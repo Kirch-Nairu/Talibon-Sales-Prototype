@@ -58,17 +58,26 @@ export default function WorkspaceLauncher({ groups }: { groups: PortalNavigation
                             <X size={16} aria-hidden="true" />
                         </button>
                     </div>
-                    <div className="grid grid-cols-2 gap-2">
-                        {groups.flatMap((group) => group.items).map(({ href, label, icon: Icon }) => (
-                            <Link
-                                key={href}
-                                href={href}
-                                onClick={() => setOpen(false)}
-                                className="flex items-center gap-2 rounded-lg bg-slate-50 p-3 text-sm font-semibold hover:bg-blue-50 dark:bg-slate-800 dark:hover:bg-slate-700"
-                            >
-                                <Icon size={17} className="shrink-0 text-blue-600 dark:text-blue-300" aria-hidden="true" />
-                                <span>{label}</span>
-                            </Link>
+                    <div className="space-y-4">
+                        {groups.map((group) => (
+                            <section key={group.key} aria-label={group.label}>
+                                <div className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+                                    {group.label}
+                                </div>
+                                <div className="grid grid-cols-2 gap-2">
+                                    {group.items.map(({ href, label, icon: Icon }) => (
+                                        <Link
+                                            key={href}
+                                            href={href}
+                                            onClick={() => setOpen(false)}
+                                            className="flex items-center gap-2 rounded-lg bg-slate-50 p-3 text-sm font-semibold hover:bg-blue-50 dark:bg-slate-800 dark:hover:bg-slate-700"
+                                        >
+                                            <Icon size={17} className="shrink-0 text-blue-600 dark:text-blue-300" aria-hidden="true" />
+                                            <span>{label}</span>
+                                        </Link>
+                                    ))}
+                                </div>
+                            </section>
                         ))}
                     </div>
                 </nav>
