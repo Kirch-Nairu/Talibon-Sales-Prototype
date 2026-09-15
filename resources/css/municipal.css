@@ -17,6 +17,16 @@
         --municipal-border-strong: #c7d3e1;
         --municipal-hover: #f3f6fa;
         --municipal-progress-track: #e5ebf2;
+        --municipal-status-blue-bg: #eaf2fb;
+        --municipal-status-blue-text: #0b4f87;
+        --municipal-status-green-bg: #eaf6ee;
+        --municipal-status-green-text: #25643a;
+        --municipal-status-amber-bg: #fff5df;
+        --municipal-status-amber-text: #815208;
+        --municipal-status-rose-bg: #fcedef;
+        --municipal-status-rose-text: #8e2c39;
+        --municipal-status-slate-bg: #eef2f6;
+        --municipal-status-slate-text: #475569;
     }
     :root.dark {
         --municipal-surface: #142236;
@@ -28,6 +38,16 @@
         --municipal-muted: #a9b7c8;
         --municipal-hover: #1a2a3f;
         --municipal-progress-track: #2a3b51;
+        --municipal-status-blue-bg: #153451;
+        --municipal-status-blue-text: #bfdbfe;
+        --municipal-status-green-bg: #173b28;
+        --municipal-status-green-text: #bbf7d0;
+        --municipal-status-amber-bg: #3a2d12;
+        --municipal-status-amber-text: #fde68a;
+        --municipal-status-rose-bg: #3b1c24;
+        --municipal-status-rose-text: #fecdd3;
+        --municipal-status-slate-bg: #26364a;
+        --municipal-status-slate-text: #cbd5e1;
     }
 }
 
@@ -182,6 +202,92 @@
         width: 1%;
         white-space: nowrap;
     }
+
+    .municipal-status {
+        display: inline-flex;
+        min-height: 1.5rem;
+        max-width: 100%;
+        align-items: center;
+        gap: .35rem;
+        border: 1px solid transparent;
+        border-radius: .375rem;
+        padding: .2rem .5rem;
+        background: var(--municipal-status-slate-bg);
+        color: var(--municipal-status-slate-text);
+        font-size: .6875rem;
+        font-weight: 750;
+        letter-spacing: .035em;
+        line-height: 1.25;
+        text-transform: uppercase;
+        overflow-wrap: anywhere;
+    }
+    .municipal-status--active,
+    .municipal-status--integrated,
+    .municipal-status--completed {
+        background: var(--municipal-status-green-bg);
+        color: var(--municipal-status-green-text);
+    }
+    .municipal-status--ongoing,
+    .municipal-status--priority {
+        background: var(--municipal-status-blue-bg);
+        color: var(--municipal-status-blue-text);
+    }
+    .municipal-status--planned,
+    .municipal-status--pending,
+    .municipal-status--due {
+        background: var(--municipal-status-amber-bg);
+        color: var(--municipal-status-amber-text);
+    }
+    .municipal-status--delayed,
+    .municipal-status--overdue {
+        background: var(--municipal-status-rose-bg);
+        color: var(--municipal-status-rose-text);
+    }
+    .municipal-status--disabled,
+    .municipal-status--not-enabled {
+        background: var(--municipal-status-slate-bg);
+        color: var(--municipal-status-slate-text);
+    }
+
+    .municipal-progress {
+        display: grid;
+        min-width: 0;
+        gap: .35rem;
+    }
+    .municipal-progress-header {
+        display: flex;
+        min-width: 0;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: .35rem .75rem;
+        color: var(--municipal-muted);
+        font-size: .75rem;
+        line-height: 1.35;
+    }
+    .municipal-progress-value-label {
+        color: var(--municipal-text);
+        font-variant-numeric: tabular-nums;
+        font-weight: 700;
+    }
+    .municipal-progress-track {
+        position: relative;
+        height: .5rem;
+        min-width: 0;
+        overflow: hidden;
+        border-radius: 999px;
+        background: var(--municipal-progress-track);
+    }
+    .municipal-progress-bar {
+        display: block;
+        width: min(var(--municipal-progress, 0%), 100%);
+        height: 100%;
+        border-radius: inherit;
+        background: var(--municipal-blue);
+    }
+    .municipal-progress-bar--complete { background: var(--municipal-green); }
+    .municipal-progress-bar--attention { background: var(--municipal-amber); }
+    .municipal-progress-bar--delayed { background: var(--municipal-danger); }
 
     .municipal-photo {
         position: absolute;
