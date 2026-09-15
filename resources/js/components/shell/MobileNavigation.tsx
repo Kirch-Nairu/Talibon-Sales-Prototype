@@ -37,6 +37,7 @@ export default function MobileNavigation({ children, onClose }: PropsWithChildre
             onCancel={(event) => { event.preventDefault(); onClose(); }}
             onClick={closeFromBackdrop}
             aria-labelledby={titleId}
+            aria-modal="true"
             className="fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none overscroll-none border-0 bg-transparent p-0 text-white backdrop:bg-slate-950/55 lg:hidden"
         >
             <span id={titleId} className="sr-only">Municipal navigation</span>
