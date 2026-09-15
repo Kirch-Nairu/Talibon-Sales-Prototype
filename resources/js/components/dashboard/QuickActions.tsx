@@ -4,7 +4,12 @@ import { portalDestinations } from '../../navigation/portalNavigation';
 import type { DashboardExperience } from './types';
 
 export default function QuickActions({ actions }: { actions: DashboardExperience['quickActions'] }) {
-    const visibleActions = actions.filter((action) => !action.url.startsWith('/audit') && !action.url.startsWith('/security/'));
+    const visibleActions = actions
+        .filter((action) => !action.url.startsWith('/audit') && !action.url.startsWith('/security/'))
+        .map((action) => action.url === '/admin'
+            ? { ...action, label: 'Administration', description: 'Open the existing municipal administration workspace.' }
+            : action);
+
     if (!visibleActions.length) return null;
 
     const columns = visibleActions.length <= 2 ? 'grid-cols-2'
