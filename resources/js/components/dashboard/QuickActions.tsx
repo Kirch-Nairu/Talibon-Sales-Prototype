@@ -1,6 +1,6 @@
 import { Link } from '@inertiajs/react';
 import { Building2, LayoutGrid } from 'lucide-react';
-import { portalDestinations } from '../../navigation/portalNavigation';
+import { portalDestinations } from '../../navigation/navigationDestinations';
 import type { DashboardExperience } from './types';
 
 const administrativeLinks: DashboardExperience['quickActions'] = [
