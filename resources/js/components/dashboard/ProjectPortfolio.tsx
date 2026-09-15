@@ -15,15 +15,26 @@ const statusClass: Record<DashboardProject['status'], string> = {
     delayed: 'text-rose-700 dark:text-rose-300',
 };
 
+const statusRank: Record<DashboardProject['status'], number> = {
+    delayed: 0,
+    attention: 1,
+    on_track: 2,
+};
+
 export default function ProjectPortfolio({ projects }: { projects: DashboardProject[] }) {
+    const orderedProjects = [...projects].sort((a, b) => {
+        const rank = statusRank[a.status] - statusRank[b.status];
+        return rank !== 0 ? rank : Date.parse(a.nextActionDate) - Date.parse(b.nextActionDate);
+    });
+
     return <section className="municipal-panel overflow-hidden" aria-labelledby="dashboard-projects">
         <DashboardSectionHeader
             icon={<FolderKanban size={16} className="text-blue-700 dark:text-blue-300" aria-hidden="true" />}
             title="Ongoing projects"
-            description="Active municipal workstreams relevant to this role, with the next recorded action."
+            description="Active municipal workstreams relevant to this role, with delayed and follow-up items first."
         />
         <div className="divide-y divide-slate-100 dark:divide-slate-700">
-            {projects.slice(0, 6).map((project) => <article key={project.id} className="px-4 py-3 sm:px-5">
+            {orderedProjects.slice(0, 6).map((project) => <article key={project.id} className="px-4 py-3 sm:px-5">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                     <div className="min-w-0">
                         <div className="text-sm font-semibold leading-5 text-slate-950 dark:text-slate-100">{project.title}</div>
@@ -42,7 +53,7 @@ export default function ProjectPortfolio({ projects }: { projects: DashboardProj
                     <span className="font-semibold text-slate-500 dark:text-slate-400">Target</span><span>{formatDate(project.nextActionDate)}</span>
                 </div>
             </article>)}
-            {projects.length === 0 ? <div className="px-5 py-7 text-center text-sm text-slate-500 dark:text-slate-400">No active project records are assigned to this dashboard scope.</div> : null}
+            {orderedProjects.length === 0 ? <div className="px-5 py-7 text-center text-sm text-slate-500 dark:text-slate-400">No active project records are assigned to this dashboard scope.</div> : null}
         </div>
     </section>;
 }
