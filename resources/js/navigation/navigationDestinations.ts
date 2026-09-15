@@ -12,6 +12,8 @@ import {
     Megaphone,
     MessageSquare,
     Network,
+    Settings,
+    UserCog,
     Users,
 } from 'lucide-react';
 import type { PortalDestination, PortalDestinationKey } from './navigationTypes';
@@ -151,5 +153,32 @@ export const portalDestinations: Partial<Record<PortalDestinationKey, PortalDest
         group: 'planning',
         readiness: 'wired',
         experiences: ['executive_oversight', 'system_administration'],
+    },
+    users: {
+        key: 'users',
+        label: 'Users',
+        href: '/admin/users',
+        icon: UserCog,
+        group: 'administration',
+        readiness: 'integration_pending',
+        permission: 'systemAdministration',
+    },
+    adminDepartments: {
+        key: 'adminDepartments',
+        label: 'Departments',
+        href: '/admin/departments',
+        icon: Building2,
+        group: 'administration',
+        readiness: 'integration_pending',
+        permission: 'systemAdministration',
+    },
+    systemAdministration: {
+        key: 'systemAdministration',
+        label: 'System Administration',
+        href: '/admin',
+        icon: Settings,
+        group: 'administration',
+        readiness: 'wired',
+        permission: 'systemAdministration',
     },
 };
