@@ -1,5 +1,5 @@
 import { X } from 'lucide-react';
-import { useEffect, useId, useRef, type PropsWithChildren } from 'react';
+import { useEffect, useId, useRef, type MouseEvent, type PropsWithChildren } from 'react';
 
 export default function MobileNavigation({ children, onClose }: PropsWithChildren<{ onClose: () => void }>) {
     const dialog = useRef<HTMLDialogElement>(null);
@@ -27,15 +27,19 @@ export default function MobileNavigation({ children, onClose }: PropsWithChildre
         return () => desktop.removeEventListener('change', closeOnDesktop);
     }, [onClose]);
 
+    const closeFromBackdrop = (event: MouseEvent<HTMLDialogElement>) => {
+        if (event.target === event.currentTarget) onClose();
+    };
+
     return (
         <dialog
             ref={dialog}
             onCancel={(event) => { event.preventDefault(); onClose(); }}
+            onClick={closeFromBackdrop}
             aria-labelledby={titleId}
             className="fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none overscroll-none border-0 bg-transparent p-0 text-white backdrop:bg-slate-950/55 lg:hidden"
         >
             <span id={titleId} className="sr-only">Municipal navigation</span>
-            <button type="button" onClick={onClose} className="absolute inset-0" aria-label="Close navigation" tabIndex={-1} />
             <aside className="relative h-full w-[84%] max-w-[290px] overflow-hidden overscroll-contain shadow-2xl">{children}</aside>
             <button
                 ref={closeButton}
