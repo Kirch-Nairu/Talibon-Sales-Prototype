@@ -16,8 +16,16 @@
 }
 
 html {
+    min-width: 320px;
+    width: 100%;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
 body {
@@ -25,11 +33,33 @@ body {
     min-height: 100vh;
     margin: 0;
     line-height: 1.55;
+    overflow-x: clip;
     background: var(--municipal-canvas);
 }
 
 :root.dark body {
     background: var(--municipal-canvas);
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    max-width: 100%;
+}
+
+#portal-content {
+    min-width: 0;
+    max-width: 100%;
+}
+
+#portal-content :where(main, section, article, header, footer, nav, form, fieldset, div) {
+    min-width: 0;
+}
+
+#portal-content :where(h1, h2, h3, h4, p, dd, dt, td, th) {
+    overflow-wrap: anywhere;
 }
 
 button, input, select, textarea {
