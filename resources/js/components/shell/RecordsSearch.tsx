@@ -20,6 +20,8 @@ export default function RecordsSearch() {
                     name="search"
                     placeholder="Search records…"
                     autoComplete="off"
+                    enterKeyHint="search"
+                    spellCheck={false}
                     className="h-11 w-full rounded-lg border border-slate-200 bg-slate-50 pl-10 pr-4 text-sm text-slate-900 placeholder:text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400"
                 />
             </label>
