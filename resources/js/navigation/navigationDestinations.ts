@@ -1,11 +1,15 @@
 import {
+    Building2,
     CalendarDays,
     FileSearch,
     FileText,
     Inbox,
+    Landmark,
     LayoutDashboard,
     Megaphone,
     MessageSquare,
+    Network,
+    Users,
 } from 'lucide-react';
 import type { PortalDestination, PortalDestinationKey } from './navigationTypes';
 
@@ -85,6 +89,39 @@ export const portalDestinations: Partial<Record<PortalDestinationKey, PortalDest
         href: '/messages',
         icon: MessageSquare,
         group: 'work',
+        readiness: 'integration_pending',
+    },
+    executiveDepartments: {
+        key: 'executiveDepartments',
+        label: 'Executive Departments',
+        href: '/departments',
+        icon: Building2,
+        group: 'organization',
+        readiness: 'wired',
+        permission: 'departments',
+    },
+    employeeDirectory: {
+        key: 'employeeDirectory',
+        label: 'Employee Directory',
+        href: '/employees',
+        icon: Users,
+        group: 'organization',
+        readiness: 'wired',
+    },
+    legislative: {
+        key: 'legislative',
+        label: 'Legislative',
+        href: '/legislation',
+        icon: Landmark,
+        group: 'organization',
+        readiness: 'wired',
+    },
+    localSpecialBodies: {
+        key: 'localSpecialBodies',
+        label: 'Local Special Bodies',
+        href: '/local-special-bodies',
+        icon: Network,
+        group: 'organization',
         readiness: 'integration_pending',
     },
 };
