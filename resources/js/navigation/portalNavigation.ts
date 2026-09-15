@@ -2,36 +2,13 @@ import type { NavigationPermissions, WorkspaceExperience } from '../types';
 import { isPortalDestinationVisible } from './navigationAccess';
 import { portalDestinations } from './navigationDestinations';
 import { portalGroupLabels, portalGroupOrder } from './navigationGroups';
+import { portalDestinationOrder } from './navigationOrder';
 import { isPortalPathActive } from './navigationPaths';
 import type {
     PortalDestination,
-    PortalDestinationKey,
     PortalNavigationGroup,
     PortalNavigationItem,
 } from './navigationTypes';
-
-const portalDestinationOrder: PortalDestinationKey[] = [
-    'home',
-    'myWork',
-    'correspondence',
-    'records',
-    'memoranda',
-    'announcements',
-    'calendar',
-    'meetings',
-    'messages',
-    'executiveDepartments',
-    'employeeDirectory',
-    'legislative',
-    'localSpecialBodies',
-    'developmentPlans',
-    'ppas',
-    'projectMonitoring',
-    'users',
-    'adminDepartments',
-    'systemAdministration',
-    'municipalSystems',
-];
 
 export const plannedPortalDestinations = portalDestinationOrder
     .map((key) => portalDestinations[key])
