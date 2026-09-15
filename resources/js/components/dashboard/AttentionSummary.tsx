@@ -6,6 +6,8 @@ type Props = {
     projectAttentionCount: number;
     dueTodayCount: number;
     correspondenceAttentionCount: number;
+    workLabel?: string;
+    overdueLabel?: string;
 };
 
 const itemClass = 'min-w-0 border-b border-r border-slate-200 px-4 py-3 dark:border-slate-700';
@@ -16,10 +18,12 @@ export default function AttentionSummary({
     projectAttentionCount,
     dueTodayCount,
     correspondenceAttentionCount,
+    workLabel = 'Work requiring attention',
+    overdueLabel = 'Overdue work',
 }: Props) {
     const items = [
-        { label: 'Work requiring attention', value: workCount, Icon: BriefcaseBusiness, tone: 'text-slate-950 dark:text-slate-100' },
-        { label: 'Overdue work', value: overdueWorkCount, Icon: AlertTriangle, tone: overdueWorkCount > 0 ? 'text-rose-700 dark:text-rose-300' : 'text-slate-950 dark:text-slate-100' },
+        { label: workLabel, value: workCount, Icon: BriefcaseBusiness, tone: 'text-slate-950 dark:text-slate-100' },
+        { label: overdueLabel, value: overdueWorkCount, Icon: AlertTriangle, tone: overdueWorkCount > 0 ? 'text-rose-700 dark:text-rose-300' : 'text-slate-950 dark:text-slate-100' },
         { label: 'Projects needing follow-up', value: projectAttentionCount, Icon: FolderKanban, tone: projectAttentionCount > 0 ? 'text-amber-700 dark:text-amber-300' : 'text-slate-950 dark:text-slate-100' },
         { label: 'Deadlines today', value: dueTodayCount, Icon: CalendarClock, tone: dueTodayCount > 0 ? 'text-amber-700 dark:text-amber-300' : 'text-slate-950 dark:text-slate-100' },
         { label: 'Correspondence attention', value: correspondenceAttentionCount, Icon: Inbox, tone: correspondenceAttentionCount > 0 ? 'text-blue-800 dark:text-blue-300' : 'text-slate-950 dark:text-slate-100' },
