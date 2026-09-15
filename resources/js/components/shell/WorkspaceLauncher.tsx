@@ -34,8 +34,10 @@ export default function WorkspaceLauncher({ groups }: { groups: PortalNavigation
                 ref={trigger}
                 type="button"
                 aria-label="Open workspace sections"
+                aria-haspopup="true"
                 aria-expanded={open}
                 aria-controls="workspace-sections"
+                title="Workspace sections"
                 onClick={() => setOpen((value) => !value)}
                 className="flex h-11 w-11 items-center justify-center rounded-lg text-[#0b2852] hover:bg-blue-50 dark:text-blue-200 dark:hover:bg-slate-800"
             >
