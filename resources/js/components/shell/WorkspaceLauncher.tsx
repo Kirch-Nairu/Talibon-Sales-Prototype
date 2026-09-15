@@ -1,9 +1,10 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { Grid3X3, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import type { PortalNavigationGroup } from '../../navigation/portalNavigation';
+import { isPortalPathActive, type PortalNavigationGroup } from '../../navigation/portalNavigation';
 
 export default function WorkspaceLauncher({ groups }: { groups: PortalNavigationGroup[] }) {
+    const page = usePage();
     const [open, setOpen] = useState(false);
     const root = useRef<HTMLDivElement>(null);
     const trigger = useRef<HTMLButtonElement>(null);
@@ -65,17 +66,25 @@ export default function WorkspaceLauncher({ groups }: { groups: PortalNavigation
                                     {group.label}
                                 </div>
                                 <div className="grid grid-cols-2 gap-2">
-                                    {group.items.map(({ href, label, icon: Icon }) => (
-                                        <Link
-                                            key={href}
-                                            href={href}
-                                            onClick={() => setOpen(false)}
-                                            className="flex items-center gap-2 rounded-lg bg-slate-50 p-3 text-sm font-semibold hover:bg-blue-50 dark:bg-slate-800 dark:hover:bg-slate-700"
-                                        >
-                                            <Icon size={17} className="shrink-0 text-blue-600 dark:text-blue-300" aria-hidden="true" />
-                                            <span>{label}</span>
-                                        </Link>
-                                    ))}
+                                    {group.items.map(({ href, label, icon: Icon }) => {
+                                        const active = isPortalPathActive(page.url, href);
+                                        return (
+                                            <Link
+                                                key={href}
+                                                href={href}
+                                                onClick={() => setOpen(false)}
+                                                aria-current={active ? 'page' : undefined}
+                                                className={`flex items-center gap-2 rounded-lg p-3 text-sm font-semibold ${
+                                                    active
+                                                        ? 'bg-blue-100 text-blue-950 dark:bg-blue-950/50 dark:text-blue-100'
+                                                        : 'bg-slate-50 hover:bg-blue-50 dark:bg-slate-800 dark:hover:bg-slate-700'
+                                                }`}
+                                            >
+                                                <Icon size={17} className="shrink-0 text-blue-600 dark:text-blue-300" aria-hidden="true" />
+                                                <span>{label}</span>
+                                            </Link>
+                                        );
+                                    })}
                                 </div>
                             </section>
                         ))}
