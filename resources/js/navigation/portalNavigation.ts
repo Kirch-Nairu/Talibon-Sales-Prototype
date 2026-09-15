@@ -14,6 +14,14 @@ export const plannedPortalDestinations = portalDestinationOrder
     .map((key) => portalDestinations[key])
     .filter((destination): destination is PortalDestination => Boolean(destination));
 
+export const wiredPortalDestinations = plannedPortalDestinations.filter(
+    (destination) => destination.readiness === 'wired',
+);
+
+export const integrationPendingPortalDestinations = plannedPortalDestinations.filter(
+    (destination) => destination.readiness === 'integration_pending',
+);
+
 export function buildPortalNavigation(
     experience: WorkspaceExperience | null,
     permissions: NavigationPermissions,
@@ -23,7 +31,7 @@ export function buildPortalNavigation(
         .map((groupKey): PortalNavigationGroup => ({
             key: groupKey,
             label: portalGroupLabels[groupKey],
-            items: plannedPortalDestinations.filter(
+            items: wiredPortalDestinations.filter(
                 (destination) => destination.group === groupKey
                     && isPortalDestinationVisible(destination, experience, permissions),
             ),
