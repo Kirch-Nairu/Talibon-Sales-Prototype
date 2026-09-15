@@ -62,12 +62,13 @@ export default function WorkspaceLauncher({ groups }: { groups: PortalNavigation
                     <div className="space-y-4">
                         {groups.map((group) => {
                             const headingId = `workspace-group-${group.key}`;
+                            const columns = group.items.length === 1 ? 'grid-cols-1' : 'grid-cols-2';
                             return (
                                 <section key={group.key} aria-labelledby={headingId}>
                                     <div id={headingId} className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
                                         {group.label}
                                     </div>
-                                    <div className="grid grid-cols-2 gap-2">
+                                    <div className={`grid gap-2 ${columns}`}>
                                         {group.items.map(({ href, label, icon: Icon }) => {
                                             const active = isPortalPathActive(page.url, href);
                                             return (
