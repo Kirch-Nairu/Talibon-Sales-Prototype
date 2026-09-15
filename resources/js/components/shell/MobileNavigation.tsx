@@ -40,7 +40,7 @@ export default function MobileNavigation({ children, onClose }: PropsWithChildre
             className="fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none overscroll-none border-0 bg-transparent p-0 text-white backdrop:bg-slate-950/55 lg:hidden"
         >
             <span id={titleId} className="sr-only">Municipal navigation</span>
-            <aside className="relative h-full w-[84%] max-w-[290px] overflow-hidden overscroll-contain shadow-2xl">{children}</aside>
+            <aside className="relative h-full w-[88%] max-w-[320px] overflow-hidden overscroll-contain shadow-2xl">{children}</aside>
             <button
                 ref={closeButton}
                 type="button"
