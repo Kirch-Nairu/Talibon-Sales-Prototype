@@ -4,14 +4,22 @@ import DashboardSectionHeader from './DashboardSectionHeader';
 import { formatDate, humanize } from './format';
 import type { DashboardWork } from './types';
 
-export default function AttentionQueue({ items }: { items: DashboardWork[] }) {
+export default function AttentionQueue({
+    items,
+    href = '/transactions?view=needs_my_action',
+    linkLabel = 'Open work queue',
+}: {
+    items: DashboardWork[];
+    href?: string;
+    linkLabel?: string;
+}) {
     return <section className="municipal-panel overflow-hidden" aria-labelledby="dashboard-attention-work">
         <DashboardSectionHeader
             icon={<AlertCircle size={16} className="text-amber-700 dark:text-amber-300" aria-hidden="true" />}
             title="Work requiring attention"
             description="Live transaction records are ordered by overdue and due-soon state first."
-            href="/transactions?view=needs_my_action"
-            linkLabel="Open work queue"
+            href={href}
+            linkLabel={linkLabel}
         />
         <div className="hidden grid-cols-[minmax(0,2fr)_120px_120px_135px] gap-3 border-b border-slate-200 bg-slate-50 px-5 py-2 text-[11px] font-bold uppercase tracking-wide text-slate-500 dark:border-slate-700 dark:bg-slate-900/30 dark:text-slate-400 @min-[760px]:grid">
             <div>Record</div><div>Status</div><div>Assigned</div><div>Due</div>
