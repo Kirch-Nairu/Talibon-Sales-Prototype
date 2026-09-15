@@ -32,11 +32,11 @@ export default function MobileNavigation({ children, onClose }: PropsWithChildre
             ref={dialog}
             onCancel={(event) => { event.preventDefault(); onClose(); }}
             aria-labelledby={titleId}
-            className="fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none border-0 bg-transparent p-0 text-white backdrop:bg-slate-950/55 lg:hidden"
+            className="fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none overscroll-none border-0 bg-transparent p-0 text-white backdrop:bg-slate-950/55 lg:hidden"
         >
             <span id={titleId} className="sr-only">Municipal navigation</span>
             <button type="button" onClick={onClose} className="absolute inset-0" aria-label="Close navigation" tabIndex={-1} />
-            <aside className="relative h-full w-[84%] max-w-[290px]">{children}</aside>
+            <aside className="relative h-full w-[84%] max-w-[290px] overflow-hidden overscroll-contain shadow-2xl">{children}</aside>
             <button
                 ref={closeButton}
                 type="button"
