@@ -4,7 +4,7 @@ import { metricPresentation } from './metricPresentation';
 import type { MetricGroupData } from './types';
 
 export default function MetricGroup({ group }: { group: MetricGroupData }) {
-    const title = ({ personal: 'My work', office: 'Office workload', executive: 'Municipal workload', system: 'Accounts and security' } as Record<string, string>)[group.key] || group.title;
+    const title = ({ personal: 'My work', office: 'Office workload', executive: 'Municipal workload', system: 'Administrative operations' } as Record<string, string>)[group.key] || group.title;
     return <section className="municipal-panel overflow-hidden" aria-labelledby={'dashboard-' + group.key + '-metrics'}>
         <header className="border-b border-slate-200 px-4 py-3 dark:border-slate-700 sm:px-5">
             <h2 id={'dashboard-' + group.key + '-metrics'} className="text-base font-bold sm:text-lg">{title}</h2>
