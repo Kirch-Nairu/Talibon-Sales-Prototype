@@ -82,7 +82,10 @@ export default function PortalSidebar({
                 </div>
             </nav>
 
-            <div className={`shrink-0 border-t border-white/10 ${compact ? 'p-2' : 'p-4'}`}>
+            <div
+                className={`shrink-0 border-t border-white/10 ${compact ? 'p-2' : 'p-4'}`}
+                style={mobile ? { paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' } : undefined}
+            >
                 <SidebarFooter compact={compact} user={user} />
             </div>
         </div>
