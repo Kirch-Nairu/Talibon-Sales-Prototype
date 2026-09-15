@@ -27,8 +27,10 @@ export type DashboardWork = {
     detailUrl: string;
 };
 
+export type DashboardExperienceKey = 'employee' | 'department_head' | 'executive_oversight' | 'system_administration';
+
 export type DashboardExperience = {
-    key: 'employee' | 'department_head' | 'executive_oversight' | 'system_administration';
+    key: DashboardExperienceKey;
     label: string;
     department: { id: number; code: string; name: string; shortName?: string | null };
     scopes: { personal: boolean; office: boolean; municipal: boolean; system: boolean };
@@ -115,6 +117,92 @@ export type SystemOverviewData = {
             createdAt?: string | null;
         }>;
     };
+};
+
+export type DashboardAudience = DashboardExperienceKey | 'mpdo';
+
+export type DashboardProject = {
+    id: string;
+    title: string;
+    leadOffice: string;
+    participatingOffices: string[];
+    stage: string;
+    status: 'on_track' | 'attention' | 'delayed';
+    progress: number;
+    nextAction: string;
+    nextActionDate: string;
+    audiences: DashboardAudience[];
+};
+
+export type DashboardMeeting = {
+    id: string;
+    title: string;
+    convenor: string;
+    office: string;
+    startsAt: string;
+    location: string;
+    purpose: string;
+    audiences: DashboardAudience[];
+};
+
+export type DashboardDeadline = {
+    id: string;
+    title: string;
+    ownerOffice: string;
+    dueAt: string;
+    requirement: string;
+    status: 'open' | 'submitted' | 'overdue';
+    audiences: DashboardAudience[];
+};
+
+export type DashboardDocument = {
+    id: string;
+    reference: string;
+    title: string;
+    office: string;
+    documentType: string;
+    updatedAt: string;
+    audiences: DashboardAudience[];
+};
+
+export type DashboardAnnouncement = {
+    id: string;
+    title: string;
+    body: string;
+    office: string;
+    postedAt: string;
+    priority: 'normal' | 'important';
+    audiences: DashboardAudience[];
+};
+
+export type DashboardPlanningUpdate = {
+    id: string;
+    title: string;
+    plan: string;
+    ownerOffice: string;
+    status: string;
+    updatedAt: string;
+    nextStep: string;
+    audiences: DashboardAudience[];
+};
+
+export type DashboardOfficeActivity = {
+    id: string;
+    office: string;
+    action: string;
+    subject: string;
+    occurredAt: string;
+    audiences: DashboardAudience[];
+};
+
+export type MunicipalDashboardData = {
+    projects: DashboardProject[];
+    meetings: DashboardMeeting[];
+    deadlines: DashboardDeadline[];
+    documents: DashboardDocument[];
+    announcements: DashboardAnnouncement[];
+    planningUpdates: DashboardPlanningUpdate[];
+    officeActivity: DashboardOfficeActivity[];
 };
 
 export type DashboardProps = {
