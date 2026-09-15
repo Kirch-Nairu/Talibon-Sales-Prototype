@@ -41,7 +41,11 @@ export default function MobileNavigation({ children, onClose }: PropsWithChildre
                 ref={closeButton}
                 type="button"
                 onClick={onClose}
-                className="absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-lg bg-white text-slate-900 shadow dark:bg-slate-800 dark:text-slate-100"
+                className="absolute flex h-11 w-11 items-center justify-center rounded-lg bg-white text-slate-900 shadow dark:bg-slate-800 dark:text-slate-100"
+                style={{
+                    right: 'max(0.75rem, env(safe-area-inset-right))',
+                    top: 'max(0.75rem, env(safe-area-inset-top))',
+                }}
                 aria-label="Close navigation"
             >
                 <X size={18} aria-hidden="true" />
