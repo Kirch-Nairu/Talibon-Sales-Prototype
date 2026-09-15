@@ -149,7 +149,7 @@ class H4SystemAdminActionCompletenessTest extends TestCase
         ])->assertForbidden();
     }
 
-    public function test_system_admin_mayor_workspace_direct_route_and_navigation_authority_agree(): void
+    public function test_system_admin_mayor_workspace_direct_route_remains_backend_authoritative_without_visible_mayor_navigation(): void
     {
         $this->seed();
 
@@ -162,14 +162,32 @@ class H4SystemAdminActionCompletenessTest extends TestCase
         $this->assertFalse($navigation->for($employee)['mayorOffice']);
         $this->assertFalse($navigation->for($engineering)['mayorOffice']);
 
-        $source = file_get_contents(resource_path('js/navigation/portalNavigation.ts'));
-        $this->assertIsString($source);
+        $navigationSource = file_get_contents(resource_path('js/navigation/portalNavigation.ts'));
+        $accessSource = file_get_contents(resource_path('js/navigation/navigationAccess.ts'));
+        $destinationsSource = file_get_contents(resource_path('js/navigation/navigationDestinations.ts'));
+        $routePlanSource = file_get_contents(resource_path('js/navigation/navigationRoutePlan.ts'));
+
+        $this->assertIsString($navigationSource);
+        $this->assertIsString($accessSource);
+        $this->assertIsString($destinationsSource);
+        $this->assertIsString($routePlanSource);
+
         $this->assertStringContainsString(
-            "system_administration: [\n        { label: 'Home', destinations: ['dashboard'] },\n        { label: 'Attention', destinations: ['mayorOffice'] },",
-            $source,
+            'isPortalDestinationVisible(destination, experience, permissions)',
+            $navigationSource,
         );
-        $this->assertStringContainsString('.filter((item) => permissions[item.permission])', $source);
-        $this->assertStringNotContainsString('role', strtolower($source));
+        $this->assertStringContainsString('permissions[destination.permission]', $accessSource);
+        $this->assertStringContainsString(
+            "systemAdministration: { key: 'systemAdministration'",
+            $destinationsSource,
+        );
+        $this->assertStringContainsString("systemAdministration: '/admin'", $routePlanSource);
+        $this->assertStringNotContainsString('mayorOffice:', $destinationsSource);
+        $this->assertStringNotContainsString('mayorOffice:', $routePlanSource);
+
+        $frontendAuthority = $navigationSource."\n".$accessSource;
+        $this->assertStringNotContainsString('includes(user?.role', $frontendAuthority);
+        $this->assertStringNotContainsString("user?.role ===", $frontendAuthority);
 
         $this->withoutMiddleware(RequireMfaAssurance::class);
         $this->actingAs($admin)->get('/mayor-office')->assertOk();
