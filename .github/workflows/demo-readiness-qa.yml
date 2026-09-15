@@ -1,0 +1,160 @@
+name: Talibon Demo Readiness Browser QA
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: talibon_portal
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d talibon_portal"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - name: Checkout exact branch head
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: mbstring, pdo_pgsql, fileinfo, zip
+          coverage: none
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - name: Prepare isolated QA environment
+        shell: bash
+        run: |
+          cp .env.example .env
+          sed -i 's/^APP_ENV=.*/APP_ENV=testing/' .env
+          sed -i 's/^APP_DEBUG=.*/APP_DEBUG=false/' .env
+          sed -i 's#^APP_URL=.*#APP_URL=http://127.0.0.1:8000#' .env
+          sed -i 's/^DB_HOST=.*/DB_HOST=127.0.0.1/' .env
+          sed -i 's/^DB_DATABASE=.*/DB_DATABASE=talibon_portal/' .env
+          sed -i 's/^DB_USERNAME=.*/DB_USERNAME=postgres/' .env
+          sed -i 's/^DB_PASSWORD=.*/DB_PASSWORD=postgres/' .env
+          DEMO_PASSWORD="$(openssl rand -hex 24)"
+          echo "::add-mask::$DEMO_PASSWORD"
+          sed -i "s/^PROTOTYPE_DEMO_PASSWORD=.*/PROTOTYPE_DEMO_PASSWORD=$DEMO_PASSWORD/" .env
+          echo "QA_DEMO_PASSWORD=$DEMO_PASSWORD" >> "$GITHUB_ENV"
+          echo "QA_BASE_URL=http://127.0.0.1:8000" >> "$GITHUB_ENV"
+
+      - name: Install PHP dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Generate application key
+        run: php artisan key:generate --force
+
+      - name: Install frontend dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: TypeScript
+        run: npm run types:check
+
+      - name: Production frontend build
+        run: npm run build
+
+      - name: PostgreSQL fresh migrate and synthetic seed
+        run: php artisan migrate:fresh --seed --force
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Start isolated Laravel runtime
+        shell: bash
+        run: |
+          mkdir -p storage/logs storage/app/qa
+          nohup php artisan serve --host=127.0.0.1 --port=8000 > storage/logs/demo-readiness-server.log 2>&1 &
+          echo $! > /tmp/talibon-demo-readiness-server.pid
+          for attempt in $(seq 1 40); do
+            if curl --fail --silent --show-error http://127.0.0.1:8000/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat storage/logs/demo-readiness-server.log
+          exit 1
+
+      - name: Seven-account browser runtime matrix
+        run: node tests/Browser/demo-readiness.mjs
+
+      - name: Reset synthetic data for isolated F2 presentation QA
+        run: php artisan migrate:fresh --seed --force
+
+      - name: F2 page foundation browser acceptance
+        run: node tests/Browser/f2-readiness.mjs
+
+      - name: Reset synthetic data for isolated F3 progressive filter QA
+        run: php artisan migrate:fresh --seed --force
+
+      - name: F3 progressive filter browser acceptance
+        run: node tests/Browser/f3-readiness.mjs
+
+      - name: Reset synthetic data for isolated F4 operational UX QA
+        run: php artisan migrate:fresh --seed --force
+
+      - name: Seed isolated F4 correspondence evidence
+        run: php artisan db:seed --class='Database\Seeders\F4BrowserQaCorrespondenceSeeder' --force
+
+      - name: F4 My Work and correspondence browser acceptance
+        run: node tests/Browser/f4-readiness.mjs
+
+      - name: Reset synthetic data for isolated F5 result presentation QA
+        run: php artisan migrate:fresh --seed --force
+
+      - name: Seed isolated F5 result presentation evidence
+        run: php artisan db:seed --class='Database\Seeders\F5BrowserQaSeeder' --force
+
+      - name: F5 records travel orders and reports browser acceptance
+        run: node tests/Browser/f5-readiness.mjs
+
+      - name: Reset synthetic data for isolated F6 dashboard QA
+        run: php artisan migrate:fresh --seed --force
+
+      - name: F6 dashboard experience browser acceptance
+        run: node tests/Browser/f6-readiness.mjs
+
+      - name: Reset synthetic data for isolated F7 administration QA
+        run: php artisan migrate:fresh --seed --force
+
+      - name: F7 administration browser acceptance
+        run: node tests/Browser/f7-readiness.mjs
+
+      - name: Reset synthetic data for isolated F8 portal hardening QA
+        run: php artisan migrate:fresh --seed --force
+
+      - name: F8 portal hardening browser acceptance
+        run: node tests/Browser/f8-readiness.mjs
+
+      - name: Upload sanitized QA evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: demo-readiness-browser-qa-${{ github.sha }}
+          path: |
+            storage/app/qa/**
+            storage/logs/demo-readiness-server.log
+          if-no-files-found: warn
+          retention-days: 7

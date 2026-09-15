@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <title>Municipal identity placeholder — not the official seal</title>
+  <circle cx="50" cy="50" r="47" fill="#0b2852" stroke="#e8c44e" stroke-width="3"/>
+  <circle cx="50" cy="50" r="39" stroke="#88bfda" stroke-width="1"/>
+  <path d="m26 43 24-16 24 16H26Zm7 6v20m11-20v20m12-20v20m11-20v20M26 74h48" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M30 81c12-5 25 5 40 0" stroke="#e8c44e" stroke-width="2"/>
+</svg>

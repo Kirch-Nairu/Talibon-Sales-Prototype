@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 560" fill="none">
+  <title>Illustrative coastal placeholder; replace with approved Talibon photograph</title>
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#cbe9f3"/><stop offset="1" stop-color="#edf4ed"/></linearGradient>
+    <linearGradient id="sea" x2="1" y2="1"><stop stop-color="#77c7d5"/><stop offset=".55" stop-color="#2588a9"/><stop offset="1" stop-color="#0c4c79"/></linearGradient>
+    <linearGradient id="hills" x2="0" y2="1"><stop stop-color="#436f71"/><stop offset="1" stop-color="#184b57"/></linearGradient>
+  </defs>
+  <path fill="url(#sky)" d="M0 0h1600v560H0z"/>
+  <circle cx="330" cy="115" r="62" fill="#fff3c5" opacity=".5"/>
+  <path fill="#88acb0" d="m500 220 160-63 90 17 120-64 90 18 93-44 104 46 65-24 161 86 217-14v180H500z"/>
+  <path fill="url(#hills)" d="m670 241 125-64 119 17 76-38 167 32 121-49 120 70 202-8v164H670z"/>
+  <path fill="url(#sea)" d="M0 228c271-6 461 18 637 12s223 33 291 47c129 28 220 37 275 108l397 65v100H0z"/>
+  <path fill="#d8dbc0" d="M1000 259c-60 40-158 31-135 69 37 61 267 33 229 84-24 36-136 30-151 59-20 35 141 53 197 89h460V274Z"/>
+  <path fill="#376d62" d="M1020 263c-48 35-124 35-99 65 44 48 249 34 210 92-27 39-105 27-115 57-8 20 139 37 189 83h395V257Z"/>
+  <g fill="#e7dfce"><path d="M1124 300h48v25h-48zm70 12h41v24h-41zm74 28h54v29h-54zm84-51h37v25h-37zm-48 129h46v25h-46zm104 57h60v31h-60zm64-88h37v26h-37z"/></g>
+  <g fill="#ae6860"><path d="m1119 300 29-16 29 16zm70 12 26-14 25 14zm74 28 32-19 32 19zm84-51 23-14 24 14zm-48 129 28-17 29 17zm104 57 35-19 35 19zm64-88 24-15 23 15z"/></g>
+  <g stroke="#bcdee3" opacity=".3"><path d="M40 305h400m-250 45h390M20 415h450m-270 61h570M490 290h230M560 390h260"/></g>
+  <path d="M675 428h55l-10 9h-33z" fill="#fff" opacity=".8"/>
+  <path d="M703 401v27m2-25 13 20h-13" stroke="#fff" opacity=".8"/>
+</svg>

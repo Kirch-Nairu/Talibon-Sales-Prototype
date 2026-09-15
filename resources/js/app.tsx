@@ -1,0 +1,26 @@
+import '../css/app.css';
+import { createInertiaApp, type ResolvedComponent } from '@inertiajs/react';
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { createRoot } from 'react-dom/client';
+import AppErrorBoundary from './components/system/AppErrorBoundary';
+import { initializeAppearance } from './theme/appearance';
+
+const appName = import.meta.env.VITE_APP_NAME || 'Talibon Intra-Office Portal';
+
+initializeAppearance();
+
+createInertiaApp({
+    title: (title) => (title ? `${title} | ${appName}` : appName),
+    resolve: (name) =>
+        resolvePageComponent<ResolvedComponent>(
+            `./pages/${name}.tsx`,
+            import.meta.glob<ResolvedComponent>('./pages/**/*.tsx'),
+        ),
+    setup({ el, App, props }) {
+        createRoot(el).render(
+            <AppErrorBoundary>
+                <App {...props} />
+            </AppErrorBoundary>,
+        );
+    },
+});

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" fill="none">
+  <title>Decorative municipal landscape placeholder; not an actual Talibon landmark</title>
+  <path d="M0 0h640v360H0z" fill="#0b2852"/>
+  <path d="M0 321c148-73 264 46 396-5 113-42 167-48 244-12v56H0z" fill="#22638b"/>
+  <g fill="#3d7b9c"><path d="M236 276V166l80-51 80 51v110h-48v-59h-64v59zm-94 0V107h45v169zm-11-169 34-54 34 54zM441 276v-92h52v92z"/><path d="M0 300h640v10H0zM79 302l8-142h9l8 142zM534 298l9-128h8l8 128z"/></g>
+  <g stroke="#3d7b9c" stroke-width="13" stroke-linecap="round"><path d="M91 164c-28-28-47-24-62-14m62 14c18-31 40-29 58-15m-58 15c-10-34-22-49-39-53m39 53c9-33 23-45 45-47m410 58c-22-26-39-25-55-17m55 17c21-28 40-28 58-14"/></g>
+  <path d="M0 330c181-63 270 59 460 0 73-22 123-28 180-12" stroke="#55add0" stroke-width="5"/>
+  <path d="M0 345c166-34 294 41 464-2 64-17 121-21 176-9" stroke="#e7c34b" stroke-width="2"/>
+</svg>
