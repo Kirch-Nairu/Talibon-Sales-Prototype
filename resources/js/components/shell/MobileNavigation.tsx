@@ -1,9 +1,11 @@
 import { X } from 'lucide-react';
-import { useEffect, useRef, type PropsWithChildren } from 'react';
+import { useEffect, useId, useRef, type MouseEvent, type PropsWithChildren } from 'react';
 
 export default function MobileNavigation({ children, onClose }: PropsWithChildren<{ onClose: () => void }>) {
     const dialog = useRef<HTMLDialogElement>(null);
     const closeButton = useRef<HTMLButtonElement>(null);
+    const titleId = useId();
+
     useEffect(() => {
         const element = dialog.current;
         const previousOverflow = document.body.style.overflow;
@@ -17,15 +19,42 @@ export default function MobileNavigation({ children, onClose }: PropsWithChildre
             previousFocus?.focus();
         };
     }, []);
+
     useEffect(() => {
         const desktop = window.matchMedia('(min-width: 1024px)');
         const closeOnDesktop = () => { if (desktop.matches) onClose(); };
         desktop.addEventListener('change', closeOnDesktop);
         return () => desktop.removeEventListener('change', closeOnDesktop);
     }, [onClose]);
-    return <dialog ref={dialog} onCancel={(event) => { event.preventDefault(); onClose(); }} aria-label="Municipal navigation" className="fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none border-0 bg-transparent p-0 text-white backdrop:bg-slate-950/55 lg:hidden">
-        <button type="button" onClick={onClose} className="absolute inset-0" aria-label="Dismiss navigation backdrop" tabIndex={-1} />
-        <aside className="relative h-full w-[84%] max-w-[290px] shadow-2xl">{children}</aside>
-        <button ref={closeButton} type="button" onClick={onClose} className="absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-lg bg-white text-slate-900 shadow dark:bg-slate-800 dark:text-slate-100" aria-label="Close navigation"><X size={18} /></button>
-    </dialog>;
+
+    const closeFromBackdrop = (event: MouseEvent<HTMLDialogElement>) => {
+        if (event.target === event.currentTarget) onClose();
+    };
+
+    return (
+        <dialog
+            ref={dialog}
+            onCancel={(event) => { event.preventDefault(); onClose(); }}
+            onClick={closeFromBackdrop}
+            aria-labelledby={titleId}
+            aria-modal="true"
+            className="fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none overscroll-none border-0 bg-transparent p-0 text-white backdrop:bg-slate-950/55 lg:hidden"
+        >
+            <span id={titleId} className="sr-only">Municipal navigation</span>
+            <aside className="relative h-full w-[88%] max-w-[320px] overflow-hidden overscroll-contain shadow-2xl">{children}</aside>
+            <button
+                ref={closeButton}
+                type="button"
+                onClick={onClose}
+                className="absolute flex h-11 w-11 items-center justify-center rounded-lg bg-white text-slate-900 shadow dark:bg-slate-800 dark:text-slate-100"
+                style={{
+                    right: 'max(0.75rem, env(safe-area-inset-right))',
+                    top: 'max(0.75rem, env(safe-area-inset-top))',
+                }}
+                aria-label="Close navigation"
+            >
+                <X size={18} aria-hidden="true" />
+            </button>
+        </dialog>
+    );
 }

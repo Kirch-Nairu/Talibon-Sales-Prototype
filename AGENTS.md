@@ -1,163 +1,183 @@
-# AGENTS.md — TALIBON REPOSITORY OPERATING RULES
+# AGENTS.md — ONE TALIBON SALES BUILD RULES
 
-## Mandatory first read
+## Authority
 
-Before doing any work in this repository, read:
+This repository is the independent One Talibon municipal workspace build.
 
-1. `SSOT_CURRENT_INTRA_OFFICE_PORTAL_SCOPE.md`
-2. `SSOT_BY_KIRCH.md`
-3. `SSOT_COMMERCIAL_PHASE_AMENDMENT.md`
-4. `docs/CODE_REVIEW_2026-08-22.md`
-5. `docs/CURRENT_STATE.md`
-6. relevant module documentation
-7. `docs/ENGINEERING_LOG.md`
+Repository: `Kirch-Nairu/Talibon-Sales-Prototype`
 
-`SSOT_CURRENT_INTRA_OFFICE_PORTAL_SCOPE.md` is the controlling authority for active work under the present Core Intra-Office Portal procurement. Older SSOT, commercial-phase, quotation, architecture and phase documents remain preserved as historical/engineering authority where they do not conflict with the current procurement boundary.
+Baseline branch: `main`
 
-Do not reinterpret older broader phase language as permission to expand active work beyond the current Core Intra-Office Portal TOR.
+Integration branch: `KIRCH-TALIBON-SALES-V1`
 
-`docs/PHASE_1_PLAN.md` and older phase/release plans are preserved historical engineering references, not current execution authority.
+Maintainer / technical authority: Kirch Ivan Balite.
 
-If a request materially conflicts with the current procurement authority, stop and obtain explicit direction from Kirch Ivan A. Balite before expanding scope.
+Writer branches are isolated work areas. A writer must work only inside the files and domain assigned by the maintainer. Do not merge another writer, rebase onto another writer, move the integration branch, deploy, or modify `Kirch-Nairu/Talibon-Intra-Office-Portal`.
 
-## Current branch / state
+## Product direction
 
-Primary active build branch:
+Build One Talibon as a dense internal municipal digital workspace. The application should read like a system the Municipality of Talibon already uses for day-to-day office coordination.
 
-`main`
+Visible content should answer practical municipal questions:
 
-Current formal project state:
+- what is this record or work item;
+- which office owns it;
+- who is responsible;
+- what is its status;
+- when is it due or scheduled;
+- what action is required;
+- which document, plan, program, project, office or meeting it relates to.
 
-`PRE-MOBILIZATION / WORKING PROTOTYPE PREPARATION`
+Do not put sales copy inside the application. Do not write large marketing paragraphs. Do not use generic filler or lorem ipsum.
 
-Current coding objective:
+## No AI product language
 
-**Make the existing backend engineering usable and presentable to Department Heads.**
+Do not add AI features, AI assistants, AI branding, AI wording, recommendation language, or generated-looking product copy.
 
-This is a Portal/UI integration and prototype-readiness wave, not another backend architecture wave.
+Do not introduce visible language such as:
 
-## Active scope freeze
+- AI powered;
+- smart recommendations;
+- revolutionary;
+- transformative;
+- next generation;
+- future ready;
+- premium;
+- upgrade;
+- pitch;
+- showcase;
+- demo;
+- prototype;
+- best in class;
+- unlock;
+- empower;
+- seamless;
+- effortless;
+- innovative solution.
 
-Current active work maps only to the Core Intra-Office Portal TOR.
+## Municipal visual language
 
-Preserve existing broader implementation but do not actively develop HRIS, payroll, DTR, attendance, leave, employee self-service, health-vault expansion, Property expansion, Legislative expansion, GAD, public portal, eBOSS, biometric integration, Project Monitoring expansion, Procurement/PR expansion, Budget-specific expansion, GIS, CBMS or unrelated integrations unless Kirch explicitly authorizes a scope change.
+Retain the Municipal Operations Console identity:
 
-Parked code, routes, migrations, models, services, tests and documentation must not be deleted merely to simplify the prototype.
+- municipal navy;
+- neutral backgrounds;
+- dense but readable information;
+- clear office context;
+- tables, records and lists before decorative cards;
+- restrained status indicators and progress treatment;
+- consistent typography;
+- restrained shadows;
+- complete light and dark compatibility.
 
-During the current Department Head prototype wave, do not start RELEASE, ARCHIVE, new correspondence terminal states, document versioning, retention/destruction, user-account administration, production deployment or backup/restore. Current-scope secure attachment/evidence storage is already authorized by the controlling SSOT and must reuse the existing shared document architecture.
+Do not introduce glassmorphism, neon, decorative gradients, floating shapes, sparkles, startup-style landing layouts, giant empty hero areas, fake charts, fake efficiency metrics, random animation, or oversized whitespace.
 
-## Existing foundations to reuse
+## Visible security presentation
 
-Do not rebuild:
+Do not advertise Audit & Security as a product surface in this build. Do not add security posture navigation, MFA posture cards, authentication-event summaries, or security walkthrough blocks.
 
-- authentication;
-- active-account enforcement;
-- MFA;
-- roles/office authorization;
-- generic workflow engine;
-- correspondence classification authorization;
-- audit history;
-- notifications;
-- scoped integration clients;
-- idempotency;
-- transactional outbox.
+Do not weaken or remove underlying authentication, authorization, sessions, CSRF, policies, audit logging, private file controls, or other security behavior.
 
-Correspondence backend already supports RECEIVE, REGISTER, CLASSIFY, ROUTE and ACT / IN_ACTION. The current product gap is authenticated human Portal access to those capabilities.
+## Existing backend authority
 
-## Every commit must be documented
+Reuse working backend behavior. Do not replace real implementation with frontend mocks when a domain already exists.
 
-Every implementation commit MUST update `docs/ENGINEERING_LOG.md` in the same commit.
+Existing foundations include authentication, users, departments, employees, correspondence, records, memoranda, notifications, calendar, work queues, Travel Orders, Legislative foundations, reports and administration.
 
-Each entry must include:
+For newly introduced read-only presentation domains, prefer typed fixtures under `resources/js/data/municipal/` rather than unnecessary backend work.
 
-- timestamp/date;
-- current TOR requirement / slice;
-- commit message or intent;
-- important files/modules changed;
-- schema/migration impact;
-- tests/verification actually run;
-- known gaps/risks;
-- next slice/action when applicable.
+Do not introduce microservices, a second authorization system, another workflow engine, realtime messaging infrastructure, video-conferencing infrastructure, or another database architecture.
 
-Do not claim green tests, builds, CI, device behavior, integrations, cloud benchmarks, restore drills, UAT, browser behavior or production readiness unless actually observed.
+## Data consistency
 
-## Implementation discipline
+Do not invent summary values independently from the records shown on screen. Derive totals, statuses, deadlines and progress summaries from the displayed collection wherever practical.
 
-- Inspect before replacing.
-- Reuse shared services instead of duplicating logic per module.
-- Keep PostgreSQL authoritative.
-- Keep business transitions auditable.
-- Use transactions/locking where invariants require them.
-- Enforce permissions server-side.
-- Treat office, assignment, workflow state, delegation and classification as authorization inputs where relevant.
-- Never rely on React visibility as authorization.
-- Keep presentation/test/production data boundaries explicit.
-- Never commit secrets or database passwords.
-- Never point destructive automated tests at presentation or production databases.
-- Do not represent synthetic data as real LGU operational data.
-- Do not give public/external integrations direct database access.
-- Do not add business rules to React.
-- Avoid controller bloat; move substantial query/read-model logic into focused query/application services.
+Synthetic municipal records must remain clearly fictional and must not be represented as certified official records.
 
-## Architecture constraints
+Never commit secrets, private credentials, personal IDs, private employee details, private correspondence, signatures, phone numbers or other sensitive material.
 
-Maintain the modular monolith.
+## Interaction rule
 
-Do not introduce:
+Primary actions must work.
 
-- microservices;
-- another workflow engine;
-- another Task engine;
-- another notification architecture;
-- Kafka/RabbitMQ;
-- a giant universal records framework.
+If an action is not implemented, remove it or use an honest read-only action such as `View details`, `Open record`, `View agenda` or `Open document`.
 
-`TransactionWorkflowService` is already in the 301–400 LOC review band. Do not keep growing it casually. Reuse its existing behavior and place new read/query responsibilities elsewhere.
+Do not display fake `Send`, `Approve`, `Submit`, `Save` or `Join Meeting` controls.
 
-Keep React pages decomposed into sensible components and below the repository page cap.
+## Parallel writer ownership
 
-## Source size and complexity standards
+Stay inside the maintainer-assigned ownership block.
 
-Source size is a design signal, not a formatting target.
+- W01 owns `AGENTS.md`, `resources/js/navigation/`, `resources/js/components/shell/`, `resources/js/layouts/`, and shell wording directly required for navigation.
+- Other writers own their assigned municipal domains.
+- Only W01 edits shared navigation.
+- Only W12 edits unrelated shared CSS.
+- Do not edit another writer's fixtures.
+- Do not opportunistically repair another writer's page.
 
-General production-file thresholds:
+If route wiring is not yet available for another writer's surface, prepare navigation metadata without creating a dead primary link. Report the required route to the integrator.
 
-- `<=300 LOC`: healthy target
-- `301-400 LOC`: review required
-- `401-500 LOC`: refactor-required territory
-- `>500 LOC`: prohibited by default; requires explicit documented exception or immediate strangler decomposition
+## Navigation contract
 
-Role-specific hard caps:
+The intended top-level information architecture is:
 
-- Controller: 300 LOC
-- Middleware: 200 LOC
-- Policy: 300 LOC
-- Service: 400 LOC
-- Engine: 450 LOC
-- React page: 400 LOC
+### Home
+- Home
 
-Method/function guidance:
+### Work
+- My Work
+- Correspondence
+- Records
+- Memoranda
+- Announcements
+- Calendar
+- Meetings
+- Messages
 
-- target `<=20 LOC`
-- review when `>35 LOC`
-- strong refactor signal when `>50 LOC`
+### Municipal Organization
+- Executive Departments
+- Employee Directory
+- Legislative
+- Local Special Bodies
 
-Do not game these limits through arbitrary helper extraction, compressed formatting, multi-statement lines or misleading file boundaries.
+### Planning
+- Development Plans
+- PPAs
+- Project Monitoring
 
-## Prototype presentation rule
+### Administration
+- Users
+- Departments
+- System Administration
 
-The Department Head prototype should present the current procurement rather than historical breadth.
+### Municipal Systems
+- Municipal Systems
 
-Primary current-scope navigation may expose Dashboard, My Work, Correspondence, authorized Mayor/Executive work, Memoranda, Departments and authorized Audit & Security.
+Audit & Security is deliberately absent from visible navigation.
 
-Parked modules should remain directly routable only where already implemented/authorized but should not be advertised in the current prototype navigation. Employees may remain reachable for assignment/routing dependencies without being presented as an HRIS feature.
+## Commit discipline
 
-## Department Head freeze rule
+Commit aggressively, but every commit must be a real atomic improvement.
 
-After the approved prototype slices are complete, stop feature development and run the integrated Department Head prototype verification gate.
+Use descriptive messages such as:
 
-The candidate must not be called production. The intended status after successful verification is:
+- `feat(nav): add municipal organization group`
+- `feat(shell): align mobile navigation sections`
+- `fix(shell): preserve focus after drawer close`
 
-`DEPARTMENT HEAD PROTOTYPE CANDIDATE`
+Do not create empty, temporary, whitespace-only, revert-for-count, placeholder or meaningless commits.
 
-After presentation, wait for consolidated client feedback and classify each request as DEFECT, IN-SCOPE CONFIGURATION, IN-SCOPE FUNCTIONAL REQUIREMENT or MATERIAL SCOPE EXPANSION before authorizing further implementation.
+Never force push.
+
+Before publishing a batch, fetch the remote branch and stop if it moved unexpectedly.
+
+## Validation
+
+At regular checkpoints run the relevant frontend type/lint checks. Run the production frontend build before final handoff. If an existing PHP-backed behavior is changed, run focused PHP tests.
+
+Only report checks that actually ran. Do not convert source inspection into a passing runtime claim.
+
+## Final boundary
+
+Writers build their assigned candidate and stop.
+
+Writers do not integrate `KIRCH-TALIBON-SALES-V1`, do not update `main`, do not deploy, and do not start another writer's scope.
