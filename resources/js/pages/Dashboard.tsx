@@ -46,6 +46,16 @@ export default function Dashboard({
     const workAttentionCount = isAdministrator ? administrativeFollowUp : attentionWork.length;
     const correspondenceAttentionCount = correspondenceOverview?.attention.value
         ?? supplementalCorrespondence.filter((item) => item.lifecycle === 'for_action').length;
+    const attentionQueueHref = experience.key === 'executive_oversight'
+        ? '/mayor-office'
+        : experience.key === 'department_head'
+            ? '/transactions?view=office_queue'
+            : '/transactions?view=needs_my_action';
+    const attentionQueueLabel = experience.key === 'executive_oversight'
+        ? 'Open executive work'
+        : experience.key === 'department_head'
+            ? 'Open office work'
+            : 'Open my work';
 
     const updates = <MunicipalUpdates announcements={municipal.announcements} planningUpdates={municipal.planningUpdates} />;
 
@@ -66,7 +76,7 @@ export default function Dashboard({
                     overdueLabel={isAdministrator ? 'Offices with overdue work' : undefined}
                 />
 
-                {!isAdministrator ? <AttentionQueue items={attentionWork} /> : null}
+                {!isAdministrator ? <AttentionQueue items={attentionWork} href={attentionQueueHref} linkLabel={attentionQueueLabel} /> : null}
                 {isAdministrator && systemOverview ? <SystemOverview overview={systemOverview} /> : null}
 
                 {operationalMetricGroups.map((group) => <MetricGroup key={group.key} group={group} />)}
