@@ -60,34 +60,37 @@ export default function WorkspaceLauncher({ groups }: { groups: PortalNavigation
                         </button>
                     </div>
                     <div className="space-y-4">
-                        {groups.map((group) => (
-                            <section key={group.key} aria-label={group.label}>
-                                <div className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
-                                    {group.label}
-                                </div>
-                                <div className="grid grid-cols-2 gap-2">
-                                    {group.items.map(({ href, label, icon: Icon }) => {
-                                        const active = isPortalPathActive(page.url, href);
-                                        return (
-                                            <Link
-                                                key={href}
-                                                href={href}
-                                                onClick={() => setOpen(false)}
-                                                aria-current={active ? 'page' : undefined}
-                                                className={`flex items-center gap-2 rounded-lg p-3 text-sm font-semibold ${
-                                                    active
-                                                        ? 'bg-blue-100 text-blue-950 dark:bg-blue-950/50 dark:text-blue-100'
-                                                        : 'bg-slate-50 hover:bg-blue-50 dark:bg-slate-800 dark:hover:bg-slate-700'
-                                                }`}
-                                            >
-                                                <Icon size={17} className="shrink-0 text-blue-600 dark:text-blue-300" aria-hidden="true" />
-                                                <span>{label}</span>
-                                            </Link>
-                                        );
-                                    })}
-                                </div>
-                            </section>
-                        ))}
+                        {groups.map((group) => {
+                            const headingId = `workspace-group-${group.key}`;
+                            return (
+                                <section key={group.key} aria-labelledby={headingId}>
+                                    <div id={headingId} className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
+                                        {group.label}
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        {group.items.map(({ href, label, icon: Icon }) => {
+                                            const active = isPortalPathActive(page.url, href);
+                                            return (
+                                                <Link
+                                                    key={href}
+                                                    href={href}
+                                                    onClick={() => setOpen(false)}
+                                                    aria-current={active ? 'page' : undefined}
+                                                    className={`flex items-center gap-2 rounded-lg p-3 text-sm font-semibold ${
+                                                        active
+                                                            ? 'bg-blue-100 text-blue-950 dark:bg-blue-950/50 dark:text-blue-100'
+                                                            : 'bg-slate-50 hover:bg-blue-50 dark:bg-slate-800 dark:hover:bg-slate-700'
+                                                    }`}
+                                                >
+                                                    <Icon size={17} className="shrink-0 text-blue-600 dark:text-blue-300" aria-hidden="true" />
+                                                    <span>{label}</span>
+                                                </Link>
+                                            );
+                                        })}
+                                    </div>
+                                </section>
+                            );
+                        })}
                     </div>
                 </nav>
             )}
