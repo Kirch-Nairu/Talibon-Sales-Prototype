@@ -21,7 +21,7 @@ export default function SidebarFooter({ compact, user }: Props) {
 
     if (compact) {
         return (
-            <div className="flex flex-col items-center gap-3">
+            <div className="flex flex-col items-center gap-3" aria-busy={signingOut}>
                 <SidebarIdentity compact user={user} />
                 <AppearanceControl compact />
                 <button
@@ -39,7 +39,7 @@ export default function SidebarFooter({ compact, user }: Props) {
     }
 
     return (
-        <div>
+        <div aria-busy={signingOut}>
             <AppearanceControl />
             <div className="mt-3 border-t border-white/10 pt-3">
                 <SidebarIdentity compact={false} user={user} />
