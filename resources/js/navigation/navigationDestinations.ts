@@ -1,4 +1,5 @@
 import {
+    AppWindow,
     BookOpen,
     Building2,
     CalendarDays,
@@ -180,5 +181,13 @@ export const portalDestinations: Partial<Record<PortalDestinationKey, PortalDest
         group: 'administration',
         readiness: 'wired',
         permission: 'systemAdministration',
+    },
+    municipalSystems: {
+        key: 'municipalSystems',
+        label: 'Municipal Systems',
+        href: '/municipal-systems',
+        icon: AppWindow,
+        group: 'systems',
+        readiness: 'integration_pending',
     },
 };
