@@ -41,10 +41,13 @@ export default function Dashboard({
     const dueToday = dashboardDueToday(openDeadlines);
     const operationalMetricGroups = metricGroups.filter((group) => group.key !== 'system');
     const isAdministrator = experience.key === 'system_administration';
+    const isMpdo = experience.key === 'department_head' && experience.department.code.toUpperCase() === 'MPDO';
     const administrativeFollowUp = systemOverview?.operations.departmentWorkload.filter((office) => office.overdue > 0 || office.unassigned > 0).length ?? 0;
     const workAttentionCount = isAdministrator ? administrativeFollowUp : attentionWork.length;
     const correspondenceAttentionCount = correspondenceOverview?.attention.value
         ?? supplementalCorrespondence.filter((item) => item.lifecycle === 'for_action').length;
+
+    const updates = <MunicipalUpdates announcements={municipal.announcements} planningUpdates={municipal.planningUpdates} />;
 
     return <AppLayout title="Home">
         <div className="mx-auto max-w-[1480px] space-y-4">
@@ -71,6 +74,8 @@ export default function Dashboard({
                 {experience.key === 'department_head' && officeOverview ? <OfficeOverview overview={officeOverview} /> : null}
                 {experience.key === 'executive_oversight' && executiveOverview ? <ExecutiveOverview overview={executiveOverview} /> : null}
 
+                {isMpdo ? updates : null}
+
                 <div className="grid min-w-0 gap-4 @min-[980px]:grid-cols-[1.04fr_.96fr]">
                     <ProjectPortfolio projects={municipal.projects} />
                     <SchedulePanel meetings={municipal.meetings} deadlines={openDeadlines} />
@@ -81,7 +86,7 @@ export default function Dashboard({
                     <RecentCorrespondence overview={correspondenceOverview} supplemental={supplementalCorrespondence} />
                 </div>
 
-                <MunicipalUpdates announcements={municipal.announcements} planningUpdates={municipal.planningUpdates} />
+                {!isMpdo ? updates : null}
 
                 <div className="grid min-w-0 gap-4 @min-[900px]:grid-cols-[1.08fr_.92fr]">
                     <OfficeActivityFeed activity={municipal.officeActivity} />
