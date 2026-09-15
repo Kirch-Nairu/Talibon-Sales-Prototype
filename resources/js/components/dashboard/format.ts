@@ -16,6 +16,22 @@ export const formatDate = (value?: string | null) => {
         });
 };
 
+export const formatDateOnly = (value?: string | null) => {
+    if (!value) return 'Not recorded';
+    const date = new Date(value);
+    return Number.isNaN(date.getTime())
+        ? 'Not recorded'
+        : date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+};
+
+export const formatTime = (value?: string | null) => {
+    if (!value) return 'Not recorded';
+    const date = new Date(value);
+    return Number.isNaN(date.getTime())
+        ? 'Not recorded'
+        : date.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
+};
+
 export const dueTone = {
     on_track: 'bg-slate-100 text-slate-700',
     due_soon: 'bg-amber-50 text-amber-800',
