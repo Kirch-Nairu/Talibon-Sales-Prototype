@@ -3,19 +3,27 @@ import { Building2, LayoutGrid } from 'lucide-react';
 import { portalDestinations } from '../../navigation/portalNavigation';
 import type { DashboardExperience } from './types';
 
+const administrativeLinks: DashboardExperience['quickActions'] = [
+    { label: 'Administration', description: 'Open the existing municipal administration workspace.', url: '/admin' },
+    { label: 'Operations', description: 'Review current municipal operational workload.', url: '/operations' },
+    { label: 'Records', description: 'Open the authorized internal records repository.', url: '/records' },
+    { label: 'Correspondence', description: 'Review registered municipal correspondence.', url: '/correspondence' },
+    { label: 'Calendar', description: 'Review municipal meetings and scheduled items.', url: '/calendar' },
+];
+
 export default function QuickActions({ actions }: { actions: DashboardExperience['quickActions'] }) {
-    const visibleActions = actions
-        .filter((action) => !action.url.startsWith('/audit') && !action.url.startsWith('/security/'))
-        .map((action) => action.url === '/admin'
-            ? { ...action, label: 'Administration', description: 'Open the existing municipal administration workspace.' }
-            : action);
+    const administratorProfile = actions.some((action) => action.url === '/admin');
+    const safeActions = administratorProfile
+        ? administrativeLinks
+        : actions.filter((action) => !action.url.startsWith('/audit') && !action.url.startsWith('/security/'));
+    const visibleActions = [...new Map(safeActions.map((action) => [action.url, action])).values()];
 
     if (!visibleActions.length) return null;
 
     const columns = visibleActions.length <= 2 ? 'grid-cols-2'
         : visibleActions.length === 3 ? 'grid-cols-2 @min-[540px]:grid-cols-3'
         : visibleActions.length === 4 ? 'grid-cols-2 @min-[650px]:grid-cols-4'
-        : 'grid-cols-2 @min-[540px]:grid-cols-3 @min-[800px]:grid-cols-6';
+        : 'grid-cols-2 @min-[540px]:grid-cols-3 @min-[800px]:grid-cols-5';
 
     return <section className="municipal-panel p-4" aria-labelledby="dashboard-quick-actions">
         <h2 id="dashboard-quick-actions" className="municipal-panel-title"><LayoutGrid size={17} className="text-blue-800 dark:text-blue-300" />Workspace links</h2>
