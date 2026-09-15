@@ -7,10 +7,15 @@ type Props = PropsWithChildren<{
 }>;
 
 export default function SidebarSection({ active, children, compact, label }: Props) {
+    const headingId = `portal-nav-${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+
     return (
-        <section aria-label={label}>
+        <section aria-labelledby={compact ? undefined : headingId} aria-label={compact ? label : undefined}>
             {!compact && (
-                <div className={`px-2 text-xs font-bold uppercase tracking-[0.18em] ${active ? 'text-white' : 'text-blue-300'}`}>
+                <div
+                    id={headingId}
+                    className={`px-2 text-xs font-bold uppercase tracking-[0.18em] ${active ? 'text-white' : 'text-blue-300'}`}
+                >
                     {label}
                 </div>
             )}
