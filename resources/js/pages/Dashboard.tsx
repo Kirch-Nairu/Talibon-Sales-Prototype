@@ -40,8 +40,11 @@ export default function Dashboard({
     const openDeadlines = dashboardOpenDeadlines(municipal.deadlines);
     const dueToday = dashboardDueToday(openDeadlines);
     const operationalMetricGroups = metricGroups.filter((group) => group.key !== 'system');
+    const isAdministrator = experience.key === 'system_administration';
     const administrativeFollowUp = systemOverview?.operations.departmentWorkload.filter((office) => office.overdue > 0 || office.unassigned > 0).length ?? 0;
-    const workAttentionCount = experience.key === 'system_administration' ? administrativeFollowUp : attentionWork.length;
+    const workAttentionCount = isAdministrator ? administrativeFollowUp : attentionWork.length;
+    const correspondenceAttentionCount = correspondenceOverview?.attention.value
+        ?? supplementalCorrespondence.filter((item) => item.lifecycle === 'for_action').length;
 
     return <AppLayout title="Home">
         <div className="mx-auto max-w-[1480px] space-y-4">
@@ -50,16 +53,18 @@ export default function Dashboard({
             <div className="@container min-w-0 space-y-4">
                 <AttentionSummary
                     workCount={workAttentionCount}
-                    overdueWorkCount={experience.key === 'system_administration'
+                    overdueWorkCount={isAdministrator
                         ? systemOverview?.operations.departmentWorkload.filter((office) => office.overdue > 0).length ?? 0
                         : attentionWork.filter((item) => item.dueState === 'overdue').length}
                     projectAttentionCount={projectAttention.length}
                     dueTodayCount={dueToday.length}
-                    correspondenceAttentionCount={correspondenceOverview?.attention.value ?? 0}
+                    correspondenceAttentionCount={correspondenceAttentionCount}
+                    workLabel={isAdministrator ? 'Offices requiring follow-up' : undefined}
+                    overdueLabel={isAdministrator ? 'Offices with overdue work' : undefined}
                 />
 
-                {experience.key !== 'system_administration' ? <AttentionQueue items={attentionWork} /> : null}
-                {experience.key === 'system_administration' && systemOverview ? <SystemOverview overview={systemOverview} /> : null}
+                {!isAdministrator ? <AttentionQueue items={attentionWork} /> : null}
+                {isAdministrator && systemOverview ? <SystemOverview overview={systemOverview} /> : null}
 
                 {operationalMetricGroups.map((group) => <MetricGroup key={group.key} group={group} />)}
 
