@@ -10,7 +10,6 @@ function userInitials(name?: string | null): string {
 export default function SidebarIdentity({ compact, user }: { compact: boolean; user: AuthUser | null }) {
     const position = user?.employee?.position;
     const department = user?.employee?.department?.name;
-    const secondary = position || department;
     const title = [user?.name, position, department].filter(Boolean).join(' · ');
 
     if (compact) {
@@ -31,9 +30,14 @@ export default function SidebarIdentity({ compact, user }: { compact: boolean; u
             <div className="text-sm font-semibold leading-snug break-words" title={user?.name || undefined}>
                 {user?.name}
             </div>
-            {secondary && (
-                <div className="mt-1 text-xs leading-snug text-blue-200 break-words" title={secondary}>
-                    {secondary}
+            {position && (
+                <div className="mt-1 text-xs leading-snug text-blue-100 break-words" title={position}>
+                    {position}
+                </div>
+            )}
+            {department && (
+                <div className="mt-0.5 text-xs leading-snug text-blue-300 break-words" title={department}>
+                    {department}
                 </div>
             )}
         </div>
