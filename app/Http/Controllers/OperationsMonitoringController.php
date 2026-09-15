@@ -33,7 +33,7 @@ class OperationsMonitoringController extends Controller
         $funds = OperationalItem::query()->where('item_type', 'fund');
         $activeStatuses = ['completed', 'closed', 'cancelled'];
 
-        return Inertia::render('Operations/Index', [
+        return Inertia::render('ProjectMonitoring/Index', [
             'items' => $items,
             'filter' => $type,
             'summary' => [
