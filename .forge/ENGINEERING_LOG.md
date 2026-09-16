@@ -104,3 +104,28 @@ Browser/runtime, visual responsive behavior, runtime keyboard/focus behavior, an
 Durable writer-return evidence was recorded under `.forge/evidence/writer/`. Independent non-mutating Reviewer handoffs were issued under `.forge/handoffs/review/` for W01 and W02.
 
 No writer candidate was integrated, promoted, or deployed. The next transition is independent Review, followed by separate Acceptance before any integration authorization.
+
+## 2026-09-16 — P1 Reviewer returns: both candidates require rework
+
+Role: Maintainer
+
+Independent Reviewer returns were received for both P1 candidates.
+
+W01 Reviewer verdict: **REWORK**.
+
+The blocking defect is source-confirmed mobile containment failure in the new Appearance disclosure: compact disclosure geometry can expand outside the mobile drawer while the surrounding navigation container clips overflow, making Appearance controls partially hidden or unreachable. W01 ownership and commit history passed review; exact-candidate CI remained green. Runtime/mobile/light-dark/keyboard behavior was not observed.
+
+W02 Reviewer verdict: **REWORK**.
+
+The blocking defect is semantic: `dashboardAttentionWork()` admits generic non-completed `recentWork` into ACT NOW even when source data does not prove immediate-attention semantics. A recent/on-track record may therefore be mislabeled as work requiring attention. W02 ownership passed; commit history received a fragmentation concern but that concern was not treated as the primary blocker. Exact-candidate CI remained green. Browser/persona/responsive/light-dark/runtime accessibility evidence was not observed.
+
+Because both Reviewer verdicts are REWORK, the separate Acceptance gate was not started.
+
+The Maintainer created immutable rework branches from the exact reviewed candidates:
+
+- `KIRCH-TALIBON-UIUX-W01-SHELL-DENSITY-REWORK@fa9fadf137c200081f2b96c2b87ca7dd4137aa2d`
+- `KIRCH-TALIBON-UIUX-W02-DASHBOARD-HIERARCHY-REWORK@cac9cef03354eb58d66a24809c9f702c0d78af51`
+
+Bounded Code Writer rework handoffs were issued under `.forge/handoffs/rework/`. The original reviewed candidate branches remain untouched. W01 and W02 rework remain file-isolated and may execute in parallel.
+
+No integration, promotion, Acceptance, deployment, or force push occurred.
