@@ -9,6 +9,7 @@ export default function AdministrativeOperations({ workload }: { workload: Offic
 
     return <section className="municipal-panel overflow-hidden" aria-labelledby="dashboard-administrative-operations">
         <DashboardSectionHeader
+            headingId="dashboard-administrative-operations"
             icon={<Building2 size={16} className="text-blue-700 dark:text-blue-300" aria-hidden="true" />}
             title="Administrative operations"
             description="Municipal workload by office, with overdue and unassigned work listed first."

@@ -29,6 +29,7 @@ export default function ProjectPortfolio({ projects }: { projects: DashboardProj
 
     return <section className="municipal-panel overflow-hidden" aria-labelledby="dashboard-projects">
         <DashboardSectionHeader
+            headingId="dashboard-projects"
             icon={<FolderKanban size={16} className="text-blue-700 dark:text-blue-300" aria-hidden="true" />}
             title="Ongoing projects"
             description="Active municipal workstreams relevant to this role, with delayed and follow-up items first."

@@ -14,6 +14,17 @@ const dueRank: Record<DashboardWork['dueState'], number> = {
     completed: 3,
 };
 
+function isDueToday(dueAt: string | null | undefined, now: Date): boolean {
+    if (!dueAt) return false;
+
+    const due = new Date(dueAt);
+    if (Number.isNaN(due.getTime())) return false;
+
+    return due.getFullYear() === now.getFullYear()
+        && due.getMonth() === now.getMonth()
+        && due.getDate() === now.getDate();
+}
+
 export function dedupeDashboardWork(items: DashboardWork[]): DashboardWork[] {
     const byUrl = new Map<string, DashboardWork>();
     items.forEach((item) => byUrl.set(item.detailUrl, item));
@@ -25,14 +36,17 @@ export function dashboardAttentionWork(
     recentWork: DashboardWork[],
     officeOverview?: OfficeOverviewData,
     executiveOverview?: ExecutiveOverviewData,
+    now = new Date(),
 ): DashboardWork[] {
     const scopeWork = experience.key === 'executive_oversight'
         ? executiveOverview?.oldestUnresolved ?? []
         : experience.key === 'department_head'
             ? officeOverview?.oldestUnresolved ?? []
             : [];
+    const provableRecentAttention = recentWork.filter((item) => item.dueState !== 'completed'
+        && (item.dueState === 'overdue' || isDueToday(item.dueAt, now)));
 
-    return dedupeDashboardWork([...scopeWork, ...recentWork])
+    return dedupeDashboardWork([...provableRecentAttention, ...scopeWork])
         .filter((item) => item.dueState !== 'completed')
         .sort((a, b) => {
             const rank = dueRank[a.dueState] - dueRank[b.dueState];
@@ -56,4 +70,13 @@ export function dashboardDueToday(deadlines: DashboardDeadline[], now = new Date
             && due.getMonth() === now.getMonth()
             && due.getDate() === now.getDate();
     });
+}
+
+export function dashboardUpcomingDeadlines(deadlines: DashboardDeadline[], now = new Date()): DashboardDeadline[] {
+    const todayEnd = new Date(now);
+    todayEnd.setHours(23, 59, 59, 999);
+
+    return dashboardOpenDeadlines(deadlines)
+        .filter((deadline) => deadline.status !== 'overdue' && Date.parse(deadline.dueAt) > todayEnd.getTime())
+        .sort((a, b) => Date.parse(a.dueAt) - Date.parse(b.dueAt));
 }

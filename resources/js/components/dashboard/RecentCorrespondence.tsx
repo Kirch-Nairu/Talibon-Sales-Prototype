@@ -21,19 +21,19 @@ function CorrespondenceRow({ row }: { row: Row }) {
         <div className="flex flex-wrap items-start justify-between gap-2">
             <div className="min-w-0 flex-1">
                 <div className="break-all text-[11px] font-bold uppercase tracking-wide text-blue-700 dark:text-blue-300">{row.reference}</div>
-                <div className="mt-1 text-sm font-semibold leading-5 text-slate-950 dark:text-slate-100">{row.subject}</div>
-                <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{row.sender} · {row.office}</div>
+                <div className="mt-0.5 text-sm font-semibold leading-5 text-slate-950 dark:text-slate-100">{row.subject}</div>
+                <div className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{row.sender} · {row.office}</div>
             </div>
             <div className="shrink-0 text-right text-xs">
                 <div className="font-semibold text-slate-600 dark:text-slate-300">{humanize(row.lifecycle)}</div>
-                <div className="mt-1 text-slate-500 dark:text-slate-400">{formatDate(row.occurredAt)}</div>
+                <div className="mt-0.5 text-slate-500 dark:text-slate-400">{formatDate(row.occurredAt)}</div>
             </div>
         </div>
     </>;
 
     return row.url
-        ? <Link href={row.url} className="block px-4 py-3 transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500 dark:hover:bg-slate-800/40 sm:px-5">{content}</Link>
-        : <article className="px-4 py-3 sm:px-5">{content}</article>;
+        ? <Link href={row.url} className="block px-4 py-2.5 transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500 dark:hover:bg-slate-800/40 sm:px-5">{content}</Link>
+        : <article className="px-4 py-2.5 sm:px-5">{content}</article>;
 }
 
 export default function RecentCorrespondence({
@@ -66,20 +66,16 @@ export default function RecentCorrespondence({
     }));
     const rows = (liveRows.length > 0 ? liveRows : fallbackRows)
         .sort((a, b) => Date.parse(b.occurredAt || '') - Date.parse(a.occurredAt || ''))
-        .slice(0, 6);
+        .slice(0, 4);
 
-    return <section className="municipal-panel overflow-hidden" aria-labelledby="dashboard-recent-correspondence">
+    return <section className="municipal-panel overflow-hidden" aria-label="Recent correspondence history">
         <DashboardSectionHeader
-            icon={<Inbox size={16} className="text-blue-700 dark:text-blue-300" aria-hidden="true" />}
+            icon={<Inbox size={16} className="text-slate-500 dark:text-slate-400" aria-hidden="true" />}
             title="Recent correspondence"
-            description={overview ? 'Current correspondence records supplied by the municipal workspace.' : 'Recent municipal correspondence relevant to this administrative view.'}
+            description={overview ? 'Recent correspondence records supplied by the municipal workspace.' : 'Recent municipal correspondence retained for reference.'}
             href="/correspondence"
             linkLabel="Open correspondence"
         />
-        {overview ? <div className="flex items-center justify-between gap-3 border-b border-slate-100 bg-amber-50/60 px-4 py-2 text-xs dark:border-slate-700 dark:bg-amber-950/15 sm:px-5">
-            <span className="font-semibold text-amber-900 dark:text-amber-200">{overview.attention.label}</span>
-            <span className="text-lg font-bold tabular-nums text-amber-900 dark:text-amber-200">{overview.attention.value}</span>
-        </div> : null}
         <div className="divide-y divide-slate-100 dark:divide-slate-700">
             {rows.map((row) => <CorrespondenceRow key={row.key} row={row} />)}
             {rows.length === 0 ? <div className="px-5 py-6 text-center text-sm text-slate-500 dark:text-slate-400">No recent correspondence in this dashboard scope.</div> : null}
