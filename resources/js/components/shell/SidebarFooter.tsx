@@ -48,7 +48,7 @@ export default function SidebarFooter({ compact, user }: Props) {
                 <div className="min-w-0 flex-1">
                     <SidebarIdentity compact={false} user={user} persona={showcasePersona} />
                 </div>
-                <SidebarAppearanceMenu compact />
+                <SidebarAppearanceMenu compact align="end" />
             </div>
             <div className="space-y-1 border-t border-white/10 pt-2">
                 {showcaseSession?.active && <WorkspaceSwitcher />}
