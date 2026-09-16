@@ -61,7 +61,8 @@ export default function Dashboard({
             ? 'Open office work'
             : 'Open my work';
 
-    const updates = <MunicipalUpdates announcements={municipal.announcements} planningUpdates={municipal.planningUpdates} />;
+    const planningUpdates = <MunicipalUpdates announcements={municipal.announcements} planningUpdates={municipal.planningUpdates} mode="planning" />;
+    const announcements = <MunicipalUpdates announcements={municipal.announcements} planningUpdates={municipal.planningUpdates} mode="announcements" />;
 
     return <AppLayout title="Home">
         <div className="mx-auto max-w-[1480px] space-y-4">
@@ -114,7 +115,7 @@ export default function Dashboard({
                     {experience.key === 'executive_oversight' && executiveOverview ? <ExecutiveOverview overview={executiveOverview} /> : null}
                     {isAdministrator && systemOverview ? <SystemOverview overview={systemOverview} /> : null}
 
-                    {isMpdo ? updates : null}
+                    {isMpdo ? planningUpdates : null}
 
                     <ProjectPortfolio projects={municipal.projects} />
                 </DashboardPrioritySection>
@@ -131,7 +132,7 @@ export default function Dashboard({
                         <RecentCorrespondence overview={correspondenceOverview} supplemental={supplementalCorrespondence} />
                     </div>
 
-                    {!isMpdo ? updates : null}
+                    {announcements}
 
                     <div className="grid min-w-0 gap-4 @min-[900px]:grid-cols-[1.08fr_.92fr]">
                         <OfficeActivityFeed activity={municipal.officeActivity} />
