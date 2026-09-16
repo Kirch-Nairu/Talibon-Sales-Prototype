@@ -26,7 +26,62 @@ export default function PlanRegisterTable({ plans }: { plans: MunicipalPlan[] })
 
     return (
         <section aria-label="Municipal plan register" className="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-[#142236]">
-            <div className="overflow-x-auto">
+            <div className="divide-y divide-slate-100 dark:divide-slate-700 lg:hidden">
+                {plans.map((plan) => {
+                    const expanded = expandedId === plan.id;
+                    const completion = Math.round((plan.sectionsComplete / plan.sectionsTotal) * 100);
+                    return (
+                        <article key={plan.id} className="p-4 sm:p-5" aria-label={`${plan.code} ${plan.title}`}>
+                            <div className="flex items-start justify-between gap-3">
+                                <div className="min-w-0">
+                                    <div className="text-xs font-bold text-blue-700 dark:text-blue-300">{plan.code}</div>
+                                    <h2 className="mt-1 text-sm font-semibold leading-5 text-slate-900 dark:text-slate-100">{plan.title}</h2>
+                                </div>
+                                <span className={`shrink-0 rounded-md border px-2 py-1 text-[11px] font-bold ${statusClass[plan.status]}`}>{plan.status}</span>
+                            </div>
+
+                            <dl className="mt-4 grid grid-cols-2 gap-3 text-xs">
+                                <Detail label="Lead office" value={plan.leadOffice} />
+                                <Detail label="Coverage" value={`${plan.coverageStart}–${plan.coverageEnd}`} />
+                                <Detail label="Next milestone" value={`${plan.nextMilestone} · ${dateLabel(plan.nextMilestoneDate)}`} />
+                                <Detail label="Document" value={plan.documentRef} />
+                            </dl>
+
+                            <div className="mt-4">
+                                <div className="flex items-center justify-between text-[11px] font-semibold text-slate-500 dark:text-slate-400">
+                                    <span>Record completion</span><span>{completion}%</span>
+                                </div>
+                                <div className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800" aria-label={`${completion}% plan record sections complete`}>
+                                    <div className="h-full rounded-full bg-blue-700" style={{ width: `${completion}%` }} />
+                                </div>
+                            </div>
+
+                            <button
+                                type="button"
+                                onClick={() => setExpandedId(expanded ? null : plan.id)}
+                                className="mt-4 inline-flex min-h-10 w-full items-center justify-center gap-1.5 rounded-lg border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-700 focus-visible:ring-offset-2 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-900/40"
+                                aria-expanded={expanded}
+                            >
+                                {expanded ? 'Hide details' : 'View details'} {expanded ? <ChevronUp size={14} aria-hidden="true" /> : <ChevronDown size={14} aria-hidden="true" />}
+                            </button>
+
+                            {expanded && (
+                                <div className="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3 dark:border-slate-700 dark:bg-slate-900/40">
+                                    <dl className="grid gap-3 sm:grid-cols-2">
+                                        <Detail label="Required action" value={plan.requiredAction} />
+                                        <Detail label="Authority / adoption" value={plan.authority} />
+                                        <Detail label="Last recorded action" value={`${plan.lastAction} · ${dateLabel(plan.lastActionDate)}`} />
+                                        <Detail label="Coordinating offices" value={plan.coordinatingOffices.join('; ')} />
+                                    </dl>
+                                    <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400"><FileText size={13} aria-hidden="true" /> {plan.documentRef}</div>
+                                </div>
+                            )}
+                        </article>
+                    );
+                })}
+            </div>
+
+            <div className="hidden overflow-x-auto lg:block">
                 <table className="min-w-[1040px] w-full border-collapse text-left">
                     <thead className="border-b border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-900/40">
                         <tr className="text-xs font-bold uppercase tracking-[0.11em] text-slate-500 dark:text-slate-400">
@@ -47,44 +102,15 @@ export default function PlanRegisterTable({ plans }: { plans: MunicipalPlan[] })
                                     <td className="px-4 py-4">
                                         <div className="text-xs font-bold text-blue-700 dark:text-blue-300">{plan.code}</div>
                                         <div className="mt-1 max-w-[280px] text-sm font-semibold leading-5 text-slate-900 dark:text-slate-100">{plan.title}</div>
-                                        <div className="mt-2 flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
-                                            <span>{plan.horizon}</span><span aria-hidden="true">•</span><span>{plan.documentRef}</span>
-                                        </div>
+                                        <div className="mt-2 flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400"><span>{plan.horizon}</span><span aria-hidden="true">•</span><span>{plan.documentRef}</span></div>
                                     </td>
-                                    <td className="px-4 py-4">
-                                        <div className="max-w-[240px] text-xs font-semibold leading-5 text-slate-700 dark:text-slate-300">{plan.leadOffice}</div>
-                                        <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{plan.coordinatingOffices.length} coordinating offices</div>
-                                    </td>
-                                    <td className="px-4 py-4">
-                                        <div className="text-xs font-semibold text-slate-700 dark:text-slate-300">{plan.coverageStart}–{plan.coverageEnd}</div>
-                                        <div className="mt-2 w-28 rounded-full bg-slate-100 dark:bg-slate-800" aria-label={`${completion}% plan record sections complete`}>
-                                            <div className="h-1.5 rounded-full bg-blue-700" style={{ width: `${completion}%` }} />
-                                        </div>
-                                        <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{plan.sectionsComplete}/{plan.sectionsTotal} sections</div>
-                                    </td>
-                                    <td className="px-4 py-4">
-                                        <span className={`inline-flex rounded-md border px-2 py-1 text-xs font-bold ${statusClass[plan.status]}`}>{plan.status}</span>
-                                        <div className="mt-2 max-w-[180px] text-xs leading-4 text-slate-500 dark:text-slate-400">{plan.lastAction}</div>
-                                    </td>
-                                    <td className="px-4 py-4">
-                                        <div className="max-w-[220px] text-xs font-semibold leading-5 text-slate-700 dark:text-slate-300">{plan.nextMilestone}</div>
-                                        <div className="mt-1 text-xs font-bold text-slate-500 dark:text-slate-400">{dateLabel(plan.nextMilestoneDate)}</div>
-                                    </td>
+                                    <td className="px-4 py-4"><div className="max-w-[240px] text-xs font-semibold leading-5 text-slate-700 dark:text-slate-300">{plan.leadOffice}</div><div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{plan.coordinatingOffices.length} coordinating offices</div></td>
+                                    <td className="px-4 py-4"><div className="text-xs font-semibold text-slate-700 dark:text-slate-300">{plan.coverageStart}–{plan.coverageEnd}</div><div className="mt-2 w-28 rounded-full bg-slate-100 dark:bg-slate-800" aria-label={`${completion}% plan record sections complete`}><div className="h-1.5 rounded-full bg-blue-700" style={{ width: `${completion}%` }} /></div><div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{plan.sectionsComplete}/{plan.sectionsTotal} sections</div></td>
+                                    <td className="px-4 py-4"><span className={`inline-flex rounded-md border px-2 py-1 text-xs font-bold ${statusClass[plan.status]}`}>{plan.status}</span><div className="mt-2 max-w-[180px] text-xs leading-4 text-slate-500 dark:text-slate-400">{plan.lastAction}</div></td>
+                                    <td className="px-4 py-4"><div className="max-w-[220px] text-xs font-semibold leading-5 text-slate-700 dark:text-slate-300">{plan.nextMilestone}</div><div className="mt-1 text-xs font-bold text-slate-500 dark:text-slate-400">{dateLabel(plan.nextMilestoneDate)}</div></td>
                                     <td className="px-4 py-4 text-right">
-                                        <button type="button" onClick={() => setExpandedId(expanded ? null : plan.id)} className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-900/40" aria-expanded={expanded}>
-                                            {expanded ? 'Hide details' : 'View details'} {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-                                        </button>
-                                        {expanded && (
-                                            <div className="mt-3 min-w-[360px] rounded-lg border border-slate-200 bg-slate-50 p-3 text-left dark:border-slate-700 dark:bg-slate-900/40">
-                                                <dl className="grid gap-3 sm:grid-cols-2">
-                                                    <Detail label="Required action" value={plan.requiredAction} />
-                                                    <Detail label="Authority / adoption" value={plan.authority} />
-                                                    <Detail label="Last recorded action" value={`${plan.lastAction} · ${dateLabel(plan.lastActionDate)}`} />
-                                                    <Detail label="Coordinating offices" value={plan.coordinatingOffices.join('; ')} />
-                                                </dl>
-                                                <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400"><FileText size={13} /> {plan.documentRef}</div>
-                                            </div>
-                                        )}
+                                        <button type="button" onClick={() => setExpandedId(expanded ? null : plan.id)} className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-900/40" aria-expanded={expanded}>{expanded ? 'Hide details' : 'View details'} {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}</button>
+                                        {expanded && <div className="mt-3 min-w-[360px] rounded-lg border border-slate-200 bg-slate-50 p-3 text-left dark:border-slate-700 dark:bg-slate-900/40"><dl className="grid gap-3 sm:grid-cols-2"><Detail label="Required action" value={plan.requiredAction} /><Detail label="Authority / adoption" value={plan.authority} /><Detail label="Last recorded action" value={`${plan.lastAction} · ${dateLabel(plan.lastActionDate)}`} /><Detail label="Coordinating offices" value={plan.coordinatingOffices.join('; ')} /></dl><div className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400"><FileText size={13} /> {plan.documentRef}</div></div>}
                                     </td>
                                 </tr>
                             );
@@ -97,10 +123,5 @@ export default function PlanRegisterTable({ plans }: { plans: MunicipalPlan[] })
 }
 
 function Detail({ label, value }: { label: string; value: string }) {
-    return (
-        <div>
-            <dt className="text-xs font-bold uppercase tracking-[0.1em] text-slate-400">{label}</dt>
-            <dd className="mt-1 text-xs leading-5 text-slate-700 dark:text-slate-300">{value}</dd>
-        </div>
-    );
+    return <div><dt className="text-xs font-bold uppercase tracking-[0.1em] text-slate-400">{label}</dt><dd className="mt-1 text-xs leading-5 text-slate-700 dark:text-slate-300">{value}</dd></div>;
 }
