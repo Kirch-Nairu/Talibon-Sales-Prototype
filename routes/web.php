@@ -42,6 +42,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionLiveController;
 use App\Http\Controllers\TravelOrderController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::get('/', [PublicPortalController::class, 'home'])->name('public.home');
 
@@ -78,6 +79,14 @@ Route::middleware(['auth', 'active', 'mfa.assured'])->group(function (): void {
     Route::get('/employees/{employee}', EmployeeProfileController::class)->name('employees.show');
     Route::get('/calendar', CalendarController::class)->name('calendar.index');
     Route::get('/operations', OperationsMonitoringController::class)->name('operations.index');
+
+    Route::get('/announcements', fn () => Inertia::render('Announcements/Index'))->name('announcements.index');
+    Route::get('/meetings', fn () => Inertia::render('Meetings/Index'))->name('meetings.index');
+    Route::get('/messages', fn () => Inertia::render('Messages/Index'))->name('messages.index');
+    Route::get('/local-special-bodies', fn () => Inertia::render('LocalBodies/Index'))->name('local-special-bodies.index');
+    Route::get('/development-plans', fn () => Inertia::render('Plans/Index'))->name('development-plans.index');
+    Route::get('/ppas', fn () => Inertia::render('PPAs/Index'))->name('ppas.index');
+    Route::get('/municipal-systems', fn () => Inertia::render('MunicipalSystems/Index'))->name('municipal-systems.index');
 
     Route::get('/correspondence', CorrespondenceWorkspaceController::class)->name('correspondence.index');
     Route::get('/records', RecordsController::class)->name('records.index');

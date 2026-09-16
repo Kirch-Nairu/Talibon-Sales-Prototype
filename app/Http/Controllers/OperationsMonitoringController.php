@@ -12,7 +12,10 @@ class OperationsMonitoringController extends Controller
 {
     public function __invoke(Request $request): Response
     {
-        abort_unless($request->user()->isRole('system_admin', 'mayor_approver', 'mayor_staff'), 403);
+        abort_unless(
+            $request->user()->isRole('system_admin', 'mayor_approver', 'mayor_staff', 'department_head'),
+            403,
+        );
 
         $type = $request->query('type');
 
@@ -33,7 +36,7 @@ class OperationsMonitoringController extends Controller
         $funds = OperationalItem::query()->where('item_type', 'fund');
         $activeStatuses = ['completed', 'closed', 'cancelled'];
 
-        return Inertia::render('Operations/Index', [
+        return Inertia::render('ProjectMonitoring/Index', [
             'items' => $items,
             'filter' => $type,
             'summary' => [

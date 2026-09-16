@@ -1,0 +1,14 @@
+import { Building2, CalendarDays, FileText, FolderKanban, Users } from 'lucide-react';
+import { resolveDepartmentProfile } from '../../data/municipal/departments';
+
+type Office = { id: number; code: string; name: string; short_name?: string | null; office_type: string; active_employees_count: number; active_transactions_count: number };
+
+export default function DepartmentOperationsCard({ office }: { office: Office }) {
+    const profile = resolveDepartmentProfile(office.name, office.short_name ?? '');
+    return <article className="min-w-0 rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-[#142236] sm:p-5">
+        <div className="flex items-start gap-3"><div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-900 text-white"><Building2 size={17} /></div><div className="min-w-0"><div className="flex flex-wrap items-center gap-2"><span className="rounded-md bg-slate-100 px-2 py-0.5 text-xs font-bold uppercase tracking-wide text-slate-600 dark:bg-slate-800 dark:text-slate-200">{office.code}</span><span className="text-[11px] font-semibold uppercase tracking-wide text-slate-400">{office.office_type.replaceAll('_', ' ')}</span></div><h2 className="mt-2 break-words text-base font-bold leading-5 text-slate-950 dark:text-slate-100">{office.name}</h2><div className="mt-1 text-xs font-semibold text-blue-800 dark:text-blue-300">{profile.headRole}</div></div></div>
+        <p className="mt-3 text-xs leading-5 text-slate-600 dark:text-slate-300">{profile.mandate}</p>
+        <dl className="mt-4 grid grid-cols-2 gap-2"><div className="rounded-lg bg-slate-50 p-2.5 dark:bg-slate-900/40"><dt className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide text-slate-400"><Users size={12} /> Employees</dt><dd className="mt-1 text-lg font-bold text-slate-950 dark:text-slate-100">{office.active_employees_count}</dd></div><div className="rounded-lg bg-slate-50 p-2.5 dark:bg-slate-900/40"><dt className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wide text-slate-400"><FolderKanban size={12} /> Active work</dt><dd className="mt-1 text-lg font-bold text-slate-950 dark:text-slate-100">{office.active_transactions_count}</dd></div></dl>
+        <div className="mt-3 space-y-2 border-t border-slate-100 pt-3 text-xs dark:border-slate-700"><div className="flex gap-2"><CalendarDays size={14} className="mt-0.5 shrink-0 text-slate-400" /><div><span className="font-bold text-slate-700 dark:text-slate-200">Upcoming: </span><span className="text-slate-500 dark:text-slate-400">{profile.upcomingMeeting}</span></div></div><div className="flex gap-2"><FileText size={14} className="mt-0.5 shrink-0 text-slate-400" /><div><span className="font-bold text-slate-700 dark:text-slate-200">Related: </span><span className="text-slate-500 dark:text-slate-400">{profile.relatedDocument}</span></div></div></div>
+    </article>;
+}

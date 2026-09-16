@@ -12,74 +12,144 @@ class CurrentPortalNavigationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_prototype_navigation_keeps_current_scope_links_and_hides_parked_modules(): void
+    public function test_current_one_talibon_navigation_uses_authority_modules_and_current_wired_scope(): void
     {
         $layout = file_get_contents(resource_path('js/layouts/AppLayout.tsx'));
         $navigation = file_get_contents(resource_path('js/navigation/portalNavigation.ts'));
+        $access = file_get_contents(resource_path('js/navigation/navigationAccess.ts'));
+        $destinations = file_get_contents(resource_path('js/navigation/navigationDestinations.ts'));
+        $routePlan = file_get_contents(resource_path('js/navigation/navigationRoutePlan.ts'));
+
         $this->assertIsString($layout);
         $this->assertIsString($navigation);
-        $activeNavigation = $layout."\n".$navigation;
+        $this->assertIsString($access);
+        $this->assertIsString($destinations);
+        $this->assertIsString($routePlan);
 
-        foreach (['/admin', '/dashboard', '/transactions', '/correspondence', '/records', '/travel-orders', '/reports', '/mayor-office', '/memoranda', '/departments', '/audit'] as $href) {
-            $this->assertStringContainsString("href: '{$href}'", $activeNavigation);
-        }
+        $activeNavigation = implode("\n", [$layout, $navigation, $access, $destinations, $routePlan]);
 
         $this->assertStringContainsString('pageProps.permissions.navigation', $layout);
         $this->assertStringContainsString('pageProps.permissions.reports && navigation.reports', $layout);
-        $this->assertStringContainsString('permissions[item.permission]', $navigation);
-        $this->assertStringContainsString('requiresReports', $navigation);
+        $this->assertStringContainsString('isPortalDestinationVisible(destination, experience, permissions)', $navigation);
+        $this->assertStringContainsString('permissions[destination.permission]', $access);
         $this->assertStringContainsString('workspaceExperience', $layout);
-        $this->assertStringNotContainsString('role', strtolower($navigation));
+        $this->assertSame(18, substr_count($destinations, "readiness: 'wired'"));
+        $this->assertSame(2, substr_count($destinations, "readiness: 'integration_pending'"));
 
-        foreach (['/operations', '/legislation', '/hris', '/employees'] as $href) {
-            $this->assertStringNotContainsString("href: '{$href}'", $activeNavigation);
+        foreach ([
+            "home: '/dashboard'",
+            "myWork: '/transactions'",
+            "correspondence: '/correspondence'",
+            "records: '/records'",
+            "memoranda: '/memoranda'",
+            "announcements: '/announcements'",
+            "calendar: '/calendar'",
+            "meetings: '/meetings'",
+            "messages: '/messages'",
+            "executiveDepartments: '/departments'",
+            "employeeDirectory: '/employees'",
+            "legislative: '/legislation'",
+            "localSpecialBodies: '/local-special-bodies'",
+            "developmentPlans: '/development-plans'",
+            "ppas: '/ppas'",
+            "projectMonitoring: '/operations'",
+            "systemAdministration: '/admin'",
+            "municipalSystems: '/municipal-systems'",
+        ] as $routeContract) {
+            $this->assertStringContainsString($routeContract, $routePlan);
         }
+
+        $this->assertStringContainsString("users: { key: 'users', label: 'Users'", $destinations);
+        $this->assertStringContainsString("adminDepartments: { key: 'adminDepartments', label: 'Departments'", $destinations);
+        $this->assertStringContainsString("readiness: 'integration_pending', permission: 'systemAdministration'", $destinations);
+        $this->assertStringNotContainsString('Audit & Security', $destinations);
+        $this->assertStringNotContainsString("audit: {", $destinations);
+        $this->assertStringNotContainsString('includes(user?.role', $activeNavigation);
+        $this->assertStringNotContainsString("user?.role ===", $activeNavigation);
     }
 
-    public function test_grouped_navigation_preserves_task_oriented_labels_without_inventing_routes(): void
+    public function test_grouped_navigation_preserves_current_municipal_labels_without_legacy_engineering_sections(): void
     {
-        $navigation = file_get_contents(resource_path('js/navigation/portalNavigation.ts'));
-        $this->assertIsString($navigation);
+        $destinations = file_get_contents(resource_path('js/navigation/navigationDestinations.ts'));
+        $this->assertIsString($destinations);
+
+        foreach ([
+            'Home',
+            'My Work',
+            'Correspondence',
+            'Records',
+            'Memoranda',
+            'Announcements',
+            'Calendar',
+            'Meetings',
+            'Messages',
+            'Executive Departments',
+            'Employee Directory',
+            'Legislative',
+            'Local Special Bodies',
+            'Development Plans',
+            'PPAs',
+            'Project Monitoring',
+            'Users',
+            'System Administration',
+            'Municipal Systems',
+        ] as $label) {
+            $this->assertStringContainsString("label: '{$label}'", $destinations);
+        }
 
         foreach ([
             'Office Overview',
             'Executive Overview',
             'System Overview',
             'Inbox & Routing',
-            'Travel Orders',
-            'Municipal Offices',
             'Accounts & Access',
             'For Decision',
             'Audit & Security',
-        ] as $label) {
-            $this->assertStringContainsString($label, $navigation);
-        }
-
-        foreach (['/admin/accounts', '/admin/offices', '/admin/mfa', '/department/current', '/executive/decisions'] as $href) {
-            $this->assertStringNotContainsString($href, $navigation);
+        ] as $legacyLabel) {
+            $this->assertStringNotContainsString($legacyLabel, $destinations);
         }
     }
 
-    public function test_parked_routes_remain_registered_even_when_not_advertised(): void
+    public function test_current_and_hidden_backend_routes_remain_registered(): void
     {
         foreach ([
+            'admin.index',
+            'dashboard',
+            'transactions.index',
+            'correspondence.index',
+            'records.index',
+            'memoranda.index',
+            'calendar.index',
             'operations.index',
             'legislation.index',
-            'legislative.workspace',
+            'employees.index',
+            'announcements.index',
+            'meetings.index',
+            'messages.index',
+            'local-special-bodies.index',
+            'development-plans.index',
+            'ppas.index',
+            'municipal-systems.index',
+        ] as $routeName) {
+            $this->assertTrue(Route::has($routeName), "Expected current route {$routeName} to remain registered.");
+        }
+
+        foreach ([
+            'audit',
+            'mfa.settings',
+            'mfa.recovery.show',
+            'mfa.recovery.regenerate',
+            'mfa.reset',
+            'mfa.disable',
             'hris',
             'hris.dtr',
             'hris.payroll',
             'property.index',
             'property.lifecycle.index',
             'reports.index',
-            'employees.index',
         ] as $routeName) {
-            $this->assertTrue(Route::has($routeName), "Expected parked route {$routeName} to remain registered.");
+            $this->assertTrue(Route::has($routeName), "Expected hidden backend route {$routeName} to remain registered.");
         }
-
-        $this->assertTrue(Route::has('admin.index'));
-        $this->assertTrue(Route::has('correspondence.index'));
-        $this->assertTrue(Route::has('records.index'));
     }
 
     public function test_public_routes_are_separate_while_internal_routes_keep_security_middleware(): void
@@ -97,7 +167,7 @@ class CurrentPortalNavigationTest extends TestCase
         }
     }
 
-    public function test_dashboard_response_does_not_serialize_parked_module_rollups(): void
+    public function test_dashboard_response_does_not_serialize_hidden_domain_rollups(): void
     {
         $this->seed();
         $mayor = User::query()->where('email', 'mayor@talibon.demo')->firstOrFail();

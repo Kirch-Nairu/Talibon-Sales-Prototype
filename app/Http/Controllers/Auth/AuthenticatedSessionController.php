@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\AuditLogger;
 use App\Services\AuthenticationAssurance;
 use App\Services\AuthenticationAttemptLimiter;
+use App\Services\ShowcaseSession;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,12 +20,20 @@ class AuthenticatedSessionController extends Controller
         private readonly AuthenticationAssurance $assurance,
         private readonly AuthenticationAttemptLimiter $limiter,
         private readonly AuditLogger $audit,
+        private readonly ShowcaseSession $showcase,
     ) {
     }
 
     public function create(): Response
     {
-        return Inertia::render('Auth/Login');
+        return Inertia::render('Auth/Login', [
+            'showcase' => [
+                'enabled' => $this->showcase->enabled(),
+                'personas' => $this->showcase->enabled()
+                    ? $this->showcase->presentationPersonas()
+                    : [],
+            ],
+        ]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -61,6 +70,7 @@ class AuthenticatedSessionController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
+        $request->session()->forget(['showcase.persona', 'showcase.session']);
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

@@ -1,24 +1,90 @@
 /* Core Portal controls share sizing; workflow and field semantics stay in React. */
+#portal-content :where(form, fieldset, label) {
+    min-width: 0;
+}
+
 #portal-content :where(input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]), select, textarea) {
+    min-width: 0;
     min-height: 44px;
     max-width: 100%;
     border-radius: 8px;
     font-size: 14px;
     line-height: 1.5;
 }
+
+#portal-content :where(input[type="checkbox"], input[type="radio"]) {
+    accent-color: var(--municipal-blue);
+}
+
+#portal-content select {
+    text-overflow: ellipsis;
+}
+
+#portal-content textarea {
+    resize: vertical;
+}
+
 #portal-content :where(button:not([role="switch"]):not([role="checkbox"])) {
     min-height: 40px;
+    max-width: 100%;
     border-radius: 8px;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+    touch-action: manipulation;
 }
+
+#portal-content :where(input, select, textarea, button) {
+    touch-action: manipulation;
+}
+
 #portal-content :where(input, select, textarea):focus-visible {
     outline: 2px solid var(--municipal-blue);
     outline-offset: 2px;
 }
-@media (max-width: 767px) {
-    #portal-content :where(button:not([role="switch"]):not([role="checkbox"])) { min-height: 44px; }
+
+#portal-content :where(button, input, select, textarea):disabled,
+#portal-content :where(button, input, select, textarea)[aria-disabled="true"] {
+    cursor: not-allowed;
+    opacity: .62;
 }
+
+#portal-content :where(input:not([type="checkbox"]):not([type="radio"]), select, textarea):disabled {
+    border-color: var(--municipal-border);
+    background: var(--municipal-surface-subtle);
+    color: var(--municipal-muted);
+}
+
+#portal-content :where(label) {
+    overflow-wrap: anywhere;
+}
+
+#portal-content :where([role="dialog"]) {
+    max-width: 100vw;
+}
+
+@media (max-width: 767px) {
+    #portal-content :where(button:not([role="switch"]):not([role="checkbox"])) {
+        min-height: 44px;
+    }
+}
+
+@media (max-width: 639px) {
+    #portal-content :where(input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]), select, textarea) {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    #portal-content form > .municipal-panel :where(button) {
+        flex-shrink: 1;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0ms !important; animation-duration: 0ms !important; }
+    *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0ms !important;
+        animation-duration: 0ms !important;
+    }
 }
 
 .dark #portal-content :where(input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]), select, textarea) {
@@ -26,7 +92,17 @@
     background-color: var(--municipal-canvas);
     border-color: var(--municipal-border);
 }
-.dark #portal-content :where(input, textarea)::placeholder { color: var(--municipal-muted); }
+
+.dark #portal-content :where(input, textarea)::placeholder {
+    color: var(--municipal-muted);
+    opacity: 1;
+}
+
+.dark #portal-content :where(input:not([type="checkbox"]):not([type="radio"]), select, textarea):disabled {
+    border-color: var(--municipal-border);
+    background: var(--municipal-surface-subtle);
+    color: var(--municipal-muted);
+}
 
 /* Legacy information labels inherit one readable dark treatment. Explicit
    component dark colors continue to take precedence by exclusion. */

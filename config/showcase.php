@@ -1,0 +1,71 @@
+<?php
+
+return [
+    'enabled' => env('SHOWCASE_MODE', true),
+
+    'personas' => [
+        'executive' => [
+            'email' => 'mayor@talibon.demo',
+            'label' => 'Municipal Executive',
+            'position' => 'Approving Authority',
+            'office' => "Mayor's Office",
+            'description' => 'Municipality-wide oversight and decisions',
+            'category' => 'executive',
+            'experience' => 'executive_oversight',
+        ],
+        'engineering_head' => [
+            'email' => 'engineering@talibon.demo',
+            'label' => 'Department Head',
+            'position' => 'Municipal Engineer',
+            'office' => 'Municipal Engineering Office',
+            'description' => 'Engineering programs, work and office coordination',
+            'category' => 'department_head',
+            'experience' => 'department_head',
+        ],
+        'budget_head' => [
+            'email' => 'budget@talibon.demo',
+            'label' => 'Department Head',
+            'position' => 'Municipal Budget Officer',
+            'office' => 'Municipal Budget Office',
+            'description' => 'Budget programs, work and office coordination',
+            'category' => 'department_head',
+            'experience' => 'department_head',
+        ],
+        'hr' => [
+            'email' => 'hr@talibon.demo',
+            'label' => 'Human Resources',
+            'position' => 'HR Management Officer',
+            'office' => 'Human Resource Management Office',
+            'description' => 'Workforce coordination and personnel operations',
+            'category' => 'human_resources',
+            'experience' => 'employee',
+        ],
+        'legislative' => [
+            'email' => 'legislative@talibon.demo',
+            'label' => 'Legislative Office',
+            'position' => 'Legislative Records Officer',
+            'office' => 'Sangguniang Bayan',
+            'description' => 'Legislative records, references and office work',
+            'category' => 'legislative',
+            'experience' => 'employee',
+        ],
+        'employee' => [
+            'email' => 'employee@talibon.demo',
+            'label' => 'Employee',
+            'position' => 'Administrative Assistant',
+            'office' => 'Municipal Planning and Development Office',
+            'description' => 'Assigned work, records and daily office coordination',
+            'category' => 'employee',
+            'experience' => 'employee',
+        ],
+        'system_admin' => [
+            'email' => 'admin@talibon.demo',
+            'label' => 'System Administration',
+            'position' => 'System Administrator',
+            'office' => 'Municipal Administration',
+            'description' => 'Workspace administration and municipal systems',
+            'category' => 'system_administration',
+            'experience' => 'system_administration',
+        ],
+    ],
+];
