@@ -18,7 +18,7 @@ This program is not a visual rewrite, marketing redesign, backend replacement, o
 
 - Maintainer owns this ledger and wave state transitions.
 - A row does not authorize work by itself.
-- Each writer requires an exact handoff and starting SHA.
+- Each writer/rework writer requires an exact handoff and starting SHA.
 - Candidate SHA must be recorded before review.
 - Review/Acceptance results must be recorded before integration.
 - Writers must stop on authority drift or ownership collision.
@@ -29,51 +29,65 @@ This program is not a visual rewrite, marketing redesign, backend replacement, o
 
 Eight writer waves are planned for the correction program.
 
-Current review concurrency: **2 independent Reviewer sessions may run in parallel**.
+Current execution state: **P1 RETURNED TO BOUNDED REWORK**.
 
-### Parallel Batch P1 — WRITERS RETURNED / REVIEW ISSUED
+W1 and W2 rework may run in parallel because their mutation surfaces remain isolated.
 
-- W1 — Shell Compaction & Density Foundation
-- W2 — Dashboard Hierarchy
+### Parallel Batch P1 — REVIEW REWORK REQUIRED
 
-Both writer branches were created from exact prepared integration source:
-
-`903046298b211906c30b47b938fb063df0741e49`
-
-Writer-start authorities:
+Original writer starts:
 
 - W1 `KIRCH-TALIBON-UIUX-W01-SHELL-DENSITY@916fa6406abcfa4e4c00c603b5d6db43a5fed4f0`
 - W2 `KIRCH-TALIBON-UIUX-W02-DASHBOARD-HIERARCHY@3940ee3f59746eea7863155c92ff6b623d3a4719`
 
-Returned writer candidates:
+Reviewed writer candidates:
 
 - W1 `fa9fadf137c200081f2b96c2b87ca7dd4137aa2d`
 - W2 `cac9cef03354eb58d66a24809c9f702c0d78af51`
 
-Both candidate branch heads were independently re-read by the Maintainer and matched the returned SHAs exactly.
+Both candidates had exact-SHA Forge UIUX Validation **SUCCESS**, but both received Reviewer verdict **REWORK** for source-confirmed semantic/interaction defects.
 
-Both exact-candidate Forge UIUX Validation runs are now observed **SUCCESS**, including frontend dependency install/typecheck/build and Laravel/PostgreSQL/Composer/feature tests.
+### W1 rework authority
 
-The candidates remain deliberately unintegrated and must now be reviewed independently.
+Branch:
 
-### Later batches
+`KIRCH-TALIBON-UIUX-W01-SHELL-DENSITY-REWORK`
 
-- P2: W3 Context-Preserving Review Workflows + W4 Planning Responsive UX, after W1 integration.
-- P3: W5 Calendar + Persistent Utility Rail + W7 Role / HRIS / Admin / Error Completion, after required W1/W2 integration.
-- W6 Messaging Quick Access follows W5 because it depends on the persistent utility architecture.
-- W8 Cross-Product Acceptance & Harness Expansion follows all product correction waves.
+Exact starting SHA:
 
-Concurrency may be reduced whenever ownership or dependency evidence makes parallel execution unsafe.
+`fa9fadf137c200081f2b96c2b87ca7dd4137aa2d`
+
+Blocking Reviewer defect: Appearance disclosure can be clipped/unreachable inside the mobile drawer because the expanded/mobile footer invokes compact disclosure geometry that expands outside an overflow-clipping container.
+
+Rework handoff:
+
+`.forge/handoffs/rework/W01-SHELL-DENSITY-REWORK.md`
+
+### W2 rework authority
+
+Branch:
+
+`KIRCH-TALIBON-UIUX-W02-DASHBOARD-HIERARCHY-REWORK`
+
+Exact starting SHA:
+
+`cac9cef03354eb58d66a24809c9f702c0d78af51`
+
+Blocking Reviewer defect: ACT NOW treats generic non-completed `recentWork` as immediate-attention work even when the available source does not prove overdue, due-today, unassigned, or action-required semantics.
+
+Rework handoff:
+
+`.forge/handoffs/rework/W02-DASHBOARD-HIERARCHY-REWORK.md`
 
 ## Current program
 
-| Wave | Scope | State | Depends on | Candidate / anchor | Acceptance |
+| Wave | Scope | State | Depends on | Candidate / anchor | Review / Acceptance |
 | --- | --- | --- | --- | --- | --- |
 | G0 | Recon → Reviewer → correction-baseline Acceptance | CLOSED | — | `0913a37f...` | ACCEPT WITH RECORDED LIMITATION |
-| N0 | Forge Nest materialization + pre-Nest decision closure | CLOSED | G0 | `9df14d2dc09022e7f9f569163db402fd622ea8b4` | remote materialization verified |
-| P0 | GitHub Actions + parallel-writer preparation | CLOSED | N0 | source `903046298b211906c30b47b938fb063df0741e49` | workflow installed and PHP runtime aligned to lock |
-| W1 | Shell Compaction & Density Foundation | RETURNED / REVIEW ISSUED | N0 + P0 | `fa9fadf137c200081f2b96c2b87ca7dd4137aa2d` | exact-SHA CI SUCCESS; Reviewer pending |
-| W2 | Dashboard Hierarchy | RETURNED / REVIEW ISSUED | N0 + P0 | `cac9cef03354eb58d66a24809c9f702c0d78af51` | exact-SHA CI SUCCESS; Reviewer pending |
+| N0 | Forge Nest materialization + pre-Nest decision closure | CLOSED | G0 | `9df14d2d...` | remote materialization verified |
+| P0 | GitHub Actions + parallel-writer preparation | CLOSED | N0 | source `90304629...` | workflow installed and PHP runtime aligned to lock |
+| W1 | Shell Compaction & Density Foundation | REWORK ISSUED | N0 + P0 | reviewed `fa9fadf...`; rework starts there | Reviewer: REWORK; Acceptance NOT STARTED |
+| W2 | Dashboard Hierarchy | REWORK ISSUED | N0 + P0 | reviewed `cac9cef...`; rework starts there | Reviewer: REWORK; Acceptance NOT STARTED |
 | W3 | Context-Preserving Review Workflows | NOT ISSUED | W1 | — | — |
 | W4 | Planning Responsive UX | NOT ISSUED | W1 | — | — |
 | W5 | Calendar + Persistent Utility Rail | NOT ISSUED | W1 | — | — |
@@ -81,90 +95,100 @@ Concurrency may be reduced whenever ownership or dependency evidence makes paral
 | W7 | Role / HRIS / Admin / Error Completion | NOT ISSUED | W1 + W2 | — | — |
 | W8 | Cross-Product Acceptance & Harness Expansion | NOT ISSUED | W2 + W3 + W4 + W5 + W6 + W7 | — | — |
 
-## Commit-density result for P1
-
-Writers were instructed to commit every independently reviewable improvement rather than batching unrelated work.
-
-Observed writer result:
-
-- W1: 12 commits, ahead 12 / behind 0 from exact writer start;
-- W2: 36 commits, ahead 36 / behind 0 from exact writer start.
-
-The aggressive numerical targets were guidance, not acceptance criteria. Reviewer must inspect whether the histories are meaningfully atomic and must not penalize W1 merely for declining artificial commit inflation.
-
-Every Forge-controlled commit uses:
-
-`KIRCH-FORGE-<ROLE>-<REASON>`
-
-## Exact-candidate validation now observed
+## Reviewer results
 
 ### W1
 
-Candidate: `fa9fadf137c200081f2b96c2b87ca7dd4137aa2d`
+Verdict: **REWORK**.
 
-GitHub Actions run `#35`, run ID `35095466589`: **SUCCESS**.
+Ownership: PASS.
 
-- frontend dependency install: PASS;
-- TypeScript check: PASS;
-- production build: PASS;
-- PostgreSQL initialization: PASS;
-- PHP setup: PASS;
-- Composer install: PASS;
-- Laravel environment preparation: PASS;
-- `composer test`: PASS.
+Commit history: PASS.
+
+Exact-SHA CI: PASS.
+
+Blocking defect: mobile Appearance disclosure containment/reachability.
+
+Runtime/browser/responsive/light-dark/keyboard evidence remains NOT OBSERVED.
+
+Durable review evidence:
+
+`.forge/evidence/review/W01-SHELL-DENSITY-REVIEW-REWORK.md`
 
 ### W2
 
-Candidate: `cac9cef03354eb58d66a24809c9f702c0d78af51`
+Verdict: **REWORK**.
+
+Ownership: PASS.
+
+Commit history: CONCERN due substantial fragmentation, but not an independent blocker.
+
+Exact-SHA CI: PASS.
+
+Blocking defect: generic recent work can be mislabeled as ACT NOW immediate attention.
+
+Runtime/browser/persona/responsive/light-dark/runtime accessibility evidence remains NOT OBSERVED.
+
+Durable review evidence:
+
+`.forge/evidence/review/W02-DASHBOARD-HIERARCHY-REVIEW-REWORK.md`
+
+## Exact-candidate validation already observed
+
+### W1 reviewed candidate
+
+`fa9fadf137c200081f2b96c2b87ca7dd4137aa2d`
+
+GitHub Actions run `#35`, run ID `35095466589`: **SUCCESS**.
+
+### W2 reviewed candidate
+
+`cac9cef03354eb58d66a24809c9f702c0d78af51`
 
 GitHub Actions run `#60`, run ID `35096458349`: **SUCCESS**.
 
-- frontend dependency install: PASS;
-- TypeScript check: PASS;
-- production build: PASS;
-- PostgreSQL initialization: PASS;
-- PHP setup: PASS;
-- Composer install: PASS;
-- Laravel environment preparation: PASS;
-- `composer test`: PASS.
+These successful runs do not validate future rework SHAs. Each rework candidate requires fresh exact-final-SHA validation.
 
-## Collision policy / P1 observation
+## Rework collision policy
 
-W1 owns shared shell/layout/density primitives named in its handoff. W2 owns Dashboard implementation/components named in its handoff.
+W1 rework is restricted primarily to:
 
-No parallel ownership collision is currently observed. Neither candidate was merged or rebased into the other.
+- `resources/js/components/shell/SidebarAppearanceMenu.tsx`
+- `resources/js/components/shell/SidebarFooter.tsx`
 
-Reviewer must independently verify ownership before recommending progression.
+W2 rework is restricted primarily to:
+
+- `resources/js/components/dashboard/dashboardSelectors.ts`
+- `resources/js/pages/Dashboard.tsx` only if necessary;
+- directly related Dashboard-owned components only if strictly necessary.
+
+Neither rework may merge/rebase the other or the correction integration branch. Cross-owned requirements return to Maintainer.
 
 ## Evidence still open
 
-Green exact-SHA CI is established for both candidates, but the following remain open:
+The following remain open after Reviewer returns:
 
 - browser/runtime behavior;
 - responsive task coverage;
 - visual light/dark parity;
 - runtime keyboard/focus behavior;
-- W1 + W2 combined visual behavior;
+- combined W1 + W2 behavior;
 - broader accessibility acceptance.
 
-These remain valid limitations and must not be silently upgraded by source inspection or build success.
+W1 rework should collect mobile/constrained-height Appearance evidence when browser execution is available.
 
-## Durable P1 evidence
-
-Writer returns:
-
-- `.forge/evidence/writer/W01-WRITER-RETURN.md`
-- `.forge/evidence/writer/W02-WRITER-RETURN.md`
-
-Reviewer handoffs:
-
-- `.forge/handoffs/review/W01-SHELL-DENSITY-REVIEW.md`
-- `.forge/handoffs/review/W02-DASHBOARD-HIERARCHY-REVIEW.md`
+W2 rework must provide explicit evidence/reasoning that generic recent/on-track records are excluded from ACT NOW unless a real immediate-attention condition is provable.
 
 ## Next authorized Maintainer action
 
-Run W1 and W2 Reviewer sessions independently and in parallel if desired.
+Run the two bounded Code Writer rework sessions from their exact rework branch authorities.
 
-Do not integrate either candidate yet.
+After each rework Writer Return:
 
-After each Reviewer returns, record the review result and issue a separate Acceptance decision for that candidate's integration readiness. Only accepted candidate evidence may proceed to an explicit integration authorization and non-force authority transition.
+1. re-read remote final SHA;
+2. verify scope and lineage;
+3. observe exact-final-SHA CI;
+4. repeat bounded Reviewer review against the corrected candidate;
+5. only a non-REWORK Reviewer result may proceed to the separate Acceptance gate.
+
+Do not integrate either reviewed candidate. Do not start Acceptance while either current candidate remains under REWORK.
