@@ -26,7 +26,7 @@ export default function QuickActions({ actions }: { actions: DashboardExperience
         : 'grid-cols-2 @min-[540px]:grid-cols-3 @min-[800px]:grid-cols-5';
 
     return <section className="municipal-panel p-4" aria-labelledby="dashboard-quick-actions">
-        <h2 id="dashboard-quick-actions" className="municipal-panel-title"><LayoutGrid size={17} className="text-blue-800 dark:text-blue-300" />Workspace links</h2>
+        <h3 id="dashboard-quick-actions" className="municipal-panel-title"><LayoutGrid size={17} className="text-blue-800 dark:text-blue-300" />Workspace links</h3>
         <div className={`mt-3 grid overflow-hidden border-y border-slate-200 dark:border-slate-700 ${columns}`}>
             {visibleActions.map((action) => {
                 const Icon = Object.values(portalDestinations).find((item) => action.url.split('?')[0] === item.href)?.icon || Building2;
