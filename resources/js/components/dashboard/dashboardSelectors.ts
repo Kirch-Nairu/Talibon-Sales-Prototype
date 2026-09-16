@@ -57,3 +57,12 @@ export function dashboardDueToday(deadlines: DashboardDeadline[], now = new Date
             && due.getDate() === now.getDate();
     });
 }
+
+export function dashboardUpcomingDeadlines(deadlines: DashboardDeadline[], now = new Date()): DashboardDeadline[] {
+    const todayEnd = new Date(now);
+    todayEnd.setHours(23, 59, 59, 999);
+
+    return dashboardOpenDeadlines(deadlines)
+        .filter((deadline) => deadline.status !== 'overdue' && Date.parse(deadline.dueAt) > todayEnd.getTime())
+        .sort((a, b) => Date.parse(a.dueAt) - Date.parse(b.dueAt));
+}
