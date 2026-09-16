@@ -54,12 +54,14 @@ Maintainer verification:
 
 Repair intent: correct the Reviewer-confirmed mobile Appearance disclosure containment defect while preserving shell architecture and operational footer priority.
 
-Exact-final-SHA CI at Maintainer processing cutoff:
+Exact-final-SHA GitHub Actions run `#77`, ID `35116074412`: **SUCCESS**.
 
-- frontend dependency install/typecheck/build: PASS;
-- Laravel setup/Composer/environment preparation: PASS;
-- Laravel feature tests: IN PROGRESS;
-- overall run `#77`, ID `35116074412`: IN PROGRESS.
+- frontend dependency install: PASS;
+- TypeScript check: PASS;
+- production build: PASS;
+- Laravel/PostgreSQL environment preparation: PASS;
+- Composer install: PASS;
+- Laravel feature tests: PASS.
 
 Runtime/mobile/light-dark/keyboard evidence remains NOT OBSERVED.
 
@@ -112,8 +114,8 @@ Repeat Reviewer handoff:
 | G0 | Recon → Reviewer → correction-baseline Acceptance | CLOSED | — | `0913a37f...` | ACCEPT WITH RECORDED LIMITATION |
 | N0 | Forge Nest materialization + pre-Nest decision closure | CLOSED | G0 | `9df14d2d...` | remote materialization verified |
 | P0 | GitHub Actions + parallel-writer preparation | CLOSED | N0 | source `90304629...` | workflow installed and PHP runtime aligned to lock |
-| W1 | Shell Compaction & Density Foundation | REWORK RETURNED / RE-REVIEW ISSUED | N0 + P0 | `8bcdb184...` | prior Reviewer REWORK; repeat Reviewer pending; Acceptance NOT STARTED |
-| W2 | Dashboard Hierarchy | REWORK RETURNED / RE-REVIEW ISSUED | N0 + P0 | `3a5fc476...` | prior Reviewer REWORK; repeat Reviewer pending; Acceptance NOT STARTED |
+| W1 | Shell Compaction & Density Foundation | REWORK RETURNED / RE-REVIEW ISSUED | N0 + P0 | `8bcdb184...` | exact-SHA CI SUCCESS; prior Reviewer REWORK; repeat Reviewer pending; Acceptance NOT STARTED |
+| W2 | Dashboard Hierarchy | REWORK RETURNED / RE-REVIEW ISSUED | N0 + P0 | `3a5fc476...` | exact-SHA CI SUCCESS; prior Reviewer REWORK; repeat Reviewer pending; Acceptance NOT STARTED |
 | W3 | Context-Preserving Review Workflows | NOT ISSUED | W1 | — | — |
 | W4 | Planning Responsive UX | NOT ISSUED | W1 | — | — |
 | W5 | Calendar + Persistent Utility Rail | NOT ISSUED | W1 | — | — |
@@ -173,7 +175,7 @@ Repeat Reviewer handoffs:
 
 ## Evidence still open
 
-Even after source repair and green/pending exact-SHA CI, the following remain separate evidence layers:
+Even after source repair and green exact-SHA CI, the following remain separate evidence layers:
 
 - browser/runtime behavior;
 - responsive task coverage;
