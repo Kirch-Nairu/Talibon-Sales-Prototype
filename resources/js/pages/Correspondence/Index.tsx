@@ -1,10 +1,11 @@
-import { Link, router } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { AlertTriangle, ArrowRight, Building2, Clock3, Inbox, Search, UserRound, X } from 'lucide-react';
 import { type FormEvent, useState } from 'react';
 import PageFrame from '../../components/PageFrame';
 import PageHeader from '../../components/PageHeader';
 import ProgressiveFilterBar from '../../components/filters/ProgressiveFilterBar';
 import AppLayout from '../../layouts/AppLayout';
+import { withReturnContext } from '../../navigation/returnContext';
 
 type Office = { id: number; code: string; name: string; short_name?: string | null };
 type RecordOffice = { id: number; code: string; name: string; shortName?: string | null };
@@ -56,6 +57,7 @@ const enabled = (value: Filters['assigned_to_me']) => value === true || value ==
 const formatDate = (value?: string | null) => value ? new Date(value).toLocaleString() : 'Not recorded';
 
 export default function CorrespondenceIndex({ records, filters, filterOptions, workspace }: Props) {
+    const { url } = usePage();
     const [search, setSearch] = useState(filters.search ?? '');
     const [lifecycle, setLifecycle] = useState(filters.lifecycle ?? '');
     const [classification, setClassification] = useState(filters.classification ?? '');
@@ -146,92 +148,32 @@ export default function CorrespondenceIndex({ records, filters, filterOptions, w
                     />
                 </form>
 
-                <section className="overflow-hidden rounded-xl border border-slate-200 bg-white text-slate-900  dark:bg-[#142236] dark:text-slate-100 dark:border-slate-700" aria-label="Correspondence inbox">
+                <section className="overflow-hidden rounded-xl border border-slate-200 bg-white text-slate-900 dark:bg-[#142236] dark:text-slate-100 dark:border-slate-700" aria-label="Correspondence inbox">
                     <div className="flex flex-col gap-1 border-b border-slate-100 bg-slate-50 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5 dark:bg-slate-900/40 dark:border-slate-700">
                         <div className="text-[13px] font-bold text-slate-900 sm:text-sm dark:text-slate-100">Current correspondence</div>
-                        <div className="text-xs text-slate-500 sm:text-xs dark:text-slate-400">
-                            {records.total === 0 ? 'No matching records' : `Showing ${records.from || 1}–${records.to || records.data.length} of ${records.total}`}
-                        </div>
+                        <div className="text-xs text-slate-500 sm:text-xs dark:text-slate-400">{records.total === 0 ? 'No matching records' : `Showing ${records.from || 1}–${records.to || records.data.length} of ${records.total}`}</div>
                     </div>
 
-                    <div className="hidden grid-cols-[minmax(0,1.5fr)_minmax(120px,1fr)_minmax(0,1.2fr)_130px_88px] gap-4 border-b border-slate-100 px-5 py-3 text-xs font-bold uppercase tracking-wide text-slate-500 xl:grid dark:text-slate-400 dark:border-slate-700">
-                        <div>Subject / Reference</div><div>Sender / Received</div><div>Routing / Responsibility</div><div>State</div><div />
-                    </div>
+                    <div className="hidden grid-cols-[minmax(0,1.5fr)_minmax(120px,1fr)_minmax(0,1.2fr)_130px_88px] gap-4 border-b border-slate-100 px-5 py-3 text-xs font-bold uppercase tracking-wide text-slate-500 xl:grid dark:text-slate-400 dark:border-slate-700"><div>Subject / Reference</div><div>Sender / Received</div><div>Routing / Responsibility</div><div>State</div><div /></div>
 
                     <div className="divide-y divide-slate-100 dark:divide-slate-700">
                         {records.data.map((record) => (
                             <article key={record.publicId} className="px-4 py-4 sm:px-5" aria-label={`${record.reference} correspondence`}>
                                 <div className="grid min-w-0 gap-4 xl:grid-cols-[minmax(0,1.5fr)_minmax(120px,1fr)_minmax(0,1.2fr)_130px_88px] xl:items-center">
-                                    <div className="min-w-0">
-                                        <div className="flex flex-wrap items-center gap-1.5">
-                                            <span className="text-xs font-bold text-blue-700 sm:text-xs">{record.reference}</span>
-                                            {record.workflowReference ? <span className="border-l border-slate-300 pl-1.5 text-xs text-slate-500 dark:text-slate-400 dark:border-slate-700">Route {record.workflowReference}</span> : null}
-                                        </div>
-                                        <h2 className="mt-1 text-[13px] font-semibold leading-5 text-slate-950 sm:text-sm dark:text-slate-100">{record.subject}</h2>
-                                        {record.classification ? <div className="mt-1.5 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{humanize(record.classification)}</div> : null}
-                                    </div>
-
-                                    <div className="min-w-0">
-                                        <div className="text-xs font-bold uppercase tracking-wide text-slate-400 xl:hidden dark:text-slate-400">Sender and receipt</div>
-                                        <div className="mt-1 text-xs font-semibold leading-4 text-slate-800 sm:text-xs dark:text-slate-100">{record.sender.name}</div>
-                                        <div className="mt-0.5 text-xs leading-4 text-slate-500 dark:text-slate-400">{record.sender.organization || humanize(record.sender.source)}{record.sender.channel ? ` · ${humanize(record.sender.channel)}` : ''}</div>
-                                        <div className="mt-1.5 flex items-start gap-1.5 text-xs leading-4 text-slate-500 dark:text-slate-400">
-                                            <Clock3 size={11} className="mt-0.5 shrink-0" aria-hidden="true" />
-                                            <span>{formatDate(record.receivedAt)} · {record.age} ago</span>
-                                        </div>
-                                    </div>
-
-                                    <div className="border-l-2 border-slate-200 bg-slate-50 px-3 py-2.5 dark:bg-slate-900/40 dark:border-slate-700">
-                                        <div className="text-xs font-bold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-400">Current responsibility</div>
-                                        <div className="mt-1 flex items-start gap-1.5 text-xs font-semibold leading-4 text-slate-800 sm:text-xs dark:text-slate-100">
-                                            <Building2 size={12} className="mt-0.5 shrink-0 text-slate-400 dark:text-slate-400" aria-hidden="true" />
-                                            <span>{record.currentOffice?.shortName || record.currentOffice?.name || 'Unregistered intake'}</span>
-                                        </div>
-                                        <div className="mt-1.5 flex items-start gap-1.5 text-xs leading-4 text-slate-600 sm:text-xs dark:text-slate-300">
-                                            <UserRound size={11} className="mt-0.5 shrink-0 text-slate-400 dark:text-slate-400" aria-hidden="true" />
-                                            <span>{record.assignedEmployee?.name || 'Unassigned'}{record.assignedEmployee?.position ? ` · ${record.assignedEmployee.position}` : ''}</span>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <div className="text-xs font-bold uppercase tracking-wide text-slate-400 xl:hidden dark:text-slate-400">State</div>
-                                        <div className="mt-1 flex flex-wrap gap-1.5">
-                                            <span className="border border-slate-200 bg-slate-50 px-2 py-1 text-xs font-bold uppercase text-slate-700 sm:text-xs dark:bg-slate-900/40 dark:text-slate-300 dark:border-slate-700">{humanize(record.lifecycleState)}</span>
-                                            {record.actionRequired ? <span className="border border-amber-200 bg-amber-50 px-2 py-1 text-xs font-bold uppercase text-amber-800 sm:text-xs">Action required</span> : <span className="border border-slate-200 bg-white px-2 py-1 text-xs font-semibold uppercase text-slate-500 sm:text-xs dark:bg-[#142236] dark:text-slate-400 dark:border-slate-700">For information</span>}
-                                            {record.overdue ? <span className="inline-flex items-center gap-1 border border-rose-200 bg-rose-50 px-2 py-1 text-xs font-bold uppercase text-rose-800 sm:text-xs"><AlertTriangle size={10} aria-hidden="true" /> Overdue</span> : null}
-                                        </div>
-                                    </div>
-
-                                    <Link
-                                        href={`/correspondence/${record.publicId}/workspace`}
-                                        className="inline-flex min-h-10 items-center justify-center gap-1.5 border border-slate-300 bg-white px-3 py-2 text-xs font-bold text-blue-800 transition hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-700 focus-visible:ring-offset-2 sm:text-xs dark:bg-[#142236] dark:border-slate-700"
-                                        aria-label={`Open correspondence ${record.reference}`}
-                                    >
-                                        Open <ArrowRight size={13} aria-hidden="true" />
-                                    </Link>
+                                    <div className="min-w-0"><div className="flex flex-wrap items-center gap-1.5"><span className="text-xs font-bold text-blue-700 sm:text-xs">{record.reference}</span>{record.workflowReference ? <span className="border-l border-slate-300 pl-1.5 text-xs text-slate-500 dark:text-slate-400 dark:border-slate-700">Route {record.workflowReference}</span> : null}</div><h2 className="mt-1 text-[13px] font-semibold leading-5 text-slate-950 sm:text-sm dark:text-slate-100">{record.subject}</h2>{record.classification ? <div className="mt-1.5 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{humanize(record.classification)}</div> : null}</div>
+                                    <div className="min-w-0"><div className="text-xs font-bold uppercase tracking-wide text-slate-400 xl:hidden dark:text-slate-400">Sender and receipt</div><div className="mt-1 text-xs font-semibold leading-4 text-slate-800 sm:text-xs dark:text-slate-100">{record.sender.name}</div><div className="mt-0.5 text-xs leading-4 text-slate-500 dark:text-slate-400">{record.sender.organization || humanize(record.sender.source)}{record.sender.channel ? ` · ${humanize(record.sender.channel)}` : ''}</div><div className="mt-1.5 flex items-start gap-1.5 text-xs leading-4 text-slate-500 dark:text-slate-400"><Clock3 size={11} className="mt-0.5 shrink-0" aria-hidden="true" /><span>{formatDate(record.receivedAt)} · {record.age} ago</span></div></div>
+                                    <div className="border-l-2 border-slate-200 bg-slate-50 px-3 py-2.5 dark:bg-slate-900/40 dark:border-slate-700"><div className="text-xs font-bold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-400">Current responsibility</div><div className="mt-1 flex items-start gap-1.5 text-xs font-semibold leading-4 text-slate-800 sm:text-xs dark:text-slate-100"><Building2 size={12} className="mt-0.5 shrink-0 text-slate-400 dark:text-slate-400" aria-hidden="true" /><span>{record.currentOffice?.shortName || record.currentOffice?.name || 'Unregistered intake'}</span></div><div className="mt-1.5 flex items-start gap-1.5 text-xs leading-4 text-slate-600 sm:text-xs dark:text-slate-300"><UserRound size={11} className="mt-0.5 shrink-0 text-slate-400 dark:text-slate-400" aria-hidden="true" /><span>{record.assignedEmployee?.name || 'Unassigned'}{record.assignedEmployee?.position ? ` · ${record.assignedEmployee.position}` : ''}</span></div></div>
+                                    <div><div className="text-xs font-bold uppercase tracking-wide text-slate-400 xl:hidden dark:text-slate-400">State</div><div className="mt-1 flex flex-wrap gap-1.5"><span className="border border-slate-200 bg-slate-50 px-2 py-1 text-xs font-bold uppercase text-slate-700 sm:text-xs dark:bg-slate-900/40 dark:text-slate-300 dark:border-slate-700">{humanize(record.lifecycleState)}</span>{record.actionRequired ? <span className="border border-amber-200 bg-amber-50 px-2 py-1 text-xs font-bold uppercase text-amber-800 sm:text-xs">Action required</span> : <span className="border border-slate-200 bg-white px-2 py-1 text-xs font-semibold uppercase text-slate-500 sm:text-xs dark:bg-[#142236] dark:text-slate-400 dark:border-slate-700">For information</span>}{record.overdue ? <span className="inline-flex items-center gap-1 border border-rose-200 bg-rose-50 px-2 py-1 text-xs font-bold uppercase text-rose-800 sm:text-xs"><AlertTriangle size={10} aria-hidden="true" /> Overdue</span> : null}</div></div>
+                                    <Link href={withReturnContext(`/correspondence/${record.publicId}/workspace`, url, '/correspondence')} className="inline-flex min-h-10 items-center justify-center gap-1.5 border border-slate-300 bg-white px-3 py-2 text-xs font-bold text-blue-800 transition hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-700 focus-visible:ring-offset-2 sm:text-xs dark:bg-[#142236] dark:border-slate-700" aria-label={`Open correspondence ${record.reference}`}>Open <ArrowRight size={13} aria-hidden="true" /></Link>
                                 </div>
                             </article>
                         ))}
 
-                        {records.data.length === 0 ? (
-                            <div className="px-5 py-12 text-center">
-                                <Inbox className="mx-auto text-slate-300" size={28} aria-hidden="true" />
-                                <div className="mt-3 text-sm font-semibold text-slate-700 dark:text-slate-300">No correspondence matches this authorized view.</div>
-                                <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">Try changing the filters or search terms.</div>
-                            </div>
-                        ) : null}
+                        {records.data.length === 0 ? <div className="px-5 py-12 text-center"><Inbox className="mx-auto text-slate-300" size={28} aria-hidden="true" /><div className="mt-3 text-sm font-semibold text-slate-700 dark:text-slate-300">No correspondence matches this authorized view.</div><div className="mt-1 text-xs text-slate-500 dark:text-slate-400">Try changing the filters or search terms.</div></div> : null}
                     </div>
                 </section>
 
-                {records.last_page > 1 ? (
-                    <div className="flex flex-col gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-xs text-slate-600 sm:flex-row sm:items-center sm:justify-between sm:text-xs dark:bg-[#142236] dark:text-slate-300 dark:border-slate-700">
-                        <div>Showing {records.from ?? 0}–{records.to ?? 0} of {records.total} authorized records · page {records.current_page} of {records.last_page}</div>
-                        <div className="flex gap-2">
-                            <button type="button" disabled={!records.prev_page_url} onClick={() => records.prev_page_url && router.visit(records.prev_page_url, { preserveScroll: true })} className="min-h-9 border border-slate-300 bg-white px-3 py-1.5 font-semibold text-slate-700 disabled:opacity-40 dark:bg-[#142236] dark:text-slate-300 dark:border-slate-700">Previous</button>
-                            <button type="button" disabled={!records.next_page_url} onClick={() => records.next_page_url && router.visit(records.next_page_url, { preserveScroll: true })} className="min-h-9 border border-slate-300 bg-white px-3 py-1.5 font-semibold text-slate-700 disabled:opacity-40 dark:bg-[#142236] dark:text-slate-300 dark:border-slate-700">Next</button>
-                        </div>
-                    </div>
-                ) : null}
+                {records.last_page > 1 ? <div className="flex flex-col gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-xs text-slate-600 sm:flex-row sm:items-center sm:justify-between sm:text-xs dark:bg-[#142236] dark:text-slate-300 dark:border-slate-700"><div>Showing {records.from ?? 0}–{records.to ?? 0} of {records.total} authorized records · page {records.current_page} of {records.last_page}</div><div className="flex gap-2"><button type="button" disabled={!records.prev_page_url} onClick={() => records.prev_page_url && router.visit(records.prev_page_url, { preserveScroll: true })} className="min-h-9 border border-slate-300 bg-white px-3 py-1.5 font-semibold text-slate-700 disabled:opacity-40 dark:bg-[#142236] dark:text-slate-300 dark:border-slate-700">Previous</button><button type="button" disabled={!records.next_page_url} onClick={() => records.next_page_url && router.visit(records.next_page_url, { preserveScroll: true })} className="min-h-9 border border-slate-300 bg-white px-3 py-1.5 font-semibold text-slate-700 disabled:opacity-40 dark:bg-[#142236] dark:text-slate-300 dark:border-slate-700">Next</button></div></div> : null}
             </PageFrame>
         </AppLayout>
     );
