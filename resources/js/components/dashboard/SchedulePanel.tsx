@@ -21,8 +21,9 @@ const urgencyClass = {
 export default function SchedulePanel({ meetings, deadlines }: { meetings: DashboardMeeting[]; deadlines: DashboardDeadline[] }) {
     const orderedMeetings = [...meetings].sort((a, b) => Date.parse(a.startsAt) - Date.parse(b.startsAt));
 
-    return <section className="municipal-panel overflow-hidden" aria-label="Upcoming meetings and deadlines">
+    return <section className="municipal-panel overflow-hidden" aria-labelledby="dashboard-schedule">
         <DashboardSectionHeader
+            headingId="dashboard-schedule"
             icon={<CalendarDays size={16} className="text-amber-700 dark:text-amber-300" aria-hidden="true" />}
             title="Upcoming meetings and deadlines"
             description="Future schedule items that require preparation or delivery."
