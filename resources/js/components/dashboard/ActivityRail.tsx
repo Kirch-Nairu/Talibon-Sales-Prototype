@@ -9,6 +9,7 @@ export default function ActivityRail() {
 
     return <section className="municipal-panel min-w-0 overflow-hidden" aria-labelledby="dashboard-notifications">
         <DashboardSectionHeader
+            headingId="dashboard-notifications"
             icon={<Bell size={16} className="text-blue-700 dark:text-blue-300" aria-hidden="true" />}
             title="Notifications"
             description="Current portal notices associated with the signed-in account."
