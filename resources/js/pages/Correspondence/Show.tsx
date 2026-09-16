@@ -1,8 +1,9 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { ArrowLeft, Building2, CalendarClock, FileText, GitBranch, UserRound } from 'lucide-react';
 import CorrespondenceActionPanel, { type CorrespondenceCapabilities, type CorrespondenceRouteOption } from '../../components/correspondence/CorrespondenceActionPanel';
 import EvidenceList, { type EvidenceItem, type EvidencePayload } from '../../components/documents/EvidenceList';
 import AppLayout from '../../layouts/AppLayout';
+import { returnTargetFromDetailUrl } from '../../navigation/returnContext';
 
 type Office = { code: string; name: string; shortName?: string | null };
 type Employee = { employeeNumber: string; name: string; position?: string | null };
@@ -96,6 +97,8 @@ function DetailRow({ label, value }: { label: string; value?: string | null }) {
 }
 
 export default function CorrespondenceShow({ correspondence, timeline, capabilities, routeOptions, evidence }: Props) {
+    const { url } = usePage();
+    const returnTarget = returnTargetFromDetailUrl(url, '/correspondence');
     const workflow = correspondence.accountability.workflow;
     const currentOffice = correspondence.accountability.currentOffice;
     const receivingOffice = correspondence.accountability.receivingOffice;
@@ -103,7 +106,7 @@ export default function CorrespondenceShow({ correspondence, timeline, capabilit
     return (
         <AppLayout title={`Correspondence · ${correspondence.reference}`}>
             <div className="mx-auto max-w-6xl space-y-4 sm:space-y-6">
-                <Link href="/correspondence" className="inline-flex items-center gap-2 text-[11px] font-semibold text-blue-700 hover:text-blue-900 sm:text-xs">
+                <Link href={returnTarget} className="inline-flex items-center gap-2 text-[11px] font-semibold text-blue-700 hover:text-blue-900 sm:text-xs">
                     <ArrowLeft size={15} /> Back to Correspondence Inbox
                 </Link>
 
