@@ -1,9 +1,10 @@
-import { Link, router } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { ArrowRight, CalendarDays, FileCheck2, MapPin, Plus, Search, Users, X } from 'lucide-react';
 import { type FormEvent, useEffect, useState } from 'react';
 import ProgressiveFilterBar from '../../components/filters/ProgressiveFilterBar';
 import PageHeader from '../../components/PageHeader';
 import AppLayout from '../../layouts/AppLayout';
+import { withReturnContext } from '../../navigation/returnContext';
 
 type Office = { id?: number; code: string; name: string; shortName?: string | null };
 type Option = { value: string; label: string };
@@ -43,6 +44,7 @@ const humanize = (value: string) => value.replaceAll('_', ' ').replace(/\b\w/g, 
 const officeLabel = (office?: Office | null) => office?.shortName || office?.name || 'Office not recorded';
 
 export default function Index({ travelOrders, filters, filterOptions, canRecordApproved }: Props) {
+    const { url } = usePage();
     const [search, setSearch] = useState(filters.search);
     const [status, setStatus] = useState(filters.status);
     const [officeId, setOfficeId] = useState(filters.office_id ? String(filters.office_id) : '');
@@ -83,6 +85,8 @@ export default function Index({ travelOrders, filters, filterOptions, canRecordA
         dateFrom ? `From: ${dateFrom}` : '',
         dateTo ? `To: ${dateTo}` : '',
     ].filter(Boolean);
+
+    const detailHref = (order: TravelOrderRow) => withReturnContext(order.detailUrl, url, '/travel-orders');
 
     return (
         <AppLayout title="Approved Travel Orders">
@@ -128,7 +132,7 @@ export default function Index({ travelOrders, filters, filterOptions, canRecordA
                     />
                 </form>
 
-                <section aria-label="Approved travel order registry" className="overflow-hidden rounded-xl border border-slate-200 bg-white text-slate-900  dark:bg-[#142236] dark:text-slate-100 dark:border-slate-700">
+                <section aria-label="Approved travel order registry" className="overflow-hidden rounded-xl border border-slate-200 bg-white text-slate-900 dark:bg-[#142236] dark:text-slate-100 dark:border-slate-700">
                     <div className="flex flex-col gap-1 border-b border-slate-100 bg-slate-50 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-5 dark:bg-slate-900/40 dark:border-slate-700">
                         <div className="flex items-center gap-2 text-[13px] font-bold text-slate-800 sm:text-sm dark:text-slate-100"><FileCheck2 size={15} /> Approved-order registry</div>
                         <div className="text-xs text-slate-500 sm:text-xs dark:text-slate-400">{travelOrders.total === 0 ? 'No matching orders' : `Showing ${travelOrders.from || 1}–${travelOrders.to || travelOrders.data.length} of ${travelOrders.total}`}</div>
@@ -139,7 +143,7 @@ export default function Index({ travelOrders, filters, filterOptions, canRecordA
                                 <div className="grid gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(460px,1fr)_auto] lg:items-start">
                                     <div className="min-w-0">
                                         <div className="flex flex-wrap items-center gap-2">
-                                            <Link href={order.detailUrl} className="text-xs font-bold uppercase tracking-[0.08em] text-blue-700 hover:underline sm:text-xs">{order.referenceNumber}</Link>
+                                            <Link href={detailHref(order)} className="text-xs font-bold uppercase tracking-[0.08em] text-blue-700 hover:underline sm:text-xs">{order.referenceNumber}</Link>
                                             <span className="rounded-full border border-slate-200 bg-slate-50 px-2 py-1 text-xs font-bold uppercase tracking-wide text-slate-600 sm:text-xs dark:bg-slate-900/40 dark:text-slate-300 dark:border-slate-700">{humanize(order.status)}</span>
                                         </div>
                                         <h2 className="mt-1.5 break-words text-[13px] font-semibold leading-5 text-slate-950 sm:text-sm dark:text-slate-100">{order.purpose}</h2>
@@ -147,27 +151,13 @@ export default function Index({ travelOrders, filters, filterOptions, canRecordA
                                     </div>
 
                                     <dl className="grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
-                                        <div className="min-w-0">
-                                            <dt className="text-xs font-bold uppercase tracking-[0.12em] text-slate-400 sm:text-xs dark:text-slate-400">Travel period</dt>
-                                            <dd className="mt-1 flex items-start gap-1.5 break-words text-xs font-semibold text-slate-700 sm:text-xs dark:text-slate-300"><CalendarDays size={12} className="mt-0.5 shrink-0 text-slate-400 dark:text-slate-400" />{order.travelStartDate} — {order.travelEndDate}</dd>
-                                        </div>
-                                        <div className="min-w-0">
-                                            <dt className="text-xs font-bold uppercase tracking-[0.12em] text-slate-400 sm:text-xs dark:text-slate-400">Responsible office</dt>
-                                            <dd className="mt-1 break-words text-xs font-semibold text-slate-700 sm:text-xs dark:text-slate-300">{officeLabel(order.office)}</dd>
-                                        </div>
-                                        <div className="min-w-0">
-                                            <dt className="text-xs font-bold uppercase tracking-[0.12em] text-slate-400 sm:text-xs dark:text-slate-400">Personnel issued</dt>
-                                            <dd className="mt-1 flex items-center gap-1.5 text-xs font-semibold text-slate-700 sm:text-xs dark:text-slate-300"><Users size={12} className="shrink-0 text-slate-400 dark:text-slate-400" />{order.issuedToCount} {order.issuedToCount === 1 ? 'person' : 'personnel'}</dd>
-                                        </div>
-                                        <div className="min-w-0">
-                                            <dt className="text-xs font-bold uppercase tracking-[0.12em] text-slate-400 sm:text-xs dark:text-slate-400">Issued</dt>
-                                            <dd className="mt-1 text-xs font-semibold text-slate-700 sm:text-xs dark:text-slate-300">{order.issuanceDate}</dd>
-                                        </div>
+                                        <div className="min-w-0"><dt className="text-xs font-bold uppercase tracking-[0.12em] text-slate-400 sm:text-xs dark:text-slate-400">Travel period</dt><dd className="mt-1 flex items-start gap-1.5 break-words text-xs font-semibold text-slate-700 sm:text-xs dark:text-slate-300"><CalendarDays size={12} className="mt-0.5 shrink-0 text-slate-400 dark:text-slate-400" />{order.travelStartDate} — {order.travelEndDate}</dd></div>
+                                        <div className="min-w-0"><dt className="text-xs font-bold uppercase tracking-[0.12em] text-slate-400 sm:text-xs dark:text-slate-400">Responsible office</dt><dd className="mt-1 break-words text-xs font-semibold text-slate-700 sm:text-xs dark:text-slate-300">{officeLabel(order.office)}</dd></div>
+                                        <div className="min-w-0"><dt className="text-xs font-bold uppercase tracking-[0.12em] text-slate-400 sm:text-xs dark:text-slate-400">Personnel issued</dt><dd className="mt-1 flex items-center gap-1.5 text-xs font-semibold text-slate-700 sm:text-xs dark:text-slate-300"><Users size={12} className="shrink-0 text-slate-400 dark:text-slate-400" />{order.issuedToCount} {order.issuedToCount === 1 ? 'person' : 'personnel'}</dd></div>
+                                        <div className="min-w-0"><dt className="text-xs font-bold uppercase tracking-[0.12em] text-slate-400 sm:text-xs dark:text-slate-400">Issued</dt><dd className="mt-1 text-xs font-semibold text-slate-700 sm:text-xs dark:text-slate-300">{order.issuanceDate}</dd></div>
                                     </dl>
 
-                                    <Link href={order.detailUrl} aria-label={`Open travel order ${order.referenceNumber}`} className="inline-flex w-fit items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-bold text-slate-700 hover:bg-slate-50 sm:text-xs lg:justify-self-end dark:bg-[#142236] dark:text-slate-300 dark:border-slate-700">
-                                        Open order <ArrowRight size={14} />
-                                    </Link>
+                                    <Link href={detailHref(order)} aria-label={`Open travel order ${order.referenceNumber}`} className="inline-flex w-fit items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-bold text-slate-700 hover:bg-slate-50 sm:text-xs lg:justify-self-end dark:bg-[#142236] dark:text-slate-300 dark:border-slate-700">Open order <ArrowRight size={14} /></Link>
                                 </div>
                             </article>
                         ))}
