@@ -13,6 +13,7 @@ import type { LiveNotification, NotificationFeed, SharedProps } from '../types';
 type Props = PropsWithChildren<{ title: string }>;
 
 const SIDEBAR_COLLAPSED_STORAGE_KEY = 'talibon.sidebar.collapsed';
+const HRIS_DARK_PARITY_CLASSES = 'dark:[&_.bg-white]:bg-[#142236] dark:[&_.bg-slate-50]:bg-slate-900/50 dark:[&_.bg-slate-100]:bg-slate-800 dark:[&_.border-slate-100]:border-slate-700 dark:[&_.border-slate-200]:border-slate-700 dark:[&_.border-slate-300]:border-slate-600 dark:[&_.divide-slate-100]:divide-slate-700 dark:[&_.text-slate-950]:text-slate-100 dark:[&_.text-slate-900]:text-slate-100 dark:[&_.text-slate-800]:text-slate-200 dark:[&_.text-slate-700]:text-slate-300 dark:[&_.text-slate-600]:text-slate-300 dark:[&_.text-slate-500]:text-slate-400 dark:[&_.text-blue-900]:text-blue-300 dark:[&_.text-blue-800]:text-blue-300 dark:[&_.bg-blue-50]:bg-blue-950/40 dark:[&_.border-blue-100]:border-blue-900 dark:[&_.border-blue-200]:border-blue-900 dark:[&_.bg-emerald-50]:bg-emerald-950/40 dark:[&_.text-emerald-800]:text-emerald-300 dark:[&_.bg-rose-50]:bg-rose-950/40 dark:[&_.text-rose-700]:text-rose-300 dark:[&_.bg-amber-50]:bg-amber-950/35 dark:[&_.border-amber-200]:border-amber-900 dark:[&_.text-amber-950]:text-amber-200';
 
 function relativeTime(value?: string | null): string {
     if (!value) return '';
@@ -55,6 +56,7 @@ export default function AppLayout({ title, children }: Props) {
     const navigation = pageProps.permissions.navigation;
     const canViewReports = pageProps.permissions.reports && navigation.reports;
     const navigationGroups = buildPortalNavigation(pageProps.workspaceExperience, navigation, canViewReports);
+    const hrisPresentation = page.url === '/hris' || page.url.startsWith('/hris/');
 
     useEffect(() => {
         try { setDesktopCollapsed(window.localStorage.getItem(SIDEBAR_COLLAPSED_STORAGE_KEY) === 'true'); }
@@ -171,7 +173,7 @@ export default function AppLayout({ title, children }: Props) {
                     <div className="2xl:grid 2xl:grid-cols-[minmax(0,1fr)_288px]">
                         <div className="min-w-0">
                             {(flash?.success || flash?.error) && <div className={`mx-3 mt-3 rounded-xl border px-3 py-2.5 text-[12px] font-semibold sm:mx-4 sm:px-4 sm:text-sm md:mx-5 ${flash.success ? 'border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-200' : 'border-rose-200 bg-rose-50 text-rose-800 dark:border-rose-900 dark:bg-rose-950/40 dark:text-rose-200'}`}>{flash.success || flash.error}</div>}
-                            <div id="portal-content" tabIndex={-1} className="p-4 sm:p-5"><NotificationContext.Provider value={notifications}>{children}</NotificationContext.Provider></div>
+                            <div id="portal-content" tabIndex={-1} className={`p-4 sm:p-5 ${hrisPresentation ? HRIS_DARK_PARITY_CLASSES : ''}`}><NotificationContext.Provider value={notifications}>{children}</NotificationContext.Provider></div>
                             <footer className="mx-3 flex flex-wrap justify-between gap-2 border-t border-slate-200 py-3 text-xs text-slate-500 dark:border-slate-700 dark:text-slate-400 sm:mx-4"><span>Municipality of Talibon · Province of Bohol</span><span>One Talibon · Intra-Office Portal</span></footer>
                         </div>
                         <MunicipalUtilityRail />
