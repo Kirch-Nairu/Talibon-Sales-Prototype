@@ -53,7 +53,7 @@ Concurrency may be reduced whenever ownership or dependency evidence makes paral
 | --- | --- | --- | --- | --- | --- |
 | G0 | Recon → Reviewer → correction-baseline Acceptance | CLOSED | — | `0913a37f...` | ACCEPT WITH RECORDED LIMITATION |
 | N0 | Forge Nest materialization + pre-Nest decision closure | CLOSED | G0 | `9df14d2dc09022e7f9f569163db402fd622ea8b4` | remote materialization verified |
-| P0 | GitHub Actions + parallel-writer preparation | ACTIVE | N0 | current integration HEAD | pending remote workflow observation |
+| P0 | GitHub Actions + parallel-writer preparation | CLOSED | N0 | prepared integration authority; read exact HEAD from Git | workflow installed; result not yet claimed |
 | W1 | Shell Compaction & Density Foundation | READY TO ISSUE | N0 + P0 | `KIRCH-TALIBON-UIUX-W01-SHELL-DENSITY` | — |
 | W2 | Dashboard Hierarchy | READY TO ISSUE | N0 + P0 | `KIRCH-TALIBON-UIUX-W02-DASHBOARD-HIERARCHY` | — |
 | W3 | Context-Preserving Review Workflows | NOT ISSUED | W1 | — | — |
@@ -120,4 +120,4 @@ Execution-layer evidence remains open and must be collected from writer environm
 
 ## Next authorized Maintainer action
 
-Finalize P0, persist W1/W2 handoffs, create both writer branches from one exact prepared SHA, verify remote branch heads, and issue the two Code Writer sessions in parallel.
+Create W1 and W2 from one exact observed `KIRCH-TALIBON-V1-UIUX-CORRECTION` HEAD, verify both remote branch heads, persist branch-local handoffs, and issue the two Code Writer sessions in parallel.
