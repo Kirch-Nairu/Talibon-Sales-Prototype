@@ -36,7 +36,7 @@ export default function Index() {
             <PPAFilters filters={filters} onChange={(next) => { setFilters(next); setSelected(null); }} />
             <div className="grid min-w-0 gap-4 2xl:grid-cols-[minmax(0,1fr)_360px]">
                 <PPARegister records={records} selectedId={selected?.id} onSelect={setSelected} />
-                <PPADetailPanel record={selected} onClose={() => setSelected(null)} />
+                <div className="hidden min-w-0 2xl:block"><PPADetailPanel record={selected} onClose={() => setSelected(null)} /></div>
             </div>
         </PageFrame>
     </AppLayout>;
