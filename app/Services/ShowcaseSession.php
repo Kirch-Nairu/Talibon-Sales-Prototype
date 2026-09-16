@@ -98,8 +98,6 @@ final class ShowcaseSession
             'position' => (string) ($persona['position'] ?? ''),
             'office' => (string) ($persona['office'] ?? ''),
             'description' => (string) ($persona['description'] ?? ''),
-            'category' => (string) ($persona['category'] ?? ''),
-            'experience' => (string) ($persona['experience'] ?? ''),
         ];
     }
 }
