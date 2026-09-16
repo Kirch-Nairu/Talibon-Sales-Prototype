@@ -11,6 +11,7 @@ import {
     dashboardProjectAttention,
     dashboardUpcomingDeadlines,
 } from '../components/dashboard/dashboardSelectors';
+import ExecutiveHistory from '../components/dashboard/ExecutiveHistory';
 import ExecutiveOverview from '../components/dashboard/ExecutiveOverview';
 import MetricGroup from '../components/dashboard/MetricGroup';
 import MunicipalUpdates from '../components/dashboard/MunicipalUpdates';
@@ -131,6 +132,8 @@ export default function Dashboard({
                         <RecentDocuments documents={municipal.documents} />
                         <RecentCorrespondence overview={correspondenceOverview} supplemental={supplementalCorrespondence} />
                     </div>
+
+                    {experience.key === 'executive_oversight' && executiveOverview ? <ExecutiveHistory overview={executiveOverview} /> : null}
 
                     {announcements}
 
