@@ -26,18 +26,21 @@ function messagePreview() {
     return [...municipalMessages].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 2);
 }
 
-export function MunicipalUtilityContent() {
+export function MunicipalUtilityContent({ idPrefix }: { idPrefix: string }) {
     const calendar = calendarPreview();
     const announcements = announcementPreview();
     const messages = messagePreview();
+    const calendarTitleId = `${idPrefix}-calendar-title`;
+    const announcementsTitleId = `${idPrefix}-announcements-title`;
+    const messagesTitleId = `${idPrefix}-messages-title`;
 
     return (
         <div className="space-y-5">
-            <section aria-labelledby="utility-calendar-title">
+            <section aria-labelledby={calendarTitleId}>
                 <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2">
                         <CalendarDays size={16} className="text-blue-700 dark:text-blue-300" aria-hidden="true" />
-                        <h2 id="utility-calendar-title" className="text-xs font-bold uppercase tracking-wide text-slate-700 dark:text-slate-200">Calendar</h2>
+                        <h2 id={calendarTitleId} className="text-xs font-bold uppercase tracking-wide text-slate-700 dark:text-slate-200">Calendar</h2>
                     </div>
                     <Link href="/calendar" className="text-xs font-semibold text-blue-700 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-700/30 dark:text-blue-300">Open</Link>
                 </div>
@@ -52,11 +55,11 @@ export function MunicipalUtilityContent() {
                 </div>
             </section>
 
-            <section aria-labelledby="utility-announcements-title">
+            <section aria-labelledby={announcementsTitleId}>
                 <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2">
                         <Megaphone size={16} className="text-blue-700 dark:text-blue-300" aria-hidden="true" />
-                        <h2 id="utility-announcements-title" className="text-xs font-bold uppercase tracking-wide text-slate-700 dark:text-slate-200">Announcements</h2>
+                        <h2 id={announcementsTitleId} className="text-xs font-bold uppercase tracking-wide text-slate-700 dark:text-slate-200">Announcements</h2>
                     </div>
                     <Link href="/announcements" className="text-xs font-semibold text-blue-700 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-700/30 dark:text-blue-300">Open</Link>
                 </div>
@@ -73,11 +76,11 @@ export function MunicipalUtilityContent() {
                 </div>
             </section>
 
-            <section aria-labelledby="utility-messages-title">
+            <section aria-labelledby={messagesTitleId}>
                 <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2">
                         <MessageSquareText size={16} className="text-blue-700 dark:text-blue-300" aria-hidden="true" />
-                        <h2 id="utility-messages-title" className="text-xs font-bold uppercase tracking-wide text-slate-700 dark:text-slate-200">Recent coordination</h2>
+                        <h2 id={messagesTitleId} className="text-xs font-bold uppercase tracking-wide text-slate-700 dark:text-slate-200">Recent coordination</h2>
                     </div>
                     <Link href="/messages" className="text-xs font-semibold text-blue-700 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-700/30 dark:text-blue-300">Open Messages</Link>
                 </div>
@@ -110,7 +113,7 @@ export function MunicipalUtilityRail() {
                         <div className="text-[11px] text-slate-500 dark:text-slate-400">At-a-glance operating context</div>
                     </div>
                 </div>
-                <MunicipalUtilityContent />
+                <MunicipalUtilityContent idPrefix="utility-rail" />
             </div>
         </aside>
     );
@@ -119,18 +122,46 @@ export function MunicipalUtilityRail() {
 export function MunicipalUtilityDrawer({ onClose }: { onClose: () => void }) {
     const dialog = useRef<HTMLDialogElement>(null);
     const closeButton = useRef<HTMLButtonElement>(null);
+    const onCloseRef = useRef(onClose);
+
+    useEffect(() => {
+        onCloseRef.current = onClose;
+    }, [onClose]);
 
     useEffect(() => {
         const element = dialog.current;
         const previousFocus = document.activeElement as HTMLElement | null;
         const previousOverflow = document.body.style.overflow;
+        const wideViewport = window.matchMedia('(min-width: 1536px)');
+        let crossedIntoWide = false;
+
+        const closeAtWideBreakpoint = (event: MediaQueryListEvent) => {
+            if (!event.matches) return;
+            crossedIntoWide = true;
+            onCloseRef.current();
+        };
+
+        if (wideViewport.matches) {
+            onCloseRef.current();
+            return;
+        }
+
         element?.showModal();
         closeButton.current?.focus();
         document.body.style.overflow = 'hidden';
+        wideViewport.addEventListener('change', closeAtWideBreakpoint);
+
         return () => {
+            wideViewport.removeEventListener('change', closeAtWideBreakpoint);
             element?.close();
             document.body.style.overflow = previousOverflow;
-            previousFocus?.focus();
+
+            if (crossedIntoWide) {
+                document.getElementById('portal-content')?.focus({ preventScroll: true });
+                return;
+            }
+
+            previousFocus?.focus({ preventScroll: true });
         };
     }, []);
 
@@ -143,19 +174,19 @@ export function MunicipalUtilityDrawer({ onClose }: { onClose: () => void }) {
             ref={dialog}
             onCancel={(event) => { event.preventDefault(); onClose(); }}
             onClick={closeFromBackdrop}
-            aria-labelledby="municipal-utilities-title"
+            aria-labelledby="municipal-utilities-drawer-title"
             aria-modal="true"
-            className="fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none border-0 bg-transparent p-0 text-slate-900 backdrop:bg-slate-950/55 dark:text-slate-100 2xl:hidden"
+            className="fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none border-0 bg-transparent p-0 text-slate-900 backdrop:bg-slate-950/55 dark:text-slate-100"
         >
             <section className="ml-auto flex h-full w-[min(92vw,360px)] flex-col border-l border-slate-200 bg-slate-50 shadow-2xl dark:border-slate-700 dark:bg-[#101b2a]">
                 <div className="flex items-center justify-between gap-3 border-b border-slate-200 px-4 py-3 dark:border-slate-700">
                     <div>
-                        <h2 id="municipal-utilities-title" className="text-sm font-bold text-slate-950 dark:text-slate-100">Municipal utilities</h2>
+                        <h2 id="municipal-utilities-drawer-title" className="text-sm font-bold text-slate-950 dark:text-slate-100">Municipal utilities</h2>
                         <div className="text-xs text-slate-500 dark:text-slate-400">Calendar, notices, and coordination</div>
                     </div>
                     <button ref={closeButton} type="button" onClick={onClose} className="flex h-11 w-11 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-700/30 dark:text-slate-300 dark:hover:bg-slate-800" aria-label="Close municipal utilities"><X size={18} /></button>
                 </div>
-                <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-4"><MunicipalUtilityContent /></div>
+                <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-4"><MunicipalUtilityContent idPrefix="utility-drawer" /></div>
             </section>
         </dialog>
     );
