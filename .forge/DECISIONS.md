@@ -85,3 +85,23 @@ Normalize 403/status visual treatment, dark mode, recovery wording, and implemen
 STATUS: ACCEPTED
 
 Final acceptance must cover representative Executive, Engineering Department Head, Budget Department Head, Employee, HR, Legislative, and System Administration experiences across desktop/laptop/mobile, with accessibility and task-semantic checks rather than root overflow alone.
+
+## UXD-015 — Parallel W1/W2 execution
+
+STATUS: ACCEPTED
+
+W1 Shell Compaction & Density Foundation and W2 Dashboard Hierarchy may execute in parallel from one exact prepared integration SHA because their ownership blocks are explicitly isolated.
+
+W1 may change shared shell/layout/page-density primitives but must not edit dashboard implementation or dashboard role-presentation files.
+
+W2 may reorganize dashboard implementation and role-presentation logic but must not edit shared shell/layout/page-density primitives.
+
+Any discovered need to cross those boundaries is a stop condition and returns to Maintainer authority.
+
+## UXD-016 — High-granularity commit mode
+
+STATUS: ACCEPTED
+
+Forge writers should maximize **meaningful atomic commits** by committing each independently reviewable improvement separately rather than batching unrelated work.
+
+Commit count is not an acceptance criterion. Empty commits, revert-for-count commits, whitespace-only padding, artificial split/rejoin sequences, and knowingly broken intermediate commits created only to increase contribution count remain prohibited.
