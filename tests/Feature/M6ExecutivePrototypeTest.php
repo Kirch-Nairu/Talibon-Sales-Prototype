@@ -76,14 +76,14 @@ class M6ExecutivePrototypeTest extends TestCase
         ]);
     }
 
-    public function test_executive_surfaces_are_not_available_to_engineering_account(): void
+    public function test_project_monitoring_is_available_to_department_head_and_executive_accounts(): void
     {
         $this->seed();
 
         $engineering = User::query()->where('email', 'engineering@talibon.demo')->firstOrFail();
         $mayor = User::query()->where('email', 'mayor@talibon.demo')->firstOrFail();
 
-        $this->actingAs($engineering)->get('/operations')->assertForbidden();
+        $this->actingAs($engineering)->get('/operations')->assertOk();
         $this->actingAs($engineering)->get('/reports')->assertOk();
 
         $this->actingAs($mayor)->get('/operations')->assertOk();
