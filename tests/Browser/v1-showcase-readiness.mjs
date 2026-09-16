@@ -117,6 +117,15 @@ async function invalidPersonaDenied(page) {
     });
     check('invalid persona denied', status === 422, `status=${status}`);
 }
+async function assertDialogFocusTrap(page) {
+    const dialog = page.getByRole('dialog');
+    const close = page.getByRole('button', { name: 'Close workspace selector', exact: true });
+    await close.focus();
+    await page.keyboard.press('Shift+Tab');
+    check('dialog traps reverse keyboard focus', await dialog.evaluate((node) => node.contains(document.activeElement)));
+    await page.keyboard.press('Tab');
+    check('dialog traps forward keyboard focus', await dialog.evaluate((node) => node.contains(document.activeElement)));
+}
 
 async function gatewayMatrix(browser) {
     checkpoint('persona gateway');
@@ -137,6 +146,7 @@ async function gatewayMatrix(browser) {
     for (const role of ['Municipal Executive', 'Department Head', 'Employee', 'Human Resources', 'Legislative Office', 'System Administration']) {
         check(`persona role visible: ${role}`, await page.getByRole('button', { name: new RegExp(`^${role}`) }).isVisible());
     }
+    await assertDialogFocusTrap(page);
     await page.keyboard.press('Escape');
     check('Escape closes persona selector', await page.getByRole('dialog').count() === 0);
     await invalidPersonaDenied(page);
@@ -238,7 +248,6 @@ async function responsiveMatrix(browser) {
         await screenshot(page, `entry-selector-${target.suffix}.png`);
         await page.keyboard.press('Escape');
         await enterWorkspace(page, 'System Administration');
-        await appearance(page, target.appearance);
         for (const [route, label] of [
             ['/dashboard', 'Dashboard'], ['/operations', 'Project Monitoring'], ['/development-plans', 'Development Plans'],
             ['/calendar', 'Calendar'], ['/messages', 'Messages'], ['/departments', 'Departments'], ['/admin', 'System Administration'],
