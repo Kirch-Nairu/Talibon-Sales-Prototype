@@ -42,13 +42,13 @@ Combined Forge UIUX Validation for this exact application source: run #94, ID `3
 
 ## W03–W08 production sprint override
 
-Execution is compressed to two implementation lanes.
+Execution remains compressed to two implementation lanes.
 
-| Lane | Original waves | Scope | State |
+| Lane | Original waves | Exact candidate | State |
 | --- | --- | --- | --- |
-| A | W03 + W04 | context-preserving review workflows + Planning responsive UX | ACTIVE |
-| B | W05 → W06 + W07 | Calendar/utility rail → read-only Messages quick access + role/HRIS/Admin/Error completion | RECOVERY ISSUED BEFORE FORMAL REVIEW |
-| W08 | cross-product completion / harness / acceptance boundary | combined integrated state only | NOT STARTED |
+| A | W03 + W04 | `f61ea353fc26595e78aba99e6aa9b5ea0293181c` | WRITER RETURN VERIFIED / INDEPENDENT REVIEW ISSUED |
+| B | W05 → W06 + W07 | `af417bab384ad066814ba32145be83c00396ff69` | RECOVERY RETURN VERIFIED / INDEPENDENT REVIEW ISSUED |
+| W08 | cross-product completion / harness / acceptance boundary | none | NOT STARTED |
 
 Detailed two-lane contract:
 
@@ -58,55 +58,94 @@ Durable sprint state:
 
 `.forge/SPRINT_W03_W08.md`
 
-## Lane B recovered remote state
+### Lane A — W03/W04
 
-The Code Writer chat timed out at message-delivery level, but remote Git work survived.
+Branch:
+
+`KIRCH-TALIBON-UIUX-SPRINT-LANE-A-W03-W04`
+
+Exact sprint start:
+
+`5727e5a258ecb358d6caa13b75127bec1c5c6d9d`
+
+Exact final candidate:
+
+`f61ea353fc26595e78aba99e6aa9b5ea0293181c`
+
+Maintainer verification:
+
+- remote HEAD exact: PASS;
+- 12 ahead / 0 behind;
+- merge base exact sprint start;
+- 12 changed files, all within Lane A W03/W04 ownership;
+- no overlap with final Lane B file set.
+
+Exact-final-SHA Forge UIUX Validation run #96, ID `35133625796`: **SUCCESS**, including frontend install/typecheck/build and Laravel feature tests.
+
+Writer evidence:
+
+`.forge/evidence/writer/LANE-A-W03-W04-WRITER-RETURN.md`
+
+Independent Review handoff:
+
+`.forge/handoffs/review/LANE-A-W03-W04-REVIEW.md`
+
+Acceptance: **NOT STARTED**.
+
+Integration: **NOT AUTHORIZED**.
+
+### Lane B — W05/W06/W07
 
 Branch:
 
 `KIRCH-TALIBON-UIUX-SPRINT-LANE-B-W05-W06-W07`
 
-Exact observed head before recovery:
+Exact sprint start:
+
+`5727e5a258ecb358d6caa13b75127bec1c5c6d9d`
+
+Pre-recovery candidate:
 
 `270b1919109d33312e5552694b773c18d5108509`
 
-Lineage from sprint base `5727e5a258ecb358d6caa13b75127bec1c5c6d9d`:
+Final recovered candidate:
 
-- ahead 4;
-- behind 0;
-- merge base equals exact sprint base.
+`af417bab384ad066814ba32145be83c00396ff69`
 
-Observed commits:
+Maintainer verification:
 
-1. `ea4dd4f6fa9a91259873247f35aeee7bd6046e93` — W05 utility rail/calendar;
-2. `4461ffc0fe01de7f288ae308ce6382eac3eb5a5a` — W06 read-only Messages utility;
-3. `6d9ac1f727b30ecb1c353df499929cb8d1a2ec85` — W07 role/presentation completion;
-4. `270b1919109d33312e5552694b773c18d5108509` — W07 HRIS dark parity.
+- remote HEAD exact: PASS;
+- full lane 5 ahead / 0 behind from sprint start;
+- merge base exact sprint start;
+- recovery final has `270b1919...` as its parent;
+- recovery delta changes only `resources/js/components/shell/MunicipalUtilities.tsx`;
+- full lane has 10 changed files, all within Lane B ownership;
+- no overlap with final Lane A file set.
 
-Exact-SHA Forge UIUX Validation run #98, ID `35134692709`: **SUCCESS**, including frontend install/typecheck/build and Laravel feature tests.
+The two source-confirmed pre-review defects are repaired at source level in the final candidate:
 
-Ownership inspection: PASS. The 10 changed files remain within Lane B ownership and no Lane A collision is observed.
+1. drawer breakpoint transition now actively closes when crossing into the `2xl` persistent-rail range instead of becoming a hidden still-modal dialog with retained body lock;
+2. rail/drawer utility sections now use surface-specific heading ID prefixes instead of duplicate IDs.
 
-Maintainer source inspection confirmed material implementation of W05/W06/W07 but identified two defects before the independent Reviewer gate:
+Exact-final-SHA Forge UIUX Validation run #103, ID `35140216527`: **SUCCESS**, including frontend install/typecheck/build and Laravel feature tests.
 
-1. utility drawer can become CSS-hidden at the `2xl` breakpoint while remaining mounted/modal, leaving body overflow locked and focus associated with hidden content after viewport growth;
-2. `MunicipalUtilityContent` hard-codes the same heading IDs in both the always-mounted rail and the drawer, creating duplicate IDs when the drawer is open.
-
-Durable evidence:
+Recovery inspection:
 
 `.forge/evidence/maintainer/LANE-B-W05-W07-RECOVERY-INSPECTION.md`
 
-Bounded same-slot recovery handoff:
+Writer recovery evidence:
 
-`.forge/handoffs/rework/LANE-B-W05-W07-RECOVERY.md`
+`.forge/evidence/writer/LANE-B-W05-W07-RECOVERY-WRITER-RETURN.md`
 
-Exact recovery starting SHA:
+Independent Review handoff:
 
-`270b1919109d33312e5552694b773c18d5108509`
+`.forge/handoffs/review/LANE-B-W05-W07-REVIEW.md`
 
-Independent Review is intentionally NOT STARTED until the writer repairs these bounded defects, returns a new exact final SHA, and fresh exact-final-SHA CI is observed.
+Acceptance: **NOT STARTED**.
 
-PR #5 remains draft and is not integration authority. Its descriptive body names an earlier head and is stale relative to the live branch; the next Writer Return must provide the actual remote final SHA.
+Integration: **NOT AUTHORIZED**.
+
+PR #4 and PR #5 remain draft candidate/CI transport only. Neither is integration authority.
 
 ## Dependencies retained
 
@@ -114,17 +153,23 @@ PR #5 remains draft and is not integration authority. Its descriptive body names
 - W05 depends on integrated W01.
 - W06 executes after W05 utility rail exists.
 - W07 depends on integrated W01 + W02.
-- W08 depends on reviewed/integrated W03–W07 and evaluates combined behavior.
+- W08 depends on reviewed/accepted/integrated W03–W07 and evaluates the combined state.
+
+Both independent lane Reviews may execute in parallel because the final candidate file sets remain non-overlapping.
+
+If a lane returns `REWORK`, route bounded repair inside its existing writer slot. If a lane returns `SUITABLE FOR ACCEPTANCE`, it may proceed only to a separate integration-readiness Acceptance decision. Do not integrate merely because Review passed.
 
 ## Open evidence carried forward
 
 Unless directly observed:
+
 - browser/runtime: NOT OBSERVED;
 - target responsive matrix: NOT OBSERVED;
 - light/dark visual parity: NOT OBSERVED;
 - runtime keyboard/focus: NOT OBSERVED;
 - zoom/reflow: NOT OBSERVED;
 - broader accessibility: NOT OBSERVED;
+- W08 combined behavior: NOT OBSERVED / NOT STARTED;
 - UAT: NOT STARTED;
 - deployment: NOT AUTHORIZED;
 - production runtime acceptance: NOT ESTABLISHED.
@@ -135,6 +180,9 @@ Unless directly observed:
 - W01 accepted candidate: `8bcdb184...`
 - W02 accepted candidate: `3a5fc476...`
 - P1 coexisting application source: `5757114a...`
+- sprint start: `5727e5a...`
+- Lane A final candidate: `f61ea353...`
 - Lane B pre-recovery candidate: `270b1919...`
+- Lane B final candidate: `af417bab...`
 
 Use exact SHAs, not branch-name assumptions, for recovery and verification.
