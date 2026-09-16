@@ -10,7 +10,7 @@ const widths: Record<Width, string> = {
 
 export default function PageFrame({ children, width = 'wide', className = '' }: Props) {
     return (
-        <div className={`mx-auto w-full min-w-0 ${widths[width]} space-y-4 sm:space-y-5 ${className}`}>
+        <div className={`mx-auto w-full min-w-0 ${widths[width]} space-y-3.5 sm:space-y-4 ${className}`}>
             {children}
         </div>
     );

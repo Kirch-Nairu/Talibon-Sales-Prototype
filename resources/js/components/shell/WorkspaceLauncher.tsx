@@ -28,6 +28,11 @@ export default function WorkspaceLauncher({ groups }: { groups: PortalNavigation
         };
     }, [open]);
 
+    const closeAndRestoreFocus = () => {
+        setOpen(false);
+        window.requestAnimationFrame(() => trigger.current?.focus());
+    };
+
     return (
         <div ref={root} className="relative">
             <button
@@ -54,7 +59,7 @@ export default function WorkspaceLauncher({ groups }: { groups: PortalNavigation
                         <span className="municipal-panel-title">Workspace sections</span>
                         <button
                             type="button"
-                            onClick={() => { setOpen(false); trigger.current?.focus(); }}
+                            onClick={closeAndRestoreFocus}
                             className="flex h-11 w-11 items-center justify-center rounded-lg"
                             aria-label="Close workspace sections"
                         >
@@ -77,7 +82,10 @@ export default function WorkspaceLauncher({ groups }: { groups: PortalNavigation
                                                 <Link
                                                     key={href}
                                                     href={href}
-                                                    onClick={() => setOpen(false)}
+                                                    onClick={() => {
+                                                        setOpen(false);
+                                                        if (active) window.requestAnimationFrame(() => trigger.current?.focus());
+                                                    }}
                                                     aria-current={active ? 'page' : undefined}
                                                     className={`flex items-center gap-2 rounded-lg p-3 text-sm font-semibold ${
                                                         active
