@@ -19,10 +19,20 @@ type Props = {
     onClose: () => void;
 };
 
+const focusableSelector = [
+    'button:not([disabled])',
+    '[href]',
+    'input:not([disabled])',
+    'select:not([disabled])',
+    'textarea:not([disabled])',
+    '[tabindex]:not([tabindex="-1"])',
+].join(',');
+
 export default function WorkspaceDialog({ open, personas, onClose }: Props) {
     const [step, setStep] = useState<'roles' | 'departments'>('roles');
     const [processing, setProcessing] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const dialogRef = useRef<HTMLDivElement>(null);
     const closeButtonRef = useRef<HTMLButtonElement>(null);
 
     const byKey = useMemo(
@@ -36,9 +46,40 @@ export default function WorkspaceDialog({ open, personas, onClose }: Props) {
         setStep('roles');
         setError(null);
         window.setTimeout(() => closeButtonRef.current?.focus(), 0);
+    }, [open]);
+
+    useEffect(() => {
+        if (!open) return;
 
         const handleKeyDown = (event: KeyboardEvent) => {
-            if (event.key === 'Escape' && !processing) onClose();
+            if (event.key === 'Escape' && !processing) {
+                event.preventDefault();
+                onClose();
+                return;
+            }
+
+            if (event.key !== 'Tab') return;
+
+            const focusable = Array.from(
+                dialogRef.current?.querySelectorAll<HTMLElement>(focusableSelector) ?? [],
+            ).filter((element) => element.offsetParent !== null);
+
+            if (focusable.length === 0) {
+                event.preventDefault();
+                return;
+            }
+
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            const active = document.activeElement;
+
+            if (event.shiftKey && (active === first || !dialogRef.current?.contains(active))) {
+                event.preventDefault();
+                last.focus();
+            } else if (!event.shiftKey && active === last) {
+                event.preventDefault();
+                first.focus();
+            }
         };
 
         document.addEventListener('keydown', handleKeyDown);
@@ -75,10 +116,14 @@ export default function WorkspaceDialog({ open, personas, onClose }: Props) {
     const budget = byKey.get('budget_head');
 
     return (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-slate-950/45 p-0 sm:items-center sm:p-5" onMouseDown={(event) => {
-            if (event.target === event.currentTarget && !processing) onClose();
-        }}>
+        <div
+            className="fixed inset-0 z-50 flex items-end justify-center bg-slate-950/45 p-0 sm:items-center sm:p-5"
+            onMouseDown={(event) => {
+                if (event.target === event.currentTarget && !processing) onClose();
+            }}
+        >
             <div
+                ref={dialogRef}
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="workspace-dialog-title"
