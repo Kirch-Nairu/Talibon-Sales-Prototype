@@ -1,8 +1,9 @@
 import { Link } from '@inertiajs/react';
-import { CalendarDays, Megaphone, PanelRightClose, X } from 'lucide-react';
+import { CalendarDays, Megaphone, MessageSquareText, PanelRightClose, X } from 'lucide-react';
 import { useEffect, useRef, type MouseEvent } from 'react';
 import { municipalAnnouncements } from '../../data/municipal/announcements';
 import { municipalCalendarItems } from '../../data/municipal/meetingsCalendar';
+import { municipalMessages } from '../../data/municipal/messages';
 
 function localDateKey() {
     const now = new Date();
@@ -21,9 +22,14 @@ function announcementPreview() {
     return [...municipalAnnouncements].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 2);
 }
 
+function messagePreview() {
+    return [...municipalMessages].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 2);
+}
+
 export function MunicipalUtilityContent() {
     const calendar = calendarPreview();
     const announcements = announcementPreview();
+    const messages = messagePreview();
 
     return (
         <div className="space-y-5">
@@ -65,6 +71,29 @@ export function MunicipalUtilityContent() {
                         </div>
                     ))}
                 </div>
+            </section>
+
+            <section aria-labelledby="utility-messages-title">
+                <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2">
+                        <MessageSquareText size={16} className="text-blue-700 dark:text-blue-300" aria-hidden="true" />
+                        <h2 id="utility-messages-title" className="text-xs font-bold uppercase tracking-wide text-slate-700 dark:text-slate-200">Recent coordination</h2>
+                    </div>
+                    <Link href="/messages" className="text-xs font-semibold text-blue-700 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-700/30 dark:text-blue-300">Open Messages</Link>
+                </div>
+                <div className="mt-2 divide-y divide-slate-100 rounded-lg border border-slate-200 bg-white dark:divide-slate-700 dark:border-slate-700 dark:bg-slate-900/45">
+                    {messages.map((message) => (
+                        <article key={message.id} className="p-2.5">
+                            <div className="flex items-start justify-between gap-2">
+                                <div className="text-xs font-semibold leading-4 text-slate-900 dark:text-slate-100">{message.subject}</div>
+                                {message.priority === 'High' && <span className="shrink-0 text-[9px] font-bold uppercase text-rose-700 dark:text-rose-300">High</span>}
+                            </div>
+                            <div className="mt-1 text-[11px] leading-4 text-slate-500 dark:text-slate-400">{message.office} · {message.date}</div>
+                            <p className="mt-1 line-clamp-2 text-[11px] leading-4 text-slate-600 dark:text-slate-300">{message.body}</p>
+                        </article>
+                    ))}
+                </div>
+                <p className="mt-1.5 text-[10px] leading-4 text-slate-500 dark:text-slate-400">Read-only coordination preview. Open Messages for the complete visible history.</p>
             </section>
         </div>
     );
@@ -122,7 +151,7 @@ export function MunicipalUtilityDrawer({ onClose }: { onClose: () => void }) {
                 <div className="flex items-center justify-between gap-3 border-b border-slate-200 px-4 py-3 dark:border-slate-700">
                     <div>
                         <h2 id="municipal-utilities-title" className="text-sm font-bold text-slate-950 dark:text-slate-100">Municipal utilities</h2>
-                        <div className="text-xs text-slate-500 dark:text-slate-400">Calendar and office notices</div>
+                        <div className="text-xs text-slate-500 dark:text-slate-400">Calendar, notices, and coordination</div>
                     </div>
                     <button ref={closeButton} type="button" onClick={onClose} className="flex h-11 w-11 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-700/30 dark:text-slate-300 dark:hover:bg-slate-800" aria-label="Close municipal utilities"><X size={18} /></button>
                 </div>
