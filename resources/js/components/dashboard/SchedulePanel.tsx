@@ -19,19 +19,21 @@ const urgencyClass = {
 } as const;
 
 export default function SchedulePanel({ meetings, deadlines }: { meetings: DashboardMeeting[]; deadlines: DashboardDeadline[] }) {
-    return <section className="municipal-panel overflow-hidden" aria-labelledby="dashboard-schedule">
+    const orderedMeetings = [...meetings].sort((a, b) => Date.parse(a.startsAt) - Date.parse(b.startsAt));
+
+    return <section className="municipal-panel overflow-hidden" aria-label="Upcoming meetings and deadlines">
         <DashboardSectionHeader
-            icon={<CalendarDays size={16} className="text-blue-700 dark:text-blue-300" aria-hidden="true" />}
-            title="Meetings and deadlines"
-            description="Near-term schedule items that require preparation or delivery."
+            icon={<CalendarDays size={16} className="text-amber-700 dark:text-amber-300" aria-hidden="true" />}
+            title="Upcoming meetings and deadlines"
+            description="Future schedule items that require preparation or delivery."
             href="/calendar"
             linkLabel="Open calendar"
         />
         <div className="grid divide-y divide-slate-200 dark:divide-slate-700 @min-[760px]:grid-cols-2 @min-[760px]:divide-x @min-[760px]:divide-y-0">
             <div className="min-w-0">
-                <div className="border-b border-slate-100 px-4 py-2 text-xs font-bold uppercase tracking-wide text-slate-500 dark:border-slate-700 dark:text-slate-400 sm:px-5">Upcoming meetings</div>
+                <div className="border-b border-slate-100 px-4 py-2 text-xs font-bold uppercase tracking-wide text-slate-500 dark:border-slate-700 dark:text-slate-400 sm:px-5">Next meetings</div>
                 <div className="divide-y divide-slate-100 dark:divide-slate-700">
-                    {meetings.slice(0, 4).map((meeting) => <article key={meeting.id} className="px-4 py-3 sm:px-5">
+                    {orderedMeetings.slice(0, 4).map((meeting) => <article key={meeting.id} className="px-4 py-3 sm:px-5">
                         <div className="flex items-start gap-3">
                             <div className="w-14 shrink-0 text-center">
                                 <div className="text-xs font-bold text-blue-700 dark:text-blue-300">{formatTime(meeting.startsAt)}</div>
@@ -44,11 +46,11 @@ export default function SchedulePanel({ meetings, deadlines }: { meetings: Dashb
                             </div>
                         </div>
                     </article>)}
-                    {meetings.length === 0 ? <div className="px-5 py-6 text-center text-sm text-slate-500 dark:text-slate-400">No upcoming meetings in this dashboard scope.</div> : null}
+                    {orderedMeetings.length === 0 ? <div className="px-5 py-6 text-center text-sm text-slate-500 dark:text-slate-400">No upcoming meetings in this dashboard scope.</div> : null}
                 </div>
             </div>
             <div className="min-w-0">
-                <div className="border-b border-slate-100 px-4 py-2 text-xs font-bold uppercase tracking-wide text-slate-500 dark:border-slate-700 dark:text-slate-400 sm:px-5">Deadlines</div>
+                <div className="border-b border-slate-100 px-4 py-2 text-xs font-bold uppercase tracking-wide text-slate-500 dark:border-slate-700 dark:text-slate-400 sm:px-5">Upcoming deadlines</div>
                 <div className="divide-y divide-slate-100 dark:divide-slate-700">
                     {deadlines.slice(0, 5).map((deadline) => {
                         const urgency = deadlineUrgency(deadline);
@@ -66,7 +68,7 @@ export default function SchedulePanel({ meetings, deadlines }: { meetings: Dashb
                             </div>
                         </article>;
                     })}
-                    {deadlines.length === 0 ? <div className="px-5 py-6 text-center text-sm text-slate-500 dark:text-slate-400">No open deadlines in this dashboard scope.</div> : null}
+                    {deadlines.length === 0 ? <div className="px-5 py-6 text-center text-sm text-slate-500 dark:text-slate-400">No future deadlines in this dashboard scope.</div> : null}
                 </div>
             </div>
         </div>
