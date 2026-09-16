@@ -19,6 +19,7 @@ export default function SidebarIdentity({ compact, user, persona = null }: Props
     const position = persona?.position ?? user?.employee?.position;
     const department = persona?.office ?? user?.employee?.department?.name;
     const title = [name, position, department].filter(Boolean).join(' · ');
+    const context = [position, department].filter(Boolean).join(' · ');
 
     if (compact) {
         return (
@@ -34,18 +35,13 @@ export default function SidebarIdentity({ compact, user, persona = null }: Props
     }
 
     return (
-        <div>
-            <div className="text-sm font-semibold leading-snug break-words" title={name || undefined}>
+        <div className="min-w-0" aria-label={title ? `Signed in as ${title}` : 'Signed in user'}>
+            <div className="truncate text-sm font-semibold leading-5 text-white" title={name || undefined}>
                 {name}
             </div>
-            {position && (
-                <div className="mt-1 text-xs leading-snug text-blue-100 break-words" title={position}>
-                    {position}
-                </div>
-            )}
-            {department && (
-                <div className="mt-0.5 text-xs leading-snug text-blue-300 break-words" title={department}>
-                    {department}
+            {context && (
+                <div className="mt-0.5 truncate text-[11px] leading-4 text-blue-200" title={context}>
+                    {context}
                 </div>
             )}
         </div>
