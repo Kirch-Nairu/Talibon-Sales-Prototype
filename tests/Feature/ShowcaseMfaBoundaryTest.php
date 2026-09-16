@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\User;
 use App\Services\PortalNavigationAccess;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
@@ -34,8 +35,9 @@ class ShowcaseMfaBoundaryTest extends TestCase
     {
         $admin = User::query()->where('email', 'admin@talibon.demo')->firstOrFail();
 
-        $this->actingAs($admin)
-            ->get('/dashboard')
+        Auth::guard('web')->login($admin);
+
+        $this->get('/dashboard')
             ->assertRedirect(route('mfa.enroll'));
     }
 
@@ -43,12 +45,12 @@ class ShowcaseMfaBoundaryTest extends TestCase
     {
         $admin = User::query()->where('email', 'admin@talibon.demo')->firstOrFail();
 
-        $this->actingAs($admin)
-            ->withSession([
-                'showcase.session' => true,
-                'showcase.persona' => 'employee',
-            ])
-            ->get('/dashboard')
+        Auth::guard('web')->login($admin);
+
+        $this->withSession([
+            'showcase.session' => true,
+            'showcase.persona' => 'employee',
+        ])->get('/dashboard')
             ->assertRedirect(route('mfa.enroll'));
     }
 
@@ -57,12 +59,12 @@ class ShowcaseMfaBoundaryTest extends TestCase
         config()->set('showcase.enabled', false);
         $admin = User::query()->where('email', 'admin@talibon.demo')->firstOrFail();
 
-        $this->actingAs($admin)
-            ->withSession([
-                'showcase.session' => true,
-                'showcase.persona' => 'system_admin',
-            ])
-            ->get('/dashboard')
+        Auth::guard('web')->login($admin);
+
+        $this->withSession([
+            'showcase.session' => true,
+            'showcase.persona' => 'system_admin',
+        ])->get('/dashboard')
             ->assertRedirect(route('mfa.enroll'));
     }
 
