@@ -21,12 +21,12 @@ function CorrespondenceRow({ row }: { row: Row }) {
         <div className="flex flex-wrap items-start justify-between gap-2">
             <div className="min-w-0 flex-1">
                 <div className="break-all text-[11px] font-bold uppercase tracking-wide text-blue-700 dark:text-blue-300">{row.reference}</div>
-                <div className="mt-1 text-sm font-semibold leading-5 text-slate-950 dark:text-slate-100">{row.subject}</div>
-                <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{row.sender} · {row.office}</div>
+                <div className="mt-0.5 text-sm font-semibold leading-5 text-slate-950 dark:text-slate-100">{row.subject}</div>
+                <div className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{row.sender} · {row.office}</div>
             </div>
             <div className="shrink-0 text-right text-xs">
                 <div className="font-semibold text-slate-600 dark:text-slate-300">{humanize(row.lifecycle)}</div>
-                <div className="mt-1 text-slate-500 dark:text-slate-400">{formatDate(row.occurredAt)}</div>
+                <div className="mt-0.5 text-slate-500 dark:text-slate-400">{formatDate(row.occurredAt)}</div>
             </div>
         </div>
     </>;
@@ -66,7 +66,7 @@ export default function RecentCorrespondence({
     }));
     const rows = (liveRows.length > 0 ? liveRows : fallbackRows)
         .sort((a, b) => Date.parse(b.occurredAt || '') - Date.parse(a.occurredAt || ''))
-        .slice(0, 6);
+        .slice(0, 4);
 
     return <section className="municipal-panel overflow-hidden" aria-label="Recent correspondence history">
         <DashboardSectionHeader
