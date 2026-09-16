@@ -25,59 +25,85 @@ This program is not a visual rewrite, marketing redesign, backend replacement, o
 - Parallel writers must own non-overlapping files unless an explicit Integration handoff resolves a planned shared-file touch.
 - Commit density is encouraged only through real atomic changes. No empty, revert-for-count, whitespace-only, or artificial split commits.
 
-## Writer plan
+## Current execution state
 
-Eight writer waves are planned for the correction program.
+**P1 REWORK WRITERS RETURNED / RE-REVIEW ISSUED.**
 
-Current execution state: **P1 RETURNED TO BOUNDED REWORK**.
+W01 and W02 rework candidates are isolated and remain unintegrated. Repeat Reviewer sessions may run independently and in parallel.
 
-W1 and W2 rework may run in parallel because their mutation surfaces remain isolated.
-
-### Parallel Batch P1 — REVIEW REWORK REQUIRED
-
-Original writer starts:
-
-- W1 `KIRCH-TALIBON-UIUX-W01-SHELL-DENSITY@916fa6406abcfa4e4c00c603b5d6db43a5fed4f0`
-- W2 `KIRCH-TALIBON-UIUX-W02-DASHBOARD-HIERARCHY@3940ee3f59746eea7863155c92ff6b623d3a4719`
-
-Reviewed writer candidates:
-
-- W1 `fa9fadf137c200081f2b96c2b87ca7dd4137aa2d`
-- W2 `cac9cef03354eb58d66a24809c9f702c0d78af51`
-
-Both candidates had exact-SHA Forge UIUX Validation **SUCCESS**, but both received Reviewer verdict **REWORK** for source-confirmed semantic/interaction defects.
-
-### W1 rework authority
+### W01 rework candidate
 
 Branch:
 
 `KIRCH-TALIBON-UIUX-W01-SHELL-DENSITY-REWORK`
 
-Exact starting SHA:
+Required rework base:
 
 `fa9fadf137c200081f2b96c2b87ca7dd4137aa2d`
 
-Blocking Reviewer defect: Appearance disclosure can be clipped/unreachable inside the mobile drawer because the expanded/mobile footer invokes compact disclosure geometry that expands outside an overflow-clipping container.
+Returned candidate:
 
-Rework handoff:
+`8bcdb18441e3cdc071a96921ac29616d9391052c`
 
-`.forge/handoffs/rework/W01-SHELL-DENSITY-REWORK.md`
+Maintainer verification:
 
-### W2 rework authority
+- remote HEAD: exact candidate SHA;
+- ahead 2 / behind 0 from required rework base;
+- merge base: exact required rework base;
+- changed files only `SidebarAppearanceMenu.tsx` and `SidebarFooter.tsx`.
+
+Repair intent: correct the Reviewer-confirmed mobile Appearance disclosure containment defect while preserving shell architecture and operational footer priority.
+
+Exact-final-SHA CI at Maintainer processing cutoff:
+
+- frontend dependency install/typecheck/build: PASS;
+- Laravel setup/Composer/environment preparation: PASS;
+- Laravel feature tests: IN PROGRESS;
+- overall run `#77`, ID `35116074412`: IN PROGRESS.
+
+Runtime/mobile/light-dark/keyboard evidence remains NOT OBSERVED.
+
+Repeat Reviewer handoff:
+
+`.forge/handoffs/review/W01-SHELL-DENSITY-REREVIEW.md`
+
+### W02 rework candidate
 
 Branch:
 
 `KIRCH-TALIBON-UIUX-W02-DASHBOARD-HIERARCHY-REWORK`
 
-Exact starting SHA:
+Required rework base:
 
 `cac9cef03354eb58d66a24809c9f702c0d78af51`
 
-Blocking Reviewer defect: ACT NOW treats generic non-completed `recentWork` as immediate-attention work even when the available source does not prove overdue, due-today, unassigned, or action-required semantics.
+Returned candidate:
 
-Rework handoff:
+`3a5fc4768f6ae786fc38a2beb433d1a9fae159b4`
 
-`.forge/handoffs/rework/W02-DASHBOARD-HIERARCHY-REWORK.md`
+Maintainer verification:
+
+- remote HEAD: exact candidate SHA;
+- ahead 1 / behind 0 from required rework base;
+- merge base: exact required rework base;
+- changed file only `resources/js/components/dashboard/dashboardSelectors.ts`.
+
+Repair intent: prevent generic recent work from entering ACT NOW unless current source proves overdue or due-today semantics, while preserving accepted Department Head/Executive unresolved scopes.
+
+Exact-final-SHA GitHub Actions run `#75`, ID `35115985714`: **SUCCESS**.
+
+- frontend dependency install: PASS;
+- TypeScript check: PASS;
+- production build: PASS;
+- PostgreSQL/Laravel environment: PASS;
+- Composer install: PASS;
+- Laravel feature tests: PASS.
+
+Browser/persona/responsive/light-dark/runtime accessibility evidence remains NOT OBSERVED.
+
+Repeat Reviewer handoff:
+
+`.forge/handoffs/review/W02-DASHBOARD-HIERARCHY-REREVIEW.md`
 
 ## Current program
 
@@ -86,8 +112,8 @@ Rework handoff:
 | G0 | Recon → Reviewer → correction-baseline Acceptance | CLOSED | — | `0913a37f...` | ACCEPT WITH RECORDED LIMITATION |
 | N0 | Forge Nest materialization + pre-Nest decision closure | CLOSED | G0 | `9df14d2d...` | remote materialization verified |
 | P0 | GitHub Actions + parallel-writer preparation | CLOSED | N0 | source `90304629...` | workflow installed and PHP runtime aligned to lock |
-| W1 | Shell Compaction & Density Foundation | REWORK ISSUED | N0 + P0 | reviewed `fa9fadf...`; rework starts there | Reviewer: REWORK; Acceptance NOT STARTED |
-| W2 | Dashboard Hierarchy | REWORK ISSUED | N0 + P0 | reviewed `cac9cef...`; rework starts there | Reviewer: REWORK; Acceptance NOT STARTED |
+| W1 | Shell Compaction & Density Foundation | REWORK RETURNED / RE-REVIEW ISSUED | N0 + P0 | `8bcdb184...` | prior Reviewer REWORK; repeat Reviewer pending; Acceptance NOT STARTED |
+| W2 | Dashboard Hierarchy | REWORK RETURNED / RE-REVIEW ISSUED | N0 + P0 | `3a5fc476...` | prior Reviewer REWORK; repeat Reviewer pending; Acceptance NOT STARTED |
 | W3 | Context-Preserving Review Workflows | NOT ISSUED | W1 | — | — |
 | W4 | Planning Responsive UX | NOT ISSUED | W1 | — | — |
 | W5 | Calendar + Persistent Utility Rail | NOT ISSUED | W1 | — | — |
@@ -95,78 +121,59 @@ Rework handoff:
 | W7 | Role / HRIS / Admin / Error Completion | NOT ISSUED | W1 + W2 | — | — |
 | W8 | Cross-Product Acceptance & Harness Expansion | NOT ISSUED | W2 + W3 + W4 + W5 + W6 + W7 | — | — |
 
-## Reviewer results
+## Prior Reviewer blockers
 
 ### W1
 
-Verdict: **REWORK**.
+Prior verdict: **REWORK**.
+
+Blocking defect: mobile Appearance disclosure containment/reachability.
 
 Ownership: PASS.
 
 Commit history: PASS.
 
-Exact-SHA CI: PASS.
-
-Blocking defect: mobile Appearance disclosure containment/reachability.
-
-Runtime/browser/responsive/light-dark/keyboard evidence remains NOT OBSERVED.
-
-Durable review evidence:
-
-`.forge/evidence/review/W01-SHELL-DENSITY-REVIEW-REWORK.md`
+Prior exact-candidate CI: PASS.
 
 ### W2
 
-Verdict: **REWORK**.
+Prior verdict: **REWORK**.
+
+Blocking defect: generic recent work could be mislabeled as ACT NOW immediate attention.
 
 Ownership: PASS.
 
-Commit history: CONCERN due substantial fragmentation, but not an independent blocker.
+Commit history: CONCERN due fragmentation, but not an independent blocker.
 
-Exact-SHA CI: PASS.
+Prior exact-candidate CI: PASS.
 
-Blocking defect: generic recent work can be mislabeled as ACT NOW immediate attention.
+The prior history-fragmentation concern does not authorize rewriting accepted candidate history. Rework histories are assessed independently.
 
-Runtime/browser/persona/responsive/light-dark/runtime accessibility evidence remains NOT OBSERVED.
+## Durable P1 evidence
 
-Durable review evidence:
+Original writer returns:
 
-`.forge/evidence/review/W02-DASHBOARD-HIERARCHY-REVIEW-REWORK.md`
+- `.forge/evidence/writer/W01-WRITER-RETURN.md`
+- `.forge/evidence/writer/W02-WRITER-RETURN.md`
 
-## Exact-candidate validation already observed
+Original Reviewer returns:
 
-### W1 reviewed candidate
+- `.forge/evidence/review/W01-SHELL-DENSITY-REVIEW-REWORK.md`
+- `.forge/evidence/review/W02-DASHBOARD-HIERARCHY-REVIEW-REWORK.md`
 
-`fa9fadf137c200081f2b96c2b87ca7dd4137aa2d`
+Rework writer returns:
 
-GitHub Actions run `#35`, run ID `35095466589`: **SUCCESS**.
+- `.forge/evidence/writer/W01-REWORK-WRITER-RETURN.md`
+- `.forge/evidence/writer/W02-REWORK-WRITER-RETURN.md`
 
-### W2 reviewed candidate
+Repeat Reviewer handoffs:
 
-`cac9cef03354eb58d66a24809c9f702c0d78af51`
-
-GitHub Actions run `#60`, run ID `35096458349`: **SUCCESS**.
-
-These successful runs do not validate future rework SHAs. Each rework candidate requires fresh exact-final-SHA validation.
-
-## Rework collision policy
-
-W1 rework is restricted primarily to:
-
-- `resources/js/components/shell/SidebarAppearanceMenu.tsx`
-- `resources/js/components/shell/SidebarFooter.tsx`
-
-W2 rework is restricted primarily to:
-
-- `resources/js/components/dashboard/dashboardSelectors.ts`
-- `resources/js/pages/Dashboard.tsx` only if necessary;
-- directly related Dashboard-owned components only if strictly necessary.
-
-Neither rework may merge/rebase the other or the correction integration branch. Cross-owned requirements return to Maintainer.
+- `.forge/handoffs/review/W01-SHELL-DENSITY-REREVIEW.md`
+- `.forge/handoffs/review/W02-DASHBOARD-HIERARCHY-REREVIEW.md`
 
 ## Evidence still open
 
-The following remain open after Reviewer returns:
+Even after source repair and green/pending exact-SHA CI, the following remain separate evidence layers:
 
 - browser/runtime behavior;
 - responsive task coverage;
@@ -175,20 +182,14 @@ The following remain open after Reviewer returns:
 - combined W1 + W2 behavior;
 - broader accessibility acceptance.
 
-W1 rework should collect mobile/constrained-height Appearance evidence when browser execution is available.
-
-W2 rework must provide explicit evidence/reasoning that generic recent/on-track records are excluded from ACT NOW unless a real immediate-attention condition is provable.
+No build/test result is upgraded into those claims.
 
 ## Next authorized Maintainer action
 
-Run the two bounded Code Writer rework sessions from their exact rework branch authorities.
+Run both bounded repeat Reviewer sessions against the exact rework candidates.
 
-After each rework Writer Return:
+Reviewer must directly re-observe candidate branch identity, rework lineage/scope, source disposition of the prior defect, and exact-final-SHA CI state.
 
-1. re-read remote final SHA;
-2. verify scope and lineage;
-3. observe exact-final-SHA CI;
-4. repeat bounded Reviewer review against the corrected candidate;
-5. only a non-REWORK Reviewer result may proceed to the separate Acceptance gate.
+Only a repeat Reviewer verdict of `SUITABLE FOR ACCEPTANCE` may proceed to the separate Acceptance gate.
 
-Do not integrate either reviewed candidate. Do not start Acceptance while either current candidate remains under REWORK.
+Do not integrate either candidate yet.
