@@ -77,3 +77,30 @@ Role: Maintainer
 N0 is closed after remote verification of the Nest materialization state. Writer decomposition is now authorized, beginning with W1 after an exact integration-HEAD precheck.
 
 This log does not attempt to record the SHA of the commit that contains this N0 closure; current exact authority remains a Git/GitHub observation.
+
+## 2026-09-16 — P1 writer returns recorded and Review issued
+
+Role: Maintainer
+
+W01 returned candidate:
+
+`KIRCH-TALIBON-UIUX-W01-SHELL-DENSITY@fa9fadf137c200081f2b96c2b87ca7dd4137aa2d`
+
+W02 returned candidate:
+
+`KIRCH-TALIBON-UIUX-W02-DASHBOARD-HIERARCHY@cac9cef03354eb58d66a24809c9f702c0d78af51`
+
+The Maintainer independently re-read both remote branch heads and confirmed exact candidate identity. W01 is 12 commits ahead / 0 behind its exact writer start; W02 is 36 commits ahead / 0 behind its exact writer start. No parallel ownership collision is currently observed.
+
+Exact-candidate GitHub Actions were re-observed after the writer returns:
+
+- W01 run `#35`, ID `35095466589`: **SUCCESS**;
+- W02 run `#60`, ID `35096458349`: **SUCCESS**.
+
+For both candidates the frontend dependency install, TypeScript check, production build, PostgreSQL-backed Laravel environment, Composer install, and `composer test` completed successfully.
+
+Browser/runtime, visual responsive behavior, runtime keyboard/focus behavior, and visual light/dark parity remain unobserved and are carried as explicit limitations rather than inferred from green CI.
+
+Durable writer-return evidence was recorded under `.forge/evidence/writer/`. Independent non-mutating Reviewer handoffs were issued under `.forge/handoffs/review/` for W01 and W02.
+
+No writer candidate was integrated, promoted, or deployed. The next transition is independent Review, followed by separate Acceptance before any integration authorization.
