@@ -5,17 +5,18 @@ import type { ReactNode } from 'react';
 type Props = {
     icon?: ReactNode;
     title: string;
+    headingId?: string;
     description?: string;
     href?: string;
     linkLabel?: string;
 };
 
-export default function DashboardSectionHeader({ icon, title, description, href, linkLabel }: Props) {
+export default function DashboardSectionHeader({ icon, title, headingId, description, href, linkLabel }: Props) {
     return <header className="flex flex-col gap-2 border-b border-slate-200 px-4 py-2.5 dark:border-slate-700 sm:flex-row sm:items-start sm:justify-between sm:px-5">
         <div className="min-w-0">
             <div className="flex items-center gap-2">
                 {icon}
-                <h3 className="text-sm font-bold text-slate-950 dark:text-slate-100 sm:text-base">{title}</h3>
+                <h3 id={headingId} className="text-sm font-bold text-slate-950 dark:text-slate-100 sm:text-base">{title}</h3>
             </div>
             {description ? <p className="mt-1 text-xs leading-4 text-slate-500 dark:text-slate-400">{description}</p> : null}
         </div>
