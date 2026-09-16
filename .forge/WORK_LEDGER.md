@@ -27,9 +27,15 @@ This program is not a visual rewrite, marketing redesign, backend replacement, o
 
 ## Current execution state
 
-**P1 REWORK WRITERS RETURNED / RE-REVIEW ISSUED.**
+**P1 REPEAT REVIEW PASSED / ACCEPTANCE ISSUED.**
 
-W01 and W02 rework candidates are isolated and remain unintegrated. Repeat Reviewer sessions may run independently and in parallel.
+Both bounded rework candidates have repeat Reviewer verdict **SUITABLE FOR ACCEPTANCE**. Neither candidate is integrated.
+
+A single bounded P1 Acceptance handoff now evaluates each candidate independently for the narrow promotion:
+
+> exact candidate → eligibility for separate mechanical integration into `KIRCH-TALIBON-V1-UIUX-CORRECTION`.
+
+Acceptance is not release, UAT, deployment, browser, responsive, accessibility, or production acceptance.
 
 ### W01 rework candidate
 
@@ -56,18 +62,22 @@ Repair intent: correct the Reviewer-confirmed mobile Appearance disclosure conta
 
 Exact-final-SHA GitHub Actions run `#77`, ID `35116074412`: **SUCCESS**.
 
-- frontend dependency install: PASS;
-- TypeScript check: PASS;
-- production build: PASS;
-- Laravel/PostgreSQL environment preparation: PASS;
-- Composer install: PASS;
-- Laravel feature tests: PASS.
+Repeat Reviewer verdict:
 
-Runtime/mobile/light-dark/keyboard evidence remains NOT OBSERVED.
+**SUITABLE FOR ACCEPTANCE**
 
-Repeat Reviewer handoff:
+Repeat Reviewer disposition:
 
-`.forge/handoffs/review/W01-SHELL-DENSITY-REREVIEW.md`
+- prior source-confirmed blocker fixed at source level;
+- no new source-confirmed defect found in bounded re-review;
+- ownership PASS;
+- history PASS;
+- exact-final-SHA CI PASS;
+- runtime/mobile/light-dark/keyboard/zoom evidence remains NOT OBSERVED.
+
+Durable repeat-review evidence:
+
+`.forge/evidence/review/W01-SHELL-DENSITY-REREVIEW-SUITABLE.md`
 
 ### W02 rework candidate
 
@@ -94,18 +104,23 @@ Repair intent: prevent generic recent work from entering ACT NOW unless current 
 
 Exact-final-SHA GitHub Actions run `#75`, ID `35115985714`: **SUCCESS**.
 
-- frontend dependency install: PASS;
-- TypeScript check: PASS;
-- production build: PASS;
-- PostgreSQL/Laravel environment: PASS;
-- Composer install: PASS;
-- Laravel feature tests: PASS.
+Repeat Reviewer verdict:
 
-Browser/persona/responsive/light-dark/runtime accessibility evidence remains NOT OBSERVED.
+**SUITABLE FOR ACCEPTANCE**
 
-Repeat Reviewer handoff:
+Repeat Reviewer disposition:
 
-`.forge/handoffs/review/W02-DASHBOARD-HIERARCHY-REREVIEW.md`
+- prior ACT NOW semantic blocker fixed;
+- no new source-confirmed defect found in bounded re-review;
+- ownership PASS;
+- rework history PASS;
+- exact-final-SHA CI PASS;
+- runtime/persona/responsive/light-dark/accessibility evidence remains NOT OBSERVED;
+- client-local calendar timezone remains a runtime-sensitive risk for due-today classification.
+
+Durable repeat-review evidence:
+
+`.forge/evidence/review/W02-DASHBOARD-HIERARCHY-REREVIEW-SUITABLE.md`
 
 ## Current program
 
@@ -114,8 +129,8 @@ Repeat Reviewer handoff:
 | G0 | Recon → Reviewer → correction-baseline Acceptance | CLOSED | — | `0913a37f...` | ACCEPT WITH RECORDED LIMITATION |
 | N0 | Forge Nest materialization + pre-Nest decision closure | CLOSED | G0 | `9df14d2d...` | remote materialization verified |
 | P0 | GitHub Actions + parallel-writer preparation | CLOSED | N0 | source `90304629...` | workflow installed and PHP runtime aligned to lock |
-| W1 | Shell Compaction & Density Foundation | REWORK RETURNED / RE-REVIEW ISSUED | N0 + P0 | `8bcdb184...` | exact-SHA CI SUCCESS; prior Reviewer REWORK; repeat Reviewer pending; Acceptance NOT STARTED |
-| W2 | Dashboard Hierarchy | REWORK RETURNED / RE-REVIEW ISSUED | N0 + P0 | `3a5fc476...` | exact-SHA CI SUCCESS; prior Reviewer REWORK; repeat Reviewer pending; Acceptance NOT STARTED |
+| W1 | Shell Compaction & Density Foundation | ACCEPTANCE ISSUED | N0 + P0 | `8bcdb184...` | repeat Reviewer: SUITABLE FOR ACCEPTANCE; exact-SHA CI SUCCESS |
+| W2 | Dashboard Hierarchy | ACCEPTANCE ISSUED | N0 + P0 | `3a5fc476...` | repeat Reviewer: SUITABLE FOR ACCEPTANCE; exact-SHA CI SUCCESS |
 | W3 | Context-Preserving Review Workflows | NOT ISSUED | W1 | — | — |
 | W4 | Planning Responsive UX | NOT ISSUED | W1 | — | — |
 | W5 | Calendar + Persistent Utility Rail | NOT ISSUED | W1 | — | — |
@@ -123,33 +138,29 @@ Repeat Reviewer handoff:
 | W7 | Role / HRIS / Admin / Error Completion | NOT ISSUED | W1 + W2 | — | — |
 | W8 | Cross-Product Acceptance & Harness Expansion | NOT ISSUED | W2 + W3 + W4 + W5 + W6 + W7 | — | — |
 
-## Prior Reviewer blockers
+## Reviewer history
 
 ### W1
 
-Prior verdict: **REWORK**.
+Original Reviewer verdict: **REWORK**.
 
-Blocking defect: mobile Appearance disclosure containment/reachability.
+Original blocker: mobile Appearance disclosure containment/reachability.
 
-Ownership: PASS.
+Repeat Reviewer verdict: **SUITABLE FOR ACCEPTANCE**.
 
-Commit history: PASS.
-
-Prior exact-candidate CI: PASS.
+Prior blocker disposition: **FIXED at source level**.
 
 ### W2
 
-Prior verdict: **REWORK**.
+Original Reviewer verdict: **REWORK**.
 
-Blocking defect: generic recent work could be mislabeled as ACT NOW immediate attention.
+Original blocker: generic recent work could be mislabeled as ACT NOW immediate attention.
 
-Ownership: PASS.
+Repeat Reviewer verdict: **SUITABLE FOR ACCEPTANCE**.
 
-Commit history: CONCERN due fragmentation, but not an independent blocker.
+Prior blocker disposition: **FIXED**.
 
-Prior exact-candidate CI: PASS.
-
-The prior history-fragmentation concern does not authorize rewriting accepted candidate history. Rework histories are assessed independently.
+The historical original-candidate fragmentation concern remains evidence but does not authorize history rewriting and was not reproduced by the bounded rework.
 
 ## Durable P1 evidence
 
@@ -168,30 +179,42 @@ Rework writer returns:
 - `.forge/evidence/writer/W01-REWORK-WRITER-RETURN.md`
 - `.forge/evidence/writer/W02-REWORK-WRITER-RETURN.md`
 
-Repeat Reviewer handoffs:
+Repeat Reviewer evidence:
 
-- `.forge/handoffs/review/W01-SHELL-DENSITY-REREVIEW.md`
-- `.forge/handoffs/review/W02-DASHBOARD-HIERARCHY-REREVIEW.md`
+- `.forge/evidence/review/W01-SHELL-DENSITY-REREVIEW-SUITABLE.md`
+- `.forge/evidence/review/W02-DASHBOARD-HIERARCHY-REREVIEW-SUITABLE.md`
+
+Acceptance handoff:
+
+- `.forge/handoffs/acceptance/P1-W01-W02-INTEGRATION-READINESS-ACCEPTANCE.md`
+
+## Process note
+
+Both repeat Reviewer handoffs referred to a prior-review filename without the `-REWORK` suffix. That referenced path did not exist. Reviewers correctly located the durable equivalent `*-REVIEW-REWORK.md` evidence and recorded the mismatch as non-blocking.
+
+This is a handoff-authoring defect, not a candidate defect. Future handoff generation should resolve referenced evidence paths against the coordination tree before issuance.
 
 ## Evidence still open
 
-Even after source repair and green exact-SHA CI, the following remain separate evidence layers:
+Even after source repair, green exact-SHA CI, and repeat Reviewer suitability, the following remain separate evidence layers:
 
 - browser/runtime behavior;
 - responsive task coverage;
 - visual light/dark parity;
 - runtime keyboard/focus behavior;
 - combined W1 + W2 behavior;
-- broader accessibility acceptance.
+- broader accessibility acceptance;
+- zoom/reflow;
+- deployment behavior.
 
-No build/test result is upgraded into those claims.
+No build/test/Reviewer result is upgraded into those claims.
 
-## Next authorized Maintainer action
+## Next authorized action
 
-Run both bounded repeat Reviewer sessions against the exact rework candidates.
+Run the bounded P1 Acceptance session against the exact W01 and W02 rework candidates.
 
-Reviewer must directly re-observe candidate branch identity, rework lineage/scope, source disposition of the prior defect, and exact-final-SHA CI state.
+Acceptance may independently accept or reject each candidate for the narrow promotion to **eligibility for separate mechanical integration**.
 
-Only a repeat Reviewer verdict of `SUITABLE FOR ACCEPTANCE` may proceed to the separate Acceptance gate.
+Only an Acceptance result authorizing a candidate for integration may lead to an Integration Writer handoff.
 
 Do not integrate either candidate yet.
