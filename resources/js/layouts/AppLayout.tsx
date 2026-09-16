@@ -212,15 +212,14 @@ export default function AppLayout({ title, children }: Props) {
                 {mobileOpen && <MobileNavigation onClose={() => setMobileOpen(false)}>{mobileSidebar}</MobileNavigation>}
 
                 <main className="min-w-0">
-                    <header className="sticky top-0 z-20 flex min-h-[72px] items-center justify-between gap-2 border-b border-slate-200/80 bg-white px-3 transition-colors dark:border-slate-700/80 dark:bg-[#142236] sm:px-5">
+                    <header className="sticky top-0 z-20 flex min-h-16 items-center justify-between gap-2 border-b border-slate-200/80 bg-white px-3 transition-colors dark:border-slate-700/80 dark:bg-[#142236] sm:px-4">
                         <div className="flex min-w-0 items-center gap-2 sm:gap-3">
                             <button onClick={() => setMobileOpen(true)} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 lg:hidden" aria-label="Open navigation">
                                 <Menu size={20} />
                             </button>
                             <div className="min-w-0">
-                                <div className="whitespace-nowrap text-lg font-extrabold tracking-tight text-[#0b2852] dark:text-white sm:text-xl">One <span className="text-[#1769aa] dark:text-blue-400">Talibon</span></div>
-                                <div className="hidden text-[10px] font-semibold uppercase tracking-wider sm:block">LGU Intra-Office Portal</div>
-                                <div className="mt-1 truncate text-xs text-slate-500 dark:text-slate-400">{title}</div>
+                                <div className="whitespace-nowrap text-lg font-extrabold leading-5 tracking-tight text-[#0b2852] dark:text-white">One <span className="text-[#1769aa] dark:text-blue-400">Talibon</span></div>
+                                <div className="truncate text-xs leading-4 text-slate-500 dark:text-slate-400">{title}</div>
                             </div>
                         </div>
 
@@ -272,12 +271,12 @@ export default function AppLayout({ title, children }: Props) {
                     </header>
 
                     {(flash?.success || flash?.error) && (
-                        <div className={`mx-3 mt-3 rounded-xl border px-3 py-2.5 text-[12px] font-semibold sm:mx-4 sm:mt-4 sm:px-4 sm:py-3 sm:text-sm md:mx-8 ${flash.success ? 'border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-200' : 'border-rose-200 bg-rose-50 text-rose-800 dark:border-rose-900 dark:bg-rose-950/40 dark:text-rose-200'}`}>
+                        <div className={`mx-3 mt-3 rounded-xl border px-3 py-2.5 text-[12px] font-semibold sm:mx-4 sm:px-4 sm:text-sm md:mx-5 ${flash.success ? 'border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-200' : 'border-rose-200 bg-rose-50 text-rose-800 dark:border-rose-900 dark:bg-rose-950/40 dark:text-rose-200'}`}>
                             {flash.success || flash.error}
                         </div>
                     )}
-                    <div id="portal-content" tabIndex={-1} className="p-4 sm:p-6"><NotificationContext.Provider value={notifications}>{children}</NotificationContext.Provider></div>
-                    <footer className="mx-3 flex flex-wrap justify-between gap-2 border-t border-slate-200 py-4 text-xs text-slate-500 dark:border-slate-700 dark:text-slate-400 sm:mx-5"><span>Municipality of Talibon · Province of Bohol</span><span>One Talibon · Intra-Office Portal</span></footer>
+                    <div id="portal-content" tabIndex={-1} className="p-4 sm:p-5"><NotificationContext.Provider value={notifications}>{children}</NotificationContext.Provider></div>
+                    <footer className="mx-3 flex flex-wrap justify-between gap-2 border-t border-slate-200 py-3 text-xs text-slate-500 dark:border-slate-700 dark:text-slate-400 sm:mx-4"><span>Municipality of Talibon · Province of Bohol</span><span>One Talibon · Intra-Office Portal</span></footer>
                 </main>
             </div>
 
