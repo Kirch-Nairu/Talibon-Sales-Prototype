@@ -48,7 +48,7 @@ Closed the shared UX decisions required before decomposition: Operational Compre
 
 See `.forge/DECISIONS.md`.
 
-## 2026-09-16 — Nest materialization initiated
+## 2026-09-16 — Nest materialization
 
 Role: Maintainer
 
@@ -56,4 +56,24 @@ New correction integration branch created from the exact accepted baseline:
 
 `KIRCH-TALIBON-V1-UIUX-CORRECTION`
 
-The Nest is materialized as NEST-2 governance. This log intentionally does not attempt to contain the SHA of the commit that contains itself; Git/GitHub remains authoritative for the resulting exact branch head.
+Nest materialization commit:
+
+`f25516c4a209abfe0497a7f3e2234b422c58bdf6`
+
+Commit identity:
+
+`KIRCH-FORGE-MAINTAINER-ESTABLISH-ONE-TALIBON-UIUX-NEST`
+
+The remote branch was re-read after publication and resolved exactly to the materialization commit, whose parent is the accepted baseline `0913a37f96affd2c2a681697bdf6fdb6c381a99e`.
+
+The repository now has a project-local NEST-2 governance layer with authority, SSOT, architecture, decisions, work ledger, validation/evidence, integration, recovery, acceptance/review evidence, handoff continuity, and updated root AGENTS governance.
+
+Execution-layer validation was not introduced by this governance commit and remains open exactly as recorded.
+
+## 2026-09-16 — N0 closure
+
+Role: Maintainer
+
+N0 is closed after remote verification of the Nest materialization state. Writer decomposition is now authorized, beginning with W1 after an exact integration-HEAD precheck.
+
+This log does not attempt to record the SHA of the commit that contains this N0 closure; current exact authority remains a Git/GitHub observation.

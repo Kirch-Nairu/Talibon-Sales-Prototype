@@ -19,10 +19,10 @@ Technical authority: Kirch Ivan Balite
 
 ## Current program
 
-| Wave | Scope | State | Depends on | Candidate | Acceptance |
+| Wave | Scope | State | Depends on | Candidate / anchor | Acceptance |
 | --- | --- | --- | --- | --- | --- |
 | G0 | Recon → Reviewer → correction-baseline Acceptance | CLOSED | — | `0913a37f...` | ACCEPT WITH RECORDED LIMITATION |
-| N0 | Forge Nest materialization + pre-Nest decision closure | ACTIVE | G0 | Maintainer-owned | pending remote verification |
+| N0 | Forge Nest materialization + pre-Nest decision closure | CLOSED | G0 | `f25516c4a209abfe0497a7f3e2234b422c58bdf6` | remote materialization verified |
 | W1 | Shell Compaction & Density Foundation | NOT ISSUED | N0 | — | — |
 | W2 | Dashboard Hierarchy | NOT ISSUED | W1 | — | — |
 | W3 | Context-Preserving Review Workflows | NOT ISSUED | W1 | — | — |
@@ -38,7 +38,7 @@ Before issuing parallel writers, the Maintainer must assign explicit ownership b
 
 ## Current blocking evidence
 
-No blocker prevents Nest materialization.
+No blocker prevents writer decomposition.
 
 Execution-layer evidence remains open and will be required by the relevant writer/acceptance waves:
 
@@ -47,3 +47,7 @@ Execution-layer evidence remains open and will be required by the relevant write
 - browser/runtime;
 - responsive task coverage;
 - accessibility acceptance.
+
+## Next authorized Maintainer action
+
+Prepare and issue W1 from the exact current `KIRCH-TALIBON-V1-UIUX-CORRECTION` HEAD after re-verifying that HEAD immediately before handoff.
