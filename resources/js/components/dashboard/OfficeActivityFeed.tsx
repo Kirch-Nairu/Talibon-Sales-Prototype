@@ -6,6 +6,7 @@ import type { DashboardOfficeActivity } from './types';
 export default function OfficeActivityFeed({ activity }: { activity: DashboardOfficeActivity[] }) {
     return <section className="municipal-panel overflow-hidden" aria-labelledby="dashboard-office-activity">
         <DashboardSectionHeader
+            headingId="dashboard-office-activity"
             icon={<Activity size={16} className="text-blue-700 dark:text-blue-300" aria-hidden="true" />}
             title="Recent office activity"
             description="Recent cross-office actions and document movement relevant to this role."
