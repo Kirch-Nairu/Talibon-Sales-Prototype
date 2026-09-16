@@ -129,3 +129,29 @@ The Maintainer created immutable rework branches from the exact reviewed candida
 Bounded Code Writer rework handoffs were issued under `.forge/handoffs/rework/`. The original reviewed candidate branches remain untouched. W01 and W02 rework remain file-isolated and may execute in parallel.
 
 No integration, promotion, Acceptance, deployment, or force push occurred.
+
+## 2026-09-16 — P1 bounded rework writers returned; repeat Review issued
+
+Role: Maintainer
+
+W01 rework returned:
+
+`KIRCH-TALIBON-UIUX-W01-SHELL-DENSITY-REWORK@8bcdb18441e3cdc071a96921ac29616d9391052c`
+
+Maintainer re-read the branch and confirmed exact identity. The candidate is 2 commits ahead / 0 behind the required rework base `fa9fadf137c200081f2b96c2b87ca7dd4137aa2d`; only `SidebarAppearanceMenu.tsx` and `SidebarFooter.tsx` changed. Source inspection confirms the rework introduces end alignment for the expanded/mobile disclosure, bounded vertical height with internal scrolling, and Escape close/focus restoration while leaving compact desktop start alignment intact.
+
+At processing cutoff, exact-SHA run `#77`, ID `35116074412`, had frontend dependency install/typecheck/build PASS and Laravel setup/Composer/environment preparation PASS; Laravel feature tests and the overall workflow remained IN PROGRESS. No overall green claim was made.
+
+W02 rework returned:
+
+`KIRCH-TALIBON-UIUX-W02-DASHBOARD-HIERARCHY-REWORK@3a5fc4768f6ae786fc38a2beb433d1a9fae159b4`
+
+Maintainer re-read the branch and confirmed exact identity. The candidate is 1 commit ahead / 0 behind the required rework base `cac9cef03354eb58d66a24809c9f702c0d78af51`; only `dashboardSelectors.ts` changed. Source inspection confirms generic recent work now enters ACT NOW only when overdue or due today, while accepted Department Head/Executive unresolved scopes remain available and no current-user assignment semantics are fabricated.
+
+Exact-SHA run `#75`, ID `35115985714`, is observed **SUCCESS**, including frontend dependency install/typecheck/build, Laravel/PostgreSQL environment setup, Composer install, and feature tests.
+
+Durable rework writer returns were recorded under `.forge/evidence/writer/`. Bounded repeat Reviewer handoffs were issued under `.forge/handoffs/review/`.
+
+Browser/runtime, responsive visual behavior, light/dark parity, runtime keyboard/focus behavior, and combined W01+W02 behavior remain unobserved unless later Reviewer/Acceptance evidence establishes them.
+
+No Acceptance, integration, promotion, deployment, merge, rebase, or force push occurred.
