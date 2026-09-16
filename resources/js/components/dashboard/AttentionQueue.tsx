@@ -15,6 +15,7 @@ export default function AttentionQueue({
 }) {
     return <section className="municipal-panel overflow-hidden" aria-labelledby="dashboard-attention-work">
         <DashboardSectionHeader
+            headingId="dashboard-attention-work"
             icon={<AlertCircle size={16} className="text-amber-700 dark:text-amber-300" aria-hidden="true" />}
             title="Work requiring attention"
             description="Live transaction records are ordered by overdue and due-soon state first."
