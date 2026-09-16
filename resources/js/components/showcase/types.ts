@@ -4,8 +4,6 @@ export type ShowcasePersona = {
     position: string;
     office: string;
     description: string;
-    category: string;
-    experience: string;
 };
 
 export type ShowcaseEntryData = {
