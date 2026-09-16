@@ -155,3 +155,44 @@ Durable rework writer returns were recorded under `.forge/evidence/writer/`. Bou
 Browser/runtime, responsive visual behavior, light/dark parity, runtime keyboard/focus behavior, and combined W01+W02 behavior remain unobserved unless later Reviewer/Acceptance evidence establishes them.
 
 No Acceptance, integration, promotion, deployment, merge, rebase, or force push occurred.
+
+## 2026-09-17 — Lane B message-delivery failure recovery inspection
+
+Role: Maintainer
+
+The Lane B Code Writer chat ended with a ChatGPT message-delivery timeout after extensive tool execution. This was treated as a communication failure, not as evidence that the Git work failed.
+
+Remote state was reconstructed directly from GitHub.
+
+Lane branch:
+
+`KIRCH-TALIBON-UIUX-SPRINT-LANE-B-W05-W06-W07@270b1919109d33312e5552694b773c18d5108509`
+
+Lineage from exact sprint base `5727e5a258ecb358d6caa13b75127bec1c5c6d9d` is 4 commits ahead / 0 behind with the exact sprint base as merge base.
+
+The four observed commits correspond to W05 utility/calendar, W06 read-only Messages quick access, W07 role/presentation completion, and W07 HRIS dark parity.
+
+The branch modifies exactly 10 files, all inside Lane B ownership. No Lane A collision is observed.
+
+Draft PR #5 exists against the correction branch. Its live head is `270b1919109d33312e5552694b773c18d5108509`; the PR body still mentions the preceding `6d9ac1f...` head and is therefore stale descriptive evidence only.
+
+Exact-final-SHA Forge UIUX Validation run #98, ID `35134692709`, is **SUCCESS**, including frontend install/typecheck/build and Laravel feature tests.
+
+Source inspection found that the implementation materially satisfies the intended W05/W06/W07 direction, but two defects were confirmed before formal independent Review:
+
+1. the below-2xl modal utility drawer can be hidden by the 2xl breakpoint while it remains mounted and body scroll remains locked if the viewport is widened while the drawer is open;
+2. `MunicipalUtilityContent` hard-codes identical heading IDs and is rendered in both rail and drawer, producing duplicate DOM IDs while the drawer is open.
+
+These are bounded shell-utility defects, not grounds to discard the lane.
+
+Maintainer recorded the reconstruction and findings in:
+
+`.forge/evidence/maintainer/LANE-B-W05-W07-RECOVERY-INSPECTION.md`
+
+A bounded same-writer-slot recovery handoff was issued:
+
+`.forge/handoffs/rework/LANE-B-W05-W07-RECOVERY.md`
+
+Recovery starts exactly from `270b1919109d33312e5552694b773c18d5108509` on the same linear Lane B branch. No force push, rebase, integration, promotion, Acceptance, or deployment is authorized.
+
+Independent Reviewer authority is intentionally deferred until the writer repairs these two source-confirmed defects, returns a normal exact final SHA, and fresh exact-final-SHA CI is observed.
