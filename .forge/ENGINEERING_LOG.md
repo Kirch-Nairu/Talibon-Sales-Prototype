@@ -196,3 +196,32 @@ A bounded same-writer-slot recovery handoff was issued:
 Recovery starts exactly from `270b1919109d33312e5552694b773c18d5108509` on the same linear Lane B branch. No force push, rebase, integration, promotion, Acceptance, or deployment is authorized.
 
 Independent Reviewer authority is intentionally deferred until the writer repairs these two source-confirmed defects, returns a normal exact final SHA, and fresh exact-final-SHA CI is observed.
+
+## 2026-09-17 — Production sprint writer returns verified; both lane Reviews issued
+
+Role: Maintainer
+
+Lane A W03/W04 returned at:
+
+`KIRCH-TALIBON-UIUX-SPRINT-LANE-A-W03-W04@f61ea353fc26595e78aba99e6aa9b5ea0293181c`
+
+Maintainer independently re-read the branch, confirmed 12 commits ahead / 0 behind exact sprint start `5727e5a258ecb358d6caa13b75127bec1c5c6d9d`, and confirmed the exact 12-file delta remains inside Lane A ownership. Exact-final-SHA Forge UIUX Validation run #96, ID `35133625796`, is **SUCCESS** for frontend install/typecheck/build and Laravel feature tests. Browser/runtime evidence remains NOT OBSERVED.
+
+Lane B recovery returned at:
+
+`KIRCH-TALIBON-UIUX-SPRINT-LANE-B-W05-W06-W07@af417bab384ad066814ba32145be83c00396ff69`
+
+Maintainer independently re-read the branch. The recovery commit is exactly one linear child of pre-recovery SHA `270b1919109d33312e5552694b773c18d5108509`; the recovery delta changes only `MunicipalUtilities.tsx`. Full lane lineage is 5 ahead / 0 behind exact sprint start. The full 10-file candidate remains inside Lane B ownership and has no path overlap with Lane A.
+
+Source inspection confirms the two Maintainer-blocking pre-review defects are repaired at source level: the utility dialog now closes across the 2xl breakpoint instead of becoming hidden while remaining modal/body-locking, and rail/drawer section IDs are namespaced separately. Exact-final-SHA Forge UIUX Validation run #103, ID `35140216527`, is **SUCCESS** for frontend install/typecheck/build and Laravel feature tests. Browser/runtime breakpoint, focus, responsive, light/dark and accessibility behavior remains NOT OBSERVED.
+
+Durable writer evidence was recorded for both lanes under `.forge/evidence/writer/`.
+
+Independent non-mutating Reviewer handoffs were issued:
+
+- `.forge/handoffs/review/LANE-A-W03-W04-REVIEW.md`
+- `.forge/handoffs/review/LANE-B-W05-W07-REVIEW.md`
+
+The final Lane A and Lane B file sets remain non-overlapping, so the two Reviewer sessions may run in parallel.
+
+Neither lane has Acceptance authority. Neither lane is integrated. Draft PR #4 and PR #5 remain candidate/CI transport only. W08 remains NOT STARTED until reviewed, accepted and integrated W03–W07 coexist on the correction branch.
