@@ -65,7 +65,7 @@ final class ShowcaseSession
 
     public function isActive(Request $request, ?User $user = null): bool
     {
-        if (! $this->enabled() || ! $request->session()->boolean('showcase.session')) {
+        if (! $this->enabled() || $request->session()->get('showcase.session') !== true) {
             return false;
         }
 
