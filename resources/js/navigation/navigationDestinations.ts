@@ -37,7 +37,7 @@ export const portalDestinations: Partial<Record<PortalDestinationKey, PortalDest
     localSpecialBodies: { key: 'localSpecialBodies', label: 'Local Special Bodies', href: portalRoutePlan.localSpecialBodies, icon: Network, group: 'organization', readiness: 'wired' },
     developmentPlans: { key: 'developmentPlans', label: 'Development Plans', href: portalRoutePlan.developmentPlans, icon: BookOpen, group: 'planning', readiness: 'wired' },
     ppas: { key: 'ppas', label: 'PPAs', href: portalRoutePlan.ppas, icon: ListChecks, group: 'planning', readiness: 'wired' },
-    projectMonitoring: { key: 'projectMonitoring', label: 'Project Monitoring', href: portalRoutePlan.projectMonitoring, icon: FolderKanban, group: 'planning', readiness: 'wired', experiences: ['executive_oversight', 'system_administration'] },
+    projectMonitoring: { key: 'projectMonitoring', label: 'Project Monitoring', href: portalRoutePlan.projectMonitoring, icon: FolderKanban, group: 'planning', readiness: 'wired', experiences: ['department_head', 'executive_oversight', 'system_administration'] },
     users: { key: 'users', label: 'Users', href: portalRoutePlan.users, icon: UserCog, group: 'administration', readiness: 'integration_pending', permission: 'systemAdministration' },
     adminDepartments: { key: 'adminDepartments', label: 'Departments', href: portalRoutePlan.adminDepartments, icon: Building2, group: 'administration', readiness: 'integration_pending', permission: 'systemAdministration' },
     systemAdministration: { key: 'systemAdministration', label: 'System Administration', href: portalRoutePlan.systemAdministration, icon: Settings, group: 'administration', readiness: 'wired', permission: 'systemAdministration' },
