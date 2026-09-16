@@ -14,6 +14,7 @@ type Props = {
 export default function SidebarFooter({ compact, user }: Props) {
     const [signingOut, setSigningOut] = useState(false);
     const { showcaseSession } = usePage<SharedProps>().props;
+    const showcasePersona = showcaseSession?.active ? showcaseSession.persona : null;
 
     const signOut = () => {
         if (signingOut) return;
@@ -24,7 +25,7 @@ export default function SidebarFooter({ compact, user }: Props) {
     if (compact) {
         return (
             <div className="flex flex-col items-center gap-3" aria-busy={signingOut}>
-                <SidebarIdentity compact user={user} />
+                <SidebarIdentity compact user={user} persona={showcasePersona} />
                 <AppearanceControl compact />
                 {showcaseSession?.active && <WorkspaceSwitcher compact />}
                 <button
@@ -45,7 +46,7 @@ export default function SidebarFooter({ compact, user }: Props) {
         <div aria-busy={signingOut}>
             <AppearanceControl />
             <div className="mt-3 border-t border-white/10 pt-3">
-                <SidebarIdentity compact={false} user={user} />
+                <SidebarIdentity compact={false} user={user} persona={showcasePersona} />
                 <div className="mt-3 space-y-1">
                     {showcaseSession?.active && <WorkspaceSwitcher />}
                     <button
