@@ -1,9 +1,10 @@
-import { Link, useForm } from '@inertiajs/react';
+import { Link, useForm, usePage } from '@inertiajs/react';
 import { ArrowLeft, Building2, CalendarDays, MapPin, Users } from 'lucide-react';
 import { type FormEvent } from 'react';
 import EvidenceFields from '../../components/documents/EvidenceFields';
 import EvidenceList, { type EvidencePayload } from '../../components/documents/EvidenceList';
 import AppLayout from '../../layouts/AppLayout';
+import { returnTargetFromDetailUrl } from '../../navigation/returnContext';
 
 type Person = { employeeNumber: string; name: string; position?: string | null; office?: { code: string; name: string; shortName?: string | null } | null };
 type Event = { id: number; event: string; fromStatus?: string | null; toStatus?: string | null; remarks?: string | null; occurredAt?: string | null; actor?: string | null };
@@ -20,6 +21,8 @@ const humanize = (value: string) => value.replaceAll('_', ' ').replace(/\b\w/g, 
 const formatDateTime = (value?: string | null) => value ? new Date(value).toLocaleString() : 'Time not recorded';
 
 export default function Show({ travelOrder, evidence, capabilities }: Props) {
+    const { url } = usePage();
+    const returnTarget = returnTargetFromDetailUrl(url, '/travel-orders');
     const { data, setData, post, processing, errors, reset } = useForm({ status: 'completed', remarks: '', evidence: [] as File[] });
     const submit = (event: FormEvent) => {
         event.preventDefault();
@@ -29,7 +32,7 @@ export default function Show({ travelOrder, evidence, capabilities }: Props) {
     return (
         <AppLayout title={`Travel Order ${travelOrder.referenceNumber}`}>
             <div className="mx-auto max-w-5xl space-y-4 sm:space-y-6">
-                <header><Link href="/travel-orders" className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-blue-700 sm:text-xs"><ArrowLeft size={14} /> Approved Travel Orders</Link><div className="mt-4 flex flex-wrap items-center gap-2"><span className="text-[10px] font-bold uppercase tracking-[0.18em] text-blue-700 sm:text-xs">Approved Travel Order record</span><span className="rounded-full bg-slate-100 px-2.5 py-1 text-[9px] font-bold uppercase text-slate-700 dark:bg-slate-900/40 dark:text-slate-300">{humanize(travelOrder.status)}</span></div><h1 className="mt-1.5 text-2xl font-bold text-slate-950 sm:text-3xl dark:text-slate-100">{travelOrder.referenceNumber}</h1><p className="mt-1.5 text-[11px] leading-5 text-slate-500 sm:text-sm dark:text-slate-400">Official post-approval travel record. Request routing, booking, liquidation and reimbursement are outside this workspace.</p></header>
+                <header><Link href={returnTarget} className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-blue-700 sm:text-xs"><ArrowLeft size={14} /> Approved Travel Orders</Link><div className="mt-4 flex flex-wrap items-center gap-2"><span className="text-[10px] font-bold uppercase tracking-[0.18em] text-blue-700 sm:text-xs">Approved Travel Order record</span><span className="rounded-full bg-slate-100 px-2.5 py-1 text-[9px] font-bold uppercase text-slate-700 dark:bg-slate-900/40 dark:text-slate-300">{humanize(travelOrder.status)}</span></div><h1 className="mt-1.5 text-2xl font-bold text-slate-950 sm:text-3xl dark:text-slate-100">{travelOrder.referenceNumber}</h1><p className="mt-1.5 text-[11px] leading-5 text-slate-500 sm:text-sm dark:text-slate-400">Official post-approval travel record. Request routing, booking, liquidation and reimbursement are outside this workspace.</p></header>
 
                 <section className="grid gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:grid-cols-2 sm:rounded-3xl sm:p-6 lg:grid-cols-4 dark:bg-[#142236] dark:border-slate-700">
                     <div className="lg:col-span-2"><div className="text-[9px] font-bold uppercase tracking-wide text-slate-400 dark:text-slate-400">Purpose</div><div className="mt-1 text-sm font-semibold text-slate-900 dark:text-slate-100">{travelOrder.purpose}</div></div>
