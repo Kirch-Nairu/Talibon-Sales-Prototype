@@ -29,9 +29,9 @@ This program is not a visual rewrite, marketing redesign, backend replacement, o
 
 Eight writer waves are planned for the correction program.
 
-Current concurrency: **2 writers in parallel**.
+Current review concurrency: **2 independent Reviewer sessions may run in parallel**.
 
-### Parallel Batch P1 — ISSUED
+### Parallel Batch P1 — WRITERS RETURNED / REVIEW ISSUED
 
 - W1 — Shell Compaction & Density Foundation
 - W2 — Dashboard Hierarchy
@@ -40,12 +40,21 @@ Both writer branches were created from exact prepared integration source:
 
 `903046298b211906c30b47b938fb063df0741e49`
 
-They are deliberately file-isolated. W2 does not edit shared shell/page primitives; W1 does not edit dashboard implementation.
-
-Writer-start authorities after Maintainer handoff + CI alignment:
+Writer-start authorities:
 
 - W1 `KIRCH-TALIBON-UIUX-W01-SHELL-DENSITY@916fa6406abcfa4e4c00c603b5d6db43a5fed4f0`
 - W2 `KIRCH-TALIBON-UIUX-W02-DASHBOARD-HIERARCHY@3940ee3f59746eea7863155c92ff6b623d3a4719`
+
+Returned writer candidates:
+
+- W1 `fa9fadf137c200081f2b96c2b87ca7dd4137aa2d`
+- W2 `cac9cef03354eb58d66a24809c9f702c0d78af51`
+
+Both candidate branch heads were independently re-read by the Maintainer and matched the returned SHAs exactly.
+
+Both exact-candidate Forge UIUX Validation runs are now observed **SUCCESS**, including frontend dependency install/typecheck/build and Laravel/PostgreSQL/Composer/feature tests.
+
+The candidates remain deliberately unintegrated and must now be reviewed independently.
 
 ### Later batches
 
@@ -63,8 +72,8 @@ Concurrency may be reduced whenever ownership or dependency evidence makes paral
 | G0 | Recon → Reviewer → correction-baseline Acceptance | CLOSED | — | `0913a37f...` | ACCEPT WITH RECORDED LIMITATION |
 | N0 | Forge Nest materialization + pre-Nest decision closure | CLOSED | G0 | `9df14d2dc09022e7f9f569163db402fd622ea8b4` | remote materialization verified |
 | P0 | GitHub Actions + parallel-writer preparation | CLOSED | N0 | source `903046298b211906c30b47b938fb063df0741e49` | workflow installed and PHP runtime aligned to lock |
-| W1 | Shell Compaction & Density Foundation | ISSUED / ACTIVE | N0 + P0 | `916fa6406abcfa4e4c00c603b5d6db43a5fed4f0` | writer pending |
-| W2 | Dashboard Hierarchy | ISSUED / ACTIVE | N0 + P0 | `3940ee3f59746eea7863155c92ff6b623d3a4719` | writer pending |
+| W1 | Shell Compaction & Density Foundation | RETURNED / REVIEW ISSUED | N0 + P0 | `fa9fadf137c200081f2b96c2b87ca7dd4137aa2d` | exact-SHA CI SUCCESS; Reviewer pending |
+| W2 | Dashboard Hierarchy | RETURNED / REVIEW ISSUED | N0 + P0 | `cac9cef03354eb58d66a24809c9f702c0d78af51` | exact-SHA CI SUCCESS; Reviewer pending |
 | W3 | Context-Preserving Review Workflows | NOT ISSUED | W1 | — | — |
 | W4 | Planning Responsive UX | NOT ISSUED | W1 | — | — |
 | W5 | Calendar + Persistent Utility Rail | NOT ISSUED | W1 | — | — |
@@ -72,62 +81,90 @@ Concurrency may be reduced whenever ownership or dependency evidence makes paral
 | W7 | Role / HRIS / Admin / Error Completion | NOT ISSUED | W1 + W2 | — | — |
 | W8 | Cross-Product Acceptance & Harness Expansion | NOT ISSUED | W2 + W3 + W4 + W5 + W6 + W7 | — | — |
 
-## Commit-density mode
+## Commit-density result for P1
 
-Writers should commit every independently reviewable improvement rather than batching unrelated work.
+Writers were instructed to commit every independently reviewable improvement rather than batching unrelated work.
 
-Recommended aggressive targets, not quotas:
+Observed writer result:
 
-- W1: approximately 40–70 meaningful atomic commits if the implementation naturally supports that granularity.
-- W2: approximately 35–60 meaningful atomic commits if the implementation naturally supports that granularity.
+- W1: 12 commits, ahead 12 / behind 0 from exact writer start;
+- W2: 36 commits, ahead 36 / behind 0 from exact writer start.
 
-A smaller count is correct when fewer real atomic changes exist. Commit count never outranks correctness, coherence, tests, or reviewability.
+The aggressive numerical targets were guidance, not acceptance criteria. Reviewer must inspect whether the histories are meaningfully atomic and must not penalize W1 merely for declining artificial commit inflation.
 
-Every Forge-controlled commit must use:
+Every Forge-controlled commit uses:
 
 `KIRCH-FORGE-<ROLE>-<REASON>`
 
-Writer examples:
+## Exact-candidate validation now observed
 
-- `KIRCH-FORGE-CODE-WRITER-W01-COMPACT-SIDEBAR-IDENTITY`
-- `KIRCH-FORGE-CODE-WRITER-W01-REDUCE-HEADER-VERTICAL-COST`
-- `KIRCH-FORGE-CODE-WRITER-W02-PRIORITIZE-ACT-NOW`
-- `KIRCH-FORGE-CODE-WRITER-W02-COMPRESS-REFERENCE-REGIONS`
+### W1
 
-## GitHub Actions preparation
+Candidate: `fa9fadf137c200081f2b96c2b87ca7dd4137aa2d`
 
-`.github/workflows/forge-uiux-validation.yml` is installed on the correction integration branch and writer branches.
+GitHub Actions run `#35`, run ID `35095466589`: **SUCCESS**.
 
-Defined CI jobs:
+- frontend dependency install: PASS;
+- TypeScript check: PASS;
+- production build: PASS;
+- PostgreSQL initialization: PASS;
+- PHP setup: PASS;
+- Composer install: PASS;
+- Laravel environment preparation: PASS;
+- `composer test`: PASS.
 
-- frontend `npm ci`;
-- `npm run types:check`;
-- `npm run build`;
-- PHP 8.4 dependency install;
-- PostgreSQL 16 test service;
-- Laravel feature tests via `composer test`.
+### W2
 
-The first W1 handoff run exposed a CI-environment mismatch: frontend typecheck/build passed, while Composer install failed because the lock resolved Symfony 8.1 packages requiring PHP >=8.4.1 and the workflow had been configured for PHP 8.3. The Maintainer aligned the workflow to PHP 8.4 on integration and both writer branches. Corrected exact-SHA runs were subsequently triggered; their final conclusions must be observed rather than assumed.
+Candidate: `cac9cef03354eb58d66a24809c9f702c0d78af51`
 
-Workflow presence is not a passing CI claim. Results must be observed per candidate SHA.
+GitHub Actions run `#60`, run ID `35096458349`: **SUCCESS**.
 
-## Collision policy
+- frontend dependency install: PASS;
+- TypeScript check: PASS;
+- production build: PASS;
+- PostgreSQL initialization: PASS;
+- PHP setup: PASS;
+- Composer install: PASS;
+- Laravel environment preparation: PASS;
+- `composer test`: PASS.
 
-W1 owns shared shell/layout/density primitives named in its handoff. W2 owns Dashboard implementation/components named in its handoff. Neither may cross into the other's block.
+## Collision policy / P1 observation
 
-Before later parallel writers are issued, the Maintainer must inspect overlapping shared files again.
+W1 owns shared shell/layout/density primitives named in its handoff. W2 owns Dashboard implementation/components named in its handoff.
 
-## Current blocking evidence
+No parallel ownership collision is currently observed. Neither candidate was merged or rebased into the other.
 
-No source blocker prevents W1 and W2 execution.
+Reviewer must independently verify ownership before recommending progression.
 
-Execution-layer evidence remains open and must be collected from writer environments and/or GitHub Actions:
+## Evidence still open
 
-- completed exact-candidate CI conclusions;
-- browser/runtime;
+Green exact-SHA CI is established for both candidates, but the following remain open:
+
+- browser/runtime behavior;
 - responsive task coverage;
-- accessibility acceptance.
+- visual light/dark parity;
+- runtime keyboard/focus behavior;
+- W1 + W2 combined visual behavior;
+- broader accessibility acceptance.
+
+These remain valid limitations and must not be silently upgraded by source inspection or build success.
+
+## Durable P1 evidence
+
+Writer returns:
+
+- `.forge/evidence/writer/W01-WRITER-RETURN.md`
+- `.forge/evidence/writer/W02-WRITER-RETURN.md`
+
+Reviewer handoffs:
+
+- `.forge/handoffs/review/W01-SHELL-DENSITY-REVIEW.md`
+- `.forge/handoffs/review/W02-DASHBOARD-HIERARCHY-REVIEW.md`
 
 ## Next authorized Maintainer action
 
-Wait for W1 and W2 writer returns. Review each independently before any integration. Do not integrate either candidate merely because it exists or because commit count is high.
+Run W1 and W2 Reviewer sessions independently and in parallel if desired.
+
+Do not integrate either candidate yet.
+
+After each Reviewer returns, record the review result and issue a separate Acceptance decision for that candidate's integration readiness. Only accepted candidate evidence may proceed to an explicit integration authorization and non-force authority transition.
