@@ -31,12 +31,21 @@ Eight writer waves are planned for the correction program.
 
 Current concurrency: **2 writers in parallel**.
 
-### Parallel Batch P1 — issue now
+### Parallel Batch P1 — ISSUED
 
 - W1 — Shell Compaction & Density Foundation
 - W2 — Dashboard Hierarchy
 
-W1 and W2 both start from the same prepared authority and are deliberately file-isolated. W2 does not edit shared shell/page primitives; W1 does not edit dashboard implementation.
+Both writer branches were created from exact prepared integration source:
+
+`903046298b211906c30b47b938fb063df0741e49`
+
+They are deliberately file-isolated. W2 does not edit shared shell/page primitives; W1 does not edit dashboard implementation.
+
+Writer-start authorities after Maintainer handoff + CI alignment:
+
+- W1 `KIRCH-TALIBON-UIUX-W01-SHELL-DENSITY@916fa6406abcfa4e4c00c603b5d6db43a5fed4f0`
+- W2 `KIRCH-TALIBON-UIUX-W02-DASHBOARD-HIERARCHY@3940ee3f59746eea7863155c92ff6b623d3a4719`
 
 ### Later batches
 
@@ -53,9 +62,9 @@ Concurrency may be reduced whenever ownership or dependency evidence makes paral
 | --- | --- | --- | --- | --- | --- |
 | G0 | Recon → Reviewer → correction-baseline Acceptance | CLOSED | — | `0913a37f...` | ACCEPT WITH RECORDED LIMITATION |
 | N0 | Forge Nest materialization + pre-Nest decision closure | CLOSED | G0 | `9df14d2dc09022e7f9f569163db402fd622ea8b4` | remote materialization verified |
-| P0 | GitHub Actions + parallel-writer preparation | CLOSED | N0 | prepared integration authority; read exact HEAD from Git | workflow installed; result not yet claimed |
-| W1 | Shell Compaction & Density Foundation | READY TO ISSUE | N0 + P0 | `KIRCH-TALIBON-UIUX-W01-SHELL-DENSITY` | — |
-| W2 | Dashboard Hierarchy | READY TO ISSUE | N0 + P0 | `KIRCH-TALIBON-UIUX-W02-DASHBOARD-HIERARCHY` | — |
+| P0 | GitHub Actions + parallel-writer preparation | CLOSED | N0 | source `903046298b211906c30b47b938fb063df0741e49` | workflow installed and PHP runtime aligned to lock |
+| W1 | Shell Compaction & Density Foundation | ISSUED / ACTIVE | N0 + P0 | `916fa6406abcfa4e4c00c603b5d6db43a5fed4f0` | writer pending |
+| W2 | Dashboard Hierarchy | ISSUED / ACTIVE | N0 + P0 | `3940ee3f59746eea7863155c92ff6b623d3a4719` | writer pending |
 | W3 | Context-Preserving Review Workflows | NOT ISSUED | W1 | — | — |
 | W4 | Planning Responsive UX | NOT ISSUED | W1 | — | — |
 | W5 | Calendar + Persistent Utility Rail | NOT ISSUED | W1 | — | — |
@@ -87,37 +96,38 @@ Writer examples:
 
 ## GitHub Actions preparation
 
-`.github/workflows/forge-uiux-validation.yml` is installed on the correction integration branch and is intended to run on the correction branch and `KIRCH-TALIBON-UIUX-W*` pushes.
+`.github/workflows/forge-uiux-validation.yml` is installed on the correction integration branch and writer branches.
 
 Defined CI jobs:
 
 - frontend `npm ci`;
 - `npm run types:check`;
 - `npm run build`;
-- PHP 8.3 dependency install;
+- PHP 8.4 dependency install;
 - PostgreSQL 16 test service;
 - Laravel feature tests via `composer test`.
+
+The first W1 handoff run exposed a CI-environment mismatch: frontend typecheck/build passed, while Composer install failed because the lock resolved Symfony 8.1 packages requiring PHP >=8.4.1 and the workflow had been configured for PHP 8.3. The Maintainer aligned the workflow to PHP 8.4 on integration and both writer branches. Corrected exact-SHA runs were subsequently triggered; their final conclusions must be observed rather than assumed.
 
 Workflow presence is not a passing CI claim. Results must be observed per candidate SHA.
 
 ## Collision policy
 
-W1 owns shared shell/layout/density primitives named in its handoff. W2 owns dashboard implementation and role-presentation files named in its handoff. Neither may cross into the other's block.
+W1 owns shared shell/layout/density primitives named in its handoff. W2 owns Dashboard implementation/components named in its handoff. Neither may cross into the other's block.
 
 Before later parallel writers are issued, the Maintainer must inspect overlapping shared files again.
 
 ## Current blocking evidence
 
-No source blocker prevents W1 and W2 issuance.
+No source blocker prevents W1 and W2 execution.
 
 Execution-layer evidence remains open and must be collected from writer environments and/or GitHub Actions:
 
-- build/type checks;
-- PHP tests when affected;
+- completed exact-candidate CI conclusions;
 - browser/runtime;
 - responsive task coverage;
 - accessibility acceptance.
 
 ## Next authorized Maintainer action
 
-Create W1 and W2 from one exact observed `KIRCH-TALIBON-V1-UIUX-CORRECTION` HEAD, verify both remote branch heads, persist branch-local handoffs, and issue the two Code Writer sessions in parallel.
+Wait for W1 and W2 writer returns. Review each independently before any integration. Do not integrate either candidate merely because it exists or because commit count is high.
