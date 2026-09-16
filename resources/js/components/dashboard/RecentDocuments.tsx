@@ -6,6 +6,7 @@ import type { DashboardDocument } from './types';
 export default function RecentDocuments({ documents }: { documents: DashboardDocument[] }) {
     return <section className="municipal-panel overflow-hidden" aria-labelledby="dashboard-recent-documents">
         <DashboardSectionHeader
+            headingId="dashboard-recent-documents"
             icon={<FileText size={16} className="text-blue-700 dark:text-blue-300" aria-hidden="true" />}
             title="Recent documents"
             description="Recently updated municipal records relevant to this dashboard scope."
