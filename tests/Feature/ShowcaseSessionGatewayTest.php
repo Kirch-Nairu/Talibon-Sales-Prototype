@@ -52,6 +52,20 @@ class ShowcaseSessionGatewayTest extends TestCase
         }
     }
 
+    public function test_showcase_login_regenerates_the_session_identifier(): void
+    {
+        $this->curatedUser('employee');
+        $this->withSession(['preexisting' => 'value']);
+        $before = app('session')->driver()->getId();
+
+        $this->post('/showcase/session', ['persona' => 'employee'])
+            ->assertRedirect(route('dashboard'));
+
+        $after = app('session')->driver()->getId();
+        $this->assertNotSame($before, $after);
+        $this->assertSame('value', session('preexisting'));
+    }
+
     public function test_invalid_persona_is_rejected_without_authentication(): void
     {
         $this->post('/showcase/session', ['persona' => '999'])
@@ -94,6 +108,30 @@ class ShowcaseSessionGatewayTest extends TestCase
             'persona' => 'employee',
             'email' => 'somebody@talibon.demo',
         ])->assertSessionHasErrors('email');
+
+        $this->assertGuest();
+    }
+
+    public function test_arbitrary_role_selector_is_prohibited(): void
+    {
+        $this->curatedUser('employee');
+
+        $this->post('/showcase/session', [
+            'persona' => 'employee',
+            'role' => 'system_admin',
+        ])->assertSessionHasErrors('role');
+
+        $this->assertGuest();
+    }
+
+    public function test_arbitrary_account_id_selector_is_prohibited(): void
+    {
+        $this->curatedUser('employee');
+
+        $this->post('/showcase/session', [
+            'persona' => 'employee',
+            'account_id' => '15',
+        ])->assertSessionHasErrors('account_id');
 
         $this->assertGuest();
     }
