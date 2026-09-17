@@ -44,8 +44,8 @@ Execution remains compressed to two writer slots.
 
 | Lane | Waves | Current exact candidate | State |
 | --- | --- | --- | --- |
-| A | W03 + W04 | `eb985fe5da8f2f7c63c987680a22583f2067b85b` | W03 REWORK RETURN VERIFIED / REPEAT REVIEW ISSUED; W04 source-level PASS/frozen |
-| B | W05 → W06 + W07 | `af417bab384ad066814ba32145be83c00396ff69` | ACCEPTED FOR INTEGRATION WITH RECORDED LIMITATIONS / bounded Integration Writer issued |
+| A | W03 + W04 | `eb985fe5da8f2f7c63c987680a22583f2067b85b` | REPEAT REVIEW `SUITABLE FOR ACCEPTANCE`; integration-readiness Acceptance issued |
+| B | W05 → W06 + W07 | `af417bab384ad066814ba32145be83c00396ff69` | INTEGRATED at `57ae471f4e52611a8cdacd3a152240c657c150e4`; post-integration run #122 SUCCESS |
 | W08 | cross-product completion / harness / acceptance boundary | none | NOT STARTED |
 
 Detailed lane contract:
@@ -58,7 +58,7 @@ Branch:
 
 `KIRCH-TALIBON-UIUX-SPRINT-LANE-A-W03-W04`
 
-Prior reviewed candidate / exact rework start:
+Prior reviewed candidate / exact W03 rework start:
 
 `f61ea353fc26595e78aba99e6aa9b5ea0293181c`
 
@@ -74,7 +74,7 @@ W04 disposition:
 
 SOURCE-LEVEL PASS and frozen during bounded W03 rework.
 
-### W03 bounded rework return
+### W03 bounded rework
 
 Exact returned candidate:
 
@@ -98,23 +98,37 @@ Exact six-file rework delta:
 - `resources/js/navigation/returnContext.ts`
 - `tests/Feature/W03ContextContinuityTest.php`
 
-Maintainer source inspection confirms the repair introduces client + server return-target sanitization, strips nested `return_to` state, validates exact expected internal list paths, preserves Transactions/Correspondence/Travel Order mutation continuity, and retains a Transactions fallback to the validated list when mutation removes detail visibility. This source check is not independent Review.
-
 Fresh exact-final-SHA Forge UIUX Validation run #116, ID `35168153990`, exact head `eb985fe5da8f2f7c63c987680a22583f2067b85b`: **SUCCESS**.
+
+Focused W03 context-continuity/security suite: 7/7 PASS.
+
+Full Laravel suite observed in that run: 370 passed / 5,088 assertions.
 
 Writer evidence:
 
 `.forge/evidence/writer/LANE-A-W03-REWORK-WRITER-RETURN.md`
 
-Repeat Reviewer handoff:
+### Repeat Review
 
-`.forge/handoffs/review/LANE-A-W03-CONTEXT-CONTINUITY-REREVIEW.md`
+Verdict:
 
-Acceptance: **NOT STARTED**.
+`SUITABLE FOR ACCEPTANCE`
+
+The repeat Reviewer independently determined the mutation-return continuity and return-target security repair sufficient at source/server-test level, found no confirmed new defect, and verified W04 remained frozen.
+
+Durable repeat Review evidence:
+
+`.forge/evidence/review/LANE-A-W03-CONTEXT-CONTINUITY-REREVIEW-SUITABLE.md`
+
+Integration-readiness Acceptance handoff:
+
+`.forge/handoffs/acceptance/LANE-A-W03-W04-INTEGRATION-READINESS-ACCEPTANCE.md`
+
+Acceptance: **ISSUED / RETURN PENDING**.
 
 Integration: **NOT AUTHORIZED**.
 
-Next Lane A transition: independent repeat Review of exact candidate `eb985fe5...`; only `SUITABLE FOR ACCEPTANCE` may advance to separate integration-readiness Acceptance.
+Next Lane A transition: separate Acceptance of exact candidate `eb985fe5...`. Only a positive integration-readiness Acceptance result may authorize a bounded Integration Writer.
 
 ## Lane B — W05/W06/W07
 
@@ -148,10 +162,6 @@ Durable Review evidence:
 
 `.forge/evidence/review/LANE-B-W05-W07-REVIEW-SUITABLE.md`
 
-The two Maintainer-confirmed pre-review defects — breakpoint-hidden active modal/body lock and duplicate utility heading IDs — were independently determined fixed at source level.
-
-W05, W06 and W07 received source-level PASS within the bounded Review.
-
 Integration-readiness Acceptance result:
 
 `ACCEPT FOR INTEGRATION WITH RECORDED LIMITATIONS`
@@ -160,19 +170,38 @@ Durable Acceptance evidence:
 
 `.forge/evidence/acceptance/LANE-B-W05-W07-INTEGRATION-READINESS-ACCEPTED.md`
 
-Bounded Integration Writer handoff:
+### Integration
 
-`.forge/handoffs/integration/LANE-B-W05-W07-INTEGRATION.md`
+PR #5 was mechanically merged with a normal merge commit after live head/base/mergeability re-verification.
 
-Integration: **AUTHORIZED ONLY THROUGH THE BOUNDED INTEGRATION WRITER HANDOFF; NOT YET PERFORMED**.
+Exact integration source anchor:
 
-PR #5 remains transport only. At Maintainer inspection it is open, head exact `af417bab...`, base `KIRCH-TALIBON-V1-UIUX-CORRECTION`, and GitHub reports mergeable/clean. Its body contains a stale historical head SHA and is not authority.
+`57ae471f4e52611a8cdacd3a152240c657c150e4`
 
-## Parallel progression now authorized
+Merge parents:
 
-Lane A repeat Review and Lane B bounded mechanical integration may proceed in parallel because Lane A review is non-mutating and the accepted lane file sets remain isolated.
+- prior correction authority `38cf3b81fece091c37b40a65c6f45f609a4aa0bc`;
+- exact accepted Lane B candidate `af417bab384ad066814ba32145be83c00396ff69`.
 
-Lane B integration alone does not authorize W08. W08 still waits for Lane A to survive repeat Review, separate Acceptance and integration so the accepted W03–W07 state coexists on the correction branch.
+Accepted candidate history is preserved.
+
+Fresh exact integration-head Forge UIUX Validation run #122, ID `35170732270`, exact head `57ae471f4e52611a8cdacd3a152240c657c150e4`: **SUCCESS**.
+
+Durable integration return:
+
+`.forge/evidence/maintainer/LANE-B-W05-W07-INTEGRATION-RETURN.md`
+
+Integration result: **SUCCESS**.
+
+No Lane A source, backend/auth/session source, or unrelated product surface was introduced by the Lane B merge.
+
+## Current progression
+
+Lane B is integrated and its exact integration source anchor is validated.
+
+Lane A has passed repeat Review and is at separate integration-readiness Acceptance.
+
+W08 remains blocked until Lane A receives valid integration authority, is mechanically integrated, and W03–W07 coexist on the correction line for combined validation.
 
 ## Open evidence carried forward
 
@@ -198,9 +227,10 @@ Unless directly observed:
 - correction baseline: `0913a37f...`
 - P1 coexisting source: `5757114a...`
 - sprint start: `5727e5a...`
-- Lane A prior reviewed candidate / rework start: `f61ea353...`
-- Lane A current rework candidate: `eb985fe5...`
+- Lane A prior reviewed candidate / W03 rework start: `f61ea353...`
+- Lane A current candidate: `eb985fe5...`
 - Lane B pre-recovery: `270b1919...`
 - Lane B accepted candidate: `af417bab...`
+- Lane B integration source anchor: `57ae471f...`
 
 Use exact SHAs, not branch-name assumptions, for every mutation and transition.
