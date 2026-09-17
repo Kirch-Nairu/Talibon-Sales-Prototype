@@ -89,6 +89,7 @@ jobs:
           set -euo pipefail
           cp .env.example .env
           QA_PASSWORD="$(openssl rand -hex 24)"
+          echo "::add-mask::${QA_PASSWORD}"
           sed -i 's/^APP_ENV=.*/APP_ENV=testing/' .env
           sed -i 's/^APP_DEBUG=.*/APP_DEBUG=false/' .env
           sed -i 's#^APP_URL=.*#APP_URL=http://127.0.0.1:8000#' .env
@@ -108,25 +109,35 @@ jobs:
           npm run build
           composer test
 
+      - name: Prepare bounded QA harness compatibility overlay
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tests/Browser/w08-qa-harness-repair.py
+          node --check storage/app/qa/runtime-harness/h1-mutation-readiness.mjs
+          node --check storage/app/qa/runtime-harness/w08-cross-product-readiness.mjs
+
       - name: H1 browser mutation evidence
         id: h1
         continue-on-error: true
         shell: bash
         env:
           QA_ENVIRONMENT: github-actions-w08-h1
+          APP_URL: http://127.0.0.1:8001
+          QA_BASE_URL: http://127.0.0.1:8001
         run: |
           set -euo pipefail
           php artisan migrate:fresh --seed --force
-          php artisan serve --host=127.0.0.1 --port=8000 > storage/logs/w08-h1-server.log 2>&1 &
+          php artisan serve --host=127.0.0.1 --port=8001 > storage/logs/w08-h1-server.log 2>&1 &
           SERVER_PID=$!
           cleanup() { kill "$SERVER_PID" 2>/dev/null || true; wait "$SERVER_PID" 2>/dev/null || true; }
           trap cleanup EXIT
           for i in {1..40}; do
-            if curl -fsS http://127.0.0.1:8000/login >/dev/null; then break; fi
+            if curl -fsS http://127.0.0.1:8001/login >/dev/null; then break; fi
             sleep 1
           done
-          curl -fsS http://127.0.0.1:8000/login >/dev/null
-          node tests/Browser/h1-mutation-readiness.mjs
+          curl -fsS http://127.0.0.1:8001/login >/dev/null
+          node storage/app/qa/runtime-harness/h1-mutation-readiness.mjs
 
       - name: W08 cross-product browser evidence
         id: w08
@@ -134,19 +145,21 @@ jobs:
         shell: bash
         env:
           QA_ENVIRONMENT: github-actions-w08-cross-product
+          APP_URL: http://127.0.0.1:8002
+          QA_BASE_URL: http://127.0.0.1:8002
         run: |
           set -euo pipefail
           php artisan migrate:fresh --seed --force
-          php artisan serve --host=127.0.0.1 --port=8000 > storage/logs/w08-cross-product-server.log 2>&1 &
+          php artisan serve --host=127.0.0.1 --port=8002 > storage/logs/w08-cross-product-server.log 2>&1 &
           SERVER_PID=$!
           cleanup() { kill "$SERVER_PID" 2>/dev/null || true; wait "$SERVER_PID" 2>/dev/null || true; }
           trap cleanup EXIT
           for i in {1..40}; do
-            if curl -fsS http://127.0.0.1:8000/login >/dev/null; then break; fi
+            if curl -fsS http://127.0.0.1:8002/login >/dev/null; then break; fi
             sleep 1
           done
-          curl -fsS http://127.0.0.1:8000/login >/dev/null
-          node tests/Browser/w08-cross-product-readiness.mjs
+          curl -fsS http://127.0.0.1:8002/login >/dev/null
+          node storage/app/qa/runtime-harness/w08-cross-product-readiness.mjs
 
       - name: Package W08 runtime evidence
         if: always()
@@ -158,6 +171,7 @@ jobs:
           cp -f storage/app/qa/w08-cross-product-readiness-report.json storage/app/qa/w08-package/ 2>/dev/null || true
           cp -f storage/logs/w08-h1-server.log storage/app/qa/w08-package/ 2>/dev/null || true
           cp -f storage/logs/w08-cross-product-server.log storage/app/qa/w08-package/ 2>/dev/null || true
+          if [ -d storage/app/qa/runtime-harness ]; then cp -R storage/app/qa/runtime-harness storage/app/qa/w08-package/; fi
           if [ -d storage/app/qa/w08-screenshots ]; then cp -R storage/app/qa/w08-screenshots storage/app/qa/w08-package/; fi
           if [ -d storage/app/qa/h1-mutation-failures ]; then cp -R storage/app/qa/h1-mutation-failures storage/app/qa/w08-package/; fi
           (cd storage/app/qa/w08-package && zip -qr ../ONE-TALIBON-W08-QA-2026-09-17_105721_PHT.zip .)
@@ -173,6 +187,7 @@ jobs:
             storage/app/qa/ONE-TALIBON-W08-QA-2026-09-17_105721_PHT.zip.sha256
             storage/app/qa/h1-mutation-readiness-report.json
             storage/app/qa/w08-cross-product-readiness-report.json
+            storage/app/qa/runtime-harness/repair-manifest.json
             storage/app/qa/w08-screenshots
             storage/app/qa/h1-mutation-failures
           if-no-files-found: warn
