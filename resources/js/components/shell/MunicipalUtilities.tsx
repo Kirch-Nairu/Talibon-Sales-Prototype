@@ -1,6 +1,6 @@
 import { Link } from '@inertiajs/react';
-import { CalendarDays, Megaphone, MessageSquareText, PanelRightClose, X } from 'lucide-react';
-import { useEffect, useRef, type MouseEvent } from 'react';
+import { CalendarDays, ChevronDown, Megaphone, MessageSquareText, PanelRightClose, X } from 'lucide-react';
+import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { municipalAnnouncements } from '../../data/municipal/announcements';
 import { municipalCalendarItems } from '../../data/municipal/meetingsCalendar';
 import { municipalMessages } from '../../data/municipal/messages';
@@ -23,7 +23,7 @@ function announcementPreview() {
 }
 
 function messagePreview() {
-    return [...municipalMessages].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 2);
+    return [...municipalMessages].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
 }
 
 export function MunicipalUtilityContent({ idPrefix }: { idPrefix: string }) {
@@ -35,7 +35,7 @@ export function MunicipalUtilityContent({ idPrefix }: { idPrefix: string }) {
     const messagesTitleId = `${idPrefix}-messages-title`;
 
     return (
-        <div className="space-y-5">
+        <div className="space-y-4">
             <section aria-labelledby={calendarTitleId}>
                 <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-2">
@@ -44,12 +44,12 @@ export function MunicipalUtilityContent({ idPrefix }: { idPrefix: string }) {
                     </div>
                     <Link href="/calendar" className="text-xs font-semibold text-blue-700 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-700/30 dark:text-blue-300">Open</Link>
                 </div>
-                <div className="mt-2 space-y-2">
+                <div className="mt-2 space-y-1.5">
                     {calendar.map((item) => (
-                        <div key={item.id} className="rounded-lg border border-slate-200 bg-white p-2.5 dark:border-slate-700 dark:bg-slate-900/45">
+                        <div key={item.id} className="rounded-lg border border-slate-200 bg-white px-2.5 py-2 dark:border-slate-700 dark:bg-slate-900/45">
                             <div className="text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">{item.date} · {item.time}</div>
-                            <div className="mt-1 text-xs font-semibold leading-4 text-slate-900 dark:text-slate-100">{item.title}</div>
-                            <div className="mt-1 text-[11px] leading-4 text-slate-500 dark:text-slate-400">{item.office}</div>
+                            <div className="mt-0.5 text-xs font-semibold leading-4 text-slate-900 dark:text-slate-100">{item.title}</div>
+                            <div className="mt-0.5 text-[11px] leading-4 text-slate-500 dark:text-slate-400">{item.office}</div>
                         </div>
                     ))}
                 </div>
@@ -65,12 +65,12 @@ export function MunicipalUtilityContent({ idPrefix }: { idPrefix: string }) {
                 </div>
                 <div className="mt-2 divide-y divide-slate-100 rounded-lg border border-slate-200 bg-white dark:divide-slate-700 dark:border-slate-700 dark:bg-slate-900/45">
                     {announcements.map((item) => (
-                        <div key={item.id} className="p-2.5">
+                        <div key={item.id} className="px-2.5 py-2">
                             <div className="flex items-start justify-between gap-2">
                                 <div className="text-xs font-semibold leading-4 text-slate-900 dark:text-slate-100">{item.title}</div>
                                 {item.priority !== 'Routine' && <span className="shrink-0 text-[9px] font-bold uppercase text-amber-700 dark:text-amber-300">{item.priority}</span>}
                             </div>
-                            <div className="mt-1 text-[11px] leading-4 text-slate-500 dark:text-slate-400">{item.issuingOffice}</div>
+                            <div className="mt-0.5 text-[11px] leading-4 text-slate-500 dark:text-slate-400">{item.issuingOffice}</div>
                         </div>
                     ))}
                 </div>
@@ -85,32 +85,84 @@ export function MunicipalUtilityContent({ idPrefix }: { idPrefix: string }) {
                     <Link href="/messages" className="text-xs font-semibold text-blue-700 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-700/30 dark:text-blue-300">Open Messages</Link>
                 </div>
                 <div className="mt-2 divide-y divide-slate-100 rounded-lg border border-slate-200 bg-white dark:divide-slate-700 dark:border-slate-700 dark:bg-slate-900/45">
-                    {messages.map((message) => (
-                        <article key={message.id} className="p-2.5">
+                    {messages.slice(0, 2).map((message) => (
+                        <article key={message.id} className="px-2.5 py-2">
                             <div className="flex items-start justify-between gap-2">
                                 <div className="text-xs font-semibold leading-4 text-slate-900 dark:text-slate-100">{message.subject}</div>
                                 {message.priority === 'High' && <span className="shrink-0 text-[9px] font-bold uppercase text-rose-700 dark:text-rose-300">High</span>}
                             </div>
-                            <div className="mt-1 text-[11px] leading-4 text-slate-500 dark:text-slate-400">{message.office} · {message.date}</div>
-                            <p className="mt-1 line-clamp-2 text-[11px] leading-4 text-slate-600 dark:text-slate-300">{message.body}</p>
+                            <div className="mt-0.5 text-[11px] leading-4 text-slate-500 dark:text-slate-400">{message.office} · {message.date}</div>
                         </article>
                     ))}
                 </div>
-                <p className="mt-1.5 text-[10px] leading-4 text-slate-500 dark:text-slate-400">Read-only coordination preview. Open Messages for the complete visible history.</p>
             </section>
+        </div>
+    );
+}
+
+export function QuickMessagesPanel() {
+    const [open, setOpen] = useState(false);
+    const panel = useRef<HTMLDivElement>(null);
+    const messages = messagePreview();
+
+    useEffect(() => {
+        if (!open) return;
+        const closeOnEscape = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') setOpen(false);
+        };
+        document.addEventListener('keydown', closeOnEscape);
+        return () => document.removeEventListener('keydown', closeOnEscape);
+    }, [open]);
+
+    return (
+        <div ref={panel} className="fixed bottom-4 right-4 z-40 flex flex-col items-end gap-2 print:hidden">
+            {open && (
+                <section className="w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xl shadow-slate-900/20 dark:border-slate-700 dark:bg-[#142236]" aria-label="Quick Messages">
+                    <div className="flex items-center justify-between gap-3 border-b border-slate-100 px-3 py-2.5 dark:border-slate-700">
+                        <div>
+                            <div className="text-xs font-bold uppercase tracking-wide text-slate-800 dark:text-slate-100">Messages</div>
+                            <div className="text-[11px] text-slate-500 dark:text-slate-400">Portable coordination preview</div>
+                        </div>
+                        <button type="button" onClick={() => setOpen(false)} className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Close quick Messages"><ChevronDown size={17} /></button>
+                    </div>
+                    <div className="divide-y divide-slate-100 dark:divide-slate-700">
+                        {messages.map((message) => (
+                            <article key={message.id} className="px-3 py-2.5">
+                                <div className="flex items-start justify-between gap-2">
+                                    <div className="text-xs font-semibold leading-4 text-slate-900 dark:text-slate-100">{message.subject}</div>
+                                    {message.priority === 'High' && <span className="text-[9px] font-bold uppercase text-rose-700 dark:text-rose-300">High</span>}
+                                </div>
+                                <div className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">{message.office} · {message.date}</div>
+                                <p className="mt-1 line-clamp-2 text-[11px] leading-4 text-slate-600 dark:text-slate-300">{message.body}</p>
+                            </article>
+                        ))}
+                    </div>
+                    <Link href="/messages" onClick={() => setOpen(false)} className="block border-t border-slate-100 px-3 py-2.5 text-center text-xs font-bold text-blue-700 hover:bg-blue-50 dark:border-slate-700 dark:text-blue-300 dark:hover:bg-blue-950/35">Open Messages</Link>
+                </section>
+            )}
+            <button
+                type="button"
+                onClick={() => setOpen((value) => !value)}
+                className="flex h-11 items-center gap-2 rounded-full bg-[#0b2852] px-4 text-sm font-semibold text-white shadow-lg shadow-slate-900/20 hover:bg-[#123865] focus:outline-none focus:ring-2 focus:ring-blue-500/40 dark:bg-blue-700 dark:hover:bg-blue-600"
+                aria-expanded={open}
+                aria-label={open ? 'Close quick Messages' : 'Open quick Messages'}
+            >
+                <MessageSquareText size={17} aria-hidden="true" />
+                <span>Messages</span>
+            </button>
         </div>
     );
 }
 
 export function MunicipalUtilityRail() {
     return (
-        <aside className="hidden border-l border-slate-200/80 bg-slate-50/70 p-4 dark:border-slate-700/80 dark:bg-[#101b2a] 2xl:block" aria-label="Municipal utilities">
-            <div className="sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto overscroll-contain pr-1">
-                <div className="mb-4 flex items-center gap-2 text-slate-700 dark:text-slate-200">
+        <aside className="hidden border-l border-slate-200/80 bg-slate-50/70 p-3 dark:border-slate-700/80 dark:bg-[#101b2a] xl:block" aria-label="Municipal utilities">
+            <div className="sticky top-16 max-h-[calc(100vh-5rem)] overflow-y-auto overscroll-contain pr-1">
+                <div className="mb-3 flex items-center gap-2 text-slate-700 dark:text-slate-200">
                     <PanelRightClose size={17} aria-hidden="true" />
                     <div>
                         <div className="text-xs font-bold uppercase tracking-wide">Municipal utilities</div>
-                        <div className="text-[11px] text-slate-500 dark:text-slate-400">At-a-glance operating context</div>
+                        <div className="text-[11px] text-slate-500 dark:text-slate-400">Schedule, notices, coordination</div>
                     </div>
                 </div>
                 <MunicipalUtilityContent idPrefix="utility-rail" />
@@ -132,35 +184,13 @@ export function MunicipalUtilityDrawer({ onClose }: { onClose: () => void }) {
         const element = dialog.current;
         const previousFocus = document.activeElement as HTMLElement | null;
         const previousOverflow = document.body.style.overflow;
-        const wideViewport = window.matchMedia('(min-width: 1536px)');
-        let crossedIntoWide = false;
-
-        const closeAtWideBreakpoint = (event: MediaQueryListEvent) => {
-            if (!event.matches) return;
-            crossedIntoWide = true;
-            onCloseRef.current();
-        };
-
-        if (wideViewport.matches) {
-            onCloseRef.current();
-            return;
-        }
-
         element?.showModal();
         closeButton.current?.focus();
         document.body.style.overflow = 'hidden';
-        wideViewport.addEventListener('change', closeAtWideBreakpoint);
 
         return () => {
-            wideViewport.removeEventListener('change', closeAtWideBreakpoint);
             element?.close();
             document.body.style.overflow = previousOverflow;
-
-            if (crossedIntoWide) {
-                document.getElementById('portal-content')?.focus({ preventScroll: true });
-                return;
-            }
-
             previousFocus?.focus({ preventScroll: true });
         };
     }, []);
@@ -178,7 +208,7 @@ export function MunicipalUtilityDrawer({ onClose }: { onClose: () => void }) {
             aria-modal="true"
             className="fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none border-0 bg-transparent p-0 text-slate-900 backdrop:bg-slate-950/55 dark:text-slate-100"
         >
-            <section className="ml-auto flex h-full w-[min(92vw,360px)] flex-col border-l border-slate-200 bg-slate-50 shadow-2xl dark:border-slate-700 dark:bg-[#101b2a]">
+            <section className="ml-auto flex h-full w-[min(92vw,350px)] flex-col border-l border-slate-200 bg-slate-50 shadow-2xl dark:border-slate-700 dark:bg-[#101b2a]">
                 <div className="flex items-center justify-between gap-3 border-b border-slate-200 px-4 py-3 dark:border-slate-700">
                     <div>
                         <h2 id="municipal-utilities-drawer-title" className="text-sm font-bold text-slate-950 dark:text-slate-100">Municipal utilities</h2>
