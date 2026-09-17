@@ -1,0 +1,188 @@
+name: Forge W08 Quality Assurance
+
+on:
+  push:
+    branches:
+      - KIRCH-TALIBON-V1-W08-FORGE-QUALITY-ASSURANCE
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: forge-w08-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  browser-qa:
+    name: W08 cross-product browser QA
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: talibon_h1_mutations
+          POSTGRES_USER: postgres
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres -d talibon_h1_mutations"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      APP_ENV: testing
+      APP_DEBUG: false
+      APP_URL: http://127.0.0.1:8000
+      DB_CONNECTION: pgsql
+      DB_HOST: 127.0.0.1
+      DB_PORT: 5432
+      DB_DATABASE: talibon_h1_mutations
+      DB_USERNAME: postgres
+      DB_PASSWORD: ''
+      DB_TIMEZONE: Asia/Manila
+      QA_BASE_URL: http://127.0.0.1:8000
+      QA_EXPECTED_SHA: ${{ github.sha }}
+      QA_PRODUCT_ANCHOR: db286142cdc5d9e793680fac933a8462deb8390d
+
+    steps:
+      - name: Checkout exact QA head
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify QA authority ancestry
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$QA_EXPECTED_SHA"
+          git merge-base --is-ancestor "$QA_PRODUCT_ANCHOR" HEAD
+          test "$(git rev-parse "$QA_PRODUCT_ANCHOR")" = "$QA_PRODUCT_ANCHOR"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+          tools: composer:v2
+
+      - name: Install dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          composer install --no-interaction --prefer-dist --no-progress
+          npm ci --no-audit --no-fund
+          npx playwright install --with-deps chromium
+
+      - name: Prepare isolated Laravel environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp .env.example .env
+          QA_PASSWORD="$(openssl rand -hex 24)"
+          sed -i 's/^APP_ENV=.*/APP_ENV=testing/' .env
+          sed -i 's/^APP_DEBUG=.*/APP_DEBUG=false/' .env
+          sed -i 's#^APP_URL=.*#APP_URL=http://127.0.0.1:8000#' .env
+          sed -i 's/^DB_DATABASE=.*/DB_DATABASE=talibon_h1_mutations/' .env
+          sed -i 's/^DB_USERNAME=.*/DB_USERNAME=postgres/' .env
+          sed -i 's/^DB_PASSWORD=.*/DB_PASSWORD=/' .env
+          sed -i "s/^PROTOTYPE_DEMO_PASSWORD=.*/PROTOTYPE_DEMO_PASSWORD=${QA_PASSWORD}/" .env
+          php artisan key:generate --force
+          echo "QA_DEMO_PASSWORD=${QA_PASSWORD}" >> "$GITHUB_ENV"
+          mkdir -p storage/app/qa storage/logs
+
+      - name: Source validation at QA head
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run types:check
+          npm run build
+          composer test
+
+      - name: H1 browser mutation evidence
+        id: h1
+        continue-on-error: true
+        shell: bash
+        env:
+          QA_ENVIRONMENT: github-actions-w08-h1
+        run: |
+          set -euo pipefail
+          php artisan migrate:fresh --seed --force
+          php artisan serve --host=127.0.0.1 --port=8000 > storage/logs/w08-h1-server.log 2>&1 &
+          SERVER_PID=$!
+          cleanup() { kill "$SERVER_PID" 2>/dev/null || true; wait "$SERVER_PID" 2>/dev/null || true; }
+          trap cleanup EXIT
+          for i in {1..40}; do
+            if curl -fsS http://127.0.0.1:8000/login >/dev/null; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:8000/login >/dev/null
+          node tests/Browser/h1-mutation-readiness.mjs
+
+      - name: W08 cross-product browser evidence
+        id: w08
+        continue-on-error: true
+        shell: bash
+        env:
+          QA_ENVIRONMENT: github-actions-w08-cross-product
+        run: |
+          set -euo pipefail
+          php artisan migrate:fresh --seed --force
+          php artisan serve --host=127.0.0.1 --port=8000 > storage/logs/w08-cross-product-server.log 2>&1 &
+          SERVER_PID=$!
+          cleanup() { kill "$SERVER_PID" 2>/dev/null || true; wait "$SERVER_PID" 2>/dev/null || true; }
+          trap cleanup EXIT
+          for i in {1..40}; do
+            if curl -fsS http://127.0.0.1:8000/login >/dev/null; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:8000/login >/dev/null
+          node tests/Browser/w08-cross-product-readiness.mjs
+
+      - name: Package W08 runtime evidence
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p storage/app/qa/w08-package
+          cp -f storage/app/qa/h1-mutation-readiness-report.json storage/app/qa/w08-package/ 2>/dev/null || true
+          cp -f storage/app/qa/w08-cross-product-readiness-report.json storage/app/qa/w08-package/ 2>/dev/null || true
+          cp -f storage/logs/w08-h1-server.log storage/app/qa/w08-package/ 2>/dev/null || true
+          cp -f storage/logs/w08-cross-product-server.log storage/app/qa/w08-package/ 2>/dev/null || true
+          if [ -d storage/app/qa/w08-screenshots ]; then cp -R storage/app/qa/w08-screenshots storage/app/qa/w08-package/; fi
+          if [ -d storage/app/qa/h1-mutation-failures ]; then cp -R storage/app/qa/h1-mutation-failures storage/app/qa/w08-package/; fi
+          (cd storage/app/qa/w08-package && zip -qr ../ONE-TALIBON-W08-QA-2026-09-17_105721_PHT.zip .)
+          sha256sum storage/app/qa/ONE-TALIBON-W08-QA-2026-09-17_105721_PHT.zip > storage/app/qa/ONE-TALIBON-W08-QA-2026-09-17_105721_PHT.zip.sha256
+
+      - name: Upload W08 evidence artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ONE-TALIBON-W08-QA-2026-09-17_105721_PHT
+          path: |
+            storage/app/qa/ONE-TALIBON-W08-QA-2026-09-17_105721_PHT.zip
+            storage/app/qa/ONE-TALIBON-W08-QA-2026-09-17_105721_PHT.zip.sha256
+            storage/app/qa/h1-mutation-readiness-report.json
+            storage/app/qa/w08-cross-product-readiness-report.json
+            storage/app/qa/w08-screenshots
+            storage/app/qa/h1-mutation-failures
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Final W08 workflow gate
+        if: always()
+        shell: bash
+        run: |
+          echo "H1 outcome: ${{ steps.h1.outcome }}"
+          echo "W08 outcome: ${{ steps.w08.outcome }}"
+          test "${{ steps.h1.outcome }}" = "success"
+          test "${{ steps.w08.outcome }}" = "success"
