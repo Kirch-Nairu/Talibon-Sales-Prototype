@@ -14,8 +14,8 @@ export default function LegislativePager({ page, pageCount, onPageChange, label 
     return (
         <nav className="flex flex-wrap items-center justify-between gap-2 border-t border-slate-100 px-3 py-2 dark:border-slate-700" aria-label={label}>
             <button type="button" disabled={page === 1} onClick={() => move(page - 1)} className="rounded-md border border-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-700/30 disabled:cursor-not-allowed disabled:opacity-40 dark:border-slate-700 dark:text-slate-300">Previous</button>
-            <span className="text-xs font-medium text-slate-500 sm:hidden">Page {page} of {pageCount}</span>
-            <div className="hidden flex-wrap items-center justify-center gap-1 sm:flex">
+            <span className="text-xs font-medium text-slate-500 @min-[480px]:hidden">Page {page} of {pageCount}</span>
+            <div className="hidden flex-wrap items-center justify-center gap-1 @min-[480px]:flex">
                 {pages.map((item) => (
                     <button
                         key={item}

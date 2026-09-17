@@ -6,7 +6,7 @@ export default function LegislativeWorkQueue({ work }: { work: LegislativeWork[]
     return (
         <section className="rounded-xl border border-slate-200 bg-white p-3.5 dark:border-slate-700 dark:bg-[#142236]" aria-labelledby="legislative-work-heading">
             <div className="flex flex-wrap items-end justify-between gap-2"><div><div className="text-xs font-bold uppercase tracking-wide text-blue-700 dark:text-blue-300">Current workload</div><h2 id="legislative-work-heading" className="mt-0.5 text-sm font-bold text-slate-950 dark:text-slate-100">Legislative routed work</h2></div><span className="text-xs text-slate-400">{work.length} loaded</span></div>
-            <div className="mt-3 space-y-1.5 sm:max-h-[24rem] sm:overflow-y-auto sm:pr-1 sm:[scrollbar-gutter:stable]">
+            <div className="mt-3 space-y-1.5 @min-[620px]:max-h-[24rem] @min-[620px]:overflow-y-auto @min-[620px]:pr-1 @min-[620px]:[scrollbar-gutter:stable]">
                 {work.map((item) => {
                     const overdue = isOverdue(item);
                     return (
