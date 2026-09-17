@@ -18,16 +18,35 @@ type RelatedWorkPageProps = {
     [key: string]: unknown;
 };
 
+const APP_ORIGIN = 'https://one-talibon.internal';
+
 export default function RelatedWorkPanel({ items, title = 'Related work' }: Props) {
-    const { props } = usePage<RelatedWorkPageProps>();
+    const { props, url } = usePage<RelatedWorkPageProps>();
     const nearby = Array.isArray(props.relatedWork) ? props.relatedWork.slice(0, 5) : [];
     const nearbyHrefs = new Set(nearby.map((item) => item.href));
     const shortcuts = items.filter((item) => !nearbyHrefs.has(item.href)).slice(0, nearby.length > 0 ? 3 : 5);
 
-    const renderItem = (item: RelatedWorkItem, compact = false) => (
+    const keepReturnContext = (href: string) => {
+        if (!href.startsWith('/') || href.startsWith('//')) return href;
+
+        try {
+            const current = new URL(url, APP_ORIGIN);
+            const returnTarget = current.searchParams.get('return_to');
+            if (!returnTarget) return href;
+
+            const target = new URL(href, APP_ORIGIN);
+            if (target.origin !== APP_ORIGIN || target.searchParams.has('return_to')) return href;
+            target.searchParams.set('return_to', returnTarget);
+            return `${target.pathname}${target.search}${target.hash}`;
+        } catch {
+            return href;
+        }
+    };
+
+    const renderItem = (item: RelatedWorkItem, compact = false, preserveReturnContext = false) => (
         <Link
             key={`${item.href}-${item.label}`}
-            href={item.href}
+            href={preserveReturnContext ? keepReturnContext(item.href) : item.href}
             className="group flex min-w-0 items-start justify-between gap-3 px-3 py-2.5 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-600 dark:hover:bg-slate-800/55"
         >
             <div className="min-w-0">
@@ -54,7 +73,7 @@ export default function RelatedWorkPanel({ items, title = 'Related work' }: Prop
             {nearby.length > 0 ? (
                 <>
                     <div className="bg-slate-50 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.14em] text-slate-500 dark:bg-slate-900/40 dark:text-slate-400">Nearby records</div>
-                    <div className="divide-y divide-slate-100 dark:divide-slate-700">{nearby.map((item) => renderItem(item))}</div>
+                    <div className="divide-y divide-slate-100 dark:divide-slate-700">{nearby.map((item) => renderItem(item, false, true))}</div>
                 </>
             ) : null}
 
