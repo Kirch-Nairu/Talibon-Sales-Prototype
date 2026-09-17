@@ -2,245 +2,178 @@
 
 ## Authority
 
-Accepted correction baseline: `0913a37f96affd2c2a681697bdf6fdb6c381a99e`
-
-Integration branch: `KIRCH-TALIBON-V1-UIUX-CORRECTION`
-
 Technical authority: Kirch Ivan Balite
 
-Forge authority: `Kirch-Nairu/KIRION-FORGE@44eb57e5b45b343be0033bf22a7a5e74d543c01a`
+Forge authority:
 
-Directive: Operational Compression with production-quality evidence discipline.
+`Kirch-Nairu/KIRION-FORGE@44eb57e5b45b343be0033bf22a7a5e74d543c01a`
 
-## Rules
+Accepted correction baseline:
 
-- Maintainer owns exact SHA progression, two-writer lane sequencing, integration order, recovery and this ledger.
-- Writers remain bounded and do not self-review, self-accept or promote.
-- Review and Acceptance remain independent.
-- No force push, destructive rewrite, fake functionality, test weakening, fabricated runtime evidence or unauthorized deployment.
-- Build != runtime != accessibility != UAT != deployment.
+`0913a37f96affd2c2a681697bdf6fdb6c381a99e`
 
-## P1 — W01 + W02
+Correction integration branch:
 
-W01 accepted candidate: `8bcdb18441e3cdc071a96921ac29616d9391052c`.
+`KIRCH-TALIBON-V1-UIUX-CORRECTION`
 
-W02 accepted candidate: `3a5fc4768f6ae786fc38a2beb433d1a9fae159b4`.
+Integrated W03-W07 product-source anchor / W08 product input:
 
-Both passed integration-readiness Acceptance and were integrated via PR #2 then PR #3.
+`db286142cdc5d9e793680fac933a8462deb8390d`
 
-Coexisting P1 application source anchor:
+Combined pre-W08 Forge UIUX Validation:
 
-`5757114a02fc5d407e0f8cf4b7b2026c6e824e5f`
+- run `#128`;
+- run ID `35172772437`;
+- exact head `db286142cdc5d9e793680fac933a8462deb8390d`;
+- conclusion `SUCCESS`.
 
-Combined Forge UIUX Validation run #94, ID `35128745031`: **SUCCESS**.
+## Program state
 
-## W03–W08 production sprint
+W01-W07 correction source is integrated at `db286142...`.
 
-Exact sprint start:
+Current wave:
 
-`5727e5a258ecb358d6caa13b75127bec1c5c6d9d`
+`W08 — Cross-Product Quality Assurance`
 
-Execution remains compressed to two writer slots.
+W08 is ACTIVE but NOT COMPLETE.
 
-| Lane | Waves | Current exact candidate | State |
-| --- | --- | --- | --- |
-| A | W03 + W04 | `eb985fe5da8f2f7c63c987680a22583f2067b85b` | ACCEPTED FOR INTEGRATION WITH RECORDED LIMITATIONS / bounded Integration Writer issued |
-| B | W05 → W06 + W07 | `af417bab384ad066814ba32145be83c00396ff69` | INTEGRATED at `57ae471f4e52611a8cdacd3a152240c657c150e4`; post-integration run #122 SUCCESS |
-| W08 | cross-product completion / harness / acceptance boundary | none | BLOCKED UNTIL LANE A INTEGRATION + COMBINED EXACT-HEAD VALIDATION |
+No W08 PASS, final program Acceptance, UAT, deployment or production runtime acceptance has been issued.
 
-Detailed lane contract:
+## W08 logical session
 
-`.forge/handoffs/sprint/W03-W07-TWO-LANE-PRODUCTION-SPRINT.md`
+Role:
 
-## Lane A — W03/W04
+`KIRION FORGE: QUALITY ASSURANCE`
 
-Branch:
+Logical QA run identity:
 
-`KIRCH-TALIBON-UIUX-SPRINT-LANE-A-W03-W04`
+`2026-09-17_105721_PHT`
 
-Prior reviewed candidate / exact W03 rework start:
+Durable dossier:
 
-`f61ea353fc26595e78aba99e6aa9b5ea0293181c`
+`Forge Quality Assurance/2026-09-17_105721_PHT/`
 
-Prior Review verdict:
+QA execution branch:
 
-`REWORK`
+`KIRCH-TALIBON-V1-W08-FORGE-QUALITY-ASSURANCE`
 
-Durable prior Review evidence:
+Recovered QA execution HEAD:
 
-`.forge/evidence/review/LANE-A-W03-W04-REVIEW-REWORK.md`
+`ecdb11dea2f89e5503ffa37aff0b714f9f035ff5`
 
-W04 disposition:
+QA execution lineage above product anchor:
 
-SOURCE-LEVEL PASS and frozen during bounded W03 rework.
+1. `36a50536f6524bdf9e4a48a5fa55a9c9af907a02` — open W08 Forge QA;
+2. `8c606e1a45a666884a52dafc9da1615890340418` — add W08 QA workflow;
+3. `ecdb11dea2f89e5503ffa37aff0b714f9f035ff5` — add W08 cross-product browser harness.
 
-### W03 bounded rework
+Comparison to product anchor:
 
-Exact returned candidate:
+- ahead: 3;
+- behind: 0;
+- merge base: exact product anchor;
+- no W08 product-source file change observed.
 
-`eb985fe5da8f2f7c63c987680a22583f2067b85b`
+## W08 external execution history
 
-Maintainer verification:
+### Run #1
 
-- remote HEAD exact: PASS;
-- exactly 1 commit ahead / 0 behind `f61ea353fc26595e78aba99e6aa9b5ea0293181c`;
-- exact rework start is merge base and direct parent;
-- exactly six changed files, all inside bounded W03 continuity ownership;
-- no W04 Planning file changed;
-- no Lane B, Dashboard, workflow/domain service, evidence service or auth/session source collision observed.
+Workflow: `Forge W08 Quality Assurance`
 
-Exact six-file rework delta:
+Run ID: `35179443998`
 
-- `app/Http/Controllers/CorrespondenceWorkspaceActionController.php`
-- `app/Http/Controllers/TransactionController.php`
-- `app/Http/Controllers/TravelOrderController.php`
-- `app/Support/ValidatedListReturn.php`
-- `resources/js/navigation/returnContext.ts`
-- `tests/Feature/W03ContextContinuityTest.php`
+Head: `8c606e1a45a666884a52dafc9da1615890340418`
 
-Fresh exact-final-SHA Forge UIUX Validation run #116, ID `35168153990`, exact head `eb985fe5da8f2f7c63c987680a22583f2067b85b`: **SUCCESS**.
+Conclusion: `CANCELLED`
 
-Focused W03 context-continuity/security suite: 7/7 PASS.
+### Run #2
 
-Full Laravel suite observed in that run: 370 passed / 5,088 assertions.
+Workflow: `Forge W08 Quality Assurance`
 
-Writer evidence:
+Run ID: `35179625056`
 
-`.forge/evidence/writer/LANE-A-W03-REWORK-WRITER-RETURN.md`
+Head: `ecdb11dea2f89e5503ffa37aff0b714f9f035ff5`
 
-### Repeat Review
+Conclusion: `FAILURE`
 
-Verdict:
+Observed:
 
-`SUITABLE FOR ACCEPTANCE`
+- source validation at QA head completed successfully;
+- browser harnesses were launched and produced machine reports;
+- runtime evidence packaging and artifact upload completed;
+- final W08 workflow gate failed.
 
-Durable repeat Review evidence:
+Artifact:
 
-`.forge/evidence/review/LANE-A-W03-CONTEXT-CONTINUITY-REREVIEW-SUITABLE.md`
+`ONE-TALIBON-W08-QA-2026-09-17_105721_PHT`
 
-### Integration-readiness Acceptance
+Artifact ID:
 
-Result:
+`10480091707`
 
-`ACCEPT FOR INTEGRATION WITH RECORDED LIMITATIONS`
+Recovered artifact evidence is incomplete and contains zero screenshots. It is failure/reconciliation evidence, not a valid W08 PASS package.
 
-Durable Acceptance evidence:
+Machine reports record login-form locator timeouts and a partial W01 shell observation. Final defect classification is reserved to resumed QA after evidence/source reconciliation.
 
-`.forge/evidence/acceptance/LANE-A-W03-W04-INTEGRATION-READINESS-ACCEPTED.md`
+No external W08 workflow is currently active at the recovered checkpoint.
 
-The Acceptance return referenced Lane B's validated product-source anchor `57ae471f4e52611a8cdacd3a152240c657c150e4`. At Maintainer processing time, the correction coordination branch had later `.forge/**` governance-only commits. Maintainer comparison confirmed no intervening product source drift, so the Acceptance result remains valid for the exact candidate and narrow integration-eligibility promotion. The coordination-version discrepancy is recorded rather than hidden.
+## W08 orchestration recovery
 
-Bounded Integration Writer handoff:
+Maintainer identified two separate Forge process defects:
 
-`.forge/handoffs/integration/LANE-A-W03-W04-INTEGRATION.md`
+1. **CI trigger inefficiency** — governance/checkpoint transitions should not launch heavyweight product/browser QA solely because control-plane text changed.
+2. **CI babysitting** — QA must not keep an ephemeral ChatGPT execution alive by repeatedly polling long-running GitHub Actions.
 
-Integration: **AUTHORIZED ONLY THROUGH THE BOUNDED INTEGRATION WRITER HANDOFF; NOT YET PERFORMED**.
+Recovery representation:
 
-PR #4 is transport only. At Maintainer inspection its live head is exact `eb985fe5...`; GitHub authoritative mergeability is `true/clean`. The PR remains draft. Its body and some embedded base metadata contain stale historical SHAs and are not authority.
+- original W08 handoff remains unchanged;
+- additive continuation handoff: `.forge/handoffs/qa/W08-QA-EXECUTION-PARTITION-CONTINUATION.md`;
+- control-plane branch: `KIRCH-TALIBON-V1-W08-QA-GOVERNANCE`;
+- current checkpoint: `Forge Quality Assurance/2026-09-17_105721_PHT/EXECUTION-CHECKPOINT.md`;
+- current phase: `FAILED_EXTERNAL_RECONCILIATION`.
 
-Next Lane A transition: bounded clean mechanical integration preserving accepted history, followed by fresh Forge UIUX Validation on the exact resulting correction HEAD.
+The governance branch is control-plane only. It does not replace or reset the QA execution branch and does not create a new W08 logical run.
 
-## Lane B — W05/W06/W07
+## Next authorized QA transition
 
-Branch:
+On `resume QA`, Quality Assurance must:
 
-`KIRCH-TALIBON-UIUX-SPRINT-LANE-B-W05-W06-W07`
+1. independently verify the latest governance checkpoint and QA execution branch;
+2. consume run `35179625056` and artifact `10480091707` before replacement;
+3. classify observed failures under HARNESS / QA ENVIRONMENT / PRODUCT law;
+4. if HARNESS/QA ENVIRONMENT, perform the smallest bounded QA-authorized repair only;
+5. if PRODUCT, stop with `W08 QA: REWORK REQUIRED` and exact evidence;
+6. when a new heavy external run is launched, verify run/head identity, persist `WAITING_EXTERNAL`, and return instead of continuous polling;
+7. eventually rerun the complete W08 matrix and complete the required screenshots, ZIP, dossier and exact 23-part final QA Return.
 
-Pre-recovery candidate:
+## Evidence boundary carried forward
 
-`270b1919109d33312e5552694b773c18d5108509`
+Until actually completed and reconciled:
 
-Accepted final candidate:
-
-`af417bab384ad066814ba32145be83c00396ff69`
-
-Lineage:
-
-- 5 ahead / 0 behind exact sprint start;
-- exact sprint start is merge base;
-- recovery commit is one linear child of pre-recovery candidate;
-- recovery delta modifies only `resources/js/components/shell/MunicipalUtilities.tsx`;
-- full 10-file candidate remains Lane B-owned.
-
-Exact-SHA Forge UIUX Validation run #103, ID `35140216527`: **SUCCESS**.
-
-Independent Reviewer verdict:
-
-`SUITABLE FOR ACCEPTANCE`
-
-Durable Review evidence:
-
-`.forge/evidence/review/LANE-B-W05-W07-REVIEW-SUITABLE.md`
-
-Integration-readiness Acceptance result:
-
-`ACCEPT FOR INTEGRATION WITH RECORDED LIMITATIONS`
-
-Durable Acceptance evidence:
-
-`.forge/evidence/acceptance/LANE-B-W05-W07-INTEGRATION-READINESS-ACCEPTED.md`
-
-### Integration
-
-PR #5 was mechanically merged with a normal merge commit after live head/base/mergeability re-verification.
-
-Exact integration product-source anchor:
-
-`57ae471f4e52611a8cdacd3a152240c657c150e4`
-
-Merge parents:
-
-- prior correction authority `38cf3b81fece091c37b40a65c6f45f609a4aa0bc`;
-- exact accepted Lane B candidate `af417bab384ad066814ba32145be83c00396ff69`.
-
-Accepted candidate history is preserved.
-
-Fresh exact integration-head Forge UIUX Validation run #122, ID `35170732270`, exact head `57ae471f4e52611a8cdacd3a152240c657c150e4`: **SUCCESS**.
-
-Durable integration return:
-
-`.forge/evidence/maintainer/LANE-B-W05-W07-INTEGRATION-RETURN.md`
-
-Integration result: **SUCCESS**.
-
-No Lane A source, backend/auth/session source, or unrelated product surface was introduced by the Lane B merge.
-
-## Current progression
-
-Lane B is integrated and its exact integration product-source anchor is validated.
-
-Lane A has passed repeat Review and integration-readiness Acceptance and now has bounded mechanical integration authority.
-
-W08 remains blocked until Lane A integration succeeds and a fresh exact-resulting-head validation establishes the coexisting W03–W07 source state. Only then may Maintainer open the W08 cross-product evidence/acceptance boundary.
-
-## Open evidence carried forward
-
-Unless directly observed:
-
-- browser/runtime: NOT OBSERVED;
-- target responsive matrix: NOT OBSERVED;
-- light/dark visual parity: NOT OBSERVED;
-- runtime keyboard/focus: NOT OBSERVED;
-- Lane A real-browser Referer/mutation continuity: NOT OBSERVED;
-- body-scroll/focus behavior across Lane B utility breakpoint: NOT OBSERVED;
-- rendered DOM ID uniqueness: NOT OBSERVED;
-- zoom/reflow: NOT OBSERVED;
-- broader accessibility: NOT OBSERVED;
-- combined Lane A + Lane B behavior: NOT OBSERVED;
-- W08: NOT STARTED;
-- UAT: NOT STARTED;
+- full persona matrix: NOT COMPLETE;
+- full viewport matrix: NOT COMPLETE;
+- light/dark matrix: NOT COMPLETE;
+- W03 browser mutation-return continuity: NOT COMPLETE;
+- W04 Planning runtime responsiveness: NOT COMPLETE;
+- W05 utility breakpoint regression: NOT COMPLETE;
+- W06/W07 browser checks: NOT COMPLETE;
+- keyboard/focus/reflow/accessibility mechanics: NOT COMPLETE;
+- screenshot package: NOT COMPLETE;
+- required final ZIP: NOT COMPLETE;
+- screen-reader behavior: NOT OBSERVED unless separately executed;
+- UAT: NOT PERFORMED;
 - deployment: NOT AUTHORIZED;
 - production runtime acceptance: NOT ESTABLISHED.
 
 ## Recovery anchors
 
-- correction baseline: `0913a37f...`
-- P1 coexisting source: `5757114a...`
-- sprint start: `5727e5a...`
-- Lane A prior reviewed candidate / W03 rework start: `f61ea353...`
-- Lane A accepted candidate: `eb985fe5...`
-- Lane B pre-recovery: `270b1919...`
-- Lane B accepted candidate: `af417bab...`
-- Lane B integration product-source anchor: `57ae471f...`
+- correction baseline: `0913a37f96affd2c2a681697bdf6fdb6c381a99e`;
+- P1 integrated anchor: `5757114a02fc5d407e0f8cf4b7b2026c6e824e5f`;
+- sprint start: `5727e5a258ecb358d6caa13b75127bec1c5c6d9d`;
+- Lane B integrated anchor: `57ae471f4e52611a8cdacd3a152240c657c150e4`;
+- integrated W03-W07 / W08 product anchor: `db286142cdc5d9e793680fac933a8462deb8390d`;
+- W08 kickoff: `36a50536f6524bdf9e4a48a5fa55a9c9af907a02`;
+- W08 workflow commit: `8c606e1a45a666884a52dafc9da1615890340418`;
+- recovered W08 QA execution head: `ecdb11dea2f89e5503ffa37aff0b714f9f035ff5`.
 
-Use exact SHAs, not branch-name assumptions, for every mutation and transition.
+Use exact SHAs and durable checkpoints, not conversation memory, for every continuation.
