@@ -19,8 +19,8 @@ export default function LegislativeSessionList({ sessions, canManage }: { sessio
     return (
         <section className="space-y-3" aria-labelledby="legislative-sessions-heading">
             <div className="flex flex-wrap items-end justify-between gap-2"><div><div className="text-xs font-bold uppercase tracking-wide text-indigo-700 dark:text-indigo-300">Session register</div><h2 id="legislative-sessions-heading" className="mt-1 font-bold text-slate-950 dark:text-slate-100">Loaded legislative sessions</h2></div><span className="text-xs text-slate-400">Showing {start}–{end} of {sessions.length}</span></div>
-            <div className="space-y-3">{visible.map((session) => <LegislativeSessionCard key={session.id} session={session} canManage={canManage} />)}{sessions.length === 0 && <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-[#142236] dark:text-slate-400">No sessions scheduled.</div>}</div>
-            <div className="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-[#142236]"><LegislativePager page={page} pageCount={pageCount} onPageChange={setPage} label="Session pages" /></div>
+            <div className="space-y-3">{visible.map((session) => <LegislativeSessionCard key={session.id} session={session} canManage={canManage} />)}{sessions.length === 0 && <div className="rounded-xl bg-slate-100/70 px-4 py-6 text-center text-sm text-slate-500 dark:bg-slate-900/40 dark:text-slate-400">No legislative sessions are loaded.</div>}</div>
+            {pageCount > 1 && <div className="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-[#142236]"><LegislativePager page={page} pageCount={pageCount} onPageChange={setPage} label="Session pages" /></div>}
         </section>
     );
 }

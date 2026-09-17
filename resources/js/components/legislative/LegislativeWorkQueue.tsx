@@ -26,7 +26,7 @@ export default function LegislativeWorkQueue({ work }: { work: Work[] }) {
                         </a>
                     );
                 })}
-                {work.length === 0 && <div className="rounded-lg bg-slate-50 px-4 py-6 text-center text-sm text-slate-500 dark:bg-slate-900/40 dark:text-slate-400">No open legislative work.</div>}
+                {work.length === 0 && <div className="rounded-lg bg-slate-50 px-4 py-6 text-center text-sm text-slate-500 dark:bg-slate-900/40 dark:text-slate-400">No open legislative routed work in the loaded set.</div>}
             </div>
         </section>
     );
