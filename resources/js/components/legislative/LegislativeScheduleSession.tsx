@@ -16,7 +16,7 @@ export default function LegislativeScheduleSession() {
         <section className="rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-[#142236]" aria-label="Session scheduling">
             <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3">
                 <div><div className="text-sm font-semibold text-slate-900 dark:text-slate-100">Schedule a legislative session</div><div className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">Available to authorized legislative operators.</div></div>
-                <button type="button" aria-expanded={open} aria-controls="legislative-session-form" onClick={() => setOpen((value) => !value)} className="rounded-lg bg-[#0b2852] px-3.5 py-2 text-xs font-semibold text-white focus:outline-none focus:ring-2 focus:ring-blue-700/30">{open ? 'Close' : 'Schedule session'}</button>
+                <button type="button" aria-expanded={open} aria-controls="legislative-session-form" onClick={() => setOpen((value) => !value)} className="w-full rounded-lg bg-[#0b2852] px-3.5 py-2 text-xs sm:w-auto font-semibold text-white focus:outline-none focus:ring-2 focus:ring-blue-700/30">{open ? 'Close' : 'Schedule session'}</button>
             </div>
             {open && (
                 <form id="legislative-session-form" onSubmit={submit} className="grid gap-3 border-t border-slate-100 p-4 dark:border-slate-700 sm:grid-cols-2 lg:grid-cols-6">

@@ -14,7 +14,7 @@ const isOverdue = (work: Work) => Boolean(work.due_at && new Date(work.due_at).g
 export default function LegislativeWorkQueue({ work }: { work: Work[] }) {
     return (
         <section className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-[#142236]" aria-labelledby="legislative-work-heading">
-            <div className="flex items-end justify-between gap-3"><div><div className="text-xs font-bold uppercase tracking-wide text-blue-700 dark:text-blue-300">Current workload</div><h2 id="legislative-work-heading" className="mt-1 font-bold text-slate-950 dark:text-slate-100">Legislative routed work</h2></div><span className="text-xs text-slate-400">{work.length} loaded</span></div>
+            <div className="flex flex-wrap items-end justify-between gap-3"><div><div className="text-xs font-bold uppercase tracking-wide text-blue-700 dark:text-blue-300">Current workload</div><h2 id="legislative-work-heading" className="mt-1 font-bold text-slate-950 dark:text-slate-100">Legislative routed work</h2></div><span className="text-xs text-slate-400">{work.length} loaded</span></div>
             <div className="mt-4 space-y-2 sm:max-h-[460px] sm:overflow-y-auto sm:pr-1">
                 {work.map((item) => {
                     const overdue = isOverdue(item);

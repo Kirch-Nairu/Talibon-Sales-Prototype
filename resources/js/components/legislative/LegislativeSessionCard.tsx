@@ -32,13 +32,13 @@ export default function LegislativeSessionCard({ session, canManage }: { session
                     <h3 className="mt-1 text-base font-bold leading-5 text-slate-950 dark:text-slate-100">{session.title}</h3>
                     <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-xs text-slate-500 dark:text-slate-400"><span>{new Date(session.scheduled_at).toLocaleString()}</span><span>{session.location || 'Location TBD'}</span><span>{session.agenda_items.length} agenda {session.agenda_items.length === 1 ? 'item' : 'items'}</span></div>
                 </div>
-                <button type="button" aria-expanded={showAgenda} aria-controls={agendaId} onClick={() => setShowAgenda((value) => !value)} className="shrink-0 rounded-lg border border-indigo-200 px-3 py-2 text-xs font-semibold text-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-700/25 dark:border-indigo-900 dark:text-indigo-300">{showAgenda ? 'Hide agenda' : 'View agenda'}</button>
+                <button type="button" aria-expanded={showAgenda} aria-controls={agendaId} onClick={() => setShowAgenda((value) => !value)} className="w-full shrink-0 rounded-lg border border-indigo-200 px-3 py-2 sm:w-auto text-xs font-semibold text-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-700/25 dark:border-indigo-900 dark:text-indigo-300">{showAgenda ? 'Hide agenda' : 'View agenda'}</button>
             </div>
             {showAgenda && (
                 <div id={agendaId} className="mt-4 border-t border-slate-100 pt-4 dark:border-slate-700">
                     {canManage && (
                         <div className="mb-3">
-                            <button type="button" aria-expanded={showAgendaForm} aria-controls={agendaFormId} onClick={() => setShowAgendaForm((value) => !value)} className="rounded-md bg-indigo-50 px-3 py-2 text-xs font-semibold text-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-700/25 dark:bg-indigo-950/30 dark:text-indigo-300">{showAgendaForm ? 'Cancel agenda entry' : 'Add agenda item'}</button>
+                            <button type="button" aria-expanded={showAgendaForm} aria-controls={agendaFormId} onClick={() => setShowAgendaForm((value) => !value)} className="w-full rounded-md bg-indigo-50 px-3 py-2 sm:w-auto text-xs font-semibold text-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-700/25 dark:bg-indigo-950/30 dark:text-indigo-300">{showAgendaForm ? 'Cancel agenda entry' : 'Add agenda item'}</button>
                             {showAgendaForm && (
                                 <form id={agendaFormId} onSubmit={submitAgenda} className="mt-2 grid gap-2 rounded-lg bg-indigo-50/50 p-3 dark:bg-indigo-950/20 sm:grid-cols-[90px_1fr_auto]">
                                     <input aria-label="Agenda sequence number" type="number" min={1} value={agenda.data.sequence_no} onChange={(event) => agenda.setData('sequence_no', Number(event.target.value))} className="rounded-md border border-slate-300 bg-white px-2.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-700/25 dark:border-slate-600 dark:bg-slate-950/40 dark:text-slate-100" />
