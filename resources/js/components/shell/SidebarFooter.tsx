@@ -45,11 +45,11 @@ export default function SidebarFooter({ compact, user }: Props) {
     }
 
     return (
-        <div className="flex min-w-0 items-center gap-2" aria-busy={signingOut}>
-            <div className="min-w-0 flex-1">
+        <div className="min-w-0 space-y-1.5" aria-busy={signingOut}>
+            <div className="min-w-0 px-0.5">
                 <SidebarIdentity compact={false} user={user} persona={showcasePersona} />
             </div>
-            <div className="flex shrink-0 items-center gap-0.5 border-l border-white/10 pl-1.5">
+            <div className="flex items-center justify-end gap-0.5 border-t border-white/10 pt-1.5">
                 {showcaseSession?.active && <WorkspaceSwitcher compact />}
                 <SidebarAppearanceMenu compact align="end" />
                 <button
