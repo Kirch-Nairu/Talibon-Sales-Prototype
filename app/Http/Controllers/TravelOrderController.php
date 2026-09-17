@@ -11,6 +11,7 @@ use App\Models\TravelOrder;
 use App\Services\TravelOrderAccess;
 use App\Services\TravelOrderService;
 use App\Services\TravelOrderWorkspaceQuery;
+use App\Support\ValidatedListReturn;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -73,6 +74,7 @@ final class TravelOrderController extends Controller
         TravelOrderStatusRequest $request,
         TravelOrder $travelOrder,
     ): RedirectResponse {
+        $returnContext = ValidatedListReturn::fromRequest($request, '/travel-orders');
         $validated = $request->validated();
         $this->service->changeStatus(
             $request->user(),
@@ -83,7 +85,7 @@ final class TravelOrderController extends Controller
         );
 
         return redirect()
-            ->route('travel-orders.show', $travelOrder)
+            ->route('travel-orders.show', $returnContext->routeParameters(['travelOrder' => $travelOrder]))
             ->with('success', 'Travel Order status updated.');
     }
 }
