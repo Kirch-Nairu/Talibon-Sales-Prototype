@@ -1,4 +1,5 @@
 import { CalendarDays, Clock3 } from 'lucide-react';
+import BoundedOperationalPanel, { BoundedOperationalPanelBody } from './BoundedOperationalPanel';
 import DashboardSectionHeader from './DashboardSectionHeader';
 import { deadlineUrgency } from './deadlinePresentation';
 import { formatDate, formatTime } from './format';
@@ -21,7 +22,7 @@ const urgencyClass = {
 export default function SchedulePanel({ meetings, deadlines }: { meetings: DashboardMeeting[]; deadlines: DashboardDeadline[] }) {
     const orderedMeetings = [...meetings].sort((a, b) => Date.parse(a.startsAt) - Date.parse(b.startsAt));
 
-    return <section className="municipal-panel overflow-hidden" aria-labelledby="dashboard-schedule">
+    return <BoundedOperationalPanel headingId="dashboard-schedule">
         <DashboardSectionHeader
             headingId="dashboard-schedule"
             icon={<CalendarDays size={15} className="text-amber-700 dark:text-amber-300" aria-hidden="true" />}
@@ -29,11 +30,11 @@ export default function SchedulePanel({ meetings, deadlines }: { meetings: Dashb
             href="/calendar"
             linkLabel="Open calendar"
         />
-        <div className="grid divide-y divide-slate-200 dark:divide-slate-700 @min-[760px]:grid-cols-2 @min-[760px]:divide-x @min-[760px]:divide-y-0">
+        <BoundedOperationalPanelBody className="grid divide-y divide-slate-200 dark:divide-slate-700 @min-[760px]:grid-cols-2 @min-[760px]:divide-x @min-[760px]:divide-y-0">
             <div className="min-w-0">
-                <div className="border-b border-slate-100 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:border-slate-700 dark:text-slate-400 sm:px-4">Next meetings</div>
+                <div className="border-b border-slate-100 bg-white px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400 sm:px-4 @min-[1120px]:sticky @min-[1120px]:top-0 @min-[1120px]:z-10">Next meetings</div>
                 <div className="divide-y divide-slate-100 dark:divide-slate-700">
-                    {orderedMeetings.slice(0, 2).map((meeting) => <article key={meeting.id} className="px-3 py-2 sm:px-4">
+                    {orderedMeetings.map((meeting) => <article key={meeting.id} className="px-3 py-2 sm:px-4">
                         <div className="flex items-start gap-2.5">
                             <div className="w-12 shrink-0 text-center">
                                 <div className="text-[11px] font-bold text-blue-700 dark:text-blue-300">{formatTime(meeting.startsAt)}</div>
@@ -50,9 +51,9 @@ export default function SchedulePanel({ meetings, deadlines }: { meetings: Dashb
                 </div>
             </div>
             <div className="min-w-0">
-                <div className="border-b border-slate-100 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:border-slate-700 dark:text-slate-400 sm:px-4">Upcoming deadlines</div>
+                <div className="border-b border-slate-100 bg-white px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400 sm:px-4 @min-[1120px]:sticky @min-[1120px]:top-0 @min-[1120px]:z-10">Upcoming deadlines</div>
                 <div className="divide-y divide-slate-100 dark:divide-slate-700">
-                    {deadlines.slice(0, 3).map((deadline) => {
+                    {deadlines.map((deadline) => {
                         const urgency = deadlineUrgency(deadline);
                         return <article key={deadline.id} className="px-3 py-2 sm:px-4">
                             <div className="flex items-start gap-2.5">
@@ -71,6 +72,6 @@ export default function SchedulePanel({ meetings, deadlines }: { meetings: Dashb
                     {deadlines.length === 0 ? <div className="px-4 py-4 text-center text-xs text-slate-500 dark:text-slate-400">No future deadlines in this scope.</div> : null}
                 </div>
             </div>
-        </div>
-    </section>;
+        </BoundedOperationalPanelBody>
+    </BoundedOperationalPanel>;
 }
