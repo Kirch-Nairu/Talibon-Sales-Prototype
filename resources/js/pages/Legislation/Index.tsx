@@ -3,6 +3,7 @@ import { ArrowRight, Gavel, Plus, Search } from 'lucide-react';
 import { type FormEvent, useEffect, useState } from 'react';
 import LegislativeCalendarPanel from '../../components/legislative/LegislativeCalendarPanel';
 import LegislativePager from '../../components/legislative/LegislativePager';
+import LegislativeRecordStatus from '../../components/legislative/LegislativeRecordStatus';
 import PageFrame from '../../components/PageFrame';
 import PageHeader from '../../components/PageHeader';
 import AppLayout from '../../layouts/AppLayout';
@@ -128,7 +129,7 @@ export default function Index({ records, filters, canManage }: { records: Record
                                 <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{record.record_type.replaceAll('_', ' ')} · {record.year} · {record.issuing_body}</div>
                             </div>
                             <div className="flex shrink-0 items-center gap-3">
-                                <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold uppercase text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300">{record.status}</span>
+                                <LegislativeRecordStatus status={record.status} />
                                 <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 group-hover:text-blue-800 dark:text-slate-400 dark:group-hover:text-blue-300">Open <ArrowRight size={14} aria-hidden="true" /></span>
                             </div>
                         </Link>
