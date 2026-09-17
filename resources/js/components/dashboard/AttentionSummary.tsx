@@ -10,7 +10,7 @@ type Props = {
     overdueLabel?: string;
 };
 
-const itemClass = 'min-w-0 border-b border-r border-slate-200 px-4 py-3 dark:border-slate-700';
+const itemClass = 'min-w-0 border-b border-r border-slate-200 px-3 py-2 dark:border-slate-700';
 
 export default function AttentionSummary({
     workCount,
@@ -30,17 +30,17 @@ export default function AttentionSummary({
     ];
 
     return <section className="municipal-panel overflow-hidden" aria-labelledby="dashboard-attention-summary">
-        <div className="border-b border-slate-200 px-4 py-2.5 dark:border-slate-700 sm:px-5">
-            <h3 id="dashboard-attention-summary" className="text-sm font-bold text-slate-950 dark:text-slate-100 sm:text-base">Immediate attention</h3>
-            <p className="mt-1 text-xs leading-4 text-slate-500 dark:text-slate-400">Live counts from the work, project, deadline, and correspondence records in this Home scope.</p>
+        <div className="flex items-center justify-between gap-3 border-b border-slate-200 px-3 py-2 dark:border-slate-700 sm:px-4">
+            <h3 id="dashboard-attention-summary" className="text-xs font-bold uppercase tracking-[0.08em] text-slate-800 dark:text-slate-100">Immediate attention</h3>
+            <span className="text-[10px] text-slate-500 dark:text-slate-400">Current work scope</span>
         </div>
         <div className="grid grid-cols-2 @min-[700px]:grid-cols-5">
             {items.map(({ label, value, Icon, tone }) => <div key={label} className={itemClass}>
                 <div className="flex items-center justify-between gap-2">
-                    <div className={`text-2xl font-bold tabular-nums ${tone}`}>{value.toLocaleString()}</div>
-                    <Icon size={16} className="shrink-0 text-slate-400" aria-hidden="true" />
+                    <div className={`text-xl font-bold tabular-nums ${tone}`}>{value.toLocaleString()}</div>
+                    <Icon size={15} className="shrink-0 text-slate-400" aria-hidden="true" />
                 </div>
-                <div className="mt-1.5 text-xs leading-4 text-slate-600 dark:text-slate-300">{label}</div>
+                <div className="mt-0.5 text-[11px] leading-4 text-slate-600 dark:text-slate-300">{label}</div>
             </div>)}
         </div>
     </section>;
