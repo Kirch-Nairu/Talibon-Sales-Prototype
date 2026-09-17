@@ -1,9 +1,6 @@
 import { Link, router } from '@inertiajs/react';
 import { BriefcaseBusiness, Plus, Search, X } from 'lucide-react';
 import { type FormEvent, useEffect, useState } from 'react';
-import PageFrame from '../../components/PageFrame';
-import PageHeader from '../../components/PageHeader';
-import ProgressiveFilterBar from '../../components/filters/ProgressiveFilterBar';
 import StaffWorkloadTable from '../../components/work-queue/StaffWorkloadTable';
 import WorkItemList from '../../components/work-queue/WorkItemList';
 import WorkScopeTabs from '../../components/work-queue/WorkScopeTabs';
@@ -49,10 +46,7 @@ export default function Index({ records, filters, scopeGroups, filterOptions, ex
             priority: overrides.priority ?? priority,
             office_id: overrides.office_id ?? (officeId ? Number(officeId) : null),
         };
-
-        return Object.fromEntries(
-            Object.entries(next).filter(([, value]) => value !== '' && value !== null && value !== undefined),
-        );
+        return Object.fromEntries(Object.entries(next).filter(([, value]) => value !== '' && value !== null && value !== undefined));
     };
 
     const applyFilters = (event: FormEvent) => {
@@ -72,73 +66,41 @@ export default function Index({ records, filters, scopeGroups, filterOptions, ex
         router.get('/transactions', { view: currentView }, { preserveState: true, preserveScroll: true, replace: true });
     };
 
-    const selectedOffice = filterOptions.offices.find((office) => String(office.id) === officeId);
-    const activeFilters = [
-        status ? `Status: ${humanize(status)}` : '',
-        priority ? `Priority: ${humanize(priority)}` : '',
-        officeId ? `Office: ${selectedOffice?.shortName || selectedOffice?.name || officeId}` : '',
-    ].filter(Boolean);
+    const activeFilterCount = [search, status, priority, officeId].filter(Boolean).length;
 
     return (
         <AppLayout title="My Work">
-            <PageFrame>
-                <PageHeader
-                    eyebrow="Daily work queues"
-                    title="My Work"
-                    description="Review your assignments, deadlines and work requiring action."
-                    icon={BriefcaseBusiness}
-                    aside={(
-                        <Link
-                            href="/transactions/create"
-                            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#0b2852] px-4 py-2.5 text-[13px] font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 focus-visible:ring-offset-2 sm:w-auto sm:py-3 sm:text-sm"
-                        >
-                            <Plus size={16} aria-hidden="true" /> New transaction
-                        </Link>
-                    )}
-                />
-
-                <div className="flex flex-wrap items-center justify-between gap-2 px-1 text-xs text-slate-500 dark:text-slate-400 sm:text-xs">
-                    <span>{experience.department.name} · {experience.hasOfficeScope ? 'Personal and office queues' : 'Personal queues'}</span>
-                    <span><span className="font-semibold text-slate-700 dark:text-slate-200">{currentTitle}</span> · {currentQueue?.count ?? records.total} item{(currentQueue?.count ?? records.total) === 1 ? '' : 's'}</span>
-                </div>
+            <div className="mx-auto max-w-7xl space-y-3">
+                <header className="rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-sm dark:border-slate-700 dark:bg-[#142236] sm:px-5">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                        <div className="flex min-w-0 items-center gap-3">
+                            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-800 dark:bg-blue-950/40 dark:text-blue-300"><BriefcaseBusiness size={18} /></div>
+                            <div className="min-w-0">
+                                <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1"><h1 className="text-lg font-bold text-slate-950 dark:text-slate-100">My Work</h1><span className="text-[10px] font-bold uppercase tracking-[0.13em] text-blue-700 dark:text-blue-300">{currentTitle}</span></div>
+                                <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{experience.department.name} · {experience.hasOfficeScope ? 'Personal and office queues' : 'Personal queues'} · {currentQueue?.count ?? records.total} item{(currentQueue?.count ?? records.total) === 1 ? '' : 's'}</p>
+                            </div>
+                        </div>
+                        <Link href="/transactions/create" className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#0b2852] px-3.5 py-2 text-xs font-semibold text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"><Plus size={15} /> New transaction</Link>
+                    </div>
+                </header>
 
                 <WorkScopeTabs groups={scopeGroups} currentView={currentView} onSelect={selectView} />
 
-                <form onSubmit={applyFilters}>
-                    <ProgressiveFilterBar
-                        title="Queue filters"
-                        activeFilters={activeFilters}
-                        primary={(
-                            <label className="block">
-                                <span className="mb-1 block text-xs font-bold uppercase tracking-wide text-slate-400 sm:text-xs dark:text-slate-400">Search work</span>
-                                <div className="relative">
-                                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-400" size={15} aria-hidden="true" />
-                                    <input value={search} onChange={(event) => setSearch(event.target.value)} className="w-full rounded-xl border border-slate-300 bg-white py-2.5 pl-9 pr-3 text-[13px] text-slate-900 outline-none focus:border-blue-700 focus:ring-2 focus:ring-blue-100 sm:text-sm dark:bg-[#142236] dark:text-slate-100 dark:border-slate-700" placeholder="Reference, title, office, assignee…" />
-                                </div>
-                            </label>
-                        )}
-                        common={(
-                            <>
-                                <label className="block lg:min-w-40"><span className="mb-1 block text-xs font-bold uppercase tracking-wide text-slate-400 sm:text-xs dark:text-slate-400">Status</span><select value={status} onChange={(event) => setStatus(event.target.value)} className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-[13px] text-slate-900 sm:text-sm dark:bg-[#142236] dark:text-slate-100 dark:border-slate-700"><option value="">All statuses</option>{filterOptions.statuses.map((value) => <option key={value} value={value}>{humanize(value)}</option>)}</select></label>
-                                <label className="block lg:min-w-40"><span className="mb-1 block text-xs font-bold uppercase tracking-wide text-slate-400 sm:text-xs dark:text-slate-400">Priority</span><select value={priority} onChange={(event) => setPriority(event.target.value)} className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-[13px] text-slate-900 sm:text-sm dark:bg-[#142236] dark:text-slate-100 dark:border-slate-700"><option value="">All priorities</option>{filterOptions.priorities.map((value) => <option key={value} value={value}>{humanize(value)}</option>)}</select></label>
-                            </>
-                        )}
-                        advanced={(
-                            <label className="block"><span className="mb-1 block text-xs font-bold uppercase tracking-wide text-slate-400 sm:text-xs dark:text-slate-400">Current office</span><select value={officeId} onChange={(event) => setOfficeId(event.target.value)} className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-[13px] text-slate-900 sm:text-sm dark:bg-[#142236] dark:text-slate-100 dark:border-slate-700"><option value="">All authorized current offices</option>{filterOptions.offices.map((office) => <option key={office.id} value={office.id}>{office.shortName || office.name}</option>)}</select></label>
-                        )}
-                        actions={(
-                            <>
-                                <button className="rounded-xl bg-blue-900 px-4 py-2.5 text-[13px] font-bold text-white sm:text-xs">Apply</button>
-                                <button type="button" onClick={clearFilters} className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-500 hover:bg-slate-50 dark:bg-[#142236] dark:text-slate-400 dark:border-slate-700" aria-label="Clear filters"><X size={15} aria-hidden="true" /></button>
-                            </>
-                        )}
-                    />
+                <form onSubmit={applyFilters} className="rounded-xl border border-slate-200 bg-white p-3 shadow-sm dark:border-slate-700 dark:bg-[#142236]">
+                    <div className="grid gap-2 md:grid-cols-[minmax(220px,1fr)_160px_150px_190px_auto] md:items-end">
+                        <label className="block">
+                            <span className="mb-1 block text-[10px] font-bold uppercase tracking-wide text-slate-400">Search work</span>
+                            <div className="relative"><Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={15} /><input value={search} onChange={(event) => setSearch(event.target.value)} className="h-9 w-full rounded-lg border border-slate-300 bg-white pl-9 pr-3 text-xs text-slate-900 outline-none focus:border-blue-700 focus:ring-2 focus:ring-blue-100 dark:border-slate-700 dark:bg-[#142236] dark:text-slate-100" placeholder="Reference, title, office, assignee…" /></div>
+                        </label>
+                        <label className="block"><span className="mb-1 block text-[10px] font-bold uppercase tracking-wide text-slate-400">Status</span><select value={status} onChange={(event) => setStatus(event.target.value)} className="h-9 w-full rounded-lg border border-slate-300 bg-white px-2.5 text-xs text-slate-900 dark:border-slate-700 dark:bg-[#142236] dark:text-slate-100"><option value="">All statuses</option>{filterOptions.statuses.map((value) => <option key={value} value={value}>{humanize(value)}</option>)}</select></label>
+                        <label className="block"><span className="mb-1 block text-[10px] font-bold uppercase tracking-wide text-slate-400">Priority</span><select value={priority} onChange={(event) => setPriority(event.target.value)} className="h-9 w-full rounded-lg border border-slate-300 bg-white px-2.5 text-xs text-slate-900 dark:border-slate-700 dark:bg-[#142236] dark:text-slate-100"><option value="">All priorities</option>{filterOptions.priorities.map((value) => <option key={value} value={value}>{humanize(value)}</option>)}</select></label>
+                        <label className="block"><span className="mb-1 block text-[10px] font-bold uppercase tracking-wide text-slate-400">Current office</span><select value={officeId} onChange={(event) => setOfficeId(event.target.value)} className="h-9 w-full rounded-lg border border-slate-300 bg-white px-2.5 text-xs text-slate-900 dark:border-slate-700 dark:bg-[#142236] dark:text-slate-100"><option value="">All authorized offices</option>{filterOptions.offices.map((office) => <option key={office.id} value={office.id}>{office.shortName || office.name}</option>)}</select></label>
+                        <div className="flex gap-2"><button className="h-9 rounded-lg bg-blue-900 px-3.5 text-xs font-bold text-white">Apply{activeFilterCount > 0 ? ` · ${activeFilterCount}` : ''}</button><button type="button" onClick={clearFilters} className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-300 bg-white text-slate-500 hover:bg-slate-50 dark:border-slate-700 dark:bg-[#142236] dark:text-slate-400" aria-label="Clear filters"><X size={15} /></button></div>
+                    </div>
                 </form>
 
-                {currentView === 'staff_workload'
-                    ? <StaffWorkloadTable rows={staffWorkload} />
-                    : <WorkItemList records={records} title={currentTitle} />}
-            </PageFrame>
+                {currentView === 'staff_workload' ? <StaffWorkloadTable rows={staffWorkload} /> : <WorkItemList records={records} title={currentTitle} />}
+            </div>
         </AppLayout>
     );
 }
