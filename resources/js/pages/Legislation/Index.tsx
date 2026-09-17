@@ -115,7 +115,12 @@ export default function Index({ records, filters, canManage }: { records: Record
                             </div>
                         </Link>
                     ))}
-                    {records.length === 0 && <div className="p-8 text-center text-sm text-slate-500 dark:text-slate-400">No municipal records matched the current search.</div>}
+                    {records.length === 0 && (
+                        <div className="px-4 py-10 text-center">
+                            <div className="text-sm font-semibold text-slate-800 dark:text-slate-200">No legislative records match this view.</div>
+                            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Try a different search term or record type.</p>
+                        </div>
+                    )}
                 </div>
 
                 <LegislativeCalendarPanel />
