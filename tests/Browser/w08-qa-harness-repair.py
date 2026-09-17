@@ -30,17 +30,19 @@ def replace_once(source: str, old: str, new: str, label: str) -> str:
 
 SHOWCASE_HELPER_H1 = r'''async function enterShowcaseSession(page, spec) {
   await page.getByRole('button', { name: 'Enter Workspace', exact: true }).click();
-  const dialog = page.getByRole('dialog', { name: 'Choose your workspace' });
+  const dialog = page.getByRole('dialog');
   await dialog.waitFor({ state: 'visible', timeout: 5000 });
+  await dialog.getByRole('heading', { name: 'Choose your workspace', exact: true }).waitFor({ state: 'visible', timeout: 5000 });
 
   if (spec.email === 'engineering@talibon.demo' || spec.email === 'budget@talibon.demo') {
-    await dialog.getByRole('button', { name: 'Department Head', exact: true }).click();
+    await dialog.getByRole('button').filter({ hasText: 'Department Head' }).first().click();
+    await dialog.getByRole('heading', { name: 'Choose office context', exact: true }).waitFor({ state: 'visible', timeout: 5000 });
     const office = spec.email === 'engineering@talibon.demo'
       ? 'Municipal Engineering Office'
       : 'Municipal Budget Office';
     await Promise.all([
       page.waitForURL((url) => url.pathname === '/dashboard', { timeout: 15000 }),
-      dialog.getByRole('button', { name: office }).click(),
+      dialog.getByRole('button').filter({ hasText: office }).first().click(),
     ]);
   } else {
     const labels = {
@@ -54,7 +56,7 @@ SHOWCASE_HELPER_H1 = r'''async function enterShowcaseSession(page, spec) {
     if (!label) throw new Error(`No showcase persona mapping for ${spec.email}`);
     await Promise.all([
       page.waitForURL((url) => url.pathname === '/dashboard', { timeout: 15000 }),
-      dialog.getByRole('button', { name: label, exact: true }).click(),
+      dialog.getByRole('button').filter({ hasText: label }).first().click(),
     ]);
   }
   await appReady(page);
@@ -75,17 +77,19 @@ async function login(browser, spec) {
 
 SHOWCASE_HELPER_W08 = r'''async function enterShowcaseSession(page, spec) {
   await page.getByRole('button', { name: 'Enter Workspace', exact: true }).click();
-  const dialog = page.getByRole('dialog', { name: 'Choose your workspace' });
+  const dialog = page.getByRole('dialog');
   await dialog.waitFor({ state: 'visible', timeout: 5000 });
+  await dialog.getByRole('heading', { name: 'Choose your workspace', exact: true }).waitFor({ state: 'visible', timeout: 5000 });
 
   if (spec.email === 'engineering@talibon.demo' || spec.email === 'budget@talibon.demo') {
-    await dialog.getByRole('button', { name: 'Department Head', exact: true }).click();
+    await dialog.getByRole('button').filter({ hasText: 'Department Head' }).first().click();
+    await dialog.getByRole('heading', { name: 'Choose office context', exact: true }).waitFor({ state: 'visible', timeout: 5000 });
     const office = spec.email === 'engineering@talibon.demo'
       ? 'Municipal Engineering Office'
       : 'Municipal Budget Office';
     await Promise.all([
       page.waitForURL((url) => url.pathname === '/dashboard', { timeout: 15000 }),
-      dialog.getByRole('button', { name: office }).click(),
+      dialog.getByRole('button').filter({ hasText: office }).first().click(),
     ]);
   } else {
     const labels = {
@@ -99,7 +103,7 @@ SHOWCASE_HELPER_W08 = r'''async function enterShowcaseSession(page, spec) {
     if (!label) throw new Error(`No showcase persona mapping for ${spec.email}`);
     await Promise.all([
       page.waitForURL((url) => url.pathname === '/dashboard', { timeout: 15000 }),
-      dialog.getByRole('button', { name: label, exact: true }).click(),
+      dialog.getByRole('button').filter({ hasText: label }).first().click(),
     ]);
   }
   await appReady(page);
@@ -151,6 +155,7 @@ manifest = {
     'transformations': [
         'H1 login follows the accepted browser-visible Showcase workspace gateway instead of obsolete Email/Password controls.',
         'W08 persona login follows the accepted browser-visible Showcase workspace gateway.',
+        'Showcase persona-card selection uses stable dialog scope and visible card text because PersonaCard accessible names include description/context text and the dialog heading changes on the department-head step.',
         'W01 mobile Appearance assertion scopes to the visible mobile navigation Appearance trigger rather than an ambiguous hidden details descendant.',
     ],
     'outputs': {},
