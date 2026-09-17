@@ -81,7 +81,7 @@ export default function Dashboard({
                     overdueLabel={isAdministrator ? 'Offices with overdue work' : undefined}
                 />
 
-                <div className="grid min-w-0 gap-2.5 xl:grid-cols-[minmax(0,.92fr)_minmax(0,1.08fr)] xl:items-start">
+                <div className="grid min-w-0 gap-2.5 @min-[1120px]:grid-cols-[minmax(0,.92fr)_minmax(0,1.08fr)] @min-[1120px]:items-start">
                     <div className="min-w-0 space-y-2.5">
                         {!isAdministrator ? <AttentionQueue items={attentionWork} href={attentionQueueHref} linkLabel={attentionQueueLabel} /> : null}
                         {isAdministrator && systemOverview ? <AdministrativeAttention workload={systemOverview.operations.departmentWorkload} /> : null}
@@ -98,7 +98,7 @@ export default function Dashboard({
                         </div>
                     </div>
 
-                    <div className="grid min-w-0 gap-2.5 xl:grid-cols-2">
+                    <div className="grid min-w-0 gap-2.5 @min-[1120px]:grid-cols-2">
                         {operationalMetricGroups.map((group) => <MetricGroup key={group.key} group={group} />)}
                         {experience.key === 'department_head' && officeOverview ? <OfficeOverview overview={officeOverview} /> : null}
                         {experience.key === 'executive_oversight' && executiveOverview ? <ExecutiveOverview overview={executiveOverview} /> : null}
@@ -119,7 +119,7 @@ export default function Dashboard({
                         <span className="hidden shrink-0 text-[11px] font-semibold text-blue-700 group-open:inline dark:text-blue-300">Hide context</span>
                     </summary>
                     <div className="space-y-2.5 border-t border-slate-200 p-3 dark:border-slate-700">
-                        <div className="grid min-w-0 gap-2.5 xl:grid-cols-2">
+                        <div className="grid min-w-0 gap-2.5 @min-[1120px]:grid-cols-2">
                             <RecentDocuments documents={municipal.documents} />
                             <RecentCorrespondence overview={correspondenceOverview} supplemental={supplementalCorrespondence} />
                         </div>
@@ -127,7 +127,7 @@ export default function Dashboard({
                         {experience.key === 'executive_oversight' && executiveOverview ? <ExecutiveHistory overview={executiveOverview} /> : null}
                         {announcements}
 
-                        <div className="grid min-w-0 gap-2.5 xl:grid-cols-[1.08fr_.92fr]">
+                        <div className="grid min-w-0 gap-2.5 @min-[1120px]:grid-cols-[1.08fr_.92fr]">
                             <OfficeActivityFeed activity={municipal.officeActivity} />
                             <ActivityRail />
                         </div>
