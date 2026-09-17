@@ -37,6 +37,8 @@ export default function Index({ records, filters, canManage }: { records: Record
     const [page, setPage] = useState(1);
     const pageCount = Math.max(1, Math.ceil(records.length / RECORDS_PER_PAGE));
     const visibleRecords = records.slice((page - 1) * RECORDS_PER_PAGE, page * RECORDS_PER_PAGE);
+    const rangeStart = records.length === 0 ? 0 : (page - 1) * RECORDS_PER_PAGE + 1;
+    const rangeEnd = Math.min(page * RECORDS_PER_PAGE, records.length);
 
     useEffect(() => {
         setPage(1);
@@ -106,7 +108,7 @@ export default function Index({ records, filters, canManage }: { records: Record
                 </section>
 
                 <section className="flex flex-wrap items-center gap-x-4 gap-y-1.5 px-1 text-xs text-slate-500 dark:text-slate-400" aria-label="Loaded legislative result context">
-                    <span><strong className="font-semibold text-slate-800 dark:text-slate-200">{records.length}</strong> loaded records</span>
+                    <span>Showing <strong className="font-semibold text-slate-800 dark:text-slate-200">{rangeStart}–{rangeEnd}</strong> of <strong className="font-semibold text-slate-800 dark:text-slate-200">{records.length}</strong> loaded records</span>
                     {Object.entries(byType).map(([type, count]) => (
                         <span key={type} className="capitalize"><strong className="font-semibold text-slate-700 dark:text-slate-300">{count}</strong> {type.replaceAll('_', ' ')}</span>
                     ))}
