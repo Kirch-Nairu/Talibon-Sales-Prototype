@@ -128,6 +128,7 @@ final class TravelOrderWorkspaceQuery
                 'canChangeStatus' => $order->status === TravelOrderStatus::Approved
                     && $this->access->canUpdateState($actor),
             ],
+            'relatedWork' => $this->relatedWork($actor, $order),
         ];
     }
 
@@ -233,6 +234,35 @@ final class TravelOrderWorkspaceQuery
             'issuedToCount' => (int) $order->issued_to_count,
             'detailUrl' => route('travel-orders.show', $order, false),
         ];
+    }
+
+    /** @return array<int, array{label:string,detail:string,meta:string,href:string}> */
+    private function relatedWork(User $actor, TravelOrder $order): array
+    {
+        $query = $this->access->scopeVisibleTo(TravelOrder::query(), $actor)
+            ->where('id', '!=', $order->id)
+            ->when(
+                $order->department_id,
+                fn (Builder $sameOffice) => $sameOffice->where('department_id', $order->department_id),
+                fn (Builder $withoutOffice) => $withoutOffice->whereNull('department_id'),
+            )
+            ->select([
+                'id', 'public_id', 'reference_number', 'purpose', 'department_id',
+                'travel_start_date', 'travel_end_date', 'status', 'issuance_date',
+            ])
+            ->with('department:id,code,name,short_name')
+            ->orderByDesc('issuance_date')
+            ->orderByDesc('id')
+            ->limit(4);
+
+        return $query->get()
+            ->map(fn (TravelOrder $item): array => [
+                'label' => $item->reference_number,
+                'detail' => $item->purpose,
+                'meta' => Str::headline($item->status->value).' · '.($item->department?->short_name ?? $item->department?->name ?? 'Office pending'),
+                'href' => route('travel-orders.show', $item, false),
+            ])
+            ->all();
     }
 
     private function office(?Department $department): ?array
