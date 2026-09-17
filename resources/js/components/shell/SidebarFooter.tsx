@@ -56,7 +56,7 @@ export default function SidebarFooter({ compact, user }: Props) {
                     type="button"
                     onClick={signOut}
                     disabled={signingOut}
-                    className="flex h-9 w-9 items-center justify-center rounded-md text-blue-200 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 disabled:cursor-wait disabled:opacity-60"
+                    className="flex h-10 w-10 items-center justify-center rounded-md text-blue-200 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 disabled:cursor-wait disabled:opacity-60 lg:h-9 lg:w-9"
                     aria-label={signingOut ? 'Signing out' : 'Sign out'}
                     title={signingOut ? 'Signing out' : 'Sign out'}
                 >
