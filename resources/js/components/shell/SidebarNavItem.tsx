@@ -30,7 +30,7 @@ export default function SidebarNavItem({
             aria-label={compact ? label : undefined}
             title={compact ? label : undefined}
             className={`relative flex items-center rounded-md text-[12px] font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-1 focus-visible:ring-offset-[#0b2852] ${
-                compact ? 'h-9 justify-center px-2' : 'min-h-9 gap-2.5 px-2.5 py-1.5'
+                compact ? 'h-9 justify-center px-2' : 'min-h-11 gap-2.5 px-2.5 py-2 lg:min-h-9 lg:py-1.5'
             } ${
                 active
                     ? 'bg-[#1769aa] text-white shadow-sm ring-1 ring-white/10'
