@@ -9,6 +9,7 @@ use App\Models\Department;
 use App\Services\CorrespondenceAccessDecider;
 use App\Services\CorrespondenceDetailPresenter;
 use App\Services\CorrespondenceInboxQuery;
+use App\Support\ValidatedListReturn;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -65,7 +66,15 @@ class CorrespondenceWorkspaceController extends Controller
             throw new AuthorizationException('You are not authorized to view this correspondence workspace.');
         }
 
-        return Inertia::render('Correspondence/Show', $presenter->workspace($user, $correspondence));
+        $payload = $presenter->workspace($user, $correspondence);
+        $workflow = &$payload['correspondence']['accountability']['workflow'];
+        if (is_array($workflow) && is_string($workflow['detailUrl'] ?? null)) {
+            $returnContext = ValidatedListReturn::fromRequest($request, '/correspondence', ['/records']);
+            $separator = str_contains($workflow['detailUrl'], '?') ? '&' : '?';
+            $workflow['detailUrl'] .= $separator.'return_to='.rawurlencode($returnContext->target());
+        }
+
+        return Inertia::render('Correspondence/Show', $payload);
     }
 
     /** @return array<int, string> */

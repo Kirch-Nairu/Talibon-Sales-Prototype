@@ -74,7 +74,7 @@ final class TravelOrderController extends Controller
         TravelOrderStatusRequest $request,
         TravelOrder $travelOrder,
     ): RedirectResponse {
-        $returnContext = ValidatedListReturn::fromRequest($request, '/travel-orders');
+        $returnContext = ValidatedListReturn::fromRequest($request, '/travel-orders', ['/records']);
         $validated = $request->validated();
         $this->service->changeStatus(
             $request->user(),

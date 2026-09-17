@@ -10,8 +10,10 @@ use App\Services\CoreEvidenceRules;
 use App\Services\DocumentEvidenceQuery;
 use App\Services\TransactionEvidenceService;
 use App\Services\TransactionLiveQuery;
+use App\Services\TransactionVisibilityQuery;
 use App\Services\WorkQueueQuery;
 use App\Support\ValidatedListReturn;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -80,6 +82,7 @@ class TransactionController extends Controller
         WorkflowTransaction $transaction,
         TransactionLiveQuery $live,
         DocumentEvidenceQuery $evidence,
+        TransactionVisibilityQuery $visibility,
     ): Response {
         $this->authorize('view', $transaction);
 
@@ -111,6 +114,7 @@ class TransactionController extends Controller
             'accountability' => $mutable['accountability'],
             'transactionPermissions' => $mutable['permissions'],
             'evidence' => $evidence->forTransaction($transaction),
+            'relatedWork' => $this->relatedWork($request, $transaction, $visibility),
         ]);
     }
 
@@ -120,7 +124,7 @@ class TransactionController extends Controller
         TransactionEvidenceService $evidence,
         WorkflowDefinitionResolver $definitions,
     ): RedirectResponse {
-        $returnContext = ValidatedListReturn::fromRequest($request, '/transactions');
+        $returnContext = ValidatedListReturn::fromRequest($request, '/transactions', ['/records', '/correspondence']);
         $definition = $definitions->resolve($transaction);
 
         $data = $request->validate([
@@ -165,6 +169,37 @@ class TransactionController extends Controller
         return redirect()
             ->route('transactions.show', $returnContext->routeParameters(['transaction' => $updated]))
             ->with('success', 'Transaction workflow updated.');
+    }
+
+    /** @return array<int, array{label:string,detail:string,meta:string,href:string}> */
+    private function relatedWork(
+        Request $request,
+        WorkflowTransaction $transaction,
+        TransactionVisibilityQuery $visibility,
+    ): array {
+        return $visibility->scope($request->user())
+            ->where('id', '!=', $transaction->id)
+            ->where(function (Builder $related) use ($transaction): void {
+                $related->where('current_department_id', $transaction->current_department_id)
+                    ->orWhere('origin_department_id', $transaction->origin_department_id)
+                    ->orWhere('transaction_type', $transaction->transaction_type);
+            })
+            ->select([
+                'id', 'reference_no', 'title', 'status', 'transaction_type',
+                'current_department_id', 'origin_department_id', 'updated_at',
+            ])
+            ->with('currentDepartment:id,code,name,short_name')
+            ->orderByRaw('CASE WHEN current_department_id = ? THEN 0 ELSE 1 END', [$transaction->current_department_id])
+            ->orderByDesc('updated_at')
+            ->limit(4)
+            ->get()
+            ->map(fn (WorkflowTransaction $item): array => [
+                'label' => $item->reference_no,
+                'detail' => $item->title,
+                'meta' => str_replace('_', ' ', $item->status).' · '.($item->currentDepartment?->short_name ?? $item->currentDepartment?->name ?? 'Office pending'),
+                'href' => route('transactions.show', $item, false),
+            ])
+            ->all();
     }
 
     /** @return array<int, \Illuminate\Http\UploadedFile> */

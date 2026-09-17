@@ -12,14 +12,21 @@ final class ValidatedListReturn
     ) {
     }
 
-    public static function fromRequest(Request $request, string $expectedPath): self
+    /** @param array<int, string> $alternatePaths */
+    public static function fromRequest(Request $request, string $expectedPath, array $alternatePaths = []): self
     {
         [$candidate, $carried] = self::candidateFromRequest($request);
 
-        return new self(self::validate($candidate, $expectedPath), $carried);
+        return new self(self::validateAllowed($candidate, $expectedPath, $alternatePaths), $carried);
     }
 
     public static function validate(mixed $candidate, string $expectedPath): string
+    {
+        return self::validateAllowed($candidate, $expectedPath, []);
+    }
+
+    /** @param array<int, string> $alternatePaths */
+    private static function validateAllowed(mixed $candidate, string $expectedPath, array $alternatePaths): string
     {
         if (! is_string($candidate)
             || $candidate === ''
@@ -37,19 +44,21 @@ final class ValidatedListReturn
         }
 
         $parts = parse_url($candidate);
+        $path = is_array($parts) ? (string) ($parts['path'] ?? '') : '';
+        $allowedPaths = array_values(array_unique([$expectedPath, ...$alternatePaths]));
         if ($parts === false
             || isset($parts['scheme'])
             || isset($parts['host'])
             || isset($parts['user'])
             || isset($parts['pass'])
             || isset($parts['port'])
-            || ($parts['path'] ?? '') !== $expectedPath) {
+            || ! in_array($path, $allowedPaths, true)) {
             return $expectedPath;
         }
 
         $query = self::stripReturnTo((string) ($parts['query'] ?? ''));
 
-        return $expectedPath.($query === '' ? '' : '?'.$query);
+        return $path.($query === '' ? '' : '?'.$query);
     }
 
     public function target(): string

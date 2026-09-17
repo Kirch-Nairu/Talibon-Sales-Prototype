@@ -8,6 +8,7 @@ use App\Models\Department;
 use App\Models\Employee;
 use App\Models\User;
 use App\Models\WorkflowTransaction;
+use Illuminate\Database\Eloquent\Builder;
 
 final class CorrespondenceDetailPresenter
 {
@@ -89,6 +90,7 @@ final class CorrespondenceDetailPresenter
                 ? $this->routeOptions($actor)
                 : [],
             'evidence' => $trace['evidence'],
+            'relatedWork' => $this->relatedWork($actor, $record, $currentOffice),
         ];
     }
 
@@ -206,5 +208,49 @@ final class CorrespondenceDetailPresenter
             'canRoute' => $this->access->canRoute($actor, $record),
             'canAct' => $canAct,
         ];
+    }
+
+    /** @return array<int, array{label:string,detail:string,meta:string,href:string}> */
+    private function relatedWork(User $actor, CorrespondenceRecord $record, ?Department $currentOffice): array
+    {
+        if (! $currentOffice) {
+            return [];
+        }
+
+        $query = CorrespondenceRecord::query()
+            ->where('id', '!=', $record->id)
+            ->with([
+                'receivingDepartment:id,code,name,short_name',
+                'workflowTransaction:id,status,current_department_id',
+                'workflowTransaction.currentDepartment:id,code,name,short_name',
+            ]);
+
+        $this->access->scopeVisibleTo($query, $actor);
+
+        return $query
+            ->where(function (Builder $office) use ($currentOffice): void {
+                $office->whereHas(
+                    'workflowTransaction',
+                    fn (Builder $workflow) => $workflow->where('current_department_id', $currentOffice->id),
+                )->orWhere(function (Builder $unlinked) use ($currentOffice): void {
+                    $unlinked->whereNull('workflow_transaction_id')
+                        ->where('receiving_department_id', $currentOffice->id);
+                });
+            })
+            ->orderByDesc('received_at')
+            ->orderByDesc('id')
+            ->limit(4)
+            ->get()
+            ->map(function (CorrespondenceRecord $item): array {
+                $itemOffice = $item->workflowTransaction?->currentDepartment ?? $item->receivingDepartment;
+
+                return [
+                    'label' => $item->municipal_reference_no ?? $item->external_reference_no,
+                    'detail' => $item->subject,
+                    'meta' => str_replace('_', ' ', $item->lifecycle_state->value).' · '.($itemOffice?->short_name ?? $itemOffice?->name ?? 'Office pending'),
+                    'href' => '/correspondence/'.$item->public_id.'/workspace',
+                ];
+            })
+            ->all();
     }
 }
