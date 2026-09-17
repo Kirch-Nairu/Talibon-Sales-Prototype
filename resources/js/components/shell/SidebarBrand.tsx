@@ -7,7 +7,7 @@ type Props = {
 
 export default function SidebarBrand({ compact }: Props) {
     return (
-        <div className={`border-b border-white/10 ${compact ? 'px-2 py-3' : 'px-4 py-3.5'}`}>
+        <div className={`border-b border-white/10 ${compact ? 'px-2 py-2.5' : 'px-3 py-2.5'}`}>
             <div className={compact ? 'flex justify-center' : undefined}>
                 <MunicipalBrand inverse compact iconOnly={compact} />
             </div>
