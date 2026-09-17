@@ -22,7 +22,7 @@ final class CorrespondenceWorkspaceActionController extends Controller
         CorrespondenceRecord $correspondence,
         CorrespondenceEvidenceService $evidence,
     ): RedirectResponse {
-        $returnContext = ValidatedListReturn::fromRequest($request, '/correspondence');
+        $returnContext = ValidatedListReturn::fromRequest($request, '/correspondence', ['/records']);
 
         $evidence->register(
             $request->user(),
@@ -41,7 +41,7 @@ final class CorrespondenceWorkspaceActionController extends Controller
         CorrespondenceRecord $correspondence,
         CorrespondenceEvidenceService $evidence,
     ): RedirectResponse {
-        $returnContext = ValidatedListReturn::fromRequest($request, '/correspondence');
+        $returnContext = ValidatedListReturn::fromRequest($request, '/correspondence', ['/records']);
 
         $evidence->classify(
             $request->user(),
@@ -62,7 +62,7 @@ final class CorrespondenceWorkspaceActionController extends Controller
         CorrespondenceRecord $correspondence,
         CorrespondenceEvidenceService $evidence,
     ): RedirectResponse {
-        $returnContext = ValidatedListReturn::fromRequest($request, '/correspondence');
+        $returnContext = ValidatedListReturn::fromRequest($request, '/correspondence', ['/records']);
         $data = $request->validated();
         unset($data['evidence']);
 
@@ -84,7 +84,7 @@ final class CorrespondenceWorkspaceActionController extends Controller
         CorrespondenceRecord $correspondence,
         CorrespondenceEvidenceService $evidence,
     ): RedirectResponse {
-        $returnContext = ValidatedListReturn::fromRequest($request, '/correspondence');
+        $returnContext = ValidatedListReturn::fromRequest($request, '/correspondence', ['/records']);
 
         $evidence->act(
             $request->user(),
