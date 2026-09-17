@@ -62,33 +62,35 @@ export default function Workspace({ sessions, legislativeWork, canManage }: { se
 
                 <LegislativeWorkspaceMetrics sessions={sessions.length} routedWork={legislativeWork.length} overdue={overdue.length} />
 
-                <section className={`grid gap-5 ${canManage ? 'lg:grid-cols-[0.8fr_1.2fr]' : ''}`}>
-                    {canManage && (
-                        <form onSubmit={submit} className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-[#142236]">
-                            <h2 className="font-bold text-slate-950 dark:text-slate-100">Schedule session</h2>
-                            <div className="mt-4 grid gap-3">
-                                <input required placeholder="Session code" value={form.data.session_code} onChange={(e) => form.setData('session_code', e.target.value)} className="rounded-lg border border-slate-300 p-2.5 text-sm" />
-                                <select value={form.data.session_type} onChange={(e) => form.setData('session_type', e.target.value)} className="rounded-lg border border-slate-300 p-2.5 text-sm"><option value="regular">Regular</option><option value="special">Special</option><option value="committee">Committee</option><option value="other">Other</option></select>
-                                <input required placeholder="Title" value={form.data.title} onChange={(e) => form.setData('title', e.target.value)} className="rounded-lg border border-slate-300 p-2.5 text-sm" />
-                                <input required type="datetime-local" value={form.data.scheduled_at} onChange={(e) => form.setData('scheduled_at', e.target.value)} className="rounded-lg border border-slate-300 p-2.5 text-sm" />
-                                <input placeholder="Location" value={form.data.location} onChange={(e) => form.setData('location', e.target.value)} className="rounded-lg border border-slate-300 p-2.5 text-sm" />
-                                <button disabled={form.processing} className="rounded-lg bg-[#0b2852] px-4 py-2.5 text-sm font-semibold text-white">Schedule</button>
-                            </div>
-                        </form>
-                    )}
-                    <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-[#142236]">
-                        <h2 className="font-bold text-slate-950 dark:text-slate-100">Legislative routed work</h2>
+                {canManage && (
+                    <form onSubmit={submit} className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-[#142236]">
+                        <h2 className="font-bold text-slate-950 dark:text-slate-100">Schedule session</h2>
+                        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+                            <input required placeholder="Session code" value={form.data.session_code} onChange={(e) => form.setData('session_code', e.target.value)} className="rounded-lg border border-slate-300 p-2.5 text-sm" />
+                            <select value={form.data.session_type} onChange={(e) => form.setData('session_type', e.target.value)} className="rounded-lg border border-slate-300 p-2.5 text-sm"><option value="regular">Regular</option><option value="special">Special</option><option value="committee">Committee</option><option value="other">Other</option></select>
+                            <input required placeholder="Title" value={form.data.title} onChange={(e) => form.setData('title', e.target.value)} className="rounded-lg border border-slate-300 p-2.5 text-sm lg:col-span-2" />
+                            <input required type="datetime-local" value={form.data.scheduled_at} onChange={(e) => form.setData('scheduled_at', e.target.value)} className="rounded-lg border border-slate-300 p-2.5 text-sm" />
+                            <input placeholder="Location" value={form.data.location} onChange={(e) => form.setData('location', e.target.value)} className="rounded-lg border border-slate-300 p-2.5 text-sm sm:col-span-2 lg:col-span-4" />
+                            <button disabled={form.processing} className="rounded-lg bg-[#0b2852] px-4 py-2.5 text-sm font-semibold text-white">Schedule</button>
+                        </div>
+                    </form>
+                )}
+
+                <main className="grid items-start gap-5 xl:grid-cols-[1.05fr_0.95fr]">
+                    <section className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-[#142236]" aria-labelledby="legislative-work-heading">
+                        <div><div className="text-xs font-bold uppercase tracking-wide text-blue-700 dark:text-blue-300">Current workload</div><h2 id="legislative-work-heading" className="mt-1 font-bold text-slate-950 dark:text-slate-100">Legislative routed work</h2></div>
                         <div className="mt-4 max-h-[460px] space-y-2 overflow-y-auto">
                             {legislativeWork.map((work) => <a key={work.id} href={`/transactions/${work.id}`} className={`block rounded-xl p-3 text-sm ${work.due_at && new Date(work.due_at).getTime() < Date.now() ? 'bg-rose-50 dark:bg-rose-950/20' : 'bg-slate-50 dark:bg-slate-900/40'}`}><div className="font-semibold text-slate-950 dark:text-slate-100">{work.reference_no} · {work.title}</div><div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{work.current_department?.short_name || work.current_department?.name} · {work.status.replaceAll('_', ' ')} · {work.priority}{work.due_at ? ` · due ${new Date(work.due_at).toLocaleString()}` : ''}</div></a>)}
                             {legislativeWork.length === 0 && <div className="text-sm text-slate-500 dark:text-slate-400">No open legislative work.</div>}
                         </div>
-                    </div>
-                </section>
+                    </section>
 
-                <section className="space-y-3">
-                    {sessions.map((session) => <SessionCard key={session.id} session={session} canManage={canManage} />)}
-                    {sessions.length === 0 && <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-[#142236] dark:text-slate-400">No sessions scheduled.</div>}
-                </section>
+                    <section className="space-y-3" aria-labelledby="legislative-sessions-heading">
+                        <div><div className="text-xs font-bold uppercase tracking-wide text-indigo-700 dark:text-indigo-300">Session register</div><h2 id="legislative-sessions-heading" className="mt-1 font-bold text-slate-950 dark:text-slate-100">Loaded legislative sessions</h2></div>
+                        {sessions.map((session) => <SessionCard key={session.id} session={session} canManage={canManage} />)}
+                        {sessions.length === 0 && <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-[#142236] dark:text-slate-400">No sessions scheduled.</div>}
+                    </section>
+                </main>
             </div>
         </AppLayout>
     );
