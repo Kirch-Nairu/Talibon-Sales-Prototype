@@ -44,8 +44,8 @@ Execution remains compressed to two writer slots.
 
 | Lane | Waves | Current exact candidate | State |
 | --- | --- | --- | --- |
-| A | W03 + W04 | `f61ea353fc26595e78aba99e6aa9b5ea0293181c` | REVIEW `REWORK`; bounded W03 rework issued; W04 source-level PASS/frozen |
-| B | W05 → W06 + W07 | `af417bab384ad066814ba32145be83c00396ff69` | REVIEW `SUITABLE FOR ACCEPTANCE`; separate integration-readiness Acceptance issued |
+| A | W03 + W04 | `eb985fe5da8f2f7c63c987680a22583f2067b85b` | W03 REWORK RETURN VERIFIED / REPEAT REVIEW ISSUED; W04 source-level PASS/frozen |
+| B | W05 → W06 + W07 | `af417bab384ad066814ba32145be83c00396ff69` | ACCEPTED FOR INTEGRATION WITH RECORDED LIMITATIONS / bounded Integration Writer issued |
 | W08 | cross-product completion / harness / acceptance boundary | none | NOT STARTED |
 
 Detailed lane contract:
@@ -58,24 +58,15 @@ Branch:
 
 `KIRCH-TALIBON-UIUX-SPRINT-LANE-A-W03-W04`
 
-Reviewed candidate:
+Prior reviewed candidate / exact rework start:
 
 `f61ea353fc26595e78aba99e6aa9b5ea0293181c`
 
-Lineage at reviewed candidate:
-
-- 12 ahead / 0 behind exact sprint start;
-- exact sprint start is merge base;
-- reviewed delta is Lane A-owned;
-- no Lane B path overlap.
-
-Exact-SHA Forge UIUX Validation run #96, ID `35133625796`: **SUCCESS**.
-
-Independent Reviewer verdict:
+Prior Review verdict:
 
 `REWORK`
 
-Durable Review evidence:
+Durable prior Review evidence:
 
 `.forge/evidence/review/LANE-A-W03-W04-REVIEW-REWORK.md`
 
@@ -83,28 +74,47 @@ W04 disposition:
 
 SOURCE-LEVEL PASS and frozen during bounded W03 rework.
 
-W03 source-confirmed blockers:
+### W03 bounded rework return
 
-1. existing `return_to` can be nested inside a newly carried return target;
-2. Transactions workflow mutations drop contextual list/filter/page state on redirect;
-3. Correspondence register/classify/act and route actions drop contextual list state;
-4. Travel Order status mutation drops contextual list state.
+Exact returned candidate:
 
-Maintainer independently confirmed the redirect defects in the exact reviewed source. These are continuity defects, not workflow/business-logic defects.
+`eb985fe5da8f2f7c63c987680a22583f2067b85b`
 
-Bounded same-slot rework handoff:
+Maintainer verification:
 
-`.forge/handoffs/rework/LANE-A-W03-CONTEXT-CONTINUITY-REWORK.md`
+- remote HEAD exact: PASS;
+- exactly 1 commit ahead / 0 behind `f61ea353fc26595e78aba99e6aa9b5ea0293181c`;
+- exact rework start is merge base and direct parent;
+- exactly six changed files, all inside bounded W03 continuity ownership;
+- no W04 Planning file changed;
+- no Lane B, Dashboard, workflow/domain service, evidence service or auth/session source collision observed.
 
-Exact rework starting SHA:
+Exact six-file rework delta:
 
-`f61ea353fc26595e78aba99e6aa9b5ea0293181c`
+- `app/Http/Controllers/CorrespondenceWorkspaceActionController.php`
+- `app/Http/Controllers/TransactionController.php`
+- `app/Http/Controllers/TravelOrderController.php`
+- `app/Support/ValidatedListReturn.php`
+- `resources/js/navigation/returnContext.ts`
+- `tests/Feature/W03ContextContinuityTest.php`
+
+Maintainer source inspection confirms the repair introduces client + server return-target sanitization, strips nested `return_to` state, validates exact expected internal list paths, preserves Transactions/Correspondence/Travel Order mutation continuity, and retains a Transactions fallback to the validated list when mutation removes detail visibility. This source check is not independent Review.
+
+Fresh exact-final-SHA Forge UIUX Validation run #116, ID `35168153990`, exact head `eb985fe5da8f2f7c63c987680a22583f2067b85b`: **SUCCESS**.
+
+Writer evidence:
+
+`.forge/evidence/writer/LANE-A-W03-REWORK-WRITER-RETURN.md`
+
+Repeat Reviewer handoff:
+
+`.forge/handoffs/review/LANE-A-W03-CONTEXT-CONTINUITY-REREVIEW.md`
 
 Acceptance: **NOT STARTED**.
 
 Integration: **NOT AUTHORIZED**.
 
-Next Lane A transition: writer repairs only bounded W03 continuity, returns exact final SHA + fresh exact-SHA CI, then independent repeat Review.
+Next Lane A transition: independent repeat Review of exact candidate `eb985fe5...`; only `SUITABLE FOR ACCEPTANCE` may advance to separate integration-readiness Acceptance.
 
 ## Lane B — W05/W06/W07
 
@@ -116,7 +126,7 @@ Pre-recovery candidate:
 
 `270b1919109d33312e5552694b773c18d5108509`
 
-Reviewed final candidate:
+Accepted final candidate:
 
 `af417bab384ad066814ba32145be83c00396ff69`
 
@@ -142,19 +152,27 @@ The two Maintainer-confirmed pre-review defects — breakpoint-hidden active mod
 
 W05, W06 and W07 received source-level PASS within the bounded Review.
 
-Separate integration-readiness Acceptance handoff:
+Integration-readiness Acceptance result:
 
-`.forge/handoffs/acceptance/LANE-B-W05-W07-INTEGRATION-READINESS-ACCEPTANCE.md`
+`ACCEPT FOR INTEGRATION WITH RECORDED LIMITATIONS`
 
-Acceptance: **ISSUED / PENDING**.
+Durable Acceptance evidence:
 
-Integration: **NOT AUTHORIZED** until Acceptance returns a positive integration-readiness disposition.
+`.forge/evidence/acceptance/LANE-B-W05-W07-INTEGRATION-READINESS-ACCEPTED.md`
+
+Bounded Integration Writer handoff:
+
+`.forge/handoffs/integration/LANE-B-W05-W07-INTEGRATION.md`
+
+Integration: **AUTHORIZED ONLY THROUGH THE BOUNDED INTEGRATION WRITER HANDOFF; NOT YET PERFORMED**.
+
+PR #5 remains transport only. At Maintainer inspection it is open, head exact `af417bab...`, base `KIRCH-TALIBON-V1-UIUX-CORRECTION`, and GitHub reports mergeable/clean. Its body contains a stale historical head SHA and is not authority.
 
 ## Parallel progression now authorized
 
-Lane A bounded rework and Lane B integration-readiness Acceptance may proceed in parallel. This keeps the two-writer sprint compressed without bypassing independent gates.
+Lane A repeat Review and Lane B bounded mechanical integration may proceed in parallel because Lane A review is non-mutating and the accepted lane file sets remain isolated.
 
-If Lane B Acceptance passes before Lane A rework clears, Maintainer may prepare Lane B integration ordering but W08 still cannot begin until both accepted lanes coexist in a valid integrated state.
+Lane B integration alone does not authorize W08. W08 still waits for Lane A to survive repeat Review, separate Acceptance and integration so the accepted W03–W07 state coexists on the correction branch.
 
 ## Open evidence carried forward
 
@@ -164,6 +182,7 @@ Unless directly observed:
 - target responsive matrix: NOT OBSERVED;
 - light/dark visual parity: NOT OBSERVED;
 - runtime keyboard/focus: NOT OBSERVED;
+- Lane A real-browser Referer/mutation continuity: NOT OBSERVED;
 - body-scroll/focus behavior across Lane B utility breakpoint: NOT OBSERVED;
 - rendered DOM ID uniqueness: NOT OBSERVED;
 - zoom/reflow: NOT OBSERVED;
@@ -179,8 +198,9 @@ Unless directly observed:
 - correction baseline: `0913a37f...`
 - P1 coexisting source: `5757114a...`
 - sprint start: `5727e5a...`
-- Lane A reviewed candidate / rework start: `f61ea353...`
+- Lane A prior reviewed candidate / rework start: `f61ea353...`
+- Lane A current rework candidate: `eb985fe5...`
 - Lane B pre-recovery: `270b1919...`
-- Lane B reviewed candidate: `af417bab...`
+- Lane B accepted candidate: `af417bab...`
 
 Use exact SHAs, not branch-name assumptions, for every mutation and transition.
