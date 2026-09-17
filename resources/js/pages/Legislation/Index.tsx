@@ -112,12 +112,15 @@ export default function Index({ records, filters, canManage }: { records: Legisl
                             key={record.id}
                             href={`/legislation/${record.id}`}
                             aria-label={`${record.record_number}: ${record.title}`}
-                            className="group flex flex-col gap-2 px-4 py-3 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-700/30 dark:hover:bg-slate-900/30 sm:flex-row sm:items-center sm:justify-between"
+                            className="group flex flex-col gap-1.5 px-3 py-2.5 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-700/30 dark:hover:bg-slate-900/30 sm:flex-row sm:items-center sm:justify-between"
                         >
                             <div className="min-w-0">
-                                <div className="text-xs font-bold text-blue-800 dark:text-blue-300">{record.record_number}</div>
-                                <div className="mt-0.5 text-sm font-semibold leading-5 text-slate-950 dark:text-slate-100">{record.title}</div>
-                                <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{record.record_type.replaceAll('_', ' ')} · {record.year} · {record.issuing_body}</div>
+                                <div className="text-sm font-semibold leading-4 text-slate-950 dark:text-slate-100">{record.title}</div>
+                                <div className="mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[11px] leading-4 text-slate-500 dark:text-slate-400">
+                                    <span className="font-bold text-blue-800 dark:text-blue-300">{record.record_number}</span>
+                                    <span aria-hidden="true">·</span>
+                                    <span>{record.record_type.replaceAll('_', ' ')} · {record.year} · {record.issuing_body}</span>
+                                </div>
                             </div>
                             <div className="flex shrink-0 items-center gap-3">
                                 <LegislativeRecordStatus status={record.status} />
