@@ -35,16 +35,16 @@ export default function PortalSidebar({
             <SidebarBrand compact={compact} mobile={mobile} />
 
             {!mobile && (
-                <div className={`flex border-b border-white/10 px-3 py-1 ${compact ? 'justify-center' : 'justify-end'}`}>
+                <div className={`flex px-2 py-0.5 ${compact ? 'justify-center' : 'justify-end'}`}>
                     <SidebarToggle collapsed={compact} onToggle={onToggleCollapsed} />
                 </div>
             )}
 
             <nav
-                className={`min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain ${compact ? 'px-2 py-2.5' : 'px-3 py-3'}`}
+                className={`min-h-0 flex-1 overflow-x-hidden overflow-y-auto overscroll-contain ${compact ? 'px-1.5 py-2' : 'px-2 py-2'}`}
                 aria-label="Primary navigation"
             >
-                <div className={compact ? 'space-y-2.5' : 'space-y-3'}>
+                <div className={compact ? 'space-y-1.5' : 'space-y-2'}>
                     {navigationGroups.map((group) => {
                         const groupActive = group.items.some((item) => isPortalPathActive(currentUrl, item.href));
 
@@ -83,8 +83,8 @@ export default function PortalSidebar({
             </nav>
 
             <div
-                className={`shrink-0 border-t border-white/10 ${compact ? 'p-2' : 'p-3'}`}
-                style={mobile ? { paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' } : undefined}
+                className={`shrink-0 border-t border-white/10 ${compact ? 'p-1.5' : 'p-2'}`}
+                style={mobile ? { paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' } : undefined}
             >
                 <SidebarFooter compact={compact} user={user} />
             </div>
