@@ -35,12 +35,12 @@ export default function SidebarIdentity({ compact, user, persona = null }: Props
     }
 
     return (
-        <div className="min-w-0" aria-label={title ? `Signed in as ${title}` : 'Signed in user'}>
-            <div className="truncate text-sm font-semibold leading-5 text-white" title={name || undefined}>
+        <div className="min-w-0" aria-label={title ? `Signed in as ${title}` : 'Signed in user'} title={title || undefined}>
+            <div className="line-clamp-1 text-sm font-semibold leading-5 text-white">
                 {name}
             </div>
             {context && (
-                <div className="mt-0.5 truncate text-[11px] leading-4 text-blue-200" title={context}>
+                <div className="mt-0.5 line-clamp-2 break-words text-[10px] leading-[14px] text-blue-200">
                     {context}
                 </div>
             )}
