@@ -19,12 +19,17 @@ const stripNestedReturnTargets = (url: URL) => {
     });
 };
 
+const recordsReturnEligible = new Set(['/transactions', '/correspondence', '/travel-orders']);
+
 export function validateReturnTarget(candidate: string | null | undefined, expectedPath: string): string {
     if (!candidate || !isInternalPath(candidate)) return expectedPath;
 
     try {
         const url = new URL(candidate, APP_ORIGIN);
-        if (url.origin !== APP_ORIGIN || url.pathname !== expectedPath) return expectedPath;
+        const allowedPaths = recordsReturnEligible.has(expectedPath)
+            ? [expectedPath, '/records']
+            : [expectedPath];
+        if (url.origin !== APP_ORIGIN || !allowedPaths.includes(url.pathname)) return expectedPath;
         stripNestedReturnTargets(url);
         return `${url.pathname}${url.search}`;
     } catch {
