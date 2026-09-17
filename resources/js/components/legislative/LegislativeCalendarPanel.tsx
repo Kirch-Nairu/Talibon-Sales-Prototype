@@ -7,9 +7,9 @@ export default function LegislativeCalendarPanel() {
             <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-700/25">
                 <div>
                     <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-indigo-700 dark:text-indigo-300"><Gavel size={15} /> Legislative reference</div>
-                    <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">Repository reference for calendar and committee context — not a live schedule feed.</p>
+                    <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">Reference calendar and committee context — not a live schedule feed.</p>
                 </div>
-                <span className="shrink-0 text-xs font-semibold text-slate-500 group-open:text-indigo-700 dark:text-slate-400">View reference</span>
+                <span className="shrink-0 text-xs font-semibold text-slate-500 dark:text-slate-400"><span className="group-open:hidden">View reference</span><span className="hidden group-open:inline text-indigo-700 dark:text-indigo-300">Hide reference</span></span>
             </summary>
             <div className="grid gap-3 border-t border-slate-100 p-4 dark:border-slate-700 xl:grid-cols-[1.2fr_0.8fr]">
                 <div>
