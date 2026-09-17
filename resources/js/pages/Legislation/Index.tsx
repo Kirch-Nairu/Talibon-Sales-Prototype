@@ -102,8 +102,12 @@ export default function Index({ records, filters, canManage }: { records: Legisl
                     ))}
                 </section>
 
-                <div className="divide-y divide-slate-100 overflow-hidden rounded-xl border border-slate-200 bg-white dark:divide-slate-700 dark:border-slate-700 dark:bg-[#142236]" aria-label="Legislative records">
-                    {visibleRecords.map((record) => (
+                <section className="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-[#142236]" aria-labelledby="legislative-register-heading">
+                    <div className="border-b border-slate-100 px-3 py-2 dark:border-slate-700">
+                        <h2 id="legislative-register-heading" className="text-xs font-bold text-slate-900 dark:text-slate-100">Legislative record register</h2>
+                    </div>
+                    <div className="divide-y divide-slate-100 dark:divide-slate-700 sm:max-h-[24rem] sm:overflow-y-auto sm:[scrollbar-gutter:stable]" aria-label="Legislative records">
+                        {visibleRecords.map((record) => (
                         <Link
                             key={record.id}
                             href={`/legislation/${record.id}`}
@@ -121,14 +125,15 @@ export default function Index({ records, filters, canManage }: { records: Legisl
                             </div>
                         </Link>
                     ))}
-                    {records.length === 0 && (
-                        <div className="px-4 py-10 text-center">
-                            <div className="text-sm font-semibold text-slate-800 dark:text-slate-200">No legislative records match this view.</div>
-                            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Try a different search term or record type.</p>
-                        </div>
-                    )}
+                        {records.length === 0 && (
+                            <div className="px-4 py-10 text-center">
+                                <div className="text-sm font-semibold text-slate-800 dark:text-slate-200">No legislative records match this view.</div>
+                                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Try a different search term or record type.</p>
+                            </div>
+                        )}
+                    </div>
                     <LegislativePager page={page} pageCount={pageCount} onPageChange={setPage} />
-                </div>
+                </section>
 
                     <LegislativeCalendarPanel />
                 </div>
