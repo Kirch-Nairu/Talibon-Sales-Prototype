@@ -15,12 +15,17 @@ export default function LegislativeSessionCard({ session, canManage }: { session
             preserveScroll: true,
             onSuccess: () => {
                 agenda.reset('title', 'description');
+                agenda.setData('sequence_no', agenda.data.sequence_no + 1);
                 setShowAgendaForm(false);
             },
         });
     };
     const agendaId = `session-agenda-${session.id}`;
     const agendaFormId = `session-agenda-form-${session.id}`;
+    const toggleAgenda = () => {
+        setShowAgendaForm(false);
+        setShowAgenda((value) => !value);
+    };
 
     return (
         <article className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-[#142236]">
@@ -30,7 +35,7 @@ export default function LegislativeSessionCard({ session, canManage }: { session
                     <h3 className="mt-1 text-base font-bold leading-5 text-slate-950 dark:text-slate-100">{session.title}</h3>
                     <div className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-xs text-slate-500 dark:text-slate-400"><span>{new Date(session.scheduled_at).toLocaleString()}</span><span>{session.location || 'Location TBD'}</span><span>{session.agenda_items.length} agenda {session.agenda_items.length === 1 ? 'item' : 'items'}</span></div>
                 </div>
-                <button type="button" aria-expanded={showAgenda} aria-controls={agendaId} onClick={() => setShowAgenda((value) => !value)} className="w-full shrink-0 rounded-lg border border-indigo-200 px-3 py-2 sm:w-auto text-xs font-semibold text-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-700/25 dark:border-indigo-900 dark:text-indigo-300">{showAgenda ? 'Hide agenda' : 'View agenda'}</button>
+                <button type="button" aria-expanded={showAgenda} aria-controls={agendaId} onClick={toggleAgenda} className="w-full shrink-0 rounded-lg border border-indigo-200 px-3 py-2 sm:w-auto text-xs font-semibold text-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-700/25 dark:border-indigo-900 dark:text-indigo-300">{showAgenda ? 'Hide agenda' : 'View agenda'}</button>
             </div>
             {showAgenda && (
                 <div id={agendaId} className="mt-4 border-t border-slate-100 pt-4 dark:border-slate-700">
