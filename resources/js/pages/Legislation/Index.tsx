@@ -1,6 +1,6 @@
 import { Link, router } from '@inertiajs/react';
 import { ArrowRight, Gavel, Plus, Search } from 'lucide-react';
-import { type FormEvent, useEffect, useState } from 'react';
+import { type FormEvent, useEffect, useRef, useState } from 'react';
 import LegislativeCalendarPanel from '../../components/legislative/LegislativeCalendarPanel';
 import LegislativePager from '../../components/legislative/LegislativePager';
 import LegislativeRecordStatus from '../../components/legislative/LegislativeRecordStatus';
@@ -24,6 +24,7 @@ const recordFilters = [
 export default function Index({ records, filters, canManage }: { records: LegislativeRecordItem[]; filters: { q: string; type: string }; canManage: boolean }) {
     const [q, setQ] = useState(filters.q || '');
     const [page, setPage] = useState(1);
+    const recordListRef = useRef<HTMLDivElement>(null);
     const pageCount = Math.max(1, Math.ceil(records.length / RECORDS_PER_PAGE));
     const visibleRecords = records.slice((page - 1) * RECORDS_PER_PAGE, page * RECORDS_PER_PAGE);
     const rangeStart = records.length === 0 ? 0 : (page - 1) * RECORDS_PER_PAGE + 1;
@@ -36,6 +37,10 @@ export default function Index({ records, filters, canManage }: { records: Legisl
     useEffect(() => {
         if (page > pageCount) setPage(pageCount);
     }, [page, pageCount]);
+
+    useEffect(() => {
+        if (recordListRef.current) recordListRef.current.scrollTop = 0;
+    }, [page]);
 
     const search = (event?: FormEvent) => {
         event?.preventDefault();
@@ -105,7 +110,7 @@ export default function Index({ records, filters, canManage }: { records: Legisl
                             ))}
                         </div>
                     </div>
-                    <div className="divide-y divide-slate-100 dark:divide-slate-700 @min-[620px]:max-h-[24rem] @min-[620px]:overflow-y-auto @min-[620px]:[scrollbar-gutter:stable]" aria-label="Legislative records">
+                    <div ref={recordListRef} className="divide-y divide-slate-100 dark:divide-slate-700 @min-[620px]:max-h-[24rem] @min-[620px]:overflow-y-auto @min-[620px]:[scrollbar-gutter:stable]" aria-label="Legislative records">
                         {visibleRecords.map((record) => (
                         <Link
                             key={record.id}
