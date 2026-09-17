@@ -95,16 +95,15 @@ export default function Index({ records, filters, canManage }: { records: Legisl
                     </nav>
                 </section>
 
-                <section className="flex flex-wrap items-center gap-x-4 gap-y-1.5 px-1 text-xs text-slate-500 dark:text-slate-400" aria-label="Loaded legislative result context" aria-live="polite">
-                    <span>Showing <strong className="font-semibold text-slate-800 dark:text-slate-200">{rangeStart}–{rangeEnd}</strong> of <strong className="font-semibold text-slate-800 dark:text-slate-200">{records.length}</strong> loaded records</span>
-                    {Object.entries(byType).map(([type, count]) => (
-                        <span key={type} className="capitalize"><strong className="font-semibold text-slate-700 dark:text-slate-300">{count}</strong> {type.replaceAll('_', ' ')}</span>
-                    ))}
-                </section>
-
                 <section className="overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-[#142236]" aria-labelledby="legislative-register-heading">
-                    <div className="border-b border-slate-100 px-3 py-2 dark:border-slate-700">
-                        <h2 id="legislative-register-heading" className="text-xs font-bold text-slate-900 dark:text-slate-100">Legislative record register</h2>
+                    <div className="flex flex-col gap-1 border-b border-slate-100 px-3 py-2 dark:border-slate-700 @min-[720px]:flex-row @min-[720px]:items-center @min-[720px]:justify-between @min-[720px]:gap-3">
+                        <h2 id="legislative-register-heading" className="shrink-0 text-xs font-bold text-slate-900 dark:text-slate-100">Legislative record register</h2>
+                        <div className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-0.5 text-[10px] leading-4 text-slate-500 dark:text-slate-400" aria-label="Loaded legislative result context" aria-live="polite">
+                            <span>Showing <strong className="font-semibold text-slate-700 dark:text-slate-300">{rangeStart}–{rangeEnd}</strong> of <strong className="font-semibold text-slate-700 dark:text-slate-300">{records.length}</strong> loaded</span>
+                            {Object.entries(byType).map(([type, count]) => (
+                                <span key={type} className="capitalize"><strong className="font-semibold text-slate-700 dark:text-slate-300">{count}</strong> {type.replaceAll('_', ' ')}</span>
+                            ))}
+                        </div>
                     </div>
                     <div className="divide-y divide-slate-100 dark:divide-slate-700 sm:max-h-[24rem] sm:overflow-y-auto sm:[scrollbar-gutter:stable]" aria-label="Legislative records">
                         {visibleRecords.map((record) => (
