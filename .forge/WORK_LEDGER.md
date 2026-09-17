@@ -44,9 +44,9 @@ Execution remains compressed to two writer slots.
 
 | Lane | Waves | Current exact candidate | State |
 | --- | --- | --- | --- |
-| A | W03 + W04 | `eb985fe5da8f2f7c63c987680a22583f2067b85b` | REPEAT REVIEW `SUITABLE FOR ACCEPTANCE`; integration-readiness Acceptance issued |
+| A | W03 + W04 | `eb985fe5da8f2f7c63c987680a22583f2067b85b` | ACCEPTED FOR INTEGRATION WITH RECORDED LIMITATIONS / bounded Integration Writer issued |
 | B | W05 → W06 + W07 | `af417bab384ad066814ba32145be83c00396ff69` | INTEGRATED at `57ae471f4e52611a8cdacd3a152240c657c150e4`; post-integration run #122 SUCCESS |
-| W08 | cross-product completion / harness / acceptance boundary | none | NOT STARTED |
+| W08 | cross-product completion / harness / acceptance boundary | none | BLOCKED UNTIL LANE A INTEGRATION + COMBINED EXACT-HEAD VALIDATION |
 
 Detailed lane contract:
 
@@ -114,21 +114,31 @@ Verdict:
 
 `SUITABLE FOR ACCEPTANCE`
 
-The repeat Reviewer independently determined the mutation-return continuity and return-target security repair sufficient at source/server-test level, found no confirmed new defect, and verified W04 remained frozen.
-
 Durable repeat Review evidence:
 
 `.forge/evidence/review/LANE-A-W03-CONTEXT-CONTINUITY-REREVIEW-SUITABLE.md`
 
-Integration-readiness Acceptance handoff:
+### Integration-readiness Acceptance
 
-`.forge/handoffs/acceptance/LANE-A-W03-W04-INTEGRATION-READINESS-ACCEPTANCE.md`
+Result:
 
-Acceptance: **ISSUED / RETURN PENDING**.
+`ACCEPT FOR INTEGRATION WITH RECORDED LIMITATIONS`
 
-Integration: **NOT AUTHORIZED**.
+Durable Acceptance evidence:
 
-Next Lane A transition: separate Acceptance of exact candidate `eb985fe5...`. Only a positive integration-readiness Acceptance result may authorize a bounded Integration Writer.
+`.forge/evidence/acceptance/LANE-A-W03-W04-INTEGRATION-READINESS-ACCEPTED.md`
+
+The Acceptance return referenced Lane B's validated product-source anchor `57ae471f4e52611a8cdacd3a152240c657c150e4`. At Maintainer processing time, the correction coordination branch had later `.forge/**` governance-only commits. Maintainer comparison confirmed no intervening product source drift, so the Acceptance result remains valid for the exact candidate and narrow integration-eligibility promotion. The coordination-version discrepancy is recorded rather than hidden.
+
+Bounded Integration Writer handoff:
+
+`.forge/handoffs/integration/LANE-A-W03-W04-INTEGRATION.md`
+
+Integration: **AUTHORIZED ONLY THROUGH THE BOUNDED INTEGRATION WRITER HANDOFF; NOT YET PERFORMED**.
+
+PR #4 is transport only. At Maintainer inspection its live head is exact `eb985fe5...`; GitHub authoritative mergeability is `true/clean`. The PR remains draft. Its body and some embedded base metadata contain stale historical SHAs and are not authority.
+
+Next Lane A transition: bounded clean mechanical integration preserving accepted history, followed by fresh Forge UIUX Validation on the exact resulting correction HEAD.
 
 ## Lane B — W05/W06/W07
 
@@ -174,7 +184,7 @@ Durable Acceptance evidence:
 
 PR #5 was mechanically merged with a normal merge commit after live head/base/mergeability re-verification.
 
-Exact integration source anchor:
+Exact integration product-source anchor:
 
 `57ae471f4e52611a8cdacd3a152240c657c150e4`
 
@@ -197,11 +207,11 @@ No Lane A source, backend/auth/session source, or unrelated product surface was 
 
 ## Current progression
 
-Lane B is integrated and its exact integration source anchor is validated.
+Lane B is integrated and its exact integration product-source anchor is validated.
 
-Lane A has passed repeat Review and is at separate integration-readiness Acceptance.
+Lane A has passed repeat Review and integration-readiness Acceptance and now has bounded mechanical integration authority.
 
-W08 remains blocked until Lane A receives valid integration authority, is mechanically integrated, and W03–W07 coexist on the correction line for combined validation.
+W08 remains blocked until Lane A integration succeeds and a fresh exact-resulting-head validation establishes the coexisting W03–W07 source state. Only then may Maintainer open the W08 cross-product evidence/acceptance boundary.
 
 ## Open evidence carried forward
 
@@ -228,9 +238,9 @@ Unless directly observed:
 - P1 coexisting source: `5757114a...`
 - sprint start: `5727e5a...`
 - Lane A prior reviewed candidate / W03 rework start: `f61ea353...`
-- Lane A current candidate: `eb985fe5...`
+- Lane A accepted candidate: `eb985fe5...`
 - Lane B pre-recovery: `270b1919...`
 - Lane B accepted candidate: `af417bab...`
-- Lane B integration source anchor: `57ae471f...`
+- Lane B integration product-source anchor: `57ae471f...`
 
 Use exact SHAs, not branch-name assumptions, for every mutation and transition.
