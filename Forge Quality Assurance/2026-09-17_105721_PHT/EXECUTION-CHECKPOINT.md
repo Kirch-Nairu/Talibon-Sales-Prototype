@@ -1,6 +1,6 @@
 # W08 QA Execution Checkpoint
 
-Checkpoint version: `2`
+Checkpoint version: `3`
 
 Logical QA run identity:
 
@@ -16,7 +16,7 @@ Execution branch:
 
 Expected current execution SHA:
 
-`b1aab464ee2da02bf8994a2165352344c04cd895`
+`5bbfd48611b3f65e279048faa0fa1d246ba89789`
 
 Integrated product-source anchor:
 
@@ -32,7 +32,7 @@ Current W08 phase:
 
 External wait state:
 
-`WAITING — RUN #3 IS IN PROGRESS`
+`WAITING — RUN #4 IS IN PROGRESS`
 
 ## External workflow history
 
@@ -42,7 +42,7 @@ Workflow: `Forge W08 Quality Assurance`
 
 Run ID: `35179443998`
 
-Expected/head SHA: `8c606e1a45a666884a52dafc9da1615890340418`
+Head SHA: `8c606e1a45a666884a52dafc9da1615890340418`
 
 Conclusion: `cancelled`
 
@@ -52,7 +52,21 @@ Workflow: `Forge W08 Quality Assurance`
 
 Run ID: `35179625056`
 
-Expected/head SHA: `ecdb11dea2f89e5503ffa37aff0b714f9f035ff5`
+Head SHA: `ecdb11dea2f89e5503ffa37aff0b714f9f035ff5`
+
+Conclusion: `failure`
+
+Artifact ID: `10480091707`
+
+Run #2 was consumed and classified before replacement. Its credential-login locator, mobile Appearance locator, server-port reuse and generated-secret masking issues were classified as QA harness/environment defects. No product defect was established by run #2.
+
+### Run #3
+
+Workflow: `Forge W08 Quality Assurance`
+
+Run ID: `35185610860`
+
+Head SHA: `b1aab464ee2da02bf8994a2165352344c04cd895`
 
 Status: `completed`
 
@@ -64,83 +78,101 @@ Artifact:
 
 Artifact ID:
 
-`10480091707`
+`10482451981`
 
 Artifact digest:
 
-`sha256:f979dd92844b0719c205ed697cb3e78d9dc94c29ec8cc357a24cab637fc6e86f`
+`sha256:ef9179c6f596127519e99d928dbe0ffe6fbb6776b6e424004c3e2753a0741b2e`
 
-### Run #3
+Run #3 step truth:
 
-Workflow: `Forge W08 Quality Assurance`
+- authority checkout and ancestry verification: success;
+- dependency/bootstrap: success;
+- source validation: success;
+- bounded compatibility overlay generation: success;
+- H1 browser step: GitHub step conclusion `success` because `continue-on-error` normalized the step, while the H1 machine report itself recorded an unsuccessful harness execution;
+- W08 browser step: GitHub step conclusion `success` because `continue-on-error` normalized the step, while the W08 machine report itself recorded an unsuccessful harness execution;
+- evidence packaging: success;
+- artifact upload: success;
+- final W08 workflow gate: failure, correctly preserving the underlying H1/W08 failure outcomes.
 
-Run ID: `35185610860`
+Run #3 retained machine evidence:
 
-Expected/head SHA: `b1aab464ee2da02bf8994a2165352344c04cd895`
+- H1 exact head verified: `b1aab464ee2da02bf8994a2165352344c04cd895`;
+- H1 isolated database verified: `talibon_h1_mutations`;
+- H1 scenarios completed: `0`;
+- H1 failure: timeout selecting the `Department Head` Showcase card;
+- W08 exact head verified and product-anchor ancestry verified;
+- W08 completed one W01 shell scenario: `PASS` with `12` checks, `0` page errors, `0` server 5xx and `0` fatal console errors;
+- W08 screenshot count: `1` (`w01-showcase-shell-390-light.png`);
+- W08 later failed during Engineering persona session bootstrap on the same `Department Head` selector;
+- the earlier W01 PASS remains a valid partial observation and is not erased by the later fatal harness failure.
 
-Observed status at checkpoint: `in_progress`
+## Run #3 failure classification
 
-Conclusion: `pending`
+### HARNESS DEFECT — Showcase PersonaCard locator contract
 
-## Run #2 reconciliation and defect classification
+The run #3 repair used exact accessible-name matching for the `Department Head` button. Product source renders each `PersonaCard` as a button containing label, description and context text, so the button accessible name is not exactly the short label. In addition, after selecting Department Head the same dialog changes its accessible heading from `Choose your workspace` to `Choose office context`, making a locator permanently constrained to the old dialog name unsuitable for the second step.
 
-Run #2 was fully consumed before replacement. GitHub run metadata, job steps, retained artifact `10480091707`, machine-readable H1/W08 reports, server logs, current product source and current harness/workflow source were inspected.
+This is a QA harness defect, not a product defect. The browser-visible gateway itself was already proven to work in W01, and the product implementation is internally coherent with its card structure.
 
-### HARNESS DEFECT — obsolete credential-login locator
+Bounded repair commit:
 
-Both H1 and W08 attempted `getByLabel('Email')` and `getByLabel('Password')` against the current `/login` surface. The accepted product surface is the Showcase municipal workspace gateway (`Enter Workspace` → persona/office selection) and intentionally contains no credential form. The timeout therefore does not establish a product defect.
-
-Bounded repair: the W08 QA workflow now generates runtime harness copies that enter the accepted browser-visible Showcase gateway for the synthetic QA personas. Product source is not modified.
-
-### HARNESS DEFECT — W01 mobile Appearance selector ambiguity
-
-The partial W01 run observed the workspace dialog, Sign out and Switch Workspace successfully, then failed only the Appearance locator. The assertion used an unscoped `getByText('Appearance').last()` lookup while `SidebarAppearanceMenu` contains both the visible summary trigger and hidden closed-details content. Product source explicitly renders a mobile footer Appearance summary trigger with `title="Appearance"`.
-
-Bounded repair: the runtime W08 harness scopes the assertion to the visible Appearance summary trigger inside the open mobile navigation dialog. This reclassifies the run #2 observation as a locator/harness defect, not a confirmed product defect. The replacement run must still exercise the behavior live.
-
-### QA ENVIRONMENT DEFECT — browser server port reuse
-
-Run #2 `w08-cross-product-server.log` records `Failed to listen on 127.0.0.1:8000 (reason: Address already in use)`. The H1 server remained bound after the failed H1 step, so the W08 step executed against the lingering server instead of its own clean server process.
-
-Bounded repair: H1 and W08 now use isolated ports `8001` and `8002` respectively, with matching step-local `APP_URL` and `QA_BASE_URL` values.
-
-### QA WORKFLOW / ENVIRONMENT DEFECT — generated secret log masking
-
-The generated isolated QA demo password was observable unmasked in run #2 job environment output. The value is intentionally not reproduced in this dossier. It was ephemeral to the isolated CI run and is not a production credential, but exposing it violates the W08 evidence-handling contract.
-
-Bounded repair: the workflow registers the generated value with GitHub Actions `add-mask` before exporting it to later steps.
-
-## Repair authority
-
-Execution repair commit:
-
-`b1aab464ee2da02bf8994a2165352344c04cd895`
+`5bbfd48611b3f65e279048faa0fa1d246ba89789`
 
 Commit message:
 
-`KIRCH-FORGE-QA-W08-REPAIR-HARNESS-BOOTSTRAP`
+`KIRCH-FORGE-QA-W08-REPAIR-SHOWCASE-PERSONA-LOCATORS`
 
 Direct parent:
 
-`ecdb11dea2f89e5503ffa37aff0b714f9f035ff5`
+`b1aab464ee2da02bf8994a2165352344c04cd895`
 
-The immutable W03–W07 product-source anchor remains an ancestor. The repair changes QA workflow/harness machinery only.
+Repair scope:
 
-## Last completed evidence
+- QA harness overlay only;
+- stable role=`dialog` scope independent of the changing heading;
+- PersonaCard selection by visible contained card text rather than exact composite accessible name;
+- explicit wait for `Choose office context` before selecting Engineering/Budget office;
+- no product-source change.
 
-- exact QA branch ancestry: verified through the current execution lineage;
-- run #2 source validation: PASS (`types:check`, production build, Laravel suite 370 passed / 5,088 assertions);
-- run #2 browser execution: attempted but invalidated/incomplete by the classified harness/environment defects above;
-- run #2 retained artifact: consumed and preserved as failed-run evidence;
-- run #2 screenshots: `0`;
-- no product defect is confirmed from run #2;
-- replacement external validation has been launched as run #3 against exact execution SHA `b1aab464ee2da02bf8994a2165352344c04cd895`.
+## Current execution authority verification
+
+Remote execution branch head independently re-read after repair:
+
+`5bbfd48611b3f65e279048faa0fa1d246ba89789`
+
+Git comparison against immutable product anchor reports:
+
+- status: `ahead`;
+- behind: `0`;
+- merge base: exactly `db286142cdc5d9e793680fac933a8462deb8390d`.
+
+Therefore product-anchor ancestry remains intact.
+
+### Run #4
+
+Workflow: `Forge W08 Quality Assurance`
+
+Run ID: `35189429744`
+
+Expected/head SHA:
+
+`5bbfd48611b3f65e279048faa0fa1d246ba89789`
+
+Observed status at checkpoint:
+
+`in_progress`
+
+Conclusion:
+
+`pending`
 
 ## Outstanding evidence
 
 Still outstanding before a valid W08 PASS/PASS WITH RECORDED LIMITATIONS:
 
-- run #3 conclusion and retained artifact reconciliation;
+- run #4 conclusion and retained artifact reconciliation;
 - successful H1 browser mutation evidence;
 - successful complete final W08 browser matrix;
 - all required personas;
@@ -152,7 +184,7 @@ Still outstanding before a valid W08 PASS/PASS WITH RECORDED LIMITATIONS:
 - W06 read-only Messages behavior;
 - W07 role/admin/HR/error checks;
 - keyboard/focus/reflow/accessibility mechanics;
-- screenshots and complete screenshot manifest;
+- complete screenshot set and screenshot manifest;
 - complete machine report;
 - required final evidence ZIP contents;
 - complete QA dossier;
@@ -163,11 +195,11 @@ Still outstanding before a valid W08 PASS/PASS WITH RECORDED LIMITATIONS:
 On `resume QA`:
 
 1. read this checkpoint first;
-2. reverify execution branch SHA `b1aab464ee2da02bf8994a2165352344c04cd895` and product-anchor ancestry;
-3. fetch run `35185610860` and verify its head equals the exact execution SHA;
-4. inspect conclusion, jobs and artifact without assuming success;
+2. reverify execution branch SHA `5bbfd48611b3f65e279048faa0fa1d246ba89789` and product-anchor ancestry;
+3. fetch run `35189429744` and verify its head equals the exact execution SHA;
+4. inspect conclusion, jobs and retained artifact without assuming success;
 5. reconcile machine reports and screenshots;
-6. classify any new failure under HARNESS / QA ENVIRONMENT / PRODUCT law;
+6. independently classify any new failure under HARNESS / QA ENVIRONMENT / PRODUCT law;
 7. if queued/in-progress and no result-independent work remains, return `W08 QA: WAITING FOR EXTERNAL VALIDATION` rather than polling.
 
 A human `resume QA` message is a wake-up signal only and is not evidence.
