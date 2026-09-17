@@ -14,150 +14,147 @@ Directive: Operational Compression with production-quality evidence discipline.
 
 ## Rules
 
-- Maintainer owns wave transitions, exact SHA progression, integration order, recovery, and this ledger.
-- Writers receive exact starting SHA and bounded ownership; they do not self-accept or promote.
-- Review remains independent of Code Writer implementation.
-- No force push, destructive history rewrite, fake functionality, test weakening, fabricated runtime evidence, or unauthorized deployment.
+- Maintainer owns exact SHA progression, two-writer lane sequencing, integration order, recovery and this ledger.
+- Writers remain bounded and do not self-review, self-accept or promote.
+- Review and Acceptance remain independent.
+- No force push, destructive rewrite, fake functionality, test weakening, fabricated runtime evidence or unauthorized deployment.
 - Build != runtime != accessibility != UAT != deployment.
 
 ## P1 — W01 + W02
 
-W01 final accepted candidate: `8bcdb18441e3cdc071a96921ac29616d9391052c`.
+W01 accepted candidate: `8bcdb18441e3cdc071a96921ac29616d9391052c`.
 
-W02 final accepted candidate: `3a5fc4768f6ae786fc38a2beb433d1a9fae159b4`.
+W02 accepted candidate: `3a5fc4768f6ae786fc38a2beb433d1a9fae159b4`.
 
-Integration-readiness Acceptance:
-
-`.forge/evidence/acceptance/P1-W01-W02-INTEGRATION-READINESS.md`
-
-W01 integrated via PR #2.
-
-W02 integrated via PR #3 after W01.
+Both passed integration-readiness Acceptance and were integrated via PR #2 then PR #3.
 
 Coexisting P1 application source anchor:
 
 `5757114a02fc5d407e0f8cf4b7b2026c6e824e5f`
 
-Combined Forge UIUX Validation for this exact application source: run #94, ID `35128745031`: **SUCCESS**.
+Combined Forge UIUX Validation run #94, ID `35128745031`: **SUCCESS**.
 
-## W03–W08 production sprint override
+## W03–W08 production sprint
 
-Execution remains compressed to two implementation lanes.
+Exact sprint start:
 
-| Lane | Original waves | Exact candidate | State |
+`5727e5a258ecb358d6caa13b75127bec1c5c6d9d`
+
+Execution remains compressed to two writer slots.
+
+| Lane | Waves | Current exact candidate | State |
 | --- | --- | --- | --- |
-| A | W03 + W04 | `f61ea353fc26595e78aba99e6aa9b5ea0293181c` | WRITER RETURN VERIFIED / INDEPENDENT REVIEW ISSUED |
-| B | W05 → W06 + W07 | `af417bab384ad066814ba32145be83c00396ff69` | RECOVERY RETURN VERIFIED / INDEPENDENT REVIEW ISSUED |
+| A | W03 + W04 | `f61ea353fc26595e78aba99e6aa9b5ea0293181c` | REVIEW `REWORK`; bounded W03 rework issued; W04 source-level PASS/frozen |
+| B | W05 → W06 + W07 | `af417bab384ad066814ba32145be83c00396ff69` | REVIEW `SUITABLE FOR ACCEPTANCE`; separate integration-readiness Acceptance issued |
 | W08 | cross-product completion / harness / acceptance boundary | none | NOT STARTED |
 
-Detailed two-lane contract:
+Detailed lane contract:
 
 `.forge/handoffs/sprint/W03-W07-TWO-LANE-PRODUCTION-SPRINT.md`
 
-Durable sprint state:
-
-`.forge/SPRINT_W03_W08.md`
-
-### Lane A — W03/W04
+## Lane A — W03/W04
 
 Branch:
 
 `KIRCH-TALIBON-UIUX-SPRINT-LANE-A-W03-W04`
 
-Exact sprint start:
-
-`5727e5a258ecb358d6caa13b75127bec1c5c6d9d`
-
-Exact final candidate:
+Reviewed candidate:
 
 `f61ea353fc26595e78aba99e6aa9b5ea0293181c`
 
-Maintainer verification:
+Lineage at reviewed candidate:
 
-- remote HEAD exact: PASS;
-- 12 ahead / 0 behind;
-- merge base exact sprint start;
-- 12 changed files, all within Lane A W03/W04 ownership;
-- no overlap with final Lane B file set.
+- 12 ahead / 0 behind exact sprint start;
+- exact sprint start is merge base;
+- reviewed delta is Lane A-owned;
+- no Lane B path overlap.
 
-Exact-final-SHA Forge UIUX Validation run #96, ID `35133625796`: **SUCCESS**, including frontend install/typecheck/build and Laravel feature tests.
+Exact-SHA Forge UIUX Validation run #96, ID `35133625796`: **SUCCESS**.
 
-Writer evidence:
+Independent Reviewer verdict:
 
-`.forge/evidence/writer/LANE-A-W03-W04-WRITER-RETURN.md`
+`REWORK`
 
-Independent Review handoff:
+Durable Review evidence:
 
-`.forge/handoffs/review/LANE-A-W03-W04-REVIEW.md`
+`.forge/evidence/review/LANE-A-W03-W04-REVIEW-REWORK.md`
+
+W04 disposition:
+
+SOURCE-LEVEL PASS and frozen during bounded W03 rework.
+
+W03 source-confirmed blockers:
+
+1. existing `return_to` can be nested inside a newly carried return target;
+2. Transactions workflow mutations drop contextual list/filter/page state on redirect;
+3. Correspondence register/classify/act and route actions drop contextual list state;
+4. Travel Order status mutation drops contextual list state.
+
+Maintainer independently confirmed the redirect defects in the exact reviewed source. These are continuity defects, not workflow/business-logic defects.
+
+Bounded same-slot rework handoff:
+
+`.forge/handoffs/rework/LANE-A-W03-CONTEXT-CONTINUITY-REWORK.md`
+
+Exact rework starting SHA:
+
+`f61ea353fc26595e78aba99e6aa9b5ea0293181c`
 
 Acceptance: **NOT STARTED**.
 
 Integration: **NOT AUTHORIZED**.
 
-### Lane B — W05/W06/W07
+Next Lane A transition: writer repairs only bounded W03 continuity, returns exact final SHA + fresh exact-SHA CI, then independent repeat Review.
+
+## Lane B — W05/W06/W07
 
 Branch:
 
 `KIRCH-TALIBON-UIUX-SPRINT-LANE-B-W05-W06-W07`
 
-Exact sprint start:
-
-`5727e5a258ecb358d6caa13b75127bec1c5c6d9d`
-
 Pre-recovery candidate:
 
 `270b1919109d33312e5552694b773c18d5108509`
 
-Final recovered candidate:
+Reviewed final candidate:
 
 `af417bab384ad066814ba32145be83c00396ff69`
 
-Maintainer verification:
+Lineage:
 
-- remote HEAD exact: PASS;
-- full lane 5 ahead / 0 behind from sprint start;
-- merge base exact sprint start;
-- recovery final has `270b1919...` as its parent;
-- recovery delta changes only `resources/js/components/shell/MunicipalUtilities.tsx`;
-- full lane has 10 changed files, all within Lane B ownership;
-- no overlap with final Lane A file set.
+- 5 ahead / 0 behind exact sprint start;
+- exact sprint start is merge base;
+- recovery commit is one linear child of pre-recovery candidate;
+- recovery delta modifies only `resources/js/components/shell/MunicipalUtilities.tsx`;
+- full 10-file candidate remains Lane B-owned.
 
-The two source-confirmed pre-review defects are repaired at source level in the final candidate:
+Exact-SHA Forge UIUX Validation run #103, ID `35140216527`: **SUCCESS**.
 
-1. drawer breakpoint transition now actively closes when crossing into the `2xl` persistent-rail range instead of becoming a hidden still-modal dialog with retained body lock;
-2. rail/drawer utility sections now use surface-specific heading ID prefixes instead of duplicate IDs.
+Independent Reviewer verdict:
 
-Exact-final-SHA Forge UIUX Validation run #103, ID `35140216527`: **SUCCESS**, including frontend install/typecheck/build and Laravel feature tests.
+`SUITABLE FOR ACCEPTANCE`
 
-Recovery inspection:
+Durable Review evidence:
 
-`.forge/evidence/maintainer/LANE-B-W05-W07-RECOVERY-INSPECTION.md`
+`.forge/evidence/review/LANE-B-W05-W07-REVIEW-SUITABLE.md`
 
-Writer recovery evidence:
+The two Maintainer-confirmed pre-review defects — breakpoint-hidden active modal/body lock and duplicate utility heading IDs — were independently determined fixed at source level.
 
-`.forge/evidence/writer/LANE-B-W05-W07-RECOVERY-WRITER-RETURN.md`
+W05, W06 and W07 received source-level PASS within the bounded Review.
 
-Independent Review handoff:
+Separate integration-readiness Acceptance handoff:
 
-`.forge/handoffs/review/LANE-B-W05-W07-REVIEW.md`
+`.forge/handoffs/acceptance/LANE-B-W05-W07-INTEGRATION-READINESS-ACCEPTANCE.md`
 
-Acceptance: **NOT STARTED**.
+Acceptance: **ISSUED / PENDING**.
 
-Integration: **NOT AUTHORIZED**.
+Integration: **NOT AUTHORIZED** until Acceptance returns a positive integration-readiness disposition.
 
-PR #4 and PR #5 remain draft candidate/CI transport only. Neither is integration authority.
+## Parallel progression now authorized
 
-## Dependencies retained
+Lane A bounded rework and Lane B integration-readiness Acceptance may proceed in parallel. This keeps the two-writer sprint compressed without bypassing independent gates.
 
-- W03 and W04 depend on integrated W01.
-- W05 depends on integrated W01.
-- W06 executes after W05 utility rail exists.
-- W07 depends on integrated W01 + W02.
-- W08 depends on reviewed/accepted/integrated W03–W07 and evaluates the combined state.
-
-Both independent lane Reviews may execute in parallel because the final candidate file sets remain non-overlapping.
-
-If a lane returns `REWORK`, route bounded repair inside its existing writer slot. If a lane returns `SUITABLE FOR ACCEPTANCE`, it may proceed only to a separate integration-readiness Acceptance decision. Do not integrate merely because Review passed.
+If Lane B Acceptance passes before Lane A rework clears, Maintainer may prepare Lane B integration ordering but W08 still cannot begin until both accepted lanes coexist in a valid integrated state.
 
 ## Open evidence carried forward
 
@@ -167,9 +164,12 @@ Unless directly observed:
 - target responsive matrix: NOT OBSERVED;
 - light/dark visual parity: NOT OBSERVED;
 - runtime keyboard/focus: NOT OBSERVED;
+- body-scroll/focus behavior across Lane B utility breakpoint: NOT OBSERVED;
+- rendered DOM ID uniqueness: NOT OBSERVED;
 - zoom/reflow: NOT OBSERVED;
 - broader accessibility: NOT OBSERVED;
-- W08 combined behavior: NOT OBSERVED / NOT STARTED;
+- combined Lane A + Lane B behavior: NOT OBSERVED;
+- W08: NOT STARTED;
 - UAT: NOT STARTED;
 - deployment: NOT AUTHORIZED;
 - production runtime acceptance: NOT ESTABLISHED.
@@ -177,12 +177,10 @@ Unless directly observed:
 ## Recovery anchors
 
 - correction baseline: `0913a37f...`
-- W01 accepted candidate: `8bcdb184...`
-- W02 accepted candidate: `3a5fc476...`
-- P1 coexisting application source: `5757114a...`
+- P1 coexisting source: `5757114a...`
 - sprint start: `5727e5a...`
-- Lane A final candidate: `f61ea353...`
-- Lane B pre-recovery candidate: `270b1919...`
-- Lane B final candidate: `af417bab...`
+- Lane A reviewed candidate / rework start: `f61ea353...`
+- Lane B pre-recovery: `270b1919...`
+- Lane B reviewed candidate: `af417bab...`
 
-Use exact SHAs, not branch-name assumptions, for recovery and verification.
+Use exact SHAs, not branch-name assumptions, for every mutation and transition.
