@@ -4,21 +4,10 @@ import { type FormEvent, useEffect, useState } from 'react';
 import LegislativeCalendarPanel from '../../components/legislative/LegislativeCalendarPanel';
 import LegislativePager from '../../components/legislative/LegislativePager';
 import LegislativeRecordStatus from '../../components/legislative/LegislativeRecordStatus';
+import type { LegislativeRecordItem } from '../../components/legislative/types';
 import PageFrame from '../../components/PageFrame';
 import PageHeader from '../../components/PageHeader';
 import AppLayout from '../../layouts/AppLayout';
-
-type RecordItem = {
-    id: number;
-    record_type: string;
-    record_number: string;
-    title: string;
-    summary?: string;
-    approved_at?: string;
-    year: number;
-    status: string;
-    issuing_body: string;
-};
 
 const RECORDS_PER_PAGE = 25;
 
@@ -33,7 +22,7 @@ const recordFilters = [
     ['other', 'Other'],
 ];
 
-export default function Index({ records, filters, canManage }: { records: RecordItem[]; filters: { q: string; type: string }; canManage: boolean }) {
+export default function Index({ records, filters, canManage }: { records: LegislativeRecordItem[]; filters: { q: string; type: string }; canManage: boolean }) {
     const [q, setQ] = useState(filters.q || '');
     const [page, setPage] = useState(1);
     const pageCount = Math.max(1, Math.ceil(records.length / RECORDS_PER_PAGE));

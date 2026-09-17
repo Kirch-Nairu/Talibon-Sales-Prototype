@@ -3,13 +3,10 @@ import LegislativeScheduleSession from '../../components/legislative/Legislative
 import LegislativeSessionList from '../../components/legislative/LegislativeSessionList';
 import LegislativeWorkQueue from '../../components/legislative/LegislativeWorkQueue';
 import LegislativeWorkspaceMetrics from '../../components/legislative/LegislativeWorkspaceMetrics';
+import type { LegislativeSession, LegislativeWork } from '../../components/legislative/types';
 import AppLayout from '../../layouts/AppLayout';
 
-type Agenda = { id: number; sequence_no: number; title: string; status: string; transaction?: { reference_no: string; title: string } | null; legislative_record?: { record_number: string; title: string } | null };
-type Session = { id: number; session_code: string; session_type: string; title: string; scheduled_at: string; location?: string | null; status: string; agenda_items: Agenda[] };
-type Work = { id: number; reference_no: string; title: string; status: string; priority: string; due_at?: string | null; current_department?: { short_name?: string | null; name: string } | null };
-
-export default function Workspace({ sessions, legislativeWork, canManage }: { sessions: Session[]; legislativeWork: Work[]; canManage: boolean }) {
+export default function Workspace({ sessions, legislativeWork, canManage }: { sessions: LegislativeSession[]; legislativeWork: LegislativeWork[]; canManage: boolean }) {
     const overdue = legislativeWork.filter((work) => work.due_at && new Date(work.due_at).getTime() < Date.now());
 
     return (

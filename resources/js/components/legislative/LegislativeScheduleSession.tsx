@@ -1,5 +1,5 @@
 import { useForm } from '@inertiajs/react';
-import { FormEvent, useState } from 'react';
+import { type FormEvent, useState } from 'react';
 
 export default function LegislativeScheduleSession() {
     const [open, setOpen] = useState(false);

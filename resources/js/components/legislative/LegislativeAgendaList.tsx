@@ -1,15 +1,7 @@
-type Agenda = {
-    id: number;
-    sequence_no: number;
-    title: string;
-    status: string;
-    transaction?: { reference_no: string; title: string } | null;
-    legislative_record?: { record_number: string; title: string } | null;
-};
-
+import type { LegislativeAgendaItem } from './types';
 const pretty = (value: string) => value.replaceAll('_', ' ').replace(/\b\w/g, (char) => char.toUpperCase());
 
-export default function LegislativeAgendaList({ items }: { items: Agenda[] }) {
+export default function LegislativeAgendaList({ items }: { items: LegislativeAgendaItem[] }) {
     if (items.length === 0) return <div className="rounded-lg bg-slate-50 px-3 py-4 text-sm text-slate-500 dark:bg-slate-900/40 dark:text-slate-400">No agenda items are recorded for this session.</div>;
 
     return (

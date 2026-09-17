@@ -1,17 +1,8 @@
-type Work = {
-    id: number;
-    reference_no: string;
-    title: string;
-    status: string;
-    priority: string;
-    due_at?: string | null;
-    current_department?: { short_name?: string | null; name: string } | null;
-};
-
+import type { LegislativeWork } from './types';
 const pretty = (value: string) => value.replaceAll('_', ' ').replace(/\b\w/g, (char) => char.toUpperCase());
-const isOverdue = (work: Work) => Boolean(work.due_at && new Date(work.due_at).getTime() < Date.now());
+const isOverdue = (work: LegislativeWork) => Boolean(work.due_at && new Date(work.due_at).getTime() < Date.now());
 
-export default function LegislativeWorkQueue({ work }: { work: Work[] }) {
+export default function LegislativeWorkQueue({ work }: { work: LegislativeWork[] }) {
     return (
         <section className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-[#142236]" aria-labelledby="legislative-work-heading">
             <div className="flex flex-wrap items-end justify-between gap-3"><div><div className="text-xs font-bold uppercase tracking-wide text-blue-700 dark:text-blue-300">Current workload</div><h2 id="legislative-work-heading" className="mt-1 font-bold text-slate-950 dark:text-slate-100">Legislative routed work</h2></div><span className="text-xs text-slate-400">{work.length} loaded</span></div>

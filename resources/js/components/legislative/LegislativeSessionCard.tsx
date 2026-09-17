@@ -1,13 +1,11 @@
 import { useForm } from '@inertiajs/react';
-import { FormEvent, useState } from 'react';
+import { type FormEvent, useState } from 'react';
 import LegislativeAgendaList from './LegislativeAgendaList';
 
-type Agenda = { id: number; sequence_no: number; title: string; status: string; transaction?: { reference_no: string; title: string } | null; legislative_record?: { record_number: string; title: string } | null };
-type Session = { id: number; session_code: string; session_type: string; title: string; scheduled_at: string; location?: string | null; status: string; agenda_items: Agenda[] };
-
+import type { LegislativeSession } from './types';
 const pretty = (value: string) => value.replaceAll('_', ' ').replace(/\b\w/g, (char) => char.toUpperCase());
 
-export default function LegislativeSessionCard({ session, canManage }: { session: Session; canManage: boolean }) {
+export default function LegislativeSessionCard({ session, canManage }: { session: LegislativeSession; canManage: boolean }) {
     const [showAgenda, setShowAgenda] = useState(false);
     const [showAgendaForm, setShowAgendaForm] = useState(false);
     const agenda = useForm({ sequence_no: session.agenda_items.length + 1, title: '', description: '' });

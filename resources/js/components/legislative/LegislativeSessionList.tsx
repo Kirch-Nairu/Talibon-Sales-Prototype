@@ -2,12 +2,10 @@ import { useEffect, useState } from 'react';
 import LegislativePager from './LegislativePager';
 import LegislativeSessionCard from './LegislativeSessionCard';
 
-type Agenda = { id: number; sequence_no: number; title: string; status: string; transaction?: { reference_no: string; title: string } | null; legislative_record?: { record_number: string; title: string } | null };
-type Session = { id: number; session_code: string; session_type: string; title: string; scheduled_at: string; location?: string | null; status: string; agenda_items: Agenda[] };
-
+import type { LegislativeSession } from './types';
 const SESSIONS_PER_PAGE = 10;
 
-export default function LegislativeSessionList({ sessions, canManage }: { sessions: Session[]; canManage: boolean }) {
+export default function LegislativeSessionList({ sessions, canManage }: { sessions: LegislativeSession[]; canManage: boolean }) {
     const [page, setPage] = useState(1);
     const pageCount = Math.max(1, Math.ceil(sessions.length / SESSIONS_PER_PAGE));
     const visible = sessions.slice((page - 1) * SESSIONS_PER_PAGE, page * SESSIONS_PER_PAGE);
