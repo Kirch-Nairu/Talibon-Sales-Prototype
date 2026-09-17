@@ -11,6 +11,7 @@ use App\Services\DocumentEvidenceQuery;
 use App\Services\TransactionEvidenceService;
 use App\Services\TransactionLiveQuery;
 use App\Services\WorkQueueQuery;
+use App\Support\ValidatedListReturn;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -119,6 +120,7 @@ class TransactionController extends Controller
         TransactionEvidenceService $evidence,
         WorkflowDefinitionResolver $definitions,
     ): RedirectResponse {
+        $returnContext = ValidatedListReturn::fromRequest($request, '/transactions');
         $definition = $definitions->resolve($transaction);
 
         $data = $request->validate([
@@ -157,10 +159,12 @@ class TransactionController extends Controller
         );
 
         if (! $request->user()->can('view', $updated)) {
-            return redirect()->route('transactions.index')->with('success', 'Transaction workflow updated.');
+            return redirect()->to($returnContext->target())->with('success', 'Transaction workflow updated.');
         }
 
-        return redirect()->route('transactions.show', $updated)->with('success', 'Transaction workflow updated.');
+        return redirect()
+            ->route('transactions.show', $returnContext->routeParameters(['transaction' => $updated]))
+            ->with('success', 'Transaction workflow updated.');
     }
 
     /** @return array<int, \Illuminate\Http\UploadedFile> */

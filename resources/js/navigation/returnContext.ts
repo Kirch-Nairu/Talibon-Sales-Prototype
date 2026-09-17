@@ -1,6 +1,23 @@
 const APP_ORIGIN = 'https://one-talibon.internal';
 
-const isInternalPath = (value: string) => value.startsWith('/') && !value.startsWith('//') && !value.includes('\\');
+const hasMalformedEncoding = (value: string) => /%(?![0-9a-fA-F]{2})/.test(value);
+
+const isInternalPath = (value: string) => {
+    if (!value.startsWith('/') || value.startsWith('//') || value.includes('\\') || hasMalformedEncoding(value)) return false;
+
+    try {
+        const decoded = decodeURIComponent(value);
+        return !decoded.includes('\\') && !/[\u0000-\u001f\u007f]/.test(decoded);
+    } catch {
+        return false;
+    }
+};
+
+const stripNestedReturnTargets = (url: URL) => {
+    [...url.searchParams.keys()].forEach((key) => {
+        if (key === 'return_to' || key.startsWith('return_to[')) url.searchParams.delete(key);
+    });
+};
 
 export function validateReturnTarget(candidate: string | null | undefined, expectedPath: string): string {
     if (!candidate || !isInternalPath(candidate)) return expectedPath;
@@ -8,6 +25,7 @@ export function validateReturnTarget(candidate: string | null | undefined, expec
     try {
         const url = new URL(candidate, APP_ORIGIN);
         if (url.origin !== APP_ORIGIN || url.pathname !== expectedPath) return expectedPath;
+        stripNestedReturnTargets(url);
         return `${url.pathname}${url.search}`;
     } catch {
         return expectedPath;

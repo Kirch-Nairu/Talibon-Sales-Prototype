@@ -10,6 +10,7 @@ use App\Http\Requests\CorrespondenceWorkspaceRegisterRequest;
 use App\Http\Requests\CorrespondenceWorkspaceRouteRequest;
 use App\Models\CorrespondenceRecord;
 use App\Services\CorrespondenceEvidenceService;
+use App\Support\ValidatedListReturn;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -21,6 +22,8 @@ final class CorrespondenceWorkspaceActionController extends Controller
         CorrespondenceRecord $correspondence,
         CorrespondenceEvidenceService $evidence,
     ): RedirectResponse {
+        $returnContext = ValidatedListReturn::fromRequest($request, '/correspondence');
+
         $evidence->register(
             $request->user(),
             $correspondence,
@@ -29,7 +32,7 @@ final class CorrespondenceWorkspaceActionController extends Controller
         );
 
         return redirect()
-            ->route('correspondence.workspace.show', $correspondence)
+            ->route('correspondence.workspace.show', $returnContext->routeParameters(['correspondence' => $correspondence]))
             ->with('success', 'Correspondence registered.');
     }
 
@@ -38,6 +41,8 @@ final class CorrespondenceWorkspaceActionController extends Controller
         CorrespondenceRecord $correspondence,
         CorrespondenceEvidenceService $evidence,
     ): RedirectResponse {
+        $returnContext = ValidatedListReturn::fromRequest($request, '/correspondence');
+
         $evidence->classify(
             $request->user(),
             $correspondence,
@@ -48,7 +53,7 @@ final class CorrespondenceWorkspaceActionController extends Controller
         );
 
         return redirect()
-            ->route('correspondence.workspace.show', $correspondence)
+            ->route('correspondence.workspace.show', $returnContext->routeParameters(['correspondence' => $correspondence]))
             ->with('success', 'Correspondence classification updated.');
     }
 
@@ -57,6 +62,7 @@ final class CorrespondenceWorkspaceActionController extends Controller
         CorrespondenceRecord $correspondence,
         CorrespondenceEvidenceService $evidence,
     ): RedirectResponse {
+        $returnContext = ValidatedListReturn::fromRequest($request, '/correspondence');
         $data = $request->validated();
         unset($data['evidence']);
 
@@ -69,7 +75,7 @@ final class CorrespondenceWorkspaceActionController extends Controller
         );
 
         return redirect()
-            ->route('correspondence.index')
+            ->to($returnContext->target())
             ->with('success', 'Correspondence routed successfully.');
     }
 
@@ -78,6 +84,8 @@ final class CorrespondenceWorkspaceActionController extends Controller
         CorrespondenceRecord $correspondence,
         CorrespondenceEvidenceService $evidence,
     ): RedirectResponse {
+        $returnContext = ValidatedListReturn::fromRequest($request, '/correspondence');
+
         $evidence->act(
             $request->user(),
             $correspondence,
@@ -87,7 +95,7 @@ final class CorrespondenceWorkspaceActionController extends Controller
         );
 
         return redirect()
-            ->route('correspondence.workspace.show', $correspondence)
+            ->route('correspondence.workspace.show', $returnContext->routeParameters(['correspondence' => $correspondence]))
             ->with('success', 'Correspondence marked in action.');
     }
 
