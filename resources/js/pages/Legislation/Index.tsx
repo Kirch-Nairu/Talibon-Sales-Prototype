@@ -102,16 +102,16 @@ export default function Index({ records, filters, canManage }: { records: Record
                             key={record.id}
                             href={`/legislation/${record.id}`}
                             aria-label={`${record.record_number}: ${record.title}`}
-                            className="flex flex-col gap-2 px-4 py-3.5 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-700/30 dark:hover:bg-slate-900/30 sm:flex-row sm:items-center sm:justify-between"
+                            className="group flex flex-col gap-2 px-4 py-3 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-700/30 dark:hover:bg-slate-900/30 sm:flex-row sm:items-center sm:justify-between"
                         >
                             <div className="min-w-0">
-                                <div className="text-[10px] font-bold uppercase tracking-wide text-blue-700 dark:text-blue-300">{record.record_number}</div>
-                                <div className="mt-1 text-sm font-semibold text-slate-950 dark:text-slate-100 sm:text-base">{record.title}</div>
+                                <div className="text-xs font-bold text-blue-800 dark:text-blue-300">{record.record_number}</div>
+                                <div className="mt-0.5 text-sm font-semibold leading-5 text-slate-950 dark:text-slate-100">{record.title}</div>
                                 <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{record.record_type.replaceAll('_', ' ')} · {record.year} · {record.issuing_body}</div>
                             </div>
-                            <div className="flex items-center gap-3">
+                            <div className="flex shrink-0 items-center gap-3">
                                 <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold uppercase text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300">{record.status}</span>
-                                <ArrowRight size={16} className="text-slate-400" aria-hidden="true" />
+                                <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 group-hover:text-blue-800 dark:text-slate-400 dark:group-hover:text-blue-300">Open <ArrowRight size={14} aria-hidden="true" /></span>
                             </div>
                         </Link>
                     ))}
