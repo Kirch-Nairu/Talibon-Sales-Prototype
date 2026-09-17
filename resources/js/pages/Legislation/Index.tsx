@@ -89,16 +89,10 @@ export default function Index({ records, filters, canManage }: { records: Record
                     </nav>
                 </section>
 
-                <section className="grid gap-2 sm:grid-cols-3 lg:grid-cols-6" aria-label="Current legislative record summary">
-                    <div className="rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-[#142236]">
-                        <div className="text-xl font-bold text-slate-950 dark:text-slate-100">{records.length}</div>
-                        <div className="text-xs text-slate-500 dark:text-slate-400">Current results</div>
-                    </div>
-                    {Object.entries(byType).slice(0, 5).map(([type, count]) => (
-                        <div key={type} className="rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-[#142236]">
-                            <div className="text-xl font-bold text-slate-950 dark:text-slate-100">{count}</div>
-                            <div className="text-xs capitalize text-slate-500 dark:text-slate-400">{type.replaceAll('_', ' ')}</div>
-                        </div>
+                <section className="flex flex-wrap items-center gap-x-4 gap-y-1.5 px-1 text-xs text-slate-500 dark:text-slate-400" aria-label="Loaded legislative result context">
+                    <span><strong className="font-semibold text-slate-800 dark:text-slate-200">{records.length}</strong> loaded records</span>
+                    {Object.entries(byType).map(([type, count]) => (
+                        <span key={type} className="capitalize"><strong className="font-semibold text-slate-700 dark:text-slate-300">{count}</strong> {type.replaceAll('_', ' ')}</span>
                     ))}
                 </section>
 
