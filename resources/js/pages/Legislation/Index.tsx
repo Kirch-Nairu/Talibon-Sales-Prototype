@@ -6,7 +6,6 @@ import LegislativePager from '../../components/legislative/LegislativePager';
 import LegislativeRecordStatus from '../../components/legislative/LegislativeRecordStatus';
 import type { LegislativeRecordItem } from '../../components/legislative/types';
 import PageFrame from '../../components/PageFrame';
-import PageHeader from '../../components/PageHeader';
 import AppLayout from '../../layouts/AppLayout';
 
 const RECORDS_PER_PAGE = 25;
@@ -51,20 +50,19 @@ export default function Index({ records, filters, canManage }: { records: Legisl
     return (
         <AppLayout title="Legislative Records">
             <PageFrame>
-                <PageHeader
-                    eyebrow="Legislative records"
-                    title="Legislative Records"
-                    description="Find municipal ordinances, resolutions, executive issuances, and other controlled legislative records."
-                    icon={Gavel}
-                    aside={canManage ? (
-                        <Link
-                            href="/legislation/create"
-                            className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg bg-[#0b2852] px-4 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-blue-700/30"
-                        >
-                            <Plus size={16} /> Add record
-                        </Link>
-                    ) : undefined}
-                />
+                <div className="@container min-w-0 space-y-2.5">
+                    <header className="flex min-w-0 flex-col gap-2 border-b border-slate-200 pb-2.5 dark:border-slate-700 @min-[680px]:flex-row @min-[680px]:items-end @min-[680px]:justify-between">
+                        <div className="min-w-0">
+                            <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-indigo-700 dark:text-indigo-300"><Gavel size={13} aria-hidden="true" /> Legislative records</div>
+                            <h1 className="mt-0.5 text-xl font-bold leading-tight tracking-tight text-slate-950 dark:text-slate-100 @min-[680px]:text-2xl">Legislative Records</h1>
+                            <p className="mt-0.5 max-w-3xl text-xs leading-5 text-slate-500 dark:text-slate-400">Find municipal ordinances, resolutions, executive issuances, and other controlled legislative records.</p>
+                        </div>
+                        {canManage && (
+                            <Link href="/legislation/create" className="inline-flex min-h-8 w-full items-center justify-center gap-1.5 rounded-md bg-[#0b2852] px-3 py-1.5 text-xs font-semibold text-white focus:outline-none focus:ring-2 focus:ring-blue-700/30 @min-[680px]:w-auto">
+                                <Plus size={14} aria-hidden="true" /> Add record
+                            </Link>
+                        )}
+                    </header>
 
                 <section className="space-y-2.5 rounded-xl bg-slate-100/70 p-2.5 dark:bg-slate-900/35" aria-label="Legislative record search and filters">
                     <form onSubmit={search} className="flex min-w-0 flex-col gap-2 rounded-lg bg-white px-2 py-1.5 sm:flex-row sm:items-center ring-1 ring-slate-200 focus-within:ring-2 focus-within:ring-blue-700/25 dark:bg-[#142236] dark:ring-slate-700">
@@ -132,7 +130,8 @@ export default function Index({ records, filters, canManage }: { records: Legisl
                     <LegislativePager page={page} pageCount={pageCount} onPageChange={setPage} />
                 </div>
 
-                <LegislativeCalendarPanel />
+                    <LegislativeCalendarPanel />
+                </div>
             </PageFrame>
         </AppLayout>
     );
