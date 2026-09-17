@@ -112,7 +112,7 @@ export default function Index({ records, filters, canManage }: { records: Legisl
                             key={record.id}
                             href={`/legislation/${record.id}`}
                             aria-label={`${record.record_number}: ${record.title}`}
-                            className="group flex flex-col gap-1.5 px-3 py-2.5 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-700/30 dark:hover:bg-slate-900/30 sm:flex-row sm:items-center sm:justify-between"
+                            className="group grid min-w-0 gap-1.5 px-3 py-2.5 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-700/30 dark:hover:bg-slate-900/30 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:gap-3"
                         >
                             <div className="min-w-0">
                                 <div className="text-sm font-semibold leading-4 text-slate-950 dark:text-slate-100">{record.title}</div>
@@ -122,7 +122,7 @@ export default function Index({ records, filters, canManage }: { records: Legisl
                                     <span>{record.record_type.replaceAll('_', ' ')} · {record.year} · {record.issuing_body}</span>
                                 </div>
                             </div>
-                            <div className="flex shrink-0 items-center gap-3">
+                            <div className="flex shrink-0 items-center gap-2 sm:min-w-[8.5rem] sm:justify-end">
                                 <LegislativeRecordStatus status={record.status} />
                                 <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-500 group-hover:text-blue-800 dark:text-slate-400 dark:group-hover:text-blue-300">Open <ArrowRight size={14} aria-hidden="true" /></span>
                             </div>
