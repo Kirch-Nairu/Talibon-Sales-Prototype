@@ -26,6 +26,7 @@ const recordFilters = [
     ['office_order', 'Office Orders'],
     ['administrative_order', 'Administrative Orders'],
     ['circular', 'Circulars'],
+    ['other', 'Other'],
 ];
 
 export default function Index({ records, filters, canManage }: { records: RecordItem[]; filters: { q: string; type: string }; canManage: boolean }) {
@@ -70,7 +71,7 @@ export default function Index({ records, filters, canManage }: { records: Record
                         />
                         <button type="submit" className="rounded-md bg-[#0b2852] px-4 py-2 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-blue-700/30">Search</button>
                     </form>
-                    <nav className="flex gap-2 overflow-x-auto pb-1" aria-label="Legislative record type filters">
+                    <nav className="flex gap-1.5 overflow-x-auto pb-0.5" aria-label="Legislative record type filters">
                         {recordFilters.map(([value, label]) => {
                             const active = filters.type === value || (!filters.type && !value);
                             return (
@@ -79,7 +80,7 @@ export default function Index({ records, filters, canManage }: { records: Record
                                     type="button"
                                     aria-pressed={active}
                                     onClick={() => router.get('/legislation', { q: q || undefined, type: value || undefined }, { preserveState: true })}
-                                    className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-blue-700/30 ${active ? 'bg-blue-800 text-white' : 'bg-white text-slate-600 ring-1 ring-slate-200 dark:bg-[#142236] dark:text-slate-300 dark:ring-slate-700'}`}
+                                    className={`shrink-0 rounded-lg px-3 py-1.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-blue-700/30 ${active ? 'bg-blue-800 text-white' : 'bg-white text-slate-600 ring-1 ring-slate-200 hover:text-slate-900 dark:bg-[#142236] dark:text-slate-300 dark:ring-slate-700 dark:hover:text-white'}`}
                                 >
                                     {label}
                                 </button>
