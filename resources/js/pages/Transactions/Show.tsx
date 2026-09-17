@@ -3,6 +3,7 @@ import { ArrowRight, CheckCircle2, Clock3, Radio, RotateCcw, Send, UserRoundChec
 import { useEffect, useRef, useState } from 'react';
 import EvidenceFields from '../../components/documents/EvidenceFields';
 import EvidenceList, { type EvidencePayload } from '../../components/documents/EvidenceList';
+import RelatedWorkPanel from '../../components/workflow/RelatedWorkPanel';
 import { useVisiblePolling } from '../../hooks/useVisiblePolling';
 import AppLayout from '../../layouts/AppLayout';
 import { returnTargetFromDetailUrl } from '../../navigation/returnContext';
@@ -119,12 +120,10 @@ export default function Show({
             headers: { Accept: 'application/json' },
             signal,
         });
-
         if (!response.ok || !response.headers.get('content-type')?.includes('application/json')) return;
 
         const payload = await response.json() as LivePayload;
         if (payload.events.length > 0) latestEventId.current = Math.max(latestEventId.current, ...payload.events.map((event) => event.id));
-
         setTx((current) => {
             const knownEventIds = new Set(current.events.map((event) => event.id));
             const newEvents = payload.events.filter((event) => !knownEventIds.has(event.id));
@@ -159,60 +158,71 @@ export default function Show({
 
     const formatDate = (value?: string | null) => value ? new Date(value).toLocaleString() : 'Not recorded';
     const dueLabel = accountability.dueState.replaceAll('_', ' ').toUpperCase();
+    const relatedWork = [
+        { label: 'Back to work queue', detail: 'Return to the exact list and query context that opened this request.', href: returnTarget },
+        { label: 'Open office work', detail: `${tx.current_department.short_name || tx.current_department.name} · ${tx.status.replaceAll('_', ' ')}`, href: '/transactions?view=office_queue' },
+        { label: 'Search this reference in Records', detail: 'Find other municipal records using this exact workflow reference.', href: `/records?search=${encodeURIComponent(tx.reference_no)}` },
+        { label: 'Open correspondence', detail: 'Check incoming and routed correspondence without returning through Home.', href: '/correspondence' },
+    ];
 
     return (
         <AppLayout title={tx.reference_no}>
-            <div className="mx-auto max-w-6xl space-y-4 sm:space-y-6">
-                <div className="flex items-center justify-between gap-3 sm:gap-4">
-                    <Link href={returnTarget} className="text-[12px] font-semibold text-blue-700 sm:text-sm">← Back to My Work</Link>
-                    <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-semibold text-emerald-800 sm:gap-2 sm:px-3 sm:py-1.5 sm:text-xs"><Radio size={12} className="animate-pulse sm:h-[14px] sm:w-[14px]" />Live status</div>
+            <div className="mx-auto max-w-7xl space-y-3">
+                <div className="flex items-center justify-between gap-3">
+                    <Link href={returnTarget} className="text-xs font-semibold text-blue-700 dark:text-blue-300">← Back to work queue</Link>
+                    <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-semibold text-emerald-800"><Radio size={12} className="animate-pulse" />Live status</div>
                 </div>
 
-                <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:rounded-3xl sm:p-6 md:p-8 dark:bg-[#142236] dark:border-slate-700">
-                    <div className="flex flex-col gap-3 sm:gap-5 lg:flex-row lg:items-start lg:justify-between">
-                        <div>
-                            <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-blue-700 sm:text-xs sm:tracking-[0.18em]">{tx.reference_no}</div>
-                            <h1 className="mt-1.5 text-2xl font-bold leading-tight text-slate-950 sm:mt-2 sm:text-3xl dark:text-slate-100">{tx.title}</h1>
-                            <p className="mt-2 max-w-3xl text-[12px] leading-5 text-slate-600 sm:mt-3 sm:text-sm sm:leading-6 dark:text-slate-300">{tx.description || 'No additional description.'}</p>
+                <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-[#142236] sm:p-5">
+                    <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                        <div className="min-w-0">
+                            <div className="text-[10px] font-bold uppercase tracking-[0.15em] text-blue-700 dark:text-blue-300">{tx.reference_no}</div>
+                            <h1 className="mt-1 text-xl font-bold leading-tight text-slate-950 dark:text-slate-100 sm:text-2xl">{tx.title}</h1>
+                            <p className="mt-1.5 max-w-4xl text-xs leading-5 text-slate-600 dark:text-slate-300 sm:text-sm">{tx.description || 'No additional description.'}</p>
                         </div>
-                        <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                            <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[9px] font-bold uppercase text-slate-700 sm:px-3 sm:py-1.5 sm:text-xs dark:bg-slate-900/40 dark:text-slate-300">{tx.status.replaceAll('_', ' ')}</span>
-                            <span className="rounded-full bg-amber-50 px-2.5 py-1 text-[9px] font-bold uppercase text-amber-800 sm:px-3 sm:py-1.5 sm:text-xs">{tx.priority}</span>
-                            <span className={`rounded-full px-2.5 py-1 text-[9px] font-bold sm:px-3 sm:py-1.5 sm:text-xs ${dueTone[accountability.dueState]}`}>{dueLabel}</span>
+                        <div className="flex flex-wrap gap-1.5">
+                            <span className="rounded-full bg-slate-100 px-2.5 py-1 text-[9px] font-bold uppercase text-slate-700 dark:bg-slate-900/40 dark:text-slate-300">{tx.status.replaceAll('_', ' ')}</span>
+                            <span className="rounded-full bg-amber-50 px-2.5 py-1 text-[9px] font-bold uppercase text-amber-800">{tx.priority}</span>
+                            <span className={`rounded-full px-2.5 py-1 text-[9px] font-bold ${dueTone[accountability.dueState]}`}>{dueLabel}</span>
                         </div>
                     </div>
-                    <div className="mt-4 grid grid-cols-2 gap-3 border-t border-slate-100 pt-4 sm:mt-7 sm:gap-4 sm:pt-6 lg:grid-cols-5 dark:border-slate-700">
-                        <div><div className="text-[9px] uppercase text-slate-400 sm:text-xs dark:text-slate-400">Origin</div><div className="mt-1 text-[12px] font-semibold text-slate-900 sm:text-sm dark:text-slate-100">{tx.origin_department.short_name || tx.origin_department.name}</div></div>
-                        <div><div className="text-[9px] uppercase text-slate-400 sm:text-xs dark:text-slate-400">Current Office</div><div className="mt-1 text-[12px] font-semibold text-blue-800 sm:text-sm">{tx.current_department.short_name || tx.current_department.name}</div></div>
-                        <div><div className="text-[9px] uppercase text-slate-400 sm:text-xs dark:text-slate-400">Responsible Officer</div><div className="mt-1 text-[12px] font-semibold text-slate-900 sm:text-sm dark:text-slate-100">{tx.assigned_employee?.full_name || 'Unassigned'}</div></div>
-                        <div><div className="text-[9px] uppercase text-slate-400 sm:text-xs dark:text-slate-400">Due</div><div className="mt-1 text-[12px] font-semibold text-slate-900 sm:text-sm dark:text-slate-100">{accountability.dueAt ? new Date(accountability.dueAt).toLocaleDateString() : 'Not set'}</div></div>
-                        <div><div className="text-[9px] uppercase text-slate-400 sm:text-xs dark:text-slate-400">Time in Office</div><div className="mt-1 text-[12px] font-semibold text-slate-900 sm:text-sm dark:text-slate-100">{accountability.timeInCurrentOffice}</div></div>
+                    <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 border-t border-slate-100 pt-3 lg:grid-cols-5 dark:border-slate-700">
+                        <div><div className="text-[9px] uppercase text-slate-400">Origin</div><div className="mt-0.5 text-xs font-semibold text-slate-900 dark:text-slate-100">{tx.origin_department.short_name || tx.origin_department.name}</div></div>
+                        <div><div className="text-[9px] uppercase text-slate-400">Current office</div><div className="mt-0.5 text-xs font-semibold text-blue-800 dark:text-blue-300">{tx.current_department.short_name || tx.current_department.name}</div></div>
+                        <div><div className="text-[9px] uppercase text-slate-400">Responsible officer</div><div className="mt-0.5 text-xs font-semibold text-slate-900 dark:text-slate-100">{tx.assigned_employee?.full_name || 'Unassigned'}</div></div>
+                        <div><div className="text-[9px] uppercase text-slate-400">Due</div><div className="mt-0.5 text-xs font-semibold text-slate-900 dark:text-slate-100">{accountability.dueAt ? new Date(accountability.dueAt).toLocaleDateString() : 'Not set'}</div></div>
+                        <div><div className="text-[9px] uppercase text-slate-400">Time in office</div><div className="mt-0.5 text-xs font-semibold text-slate-900 dark:text-slate-100">{accountability.timeInCurrentOffice}</div></div>
                     </div>
-                    <div className="mt-3 grid gap-2 rounded-xl bg-slate-50 p-3 text-[9px] text-slate-500 sm:grid-cols-3 sm:text-xs dark:bg-slate-900/40 dark:text-slate-400"><div><span className="font-semibold text-slate-700 dark:text-slate-300">Received:</span> {formatDate(accountability.receivedAt)}</div><div><span className="font-semibold text-slate-700 dark:text-slate-300">Created by:</span> {tx.creator.name}</div><div><span className="font-semibold text-slate-700 dark:text-slate-300">Deadline state:</span> {dueLabel}</div></div>
+                    <div className="mt-3 grid gap-1.5 rounded-lg bg-slate-50 px-3 py-2 text-[10px] text-slate-500 sm:grid-cols-3 dark:bg-slate-900/40 dark:text-slate-400"><div><span className="font-semibold text-slate-700 dark:text-slate-300">Received:</span> {formatDate(accountability.receivedAt)}</div><div><span className="font-semibold text-slate-700 dark:text-slate-300">Created by:</span> {tx.creator.name}</div><div><span className="font-semibold text-slate-700 dark:text-slate-300">Deadline state:</span> {dueLabel}</div></div>
                 </section>
 
-                {evidence.record.length > 0 && <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6 dark:bg-[#142236] dark:border-slate-700"><h2 className="text-sm font-bold text-slate-950 sm:text-base dark:text-slate-100">Transaction evidence</h2><p className="mt-1 text-[10px] text-slate-500 sm:text-xs dark:text-slate-400">Protected supporting files attached when this transaction was created.</p><div className="mt-3"><EvidenceList items={evidence.record} /></div></section>}
+                <div className="grid min-w-0 gap-3 xl:grid-cols-[minmax(0,1fr)_320px] xl:items-start">
+                    <div className="min-w-0 space-y-3">
+                        {(permissions.canTransition || permissions.canMayorDecision) && (
+                            <section className="rounded-xl border border-blue-100 bg-blue-50/60 p-4 dark:border-blue-900 dark:bg-blue-950/40">
+                                <div className="flex items-center gap-2 text-sm font-bold text-slate-950 dark:text-slate-100"><Send size={16} /> Workflow actions</div>
+                                <textarea value={form.data.remarks} onChange={(e) => form.setData('remarks', e.target.value)} rows={2} className="mt-3 w-full rounded-lg border border-blue-200 bg-white px-3 py-2.5 text-sm dark:border-blue-900 dark:bg-[#142236]" placeholder="Review note / routing remarks" />
+                                <div className="mt-3"><EvidenceFields files={form.data.evidence} onChange={(files) => form.setData('evidence', files)} errors={form.errors as Record<string, string | undefined>} disabled={form.processing} label="Evidence for this workflow action" /></div>
 
-                {(permissions.canTransition || permissions.canMayorDecision) && (
-                    <section className="rounded-2xl border border-blue-100 bg-blue-50/60 p-4 sm:rounded-3xl sm:p-6 dark:bg-blue-950/40">
-                        <div className="flex items-center gap-2 text-sm font-bold text-slate-950 sm:text-base dark:text-slate-100"><Send size={16} className="sm:h-[18px] sm:w-[18px]" /> Workflow actions</div>
-                        <textarea value={form.data.remarks} onChange={(e) => form.setData('remarks', e.target.value)} rows={2} className="mt-3 w-full rounded-xl border border-blue-200 bg-white px-3 py-2.5 text-[12px] sm:mt-4 sm:px-4 sm:py-3 sm:text-sm dark:bg-[#142236]" placeholder="Review note / routing remarks" />
-                        <div className="mt-3"><EvidenceFields files={form.data.evidence} onChange={(files) => form.setData('evidence', files)} errors={form.errors as Record<string, string | undefined>} disabled={form.processing} label="Evidence for this workflow action" /></div>
+                                {permissions.canAssign && <div className="mt-3 rounded-lg border border-blue-100 bg-white p-3 dark:border-blue-900 dark:bg-[#142236]"><div className="flex items-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-100"><UserRoundCheck size={15} /> Assign responsible employee</div><div className="mt-2 flex gap-2"><select value={form.data.assigned_employee_id} onChange={(e) => form.setData('assigned_employee_id', e.target.value ? Number(e.target.value) : '')} className="min-w-0 flex-1 rounded-lg border border-slate-300 bg-white px-2.5 py-2 text-xs dark:border-slate-700 dark:bg-[#142236]"><option value="">Choose employee…</option>{assignableEmployees.map((employee) => <option key={employee.id} value={employee.id}>{employee.full_name || employee.employee_number} · {employee.position_title}</option>)}</select><button disabled={!form.data.assigned_employee_id || form.processing} onClick={() => transition('assign')} className="rounded-lg bg-blue-800 px-3 py-2 text-xs font-semibold text-white disabled:opacity-40">Assign</button></div></div>}
 
-                        {permissions.canAssign && <div className="mt-3 rounded-xl border border-blue-100 bg-white p-3 sm:mt-4 sm:p-4 dark:bg-[#142236]"><div className="flex items-center gap-2 text-[11px] font-bold text-slate-800 sm:text-sm dark:text-slate-100"><UserRoundCheck size={15} /> Assign responsible employee</div><div className="mt-2 flex gap-2"><select value={form.data.assigned_employee_id} onChange={(e) => form.setData('assigned_employee_id', e.target.value ? Number(e.target.value) : '')} className="min-w-0 flex-1 rounded-lg border border-slate-300 bg-white px-2.5 py-2 text-[11px] sm:rounded-xl sm:px-3 sm:py-2.5 sm:text-sm dark:bg-[#142236] dark:border-slate-700"><option value="">Choose employee…</option>{assignableEmployees.map((employee) => <option key={employee.id} value={employee.id}>{employee.full_name || employee.employee_number} · {employee.position_title}</option>)}</select><button disabled={!form.data.assigned_employee_id || form.processing} onClick={() => transition('assign')} className="rounded-lg bg-blue-800 px-3 py-2 text-[11px] font-semibold text-white disabled:opacity-40 sm:rounded-xl sm:px-4 sm:py-2.5 sm:text-sm">Assign</button></div></div>}
+                                {permissions.canTransition && <div className="mt-3 flex flex-wrap gap-2"><button disabled={form.processing} onClick={() => transition('mark_review')} className="rounded-lg border border-blue-200 bg-white px-3 py-2 text-xs font-semibold text-blue-900 disabled:opacity-50 dark:bg-[#142236] dark:text-blue-200"><Clock3 className="mr-1.5 inline" size={14} />Mark for Review</button><button disabled={form.processing} onClick={() => transition('send_to_mayor')} className="rounded-lg bg-[#0b2852] px-3 py-2 text-xs font-semibold text-white disabled:opacity-50">Send to Mayor's Office</button><button disabled={form.processing} onClick={() => transition('return_origin')} className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-semibold text-slate-700 disabled:opacity-50 dark:border-slate-700 dark:bg-[#142236] dark:text-slate-300"><RotateCcw className="mr-1.5 inline" size={14} />Return to Origin</button><div className="flex min-w-[260px] flex-1 gap-2"><select value={form.data.target_department_id} onChange={(e) => form.setData('target_department_id', e.target.value ? Number(e.target.value) : '')} className="min-w-0 flex-1 rounded-lg border border-blue-200 bg-white px-2.5 py-2 text-xs dark:border-blue-900 dark:bg-[#142236]"><option value="">Forward to department…</option>{departments.filter((d) => d.id !== tx.current_department.id).map((d) => <option key={d.id} value={d.id}>{d.name}</option>)}</select><button disabled={!form.data.target_department_id || form.processing} onClick={() => transition('forward')} className="rounded-lg border border-blue-200 bg-white px-3 py-2 text-xs font-semibold text-blue-900 disabled:opacity-40 dark:border-blue-900 dark:bg-[#142236] dark:text-blue-200">Forward</button></div></div>}
 
-                        {permissions.canTransition && <div className="mt-3 flex flex-wrap gap-2 sm:mt-4 sm:gap-3"><button disabled={form.processing} onClick={() => transition('mark_review')} className="rounded-lg border border-blue-200 bg-white px-3 py-2 text-[12px] font-semibold text-blue-900 disabled:opacity-50 sm:rounded-xl sm:px-4 sm:py-2.5 sm:text-sm dark:bg-[#142236]"><Clock3 className="mr-1.5 inline" size={14} />Mark for Review</button><button disabled={form.processing} onClick={() => transition('send_to_mayor')} className="rounded-lg bg-[#0b2852] px-3 py-2 text-[12px] font-semibold text-white disabled:opacity-50 sm:rounded-xl sm:px-4 sm:py-2.5 sm:text-sm">Send to Mayor's Office</button><button disabled={form.processing} onClick={() => transition('return_origin')} className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-[12px] font-semibold text-slate-700 disabled:opacity-50 sm:rounded-xl sm:px-4 sm:py-2.5 sm:text-sm dark:bg-[#142236] dark:text-slate-300 dark:border-slate-700"><RotateCcw className="mr-1.5 inline" size={14} />Return to Origin</button><div className="flex min-w-0 basis-full gap-2 sm:min-w-[280px] sm:flex-1 sm:basis-auto"><select value={form.data.target_department_id} onChange={(e) => form.setData('target_department_id', e.target.value ? Number(e.target.value) : '')} className="min-w-0 flex-1 rounded-lg border border-blue-200 bg-white px-2.5 py-2 text-[12px] sm:rounded-xl sm:px-3 sm:py-2.5 sm:text-sm dark:bg-[#142236]"><option value="">Forward to department…</option>{departments.filter((d) => d.id !== tx.current_department.id).map((d) => <option key={d.id} value={d.id}>{d.name}</option>)}</select><button disabled={!form.data.target_department_id || form.processing} onClick={() => transition('forward')} className="rounded-lg border border-blue-200 bg-white px-3 py-2 text-[12px] font-semibold text-blue-900 disabled:opacity-40 sm:rounded-xl sm:px-4 sm:py-2.5 sm:text-sm dark:bg-[#142236]">Forward</button></div></div>}
+                                {permissions.canMayorDecision && <div className="mt-3 flex flex-wrap gap-2 border-t border-blue-100 pt-3 dark:border-blue-900"><button disabled={form.processing} onClick={() => transition('approve')} className="rounded-lg bg-emerald-700 px-3.5 py-2 text-xs font-semibold text-white disabled:opacity-50"><CheckCircle2 className="mr-1.5 inline" size={14} />Approve</button><button disabled={form.processing} onClick={() => transition('disapprove')} className="rounded-lg bg-rose-700 px-3.5 py-2 text-xs font-semibold text-white disabled:opacity-50">Disapprove</button><button disabled={form.processing} onClick={() => transition('request_information')} className="rounded-lg border border-blue-200 bg-white px-3.5 py-2 text-xs font-semibold text-blue-900 disabled:opacity-50 dark:border-blue-900 dark:bg-[#142236] dark:text-blue-200">Request Information</button></div>}
+                            </section>
+                        )}
 
-                        {permissions.canMayorDecision && <div className="mt-3 flex flex-wrap gap-2 border-t border-blue-100 pt-3 sm:mt-4 sm:gap-3 sm:pt-4"><button disabled={form.processing} onClick={() => transition('approve')} className="rounded-lg bg-emerald-700 px-3.5 py-2 text-[12px] font-semibold text-white disabled:opacity-50 sm:rounded-xl sm:px-5 sm:py-2.5 sm:text-sm"><CheckCircle2 className="mr-1.5 inline" size={14} />Approve</button><button disabled={form.processing} onClick={() => transition('disapprove')} className="rounded-lg bg-rose-700 px-3.5 py-2 text-[12px] font-semibold text-white disabled:opacity-50 sm:rounded-xl sm:px-5 sm:py-2.5 sm:text-sm">Disapprove</button><button disabled={form.processing} onClick={() => transition('request_information')} className="rounded-lg border border-blue-200 bg-white px-3.5 py-2 text-[12px] font-semibold text-blue-900 disabled:opacity-50 sm:rounded-xl sm:px-5 sm:py-2.5 sm:text-sm dark:bg-[#142236]">Request Information</button></div>}
-                    </section>
-                )}
-
-                <section className="rounded-2xl border border-slate-200 bg-white shadow-sm sm:rounded-3xl dark:bg-[#142236] dark:border-slate-700">
-                    <div className="border-b border-slate-100 px-4 py-3 sm:px-6 sm:py-5 dark:border-slate-700"><h2 className="text-sm font-bold text-slate-950 sm:text-base dark:text-slate-100">Routing history</h2><p className="mt-1 text-[10px] text-slate-500 sm:text-sm dark:text-slate-400">Append-only workflow evidence · updates automatically</p></div>
-                    <div className="divide-y divide-slate-100 dark:divide-slate-700">
-                        {tx.events.map((event) => <div key={event.id} className="grid gap-2.5 px-4 py-3.5 sm:gap-4 sm:px-6 sm:py-5 md:grid-cols-[32px_1fr_180px]"><div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-50 text-blue-800 sm:h-8 sm:w-8 dark:bg-blue-950/40"><ArrowRight size={14} className="sm:h-[15px] sm:w-[15px]" /></div><div><div className="text-[13px] font-semibold capitalize text-slate-950 sm:text-base dark:text-slate-100">{event.action.replaceAll('_', ' ')}</div><div className="mt-1 text-[11px] text-slate-600 sm:text-sm dark:text-slate-300">{event.from_department?.short_name || event.from_department?.name || '—'} → {event.to_department?.short_name || event.to_department?.name || '—'}</div>{event.remarks && <div className="mt-2 rounded-lg bg-slate-50 px-2.5 py-1.5 text-[11px] text-slate-600 sm:rounded-xl sm:px-3 sm:py-2 sm:text-sm dark:bg-slate-900/40 dark:text-slate-300">{event.remarks}</div>}<div className="mt-2 text-[9px] text-slate-400 sm:text-xs dark:text-slate-400">By {event.actor.name}</div><EvidenceList items={evidence.events[String(event.id)] ?? []} compact /></div><div className="text-[9px] text-slate-500 sm:text-xs md:text-right dark:text-slate-400">{new Date(event.created_at).toLocaleString()}</div></div>)}
+                        {evidence.record.length > 0 && <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-[#142236]"><h2 className="text-sm font-bold text-slate-950 dark:text-slate-100">Transaction evidence</h2><div className="mt-3"><EvidenceList items={evidence.record} /></div></section>}
                     </div>
-                </section>
+                    <RelatedWorkPanel items={relatedWork} />
+                </div>
+
+                <details className="group rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-[#142236]">
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 marker:hidden"><div><h2 className="text-sm font-bold text-slate-950 dark:text-slate-100">Routing history</h2><p className="mt-0.5 text-[10px] text-slate-500 dark:text-slate-400">Append-only workflow evidence · updates automatically · {tx.events.length} events</p></div><span className="text-xs font-semibold text-blue-700 group-open:hidden dark:text-blue-300">Show history</span><span className="hidden text-xs font-semibold text-blue-700 group-open:inline dark:text-blue-300">Hide history</span></summary>
+                    <div className="divide-y divide-slate-100 border-t border-slate-100 dark:divide-slate-700 dark:border-slate-700">
+                        {tx.events.map((event) => <div key={event.id} className="grid gap-2.5 px-4 py-3 md:grid-cols-[28px_1fr_160px]"><div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-50 text-blue-800 dark:bg-blue-950/40 dark:text-blue-300"><ArrowRight size={14} /></div><div><div className="text-sm font-semibold capitalize text-slate-950 dark:text-slate-100">{event.action.replaceAll('_', ' ')}</div><div className="mt-0.5 text-xs text-slate-600 dark:text-slate-300">{event.from_department?.short_name || event.from_department?.name || '—'} → {event.to_department?.short_name || event.to_department?.name || '—'}</div>{event.remarks && <div className="mt-2 rounded-lg bg-slate-50 px-2.5 py-1.5 text-xs text-slate-600 dark:bg-slate-900/40 dark:text-slate-300">{event.remarks}</div>}<div className="mt-1.5 text-[10px] text-slate-400">By {event.actor.name}</div><EvidenceList items={evidence.events[String(event.id)] ?? []} compact /></div><div className="text-[10px] text-slate-500 md:text-right dark:text-slate-400">{new Date(event.created_at).toLocaleString()}</div></div>)}
+                    </div>
+                </details>
             </div>
         </AppLayout>
     );
