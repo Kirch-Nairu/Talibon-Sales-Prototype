@@ -1,15 +1,15 @@
-import { useMemo, useState } from 'react';
 import { FolderKanban } from 'lucide-react';
-import AppLayout from '../../layouts/AppLayout';
+import { useMemo, useState } from 'react';
 import PageFrame from '../../components/PageFrame';
 import PageHeader from '../../components/PageHeader';
 import OperationalRegister, { type OperationalItem, type OperationalSummary } from '../../components/project-monitoring/OperationalRegister';
-import ProjectFilters from '../../components/project-monitoring/ProjectFilters';
-import ProjectSummary from '../../components/project-monitoring/ProjectSummary';
-import ProjectRegister from '../../components/project-monitoring/ProjectRegister';
 import ProjectDetailPanel from '../../components/project-monitoring/ProjectDetailPanel';
+import ProjectFilters from '../../components/project-monitoring/ProjectFilters';
+import ProjectRegister from '../../components/project-monitoring/ProjectRegister';
+import ProjectSummary from '../../components/project-monitoring/ProjectSummary';
 import { municipalProjects } from '../../data/municipal/projects';
 import type { MunicipalProject, ProjectFilters as Filters } from '../../data/municipal/projects.types';
+import AppLayout from '../../layouts/AppLayout';
 
 const initial: Filters = { query: '', office: '', funding: '', status: '', location: '' };
 
@@ -34,5 +34,16 @@ export default function Index({ items = [], filter = null, summary }: Props) {
         });
     }, [filters]);
 
-    return <AppLayout title="Project Monitoring"><PageFrame><PageHeader eyebrow="Planning and implementation" title="Project Monitoring" description="Municipal project register with physical and financial progress, implementation milestones, current concerns, funding context, and plan relationships." icon={FolderKanban} aside={<div className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm dark:border-slate-700 dark:bg-[#142236]"><div className="text-xs font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Current result</div><div className="mt-1 font-bold text-slate-950 dark:text-slate-100">{projects.length} of {municipalProjects.length} projects</div></div>} /><ProjectSummary projects={projects} /><ProjectFilters filters={filters} onChange={(value) => { setFilters(value); setSelected(null); }} /><div className="grid min-w-0 gap-4 2xl:grid-cols-[minmax(0,1fr)_360px]"><ProjectRegister projects={projects} selectedId={selected?.id} onSelect={setSelected} /><div className="hidden min-w-0 2xl:block"><ProjectDetailPanel project={selected} onClose={() => setSelected(null)} /></div></div>{summary ? <OperationalRegister items={items} filter={filter} summary={summary} /> : null}</PageFrame></AppLayout>;
+    return <AppLayout title="Project Monitoring">
+        <PageFrame className="max-w-[1480px]">
+            <PageHeader eyebrow="Planning and implementation" title="Project Monitoring" description="Municipal project register with physical and financial progress, implementation milestones, current concerns, funding context, and plan relationships." icon={FolderKanban} aside={<div className="rounded-lg border border-slate-200 bg-white px-3 py-2 dark:border-slate-700 dark:bg-[#142236]"><div className="text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">Current result</div><div className="mt-0.5 text-xs font-bold text-slate-950 dark:text-slate-100">{projects.length} of {municipalProjects.length} projects</div></div>} />
+            <ProjectSummary projects={projects} />
+            <ProjectFilters filters={filters} onChange={(value) => { setFilters(value); setSelected(null); }} />
+            <div className="grid min-w-0 gap-3 xl:grid-cols-[minmax(0,1fr)_340px]">
+                <ProjectRegister projects={projects} selectedId={selected?.id} onSelect={setSelected} />
+                <div className="hidden min-w-0 xl:block"><ProjectDetailPanel project={selected} onClose={() => setSelected(null)} /></div>
+            </div>
+            {summary ? <details className="group rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-[#142236]"><summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-2.5 marker:hidden"><div><div className="text-xs font-bold text-slate-900 dark:text-slate-100">Operational monitoring register</div><div className="mt-0.5 text-[10px] text-slate-500 dark:text-slate-400">Additional operational monitoring context</div></div><span className="text-xs font-semibold text-blue-700 group-open:hidden dark:text-blue-300">Show</span><span className="hidden text-xs font-semibold text-blue-700 group-open:inline dark:text-blue-300">Hide</span></summary><div className="border-t border-slate-100 p-3 dark:border-slate-700"><OperationalRegister items={items} filter={filter} summary={summary} /></div></details> : null}
+        </PageFrame>
+    </AppLayout>;
 }
