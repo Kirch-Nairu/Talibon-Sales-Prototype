@@ -2,6 +2,7 @@ import { useForm } from '@inertiajs/react';
 import { Gavel } from 'lucide-react';
 import { FormEvent, useState } from 'react';
 import LegislativeScheduleSession from '../../components/legislative/LegislativeScheduleSession';
+import LegislativeWorkQueue from '../../components/legislative/LegislativeWorkQueue';
 import LegislativeWorkspaceMetrics from '../../components/legislative/LegislativeWorkspaceMetrics';
 import AppLayout from '../../layouts/AppLayout';
 
@@ -64,13 +65,7 @@ export default function Workspace({ sessions, legislativeWork, canManage }: { se
                 {canManage && <LegislativeScheduleSession />}
 
                 <main className="grid items-start gap-5 xl:grid-cols-[1.05fr_0.95fr]">
-                    <section className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-[#142236]" aria-labelledby="legislative-work-heading">
-                        <div><div className="text-xs font-bold uppercase tracking-wide text-blue-700 dark:text-blue-300">Current workload</div><h2 id="legislative-work-heading" className="mt-1 font-bold text-slate-950 dark:text-slate-100">Legislative routed work</h2></div>
-                        <div className="mt-4 max-h-[460px] space-y-2 overflow-y-auto">
-                            {legislativeWork.map((work) => <a key={work.id} href={`/transactions/${work.id}`} className={`block rounded-xl p-3 text-sm ${work.due_at && new Date(work.due_at).getTime() < Date.now() ? 'bg-rose-50 dark:bg-rose-950/20' : 'bg-slate-50 dark:bg-slate-900/40'}`}><div className="font-semibold text-slate-950 dark:text-slate-100">{work.reference_no} · {work.title}</div><div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{work.current_department?.short_name || work.current_department?.name} · {work.status.replaceAll('_', ' ')} · {work.priority}{work.due_at ? ` · due ${new Date(work.due_at).toLocaleString()}` : ''}</div></a>)}
-                            {legislativeWork.length === 0 && <div className="text-sm text-slate-500 dark:text-slate-400">No open legislative work.</div>}
-                        </div>
-                    </section>
+                    <LegislativeWorkQueue work={legislativeWork} />
 
                     <section className="space-y-3" aria-labelledby="legislative-sessions-heading">
                         <div><div className="text-xs font-bold uppercase tracking-wide text-indigo-700 dark:text-indigo-300">Session register</div><h2 id="legislative-sessions-heading" className="mt-1 font-bold text-slate-950 dark:text-slate-100">Loaded legislative sessions</h2></div>
