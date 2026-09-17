@@ -9,12 +9,20 @@ const pretty = (value: string) => value.replaceAll('_', ' ').replace(/\b\w/g, (c
 
 export default function LegislativeSessionCard({ session, canManage }: { session: Session; canManage: boolean }) {
     const [showAgenda, setShowAgenda] = useState(false);
+    const [showAgendaForm, setShowAgendaForm] = useState(false);
     const agenda = useForm({ sequence_no: session.agenda_items.length + 1, title: '', description: '' });
     const submitAgenda = (event: FormEvent) => {
         event.preventDefault();
-        agenda.post(`/legislative-workspace/sessions/${session.id}/agenda`, { preserveScroll: true, onSuccess: () => agenda.reset('title', 'description') });
+        agenda.post(`/legislative-workspace/sessions/${session.id}/agenda`, {
+            preserveScroll: true,
+            onSuccess: () => {
+                agenda.reset('title', 'description');
+                setShowAgendaForm(false);
+            },
+        });
     };
     const agendaId = `session-agenda-${session.id}`;
+    const agendaFormId = `session-agenda-form-${session.id}`;
 
     return (
         <article className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-[#142236]">
@@ -28,8 +36,19 @@ export default function LegislativeSessionCard({ session, canManage }: { session
             </div>
             {showAgenda && (
                 <div id={agendaId} className="mt-4 border-t border-slate-100 pt-4 dark:border-slate-700">
-                    {canManage && <form onSubmit={submitAgenda} className="mb-3 grid gap-2 rounded-lg bg-indigo-50/50 p-3 dark:bg-indigo-950/20 sm:grid-cols-[90px_1fr_auto]"><input type="number" min={1} value={agenda.data.sequence_no} onChange={(event) => agenda.setData('sequence_no', Number(event.target.value))} className="rounded-md border border-slate-300 bg-white px-2.5 py-2 text-sm" /><input required placeholder="Agenda item title" value={agenda.data.title} onChange={(event) => agenda.setData('title', event.target.value)} className="rounded-md border border-slate-300 bg-white px-2.5 py-2 text-sm" /><button disabled={agenda.processing} className="rounded-md bg-[#0b2852] px-3 py-2 text-sm font-semibold text-white">Add</button></form>}
-<LegislativeAgendaList items={session.agenda_items} />
+                    {canManage && (
+                        <div className="mb-3">
+                            <button type="button" aria-expanded={showAgendaForm} aria-controls={agendaFormId} onClick={() => setShowAgendaForm((value) => !value)} className="rounded-md bg-indigo-50 px-3 py-2 text-xs font-semibold text-indigo-800 dark:bg-indigo-950/30 dark:text-indigo-300">{showAgendaForm ? 'Cancel agenda entry' : 'Add agenda item'}</button>
+                            {showAgendaForm && (
+                                <form id={agendaFormId} onSubmit={submitAgenda} className="mt-2 grid gap-2 rounded-lg bg-indigo-50/50 p-3 dark:bg-indigo-950/20 sm:grid-cols-[90px_1fr_auto]">
+                                    <input aria-label="Agenda sequence number" type="number" min={1} value={agenda.data.sequence_no} onChange={(event) => agenda.setData('sequence_no', Number(event.target.value))} className="rounded-md border border-slate-300 bg-white px-2.5 py-2 text-sm" />
+                                    <input aria-label="Agenda item title" required placeholder="Agenda item title" value={agenda.data.title} onChange={(event) => agenda.setData('title', event.target.value)} className="rounded-md border border-slate-300 bg-white px-2.5 py-2 text-sm" />
+                                    <button disabled={agenda.processing} className="rounded-md bg-[#0b2852] px-3 py-2 text-sm font-semibold text-white">Add</button>
+                                </form>
+                            )}
+                        </div>
+                    )}
+                    <LegislativeAgendaList items={session.agenda_items} />
                 </div>
             )}
         </article>
