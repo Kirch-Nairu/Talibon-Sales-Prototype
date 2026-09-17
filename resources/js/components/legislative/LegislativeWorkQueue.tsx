@@ -19,7 +19,7 @@ export default function LegislativeWorkQueue({ work }: { work: Work[] }) {
                 {work.map((item) => {
                     const overdue = isOverdue(item);
                     return (
-                        <a key={item.id} href={`/transactions/${item.id}`} className={`block min-w-0 rounded-xl border p-3 text-sm transition focus:outline-none focus:ring-2 focus:ring-blue-700/25 ${overdue ? 'border-rose-200 bg-rose-50/70 dark:border-rose-900/50 dark:bg-rose-950/20' : 'border-slate-100 bg-slate-50 dark:border-slate-800 dark:bg-slate-900/40'}`}>
+                        <a key={item.id} href={`/transactions/${item.id}`} aria-label={`Open ${item.reference_no}: ${item.title}`} className={`block min-w-0 rounded-xl border p-3 text-sm transition focus:outline-none focus:ring-2 focus:ring-blue-700/25 ${overdue ? 'border-rose-200 bg-rose-50/70 dark:border-rose-900/50 dark:bg-rose-950/20' : 'border-slate-100 bg-slate-50 dark:border-slate-800 dark:bg-slate-900/40'}`}>
                             <div className="text-xs font-bold text-blue-800 dark:text-blue-300">{item.reference_no}</div>
                             <div className="mt-0.5 break-words font-semibold leading-5 text-slate-950 dark:text-slate-100">{item.title}</div>
                             <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-slate-500 dark:text-slate-400"><span>{pretty(item.status)}</span><span>{pretty(item.priority)}</span><span>{item.current_department?.short_name || item.current_department?.name || 'Legislative office'}</span>{item.due_at && <span className={overdue ? 'font-semibold text-rose-700 dark:text-rose-300' : ''}>{overdue ? 'Overdue' : 'Due'} {new Date(item.due_at).toLocaleString()}</span>}</div>

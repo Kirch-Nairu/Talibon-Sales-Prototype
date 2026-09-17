@@ -38,12 +38,12 @@ export default function LegislativeSessionCard({ session, canManage }: { session
                 <div id={agendaId} className="mt-4 border-t border-slate-100 pt-4 dark:border-slate-700">
                     {canManage && (
                         <div className="mb-3">
-                            <button type="button" aria-expanded={showAgendaForm} aria-controls={agendaFormId} onClick={() => setShowAgendaForm((value) => !value)} className="rounded-md bg-indigo-50 px-3 py-2 text-xs font-semibold text-indigo-800 dark:bg-indigo-950/30 dark:text-indigo-300">{showAgendaForm ? 'Cancel agenda entry' : 'Add agenda item'}</button>
+                            <button type="button" aria-expanded={showAgendaForm} aria-controls={agendaFormId} onClick={() => setShowAgendaForm((value) => !value)} className="rounded-md bg-indigo-50 px-3 py-2 text-xs font-semibold text-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-700/25 dark:bg-indigo-950/30 dark:text-indigo-300">{showAgendaForm ? 'Cancel agenda entry' : 'Add agenda item'}</button>
                             {showAgendaForm && (
                                 <form id={agendaFormId} onSubmit={submitAgenda} className="mt-2 grid gap-2 rounded-lg bg-indigo-50/50 p-3 dark:bg-indigo-950/20 sm:grid-cols-[90px_1fr_auto]">
-                                    <input aria-label="Agenda sequence number" type="number" min={1} value={agenda.data.sequence_no} onChange={(event) => agenda.setData('sequence_no', Number(event.target.value))} className="rounded-md border border-slate-300 bg-white px-2.5 py-2 text-sm" />
-                                    <input aria-label="Agenda item title" required placeholder="Agenda item title" value={agenda.data.title} onChange={(event) => agenda.setData('title', event.target.value)} className="rounded-md border border-slate-300 bg-white px-2.5 py-2 text-sm" />
-                                    <button disabled={agenda.processing} className="rounded-md bg-[#0b2852] px-3 py-2 text-sm font-semibold text-white">Add</button>
+                                    <input aria-label="Agenda sequence number" type="number" min={1} value={agenda.data.sequence_no} onChange={(event) => agenda.setData('sequence_no', Number(event.target.value))} className="rounded-md border border-slate-300 bg-white px-2.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-700/25 dark:border-slate-600 dark:bg-slate-950/40 dark:text-slate-100" />
+                                    <input aria-label="Agenda item title" required placeholder="Agenda item title" value={agenda.data.title} onChange={(event) => agenda.setData('title', event.target.value)} className="rounded-md border border-slate-300 bg-white px-2.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-700/25 dark:border-slate-600 dark:bg-slate-950/40 dark:text-slate-100" />
+                                    <button type="submit" disabled={agenda.processing} className="rounded-md bg-[#0b2852] px-3 py-2 text-sm font-semibold text-white focus:outline-none focus:ring-2 focus:ring-blue-700/30 disabled:opacity-50">Add agenda item</button>
                                 </form>
                             )}
                         </div>
