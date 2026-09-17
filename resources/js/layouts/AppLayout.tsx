@@ -59,6 +59,7 @@ export default function AppLayout({ title, children }: Props) {
     const navigationGroups = buildPortalNavigation(pageProps.workspaceExperience, navigation, canViewReports);
     const hrisPresentation = page.url === '/hris' || page.url.startsWith('/hris/');
     const canSearchRecords = navigationGroups.some((group) => group.items.some((item) => item.key === 'records'));
+    const utilitiesActive = desktopUtilitiesOpen || utilitiesOpen;
 
     useEffect(() => {
         try { setDesktopCollapsed(window.localStorage.getItem(SIDEBAR_COLLAPSED_STORAGE_KEY) === 'true'); }
@@ -76,9 +77,11 @@ export default function AppLayout({ title, children }: Props) {
 
     const toggleUtilities = () => {
         if (window.matchMedia('(min-width: 1280px)').matches) {
+            setUtilitiesOpen(false);
             setDesktopUtilitiesOpen((open) => !open);
             return;
         }
+        setDesktopUtilitiesOpen(false);
         setUtilitiesOpen(true);
     };
 
@@ -169,9 +172,9 @@ export default function AppLayout({ title, children }: Props) {
                             {canSearchRecords && <RecordsSearch />}
                             <button
                                 onClick={toggleUtilities}
-                                className={`flex h-10 w-10 items-center justify-center rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700/30 ${desktopUtilitiesOpen ? 'bg-blue-50 text-blue-800 dark:bg-blue-950/45 dark:text-blue-200' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'}`}
-                                aria-label={desktopUtilitiesOpen ? 'Close municipal utilities' : 'Open municipal utilities'}
-                                aria-expanded={desktopUtilitiesOpen}
+                                className={`flex h-10 w-10 items-center justify-center rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700/30 ${utilitiesActive ? 'bg-blue-50 text-blue-800 dark:bg-blue-950/45 dark:text-blue-200' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'}`}
+                                aria-label={utilitiesActive ? 'Close municipal utilities' : 'Open municipal utilities'}
+                                aria-expanded={utilitiesActive}
                             >
                                 <PanelRightOpen size={18} />
                             </button>
