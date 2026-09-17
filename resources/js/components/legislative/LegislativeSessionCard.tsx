@@ -1,5 +1,6 @@
 import { useForm } from '@inertiajs/react';
 import { FormEvent, useState } from 'react';
+import LegislativeAgendaList from './LegislativeAgendaList';
 
 type Agenda = { id: number; sequence_no: number; title: string; status: string; transaction?: { reference_no: string; title: string } | null; legislative_record?: { record_number: string; title: string } | null };
 type Session = { id: number; session_code: string; session_type: string; title: string; scheduled_at: string; location?: string | null; status: string; agenda_items: Agenda[] };
@@ -28,7 +29,7 @@ export default function LegislativeSessionCard({ session, canManage }: { session
             {showAgenda && (
                 <div id={agendaId} className="mt-4 border-t border-slate-100 pt-4 dark:border-slate-700">
                     {canManage && <form onSubmit={submitAgenda} className="mb-3 grid gap-2 rounded-lg bg-indigo-50/50 p-3 dark:bg-indigo-950/20 sm:grid-cols-[90px_1fr_auto]"><input type="number" min={1} value={agenda.data.sequence_no} onChange={(event) => agenda.setData('sequence_no', Number(event.target.value))} className="rounded-md border border-slate-300 bg-white px-2.5 py-2 text-sm" /><input required placeholder="Agenda item title" value={agenda.data.title} onChange={(event) => agenda.setData('title', event.target.value)} className="rounded-md border border-slate-300 bg-white px-2.5 py-2 text-sm" /><button disabled={agenda.processing} className="rounded-md bg-[#0b2852] px-3 py-2 text-sm font-semibold text-white">Add</button></form>}
-                    <div className="space-y-2">{session.agenda_items.map((item) => <div key={item.id} className="rounded-lg bg-slate-50 px-3 py-2.5 text-sm dark:bg-slate-900/40"><div><span className="font-bold">{item.sequence_no}.</span> {item.title}</div><div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{item.transaction?.reference_no || item.legislative_record?.record_number || 'Internal agenda item'} · {pretty(item.status)}</div></div>)}{session.agenda_items.length === 0 && <div className="rounded-lg bg-slate-50 px-3 py-4 text-sm text-slate-500 dark:bg-slate-900/40 dark:text-slate-400">No agenda items yet.</div>}</div>
+<LegislativeAgendaList items={session.agenda_items} />
                 </div>
             )}
         </article>
