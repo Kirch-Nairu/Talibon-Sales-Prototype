@@ -1,7 +1,8 @@
 import { Link, router } from '@inertiajs/react';
 import { ArrowRight, Gavel, Plus, Search } from 'lucide-react';
-import { type FormEvent, useState } from 'react';
+import { type FormEvent, useEffect, useState } from 'react';
 import LegislativeCalendarPanel from '../../components/legislative/LegislativeCalendarPanel';
+import LegislativePager from '../../components/legislative/LegislativePager';
 import PageFrame from '../../components/PageFrame';
 import PageHeader from '../../components/PageHeader';
 import AppLayout from '../../layouts/AppLayout';
@@ -18,6 +19,8 @@ type RecordItem = {
     issuing_body: string;
 };
 
+const RECORDS_PER_PAGE = 25;
+
 const recordFilters = [
     ['', 'All'],
     ['ordinance', 'Ordinances'],
@@ -31,8 +34,21 @@ const recordFilters = [
 
 export default function Index({ records, filters, canManage }: { records: RecordItem[]; filters: { q: string; type: string }; canManage: boolean }) {
     const [q, setQ] = useState(filters.q || '');
+    const [page, setPage] = useState(1);
+    const pageCount = Math.max(1, Math.ceil(records.length / RECORDS_PER_PAGE));
+    const visibleRecords = records.slice((page - 1) * RECORDS_PER_PAGE, page * RECORDS_PER_PAGE);
+
+    useEffect(() => {
+        setPage(1);
+    }, [filters.q, filters.type]);
+
+    useEffect(() => {
+        if (page > pageCount) setPage(pageCount);
+    }, [page, pageCount]);
+
     const search = (event?: FormEvent) => {
         event?.preventDefault();
+        setPage(1);
         router.get('/legislation', { q: q || undefined, type: filters.type || undefined }, { preserveState: true, replace: true });
     };
     const byType = records.reduce<Record<string, number>>(
@@ -79,7 +95,7 @@ export default function Index({ records, filters, canManage }: { records: Record
                                     key={value}
                                     type="button"
                                     aria-pressed={active}
-                                    onClick={() => router.get('/legislation', { q: q || undefined, type: value || undefined }, { preserveState: true })}
+                                    onClick={() => { setPage(1); router.get('/legislation', { q: q || undefined, type: value || undefined }, { preserveState: true }); }}
                                     className={`shrink-0 rounded-lg px-3 py-1.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-blue-700/30 ${active ? 'bg-blue-800 text-white' : 'bg-white text-slate-600 ring-1 ring-slate-200 hover:text-slate-900 dark:bg-[#142236] dark:text-slate-300 dark:ring-slate-700 dark:hover:text-white'}`}
                                 >
                                     {label}
@@ -97,7 +113,7 @@ export default function Index({ records, filters, canManage }: { records: Record
                 </section>
 
                 <div className="divide-y divide-slate-100 overflow-hidden rounded-xl border border-slate-200 bg-white dark:divide-slate-700 dark:border-slate-700 dark:bg-[#142236]" aria-label="Legislative records">
-                    {records.map((record) => (
+                    {visibleRecords.map((record) => (
                         <Link
                             key={record.id}
                             href={`/legislation/${record.id}`}
@@ -121,6 +137,7 @@ export default function Index({ records, filters, canManage }: { records: Record
                             <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Try a different search term or record type.</p>
                         </div>
                     )}
+                    <LegislativePager page={page} pageCount={pageCount} onPageChange={setPage} />
                 </div>
 
                 <LegislativeCalendarPanel />
