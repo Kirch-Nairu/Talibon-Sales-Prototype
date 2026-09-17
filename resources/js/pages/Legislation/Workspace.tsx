@@ -1,6 +1,7 @@
 import { useForm } from '@inertiajs/react';
 import { Gavel } from 'lucide-react';
 import { FormEvent, useState } from 'react';
+import LegislativeWorkspaceMetrics from '../../components/legislative/LegislativeWorkspaceMetrics';
 import AppLayout from '../../layouts/AppLayout';
 
 type Agenda = { id: number; sequence_no: number; title: string; status: string; transaction?: { reference_no: string; title: string } | null; legislative_record?: { record_number: string; title: string } | null };
@@ -59,11 +60,7 @@ export default function Workspace({ sessions, legislativeWork, canManage }: { se
                     </div>
                 </header>
 
-                <section className="grid grid-cols-3 gap-3">
-                    <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-[#142236]"><div className="text-2xl font-bold text-indigo-800 dark:text-indigo-300">{sessions.length}</div><div className="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400">Sessions</div></div>
-                    <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-[#142236]"><div className="text-2xl font-bold text-[#0b2852] dark:text-blue-300">{legislativeWork.length}</div><div className="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400">Routed work</div></div>
-                    <div className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-[#142236]"><div className={`text-2xl font-bold ${overdue.length > 0 ? 'text-rose-700 dark:text-rose-300' : 'text-slate-500 dark:text-slate-400'}`}>{overdue.length}</div><div className="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400">Overdue</div></div>
-                </section>
+                <LegislativeWorkspaceMetrics sessions={sessions.length} routedWork={legislativeWork.length} overdue={overdue.length} />
 
                 <section className={`grid gap-5 ${canManage ? 'lg:grid-cols-[0.8fr_1.2fr]' : ''}`}>
                     {canManage && (
