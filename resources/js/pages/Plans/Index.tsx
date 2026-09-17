@@ -56,32 +56,27 @@ export default function PlansIndex() {
                     description="Register of adopted, active and updating municipal plans, their coverage periods, responsible offices and next required actions."
                     icon={ClipboardList}
                     aside={
-                        <div className="rounded-xl border border-slate-200 bg-white px-4 py-3 dark:border-slate-700 dark:bg-[#142236]">
-                            <div className="text-xs font-bold uppercase tracking-[0.12em] text-slate-400">Current planning year</div>
-                            <div className="mt-1 text-lg font-bold text-[#0b2852] dark:text-slate-100">2026</div>
-                            <div className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{municipalPlans.length} records in the municipal register</div>
+                        <div className="rounded-lg border border-slate-200 bg-white px-3 py-2 dark:border-slate-700 dark:bg-[#142236]">
+                            <div className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400">Planning year</div>
+                            <div className="mt-0.5 flex items-baseline gap-2"><span className="text-base font-bold text-[#0b2852] dark:text-slate-100">2026</span><span className="text-[11px] text-slate-500 dark:text-slate-400">{municipalPlans.length} register records</span></div>
                         </div>
                     }
                 />
 
                 <PlanMetricGrid metrics={metrics} />
+                <PlanFilterBar filters={filters} leadOffices={leadOffices} resultCount={filteredPlans.length} onChange={setFilters} />
 
-                <PlanFilterBar
-                    filters={filters}
-                    leadOffices={leadOffices}
-                    resultCount={filteredPlans.length}
-                    onChange={setFilters}
-                />
+                <details className="group rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-[#142236]">
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-2.5 marker:hidden">
+                        <div><div className="text-xs font-bold text-slate-900 dark:text-slate-100">Coverage summary</div><div className="mt-0.5 text-[10px] text-slate-500 dark:text-slate-400">Plan horizons and coverage context</div></div>
+                        <span className="text-xs font-semibold text-blue-700 group-open:hidden dark:text-blue-300">Show</span><span className="hidden text-xs font-semibold text-blue-700 group-open:inline dark:text-blue-300">Hide</span>
+                    </summary>
+                    <div className="border-t border-slate-100 p-3 dark:border-slate-700"><PlanCoverageSummary plans={filteredPlans} /></div>
+                </details>
 
-                <PlanCoverageSummary plans={filteredPlans} />
-
-                <div className="grid min-w-0 gap-4 2xl:grid-cols-[minmax(0,1fr)_390px]">
-                    <div className="min-w-0">
-                        <PlanRegisterTable plans={filteredPlans} />
-                    </div>
-                    <div className="min-w-0">
-                        <PlanMilestoneQueue plans={filteredPlans} />
-                    </div>
+                <div className="grid min-w-0 gap-3 xl:grid-cols-[minmax(0,1fr)_340px]">
+                    <div className="min-w-0"><PlanRegisterTable plans={filteredPlans} /></div>
+                    <div className="min-w-0"><PlanMilestoneQueue plans={filteredPlans} /></div>
                 </div>
             </PageFrame>
         </AppLayout>
