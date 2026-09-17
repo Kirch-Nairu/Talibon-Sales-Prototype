@@ -124,7 +124,7 @@ class TransactionController extends Controller
         TransactionEvidenceService $evidence,
         WorkflowDefinitionResolver $definitions,
     ): RedirectResponse {
-        $returnContext = ValidatedListReturn::fromRequest($request, '/transactions', ['/records']);
+        $returnContext = ValidatedListReturn::fromRequest($request, '/transactions', ['/records', '/correspondence']);
         $definition = $definitions->resolve($transaction);
 
         $data = $request->validate([
