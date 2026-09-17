@@ -14,12 +14,12 @@ export default function SidebarSection({ active, children, compact, label }: Pro
             {!compact && (
                 <div
                     id={headingId}
-                    className={`px-2 text-[10px] font-bold uppercase tracking-[0.16em] ${active ? 'text-white' : 'text-blue-300'}`}
+                    className={`px-2 text-[9px] font-bold uppercase tracking-[0.14em] ${active ? 'text-white' : 'text-blue-300/85'}`}
                 >
                     {label}
                 </div>
             )}
-            <div className={compact ? 'space-y-1' : 'mt-1 space-y-0.5'}>{children}</div>
+            <div className={compact ? 'space-y-0.5' : 'mt-0.5 space-y-0.5'}>{children}</div>
         </section>
     );
 }
