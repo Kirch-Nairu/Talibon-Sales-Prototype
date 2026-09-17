@@ -1,7 +1,6 @@
-import { useForm } from '@inertiajs/react';
 import { Gavel } from 'lucide-react';
-import { FormEvent, useState } from 'react';
 import LegislativeScheduleSession from '../../components/legislative/LegislativeScheduleSession';
+import LegislativeSessionList from '../../components/legislative/LegislativeSessionList';
 import LegislativeWorkQueue from '../../components/legislative/LegislativeWorkQueue';
 import LegislativeWorkspaceMetrics from '../../components/legislative/LegislativeWorkspaceMetrics';
 import AppLayout from '../../layouts/AppLayout';
@@ -9,42 +8,6 @@ import AppLayout from '../../layouts/AppLayout';
 type Agenda = { id: number; sequence_no: number; title: string; status: string; transaction?: { reference_no: string; title: string } | null; legislative_record?: { record_number: string; title: string } | null };
 type Session = { id: number; session_code: string; session_type: string; title: string; scheduled_at: string; location?: string | null; status: string; agenda_items: Agenda[] };
 type Work = { id: number; reference_no: string; title: string; status: string; priority: string; due_at?: string | null; current_department?: { short_name?: string | null; name: string } | null };
-
-function SessionCard({ session, canManage }: { session: Session; canManage: boolean }) {
-    const [showAgenda, setShowAgenda] = useState(false);
-    const agenda = useForm({ sequence_no: session.agenda_items.length + 1, title: '', description: '' });
-    const submitAgenda = (e: FormEvent) => {
-        e.preventDefault();
-        agenda.post(`/legislative-workspace/sessions/${session.id}/agenda`, {
-            preserveScroll: true,
-            onSuccess: () => { agenda.reset('title', 'description'); setShowAgenda(false); },
-        });
-    };
-
-    return (
-        <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-700 dark:bg-[#142236]">
-            <div className="flex flex-wrap items-start justify-between gap-3">
-                <div>
-                    <div className="text-xs font-bold uppercase text-indigo-700 dark:text-indigo-300">{session.session_code} · {session.session_type}</div>
-                    <h2 className="mt-1 text-lg font-bold text-slate-950 dark:text-slate-100">{session.title}</h2>
-                    <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{new Date(session.scheduled_at).toLocaleString()} · {session.location || 'Location TBD'} · {session.status}</div>
-                </div>
-                {canManage && <button onClick={() => setShowAgenda((value) => !value)} className="rounded-lg bg-indigo-50 px-3 py-2 text-xs font-semibold text-indigo-800 dark:bg-indigo-950/30 dark:text-indigo-300">{showAgenda ? 'Close' : 'Add agenda item'}</button>}
-            </div>
-            {canManage && showAgenda && (
-                <form onSubmit={submitAgenda} className="mt-4 grid gap-3 rounded-xl border border-indigo-100 bg-indigo-50/40 p-4 dark:border-indigo-900/50 dark:bg-indigo-950/20 sm:grid-cols-[110px_1fr_auto]">
-                    <input type="number" min={1} value={agenda.data.sequence_no} onChange={(e) => agenda.setData('sequence_no', Number(e.target.value))} className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm" />
-                    <input required placeholder="Agenda item title" value={agenda.data.title} onChange={(e) => agenda.setData('title', e.target.value)} className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm" />
-                    <button disabled={agenda.processing} className="rounded-lg bg-[#0b2852] px-4 py-2 text-sm font-semibold text-white">Add</button>
-                </form>
-            )}
-            <div className="mt-4 space-y-2">
-                {session.agenda_items.map((item) => <div key={item.id} className="rounded-xl bg-slate-50 p-3 text-sm dark:bg-slate-900/40"><span className="font-bold">{item.sequence_no}.</span> {item.title}<div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{item.transaction?.reference_no || item.legislative_record?.record_number || 'Internal agenda item'} · {item.status}</div></div>)}
-                {session.agenda_items.length === 0 && <div className="rounded-xl bg-slate-50 p-4 text-sm text-slate-500 dark:bg-slate-900/40 dark:text-slate-400">No agenda items yet.</div>}
-            </div>
-        </div>
-    );
-}
 
 export default function Workspace({ sessions, legislativeWork, canManage }: { sessions: Session[]; legislativeWork: Work[]; canManage: boolean }) {
     const overdue = legislativeWork.filter((work) => work.due_at && new Date(work.due_at).getTime() < Date.now());
@@ -67,11 +30,7 @@ export default function Workspace({ sessions, legislativeWork, canManage }: { se
                 <main className="grid items-start gap-5 xl:grid-cols-[1.05fr_0.95fr]">
                     <LegislativeWorkQueue work={legislativeWork} />
 
-                    <section className="space-y-3" aria-labelledby="legislative-sessions-heading">
-                        <div><div className="text-xs font-bold uppercase tracking-wide text-indigo-700 dark:text-indigo-300">Session register</div><h2 id="legislative-sessions-heading" className="mt-1 font-bold text-slate-950 dark:text-slate-100">Loaded legislative sessions</h2></div>
-                        {sessions.map((session) => <SessionCard key={session.id} session={session} canManage={canManage} />)}
-                        {sessions.length === 0 && <div className="rounded-2xl border border-slate-200 bg-white p-8 text-center text-sm text-slate-500 dark:border-slate-700 dark:bg-[#142236] dark:text-slate-400">No sessions scheduled.</div>}
-                    </section>
+                    <LegislativeSessionList sessions={sessions} canManage={canManage} />
                 </main>
             </div>
         </AppLayout>
