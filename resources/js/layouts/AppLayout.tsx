@@ -13,6 +13,7 @@ import type { LiveNotification, NotificationFeed, SharedProps } from '../types';
 type Props = PropsWithChildren<{ title: string }>;
 
 const SIDEBAR_COLLAPSED_STORAGE_KEY = 'talibon.sidebar.collapsed';
+const UTILITY_RAIL_STORAGE_KEY = 'talibon.utilities.open';
 const HRIS_DARK_PARITY_CLASSES = 'dark:[&_.bg-white]:bg-[#142236] dark:[&_.bg-slate-50]:bg-slate-900/50 dark:[&_.bg-slate-100]:bg-slate-800 dark:[&_.border-slate-100]:border-slate-700 dark:[&_.border-slate-200]:border-slate-700 dark:[&_.border-slate-300]:border-slate-600 dark:[&_.divide-slate-100]:divide-slate-700 dark:[&_.text-slate-950]:text-slate-100 dark:[&_.text-slate-900]:text-slate-100 dark:[&_.text-slate-800]:text-slate-200 dark:[&_.text-slate-700]:text-slate-300 dark:[&_.text-slate-600]:text-slate-300 dark:[&_.text-slate-500]:text-slate-400 dark:[&_.text-blue-900]:text-blue-300 dark:[&_.text-blue-800]:text-blue-300 dark:[&_.bg-blue-50]:bg-blue-950/40 dark:[&_.border-blue-100]:border-blue-900 dark:[&_.border-blue-200]:border-blue-900 dark:[&_.bg-emerald-50]:bg-emerald-950/40 dark:[&_.text-emerald-800]:text-emerald-300 dark:[&_.bg-rose-50]:bg-rose-950/40 dark:[&_.text-rose-700]:text-rose-300 dark:[&_.bg-amber-50]:bg-amber-950/35 dark:[&_.border-amber-200]:border-amber-900 dark:[&_.text-amber-950]:text-amber-200';
 
 function relativeTime(value?: string | null): string {
@@ -66,6 +67,22 @@ export default function AppLayout({ title, children }: Props) {
         catch { setDesktopCollapsed(false); }
     }, []);
 
+    useEffect(() => {
+        const desktopQuery = window.matchMedia('(min-width: 1280px)');
+        const restoreDesktopUtilityPreference = () => {
+            if (!desktopQuery.matches) {
+                setDesktopUtilitiesOpen(false);
+                return;
+            }
+            try { setDesktopUtilitiesOpen(window.localStorage.getItem(UTILITY_RAIL_STORAGE_KEY) === 'true'); }
+            catch { setDesktopUtilitiesOpen(false); }
+        };
+
+        restoreDesktopUtilityPreference();
+        desktopQuery.addEventListener('change', restoreDesktopUtilityPreference);
+        return () => desktopQuery.removeEventListener('change', restoreDesktopUtilityPreference);
+    }, []);
+
     const toggleDesktopSidebar = () => {
         setDesktopCollapsed((collapsed) => {
             const next = !collapsed;
@@ -78,7 +95,12 @@ export default function AppLayout({ title, children }: Props) {
     const toggleUtilities = () => {
         if (window.matchMedia('(min-width: 1280px)').matches) {
             setUtilitiesOpen(false);
-            setDesktopUtilitiesOpen((open) => !open);
+            setDesktopUtilitiesOpen((open) => {
+                const next = !open;
+                try { window.localStorage.setItem(UTILITY_RAIL_STORAGE_KEY, String(next)); }
+                catch { /* Keep the in-memory preference when browser storage is unavailable. */ }
+                return next;
+            });
             return;
         }
         setDesktopUtilitiesOpen(false);
@@ -158,7 +180,7 @@ export default function AppLayout({ title, children }: Props) {
                 {mobileOpen && <MobileNavigation onClose={() => setMobileOpen(false)}>{mobileSidebar}</MobileNavigation>}
                 {utilitiesOpen && <MunicipalUtilityDrawer onClose={() => setUtilitiesOpen(false)} />}
 
-                <main className="min-w-0">
+                <main className="min-w-0 overflow-x-clip">
                     <header className="sticky top-0 z-20 flex min-h-14 items-center justify-between gap-2 border-b border-slate-200/80 bg-white px-3 transition-colors dark:border-slate-700/80 dark:bg-[#142236] sm:px-4">
                         <div className="flex min-w-0 items-center gap-2">
                             <button onClick={() => setMobileOpen(true)} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 lg:hidden" aria-label="Open navigation"><Menu size={20} /></button>
@@ -193,7 +215,7 @@ export default function AppLayout({ title, children }: Props) {
                         </div>
                     </header>
 
-                    <div className={desktopUtilitiesOpen ? 'xl:grid xl:grid-cols-[minmax(0,1fr)_276px]' : ''}>
+                    <div className={desktopUtilitiesOpen ? 'xl:grid xl:grid-cols-[minmax(0,1fr)_292px]' : ''}>
                         <div className="min-w-0">
                             {(flash?.success || flash?.error) && <div className={`mx-3 mt-3 rounded-lg border px-3 py-2 text-sm font-semibold ${flash.success ? 'border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-200' : 'border-rose-200 bg-rose-50 text-rose-800 dark:border-rose-900 dark:bg-rose-950/40 dark:text-rose-200'}`}>{flash.success || flash.error}</div>}
                             <div id="portal-content" tabIndex={-1} className={`p-3 sm:p-4 ${hrisPresentation ? HRIS_DARK_PARITY_CLASSES : ''}`}><NotificationContext.Provider value={notifications}>{children}</NotificationContext.Provider></div>
