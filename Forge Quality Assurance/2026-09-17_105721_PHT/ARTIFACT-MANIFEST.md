@@ -1,92 +1,33 @@
 # W08 Artifact Manifest
 
-Status: `PARTIAL FAILURE ARTIFACT RECORDED — FINAL PACKAGE INCOMPLETE`
+Logical QA session: `2026-09-17_105721_PHT`
 
-Required final ZIP:
+Final disposition: `W08 QA: REWORK REQUIRED`
 
-`ONE-TALIBON-W08-QA-2026-09-17_105721_PHT.zip`
+## Retained GitHub Actions evidence
 
-## Existing external artifact
+Workflow: `Forge W08 Quality Assurance`
 
-Workflow:
+Run #4 / run ID: `35189429744`
 
-`Forge W08 Quality Assurance`
+Exact run head: `5bbfd48611b3f65e279048faa0fa1d246ba89789`
 
-Run:
+Conclusion: `failure`
 
-`#2`
+Retained artifact name: `ONE-TALIBON-W08-QA-2026-09-17_105721_PHT`
 
-Run ID:
+Artifact ID: `10483479162`
 
-`35179625056`
+GitHub-uploaded artifact digest: `sha256:5a96d7995197d062be096f816c784bcb63c7499dd7c11c98eb4c3236023d2116`
 
-Exact run head:
+Navigation reference: `https://github.com/Kirch-Nairu/Talibon-Sales-Prototype/actions/runs/35189429744/artifacts/10483479162`
 
-`ecdb11dea2f89e5503ffa37aff0b714f9f035ff5`
+Earlier run artifacts/failures remain part of the durable chronology and are not superseded or erased by run #4.
 
-Workflow conclusion:
+## Direct final QA evidence ZIP
 
-`failure`
+Required filename: `ONE-TALIBON-W08-QA-2026-09-17_105721_PHT.zip`
 
-Artifact name:
+The direct handoff package is a REWORK evidence package, not a passing package. It contains all screenshots retained from the final reconciled browser run, complete QA notes, full Forge journey, final result, screenshot manifest, raw machine reports, non-secret runtime diagnostics, repair manifest, final classification JSON and this artifact manifest.
 
-`ONE-TALIBON-W08-QA-2026-09-17_105721_PHT`
-
-Artifact ID:
-
-`10480091707`
-
-Artifact digest reported by GitHub:
-
-`sha256:f979dd92844b0719c205ed697cb3e78d9dc94c29ec8cc357a24cab637fc6e86f`
-
-GitHub expiry metadata:
-
-`2026-10-01T04:02:04Z`
-
-## Recovered artifact contents
-
-Outer uploaded artifact contains:
-
-- `ONE-TALIBON-W08-QA-2026-09-17_105721_PHT.zip`;
-- `ONE-TALIBON-W08-QA-2026-09-17_105721_PHT.zip.sha256`;
-- `h1-mutation-readiness-report.json`;
-- `w08-cross-product-readiness-report.json`.
-
-Recovered inner ZIP contains:
-
-- `h1-mutation-readiness-report.json`;
-- `w08-cross-product-readiness-report.json`;
-- `w08-h1-server.log`;
-- `w08-cross-product-server.log`.
-
-Observed screenshot count in the recovered machine report/package:
-
-`0`
-
-Therefore this existing artifact is FAILURE/RECONCILIATION EVIDENCE ONLY. It does not satisfy the final W08 PASS ZIP contract.
-
-## Still required for final W08 ZIP
-
-The eventual valid final ZIP must contain:
-
-- all W08 screenshots;
-- `QA-NOTES.md`;
-- completed `FORGE-SESSION-JOURNEY.md`;
-- completed `W08-RESULT.md`;
-- completed `SCREENSHOT-MANIFEST.md`;
-- final machine-readable W08 report JSON;
-- relevant non-secret runtime diagnostics;
-- artifact manifest;
-- final checksums where practical.
-
-The final QA role must also record:
-
-- exact final QA execution SHA;
-- browser workflow name/run ID/conclusion;
-- normal Forge UIUX Validation state for the relevant product/QA state;
-- screenshot count;
-- final artifact identity and usable navigation/download reference;
-- final W08 disposition.
-
-A later successful artifact does not erase run #1, run #2, or this partial artifact from the session chronology.
+The outer ZIP SHA-256 is recorded in the final 23-part QA Return because embedding an outer archive checksum inside the archive itself would be circular.

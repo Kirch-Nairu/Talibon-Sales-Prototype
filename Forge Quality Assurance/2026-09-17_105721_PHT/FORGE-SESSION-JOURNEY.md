@@ -1,164 +1,85 @@
 # One Talibon V1 — Forge Session Journey
 
-This document is the durable run narrative for the UI/UX correction program from governed Nest formation through W08. The W08 QA role must preserve this history and append the actual final QA result rather than rewriting earlier evidence.
+This is the durable One Talibon UI/UX correction journey from governed baseline/Nest through the W08 result.
 
 ## 1. Accepted correction baseline
 
-The correction program anchored on accepted immutable Showcase state:
+The correction program anchored on accepted immutable Showcase state `KIRCH-TALIBON-V1-SHOWCASE-ACCESS@0913a37f96affd2c2a681697bdf6fdb6c381a99e`. G0 accepted that state with recorded limitations as a correction baseline only; it did not establish browser/runtime/UAT/deployment/production acceptance.
 
-`KIRCH-TALIBON-V1-SHOWCASE-ACCESS@0913a37f96affd2c2a681697bdf6fdb6c381a99e`
+## 2. Program doctrine and governed Nest
 
-G0 baseline disposition was acceptance with recorded limitations. That established a correction baseline only; it did not establish browser/runtime/UAT/deployment/production acceptance.
-
-## 2. Program doctrine and Nest
-
-The program was governed by Operational Compression: reduce scroll, whitespace, action hunting, route bouncing, context loss and horizontal task travel while preserving accessibility, role relevance, backend behavior and municipal professionalism.
-
-Accepted pre-Nest decisions included shared density primitives; compact but reachable shell/footer; truthful Records Search; Dashboard hierarchy `ACT NOW → NEXT/SOON → CURRENT OPERATING PICTURE → REFERENCE/HISTORY`; context-preserving detail flows; responsive Planning; restrained persistent utilities; read-only quick Messages; shared HR/Legislative shell; removal of ordinary Audit & Security presentation; normalized error states; and final representative role/viewport/accessibility validation.
-
-The repository was placed under a governed NEST-2 model. Repository and observable evidence outrank memory; build/runtime/deployment evidence are separate; Writers cannot self-promote; Review/Acceptance remain independent; destructive history rewriting and force pushes are prohibited.
+Operational Compression governed the program: reduce scroll, whitespace, action hunting, route bouncing, context loss and horizontal task travel while preserving accessibility, role relevance, backend behavior and municipal professionalism. The repository operated as NEST-2 — Governed: repository and observable evidence outrank memory; build/runtime/deployment evidence are distinct; Writers cannot self-promote; Review/Acceptance are independent; destructive history rewriting and force pushes are prohibited.
 
 ## 3. Validation foundation
 
-Forge UIUX Validation was established to provide repeatable frontend dependency install, TypeScript checking, production build and Laravel feature-test evidence. It intentionally did not claim browser/runtime evidence.
+Forge UIUX Validation established repeatable dependency installation, TypeScript checking, production frontend build and Laravel feature-test evidence. It intentionally did not claim browser/runtime evidence.
 
-## 4. P1 — W01 Shell + W02 Dashboard
+## 4. P1 — W01 Shell and W02 Dashboard
 
-W01 initial candidate:
+W01 initial candidate `fa9fadf137c200081f2b96c2b87ca7dd4137aa2d` was independently reviewed and found to have a mobile Appearance containment/clipping defect. Bounded rework produced `8bcdb18441e3cdc071a96921ac29616d9391052c`; repeat Review found it suitable for acceptance.
 
-`fa9fadf137c200081f2b96c2b87ca7dd4137aa2d`
+W02 initial candidate `cac9cef03354eb58d66a24809c9f702c0d78af51` was independently reviewed and found to admit generic recent work into ACT NOW without adequate urgency semantics. Bounded rework produced `3a5fc4768f6ae786fc38a2beb433d1a9fae159b4`; repeat Review found it suitable for acceptance.
 
-Independent Review found a mobile Appearance disclosure containment/clipping defect.
+Both passed integration-readiness Acceptance and were mechanically integrated. Coexisting P1 source anchor: `5757114a02fc5d407e0f8cf4b7b2026c6e824e5f`. Combined validation run #94 succeeded.
 
-Bounded W01 rework produced:
+## 5. W03–W07 parallel production sprint
 
-`8bcdb18441e3cdc071a96921ac29616d9391052c`
+Technical Authority compressed W03–W07 into two writer slots without removing independent Review, bounded rework, evidence discipline or no-force-push law. Sprint baseline: `5727e5a258ecb358d6caa13b75127bec1c5c6d9d`.
 
-Repeat Review: `SUITABLE FOR ACCEPTANCE`.
+Lane A: W03 Context-Preserving Review Workflows + W04 Planning Responsive UX.
 
-W02 initial candidate:
-
-`cac9cef03354eb58d66a24809c9f702c0d78af51`
-
-Independent Review found ACT NOW semantics admitted generic recent work without sufficient urgency semantics.
-
-Bounded W02 rework produced:
-
-`3a5fc4768f6ae786fc38a2beb433d1a9fae159b4`
-
-Repeat Review: `SUITABLE FOR ACCEPTANCE`.
-
-Both passed integration-readiness Acceptance and were mechanically integrated via PR #2 then PR #3.
-
-Coexisting P1 application-source anchor:
-
-`5757114a02fc5d407e0f8cf4b7b2026c6e824e5f`
-
-Combined validation run #94: `SUCCESS`.
-
-## 5. W03–W08 production sprint override
-
-Technical Authority compressed W03–W07 into exactly two writer slots while retaining architecture, quality, evidence discipline, independent Review, bounded rework and no-force-push requirements.
-
-Exact sprint baseline:
-
-`5727e5a258ecb358d6caa13b75127bec1c5c6d9d`
-
-Lane A carried W03 Context-Preserving Review Workflows + W04 Planning Responsive UX.
-
-Lane B carried W05 Calendar + Persistent Utility Rail → W06 Messaging Quick Access + W07 Role/HRIS/Admin/Error Completion.
+Lane B: W05 Calendar/Persistent Utility Rail + W06 Messaging Quick Access + W07 Role/HRIS/Admin/Error Completion.
 
 ## 6. Lane B — W05/W06/W07
 
-Initial Lane B candidate:
+Initial Lane B candidate `270b1919109d33312e5552694b773c18d5108509`. Maintainer recovery after a delivery timeout found two real utility-surface defects: hidden drawer/modal state could survive the `2xl` transition, and simultaneous rail/drawer utility mounts created duplicate IDs.
 
-`270b1919109d33312e5552694b773c18d5108509`
-
-A ChatGPT delivery timeout occurred after implementation, but Maintainer reconstruction confirmed the remote work survived.
-
-Maintainer pre-review inspection found two real source defects in the utility surface:
-
-1. a drawer could become hidden at the `2xl` transition while leaving modal/body-scroll state active;
-2. rail and drawer simultaneously mounted utility content with duplicate heading IDs.
-
-Bounded same-slot recovery produced:
-
-`af417bab384ad066814ba32145be83c00396ff69`
-
-Recovery was exact one-commit/one-file work in `MunicipalUtilities.tsx`. Exact-head validation run #103: `SUCCESS`.
-
-Independent Review: `SUITABLE FOR ACCEPTANCE`.
-
-Acceptance: `ACCEPT FOR INTEGRATION WITH RECORDED LIMITATIONS`.
-
-Mechanical integration via PR #5 produced product-source anchor:
-
-`57ae471f4e52611a8cdacd3a152240c657c150e4`
-
-Post-integration validation run #122: `SUCCESS`.
-
-Browser behavior for the utility breakpoint/focus/body-scroll path remained unobserved and was deliberately carried into W08.
+Bounded recovery `af417bab384ad066814ba32145be83c00396ff69` repaired only `MunicipalUtilities.tsx`. Exact-head validation run #103 succeeded. Independent Review: suitable for acceptance. Acceptance: accept for integration with recorded limitations. Mechanical integration produced `57ae471f4e52611a8cdacd3a152240c657c150e4`; post-integration validation run #122 succeeded. Live breakpoint/focus/body-scroll evidence was carried into W08.
 
 ## 7. Lane A — W03/W04
 
-Initial Lane A candidate:
+Initial Lane A candidate `f61ea353fc26595e78aba99e6aa9b5ea0293181c`. W04 Planning source review passed and was frozen. Independent Review found W03 mutation redirects did not fully preserve context and could accumulate nested/stale `return_to` state.
 
-`f61ea353fc26595e78aba99e6aa9b5ea0293181c`
+Bounded W03 rework `eb985fe5da8f2f7c63c987680a22583f2067b85b` added validated list returns, nested-return stripping, mutation continuity across Transactions/Correspondence/Travel Orders and seven focused tests. Focused tests 7/7 passed; full Laravel run #116 passed 370 tests / 5,088 assertions. Repeat Review: suitable for acceptance. Acceptance: accept for integration with recorded limitations.
 
-W04 Planning source-level Review passed: responsive cards/direct actions and selected-detail locality were coherent; W04 was then frozen.
+Mechanical integration produced `db286142cdc5d9e793680fac933a8462deb8390d`. Post-integration Forge UIUX Validation run #128 / `35172772437` succeeded. This became W08's immutable integrated product input.
 
-Independent Review found W03 context continuity was incomplete across mutation redirects and that stale/nested `return_to` state could accumulate.
+## 8. W08 opening
 
-Bounded W03 rework produced:
+W08 was Cross-Product Quality Assurance, not a feature wave. It had to supply real browser evidence across seven personas, responsive viewports, light/dark appearance, W01–W07 cross-wave behavior, W03 mutation/return continuity, W05 live breakpoint regression, keyboard/focus/reflow/accessibility mechanics, screenshots and a durable ZIP.
 
-`eb985fe5da8f2f7c63c987680a22583f2067b85b`
+## 9. W08 execution chronology
 
-The repair added server-side validated list returns, stripped nested return parameters, preserved Transactions/Correspondence/Travel Order context through mutation, and added seven focused feature tests.
+W08 remained one logical session `2026-09-17_105721_PHT` despite ChatGPT timeouts and CI partitioning.
 
-Focused W03 tests: 7/7 PASS.
+- QA opening commit `36a50536f6524bdf9e4a48a5fa55a9c9af907a02` established the dossier directly above product anchor `db286142...`.
+- Workflow commit `8c606e1a45a666884a52dafc9da1615890340418` added dedicated W08 Actions execution.
+- Harness commit `ecdb11dea2f89e5503ffa37aff0b714f9f035ff5` added cross-product browser evidence.
+- Run #1 `35179443998` was cancelled and preserved.
+- Run #2 `35179625056` failed after browser execution began. Its artifact `10480091707` was consumed before replacement. QA classified obsolete credential locators, mobile Appearance ambiguity, server-port reuse and generated-secret logging as HARNESS / QA ENVIRONMENT defects.
+- QA-only repair commit `b1aab464ee2da02bf8994a2165352344c04cd895` switched runtime harness entry to the accepted Showcase gateway, isolated H1/W08 ports, scoped mobile Appearance and masked the generated secret.
+- Run #3 `35185610860` remained part of the failed chronology and prompted refinement of Showcase persona-card locators.
+- QA-only repair commit `5bbfd48611b3f65e279048faa0fa1d246ba89789` stabilized Showcase persona selection. Product source remained untouched and `db286142...` remained the merge base/ancestor.
+- Run #4 `35189429744` executed against exact head `5bbfd486...`. Source validation passed, H1 and W08 browser harnesses executed, evidence was packaged, and artifact `10483479162` was uploaded before the final gate failed.
 
-Full Laravel suite in run #116: 370 passed / 5,088 assertions.
+## 10. W08 run #4 observations
 
-Repeat Review: `SUITABLE FOR ACCEPTANCE`.
+H1: 20 scenarios / 16 pass / 4 fail. The correspondence chain failure begins with a stale exact-case locator (`Register Correspondence` vs rendered `Register correspondence`); later correspondence failures are dependency fallout. Classification: HARNESS DEFECT.
 
-Acceptance: `ACCEPT FOR INTEGRATION WITH RECORDED LIMITATIONS`.
+W08: 21 scenarios / 8 pass / 13 fail / 168 checks / 7 W08 screenshots. Runtime diagnostics recorded 0 page errors, 0 HTTP 5xx and 0 fatal console runtime errors.
 
-Mechanical integration via PR #4 produced:
+Live PASS evidence included W01 Showcase shell continuity; W03 Correspondence and Travel Order return continuity; the complete mandatory W05 breakpoint round-trip from compact drawer through >=1536 persistent rail and back; normalized W07 403 presentation; and representative keyboard/focus/reflow/semantic checks on several persona/viewport surfaces.
 
-`db286142cdc5d9e793680fac933a8462deb8390d`
+Additional failed observations were classified as harness defects: W02 hierarchy order measurement, W03 transaction fixture/view mismatch, mobile Appearance automation, a falsely labeled mobile dark case, limited heading-contrast parsing, and the H1 correspondence exact-case locator.
 
-Merge parents were exact prior correction authority `85e29bff13168a638087e5581147528d2dd3bb7e` and exact accepted Lane A candidate `eb985fe5da8f2f7c63c987680a22583f2067b85b`.
+## 11. W08 blocking product defect and final result
 
-Post-integration Forge UIUX Validation run #128 / ID `35172772437`: `SUCCESS`.
+W06 Messages produced browser semantics `unlabeled: ["SELECT:"]` for the visible Quick messages control. Inspection of immutable product source `resources/js/pages/Messages/Index.tsx@db286142...` confirms the `<select>` has no associated `<label>`, `aria-label`, or `aria-labelledby`.
 
-This is the first integrated source state where W03–W07 coexist and source/build/server tests are green.
+This is a genuine product-source accessibility defect. W08 QA authority prohibited repairing it. Assertions were not weakened and no synthetic pass was manufactured.
 
-## 8. W08 opening state
+Final disposition: `W08 QA: REWORK REQUIRED`.
 
-W08 is Cross-Product Acceptance & Harness Expansion.
+The full all-green W08 matrix is therefore not established. Product authority must perform bounded W06 Messages accessibility rework, issue a new explicitly authorized product anchor, then return the program to W08 QA. The existing W08 run chronology, failed artifacts and classifications remain durable evidence and must not be erased.
 
-It is not another product feature wave.
-
-At W08 entry:
-
-- integrated W03–W07 source: VERIFIED;
-- frontend typecheck/build: PASS;
-- Laravel feature tests: PASS;
-- browser/runtime: NOT YET OBSERVED for the final integrated state;
-- representative responsive matrix: NOT YET OBSERVED;
-- light/dark visual parity: NOT YET OBSERVED;
-- W03 real-browser mutation/return continuity: NOT YET OBSERVED;
-- utility drawer `2xl` transition/body-scroll/focus behavior: NOT YET OBSERVED;
-- zoom/reflow and broader accessibility mechanics: NOT YET OBSERVED;
-- screen-reader behavior: NOT OBSERVED unless W08 actually performs it;
-- UAT: NOT STARTED;
-- deployment: NOT AUTHORIZED;
-- production runtime acceptance: NOT ESTABLISHED.
-
-Existing Playwright/H-series/F-series browser infrastructure must be treated as reusable machinery, not current W08 evidence until executed against the integrated state.
-
-## 9. W08 final result
-
-`TO BE COMPLETED BY KIRION FORGE: QUALITY ASSURANCE`
-
-The QA role must append the actual branch SHA, runtime environment, executed matrix, defects, screenshot/artifact identities, final evidence states and W08 QA disposition here.
+UAT was not performed. Deployment was not authorized. Production runtime acceptance was not claimed. Final program Acceptance was not self-issued by QA.

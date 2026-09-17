@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "logicalRunId": "2026-09-17_105721_PHT",
+  "role": "KIRION FORGE: QUALITY ASSURANCE",
+  "productAnchor": "db286142cdc5d9e793680fac933a8462deb8390d",
+  "finalQaHead": "5bbfd48611b3f65e279048faa0fa1d246ba89789",
+  "finalWorkflow": {"name": "Forge W08 Quality Assurance", "runNumber": 4, "runId": 35189429744, "conclusion": "failure", "artifactId": 10483479162},
+  "sourceValidation": {"typescript": "PASS", "frontendBuild": "PASS", "laravel": {"result": "PASS", "tests": 370, "assertions": 5088}},
+  "h1": {"scenarios": 20, "passed": 16, "failed": 4, "classification": "HARNESS_DEPENDENCY_CHAIN", "rootCause": "Exact-case correspondence Register action locator differs from rendered product action text."},
+  "w08": {"scenarios": 21, "passed": 8, "failed": 13, "checks": 168, "screenshots": 7, "pageErrors": 0, "http5xx": 0, "fatalConsoleErrors": 0},
+  "confirmedProductDefects": [{"wave": "W06", "route": "/messages", "surface": "Quick messages select", "observation": "Browser semantics reports unlabeled SELECT control.", "machineEvidence": "unlabeled: [\"SELECT:\"]", "sourceEvidence": "resources/js/pages/Messages/Index.tsx select has no associated label, aria-label, or aria-labelledby.", "requiredAction": "Product-source accessibility rework; QA may not repair product source."}],
+  "harnessDefects": ["H1 correspondence exact-case Register action locator", "W02 hierarchy order probe based on body.innerText index", "W03 transaction fixture queried through personal-scoped view=all", "Mobile Appearance automation without opening mobile navigation", "Mobile dark matrix label without actual appearance switch", "Heading contrast parser cannot parse all computed color formats"],
+  "disposition": "W08 QA: REWORK REQUIRED"
+}
