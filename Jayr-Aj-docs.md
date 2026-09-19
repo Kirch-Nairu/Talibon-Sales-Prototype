@@ -3828,3 +3828,83 @@ ui: align employee semantic tones
 ```
 
 ---
+
+## EUI-S15 — Hover / Focus / Active / Empty States
+
+### Problem / audit findings
+
+Interaction states were individually functional but not fully unified:
+
+- shared employee rows mixed local inset focus rings with the portal-wide focus-visible outline;
+- authenticated-content transition properties still included `transform` despite the no-movement interaction direction;
+- secondary navigation disclosures communicated expansion primarily through chevron direction;
+- empty states were compact from Phase 1/3 but did not yet have one shared neutral state role.
+
+### Visual-system decision
+
+Use a predictable state vocabulary:
+
+```text
+Default   → neutral content/surface
+Hover     → subtle background only
+Focus     → global visible outline, distinct from hover
+Current   → active navigation background + weight + left indicator + aria-current
+Expanded  → chevron direction + restrained background + aria-expanded
+Disabled  → only where real
+Empty     → compact, neutral, no illustration
+```
+
+### Change
+
+- authenticated content transitions no longer include `transform`;
+- transition duration is standardized to 150ms and nearly removed under reduced-motion preference;
+- added `employee-interactive-row` for shared record/shortcut hover surfaces;
+- AttentionQueue, Workspace shortcuts, and Recent Correspondence use the shared interactive-row treatment;
+- local inset focus rings were removed from those shared content rows so the global focus-visible outline remains the consistent keyboard signal;
+- Records Search trigger also relies on the global focus-visible outline;
+- lower-priority sidebar disclosure adds a subtle expanded background while keeping chevron direction and `aria-expanded`;
+- sidebar navigation retains its specialized high-contrast white keyboard ring on the dark municipal sidebar;
+- `employee-empty-state` explicitly remains transparent and left-aligned;
+- no movement, card lift, arrow slide, or bounce state is introduced.
+
+### Files changed
+
+```text
+resources/css/app.css
+resources/js/components/dashboard/AttentionQueue.tsx
+resources/js/components/dashboard/QuickActions.tsx
+resources/js/components/dashboard/RecentCorrespondence.tsx
+resources/js/components/shell/SidebarSection.tsx
+resources/js/components/shell/RecordsSearch.tsx
+Jayr-Aj-docs.md
+docs/ENGINEERING_LOG.md
+```
+
+### Verification
+
+```text
+Transform-based employee transitions removed: PASS
+Shared interactive-row hover role: PASS
+Focus remains distinct from hover: PASS
+Active navigation structural indicator preserved: PASS
+Disclosure expanded state remains non-color-only via chevron: PASS
+Compact empty state preserved: PASS
+Movement-heavy effects introduced: NO
+Runtime keyboard/hover review: NOT OBSERVED
+```
+
+### Known limitations
+
+Popup focus trapping/return behavior and actual focus visibility across every browser/theme remain Phase 4 runtime checks.
+
+### Commits
+
+```text
+76f2be16c98eea34e9f984890287b61cbca0f631
+ui: unify employee interaction states
+
+9ff767895fe9be5a62447fa8391f9fe34de701e4
+ui: align employee state feedback
+```
+
+---

@@ -1790,3 +1790,16 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Default metrics and zero attention values stay neutral; urgency color is reserved for real state.
 - No business-state mapping, record data, routes, backend, Phase 1 composition, Phase 2 navigation, or Public Portal styling changed.
 - Source color-semantic review PASS; runtime contrast/theme review NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 3 / EUI-S15 interaction states
+
+### `ui: unify employee interaction states`
+
+- Executable EUI-S15 SHA: `9ff767895fe9be5a62447fa8391f9fe34de701e4`.
+- Employee-content transition vocabulary no longer includes transform; reduced-motion preference collapses the remaining duration.
+- Shared interactive rows use one subtle hover surface and rely on the portal-wide focus-visible outline rather than mixed local inset rings.
+- Sidebar disclosures retain native button semantics and now communicate expanded state with chevron direction plus a restrained background.
+- Existing active navigation keeps background + weight + left indicator + aria-current.
+- Empty-state role remains compact, neutral, transparent, and illustration-free.
+- No movement-heavy interaction, route, auth, backend, Public Portal, Phase 1 composition, or Phase 2 navigation hierarchy change introduced.
+- Source state review PASS; runtime interaction review NOT OBSERVED.
