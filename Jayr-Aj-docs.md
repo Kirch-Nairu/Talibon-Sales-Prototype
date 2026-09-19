@@ -324,7 +324,8 @@ docs/ENGINEERING_LOG.md
 
 ```text
 Source inspection: PASS
-Diff/scope inspection: PENDING post-commit check
+Diff/scope inspection: PASS
+Branch isolation: PASS
 Runtime visual inspection: NOT OBSERVED
 Build/typecheck: NOT OBSERVED
 ```
@@ -335,7 +336,16 @@ Runtime acceptance remains pending until the branch is rendered and inspected at
 
 # Current UI Branch State
 
-At the end of UI-S2, the working branch is:
+After UI-S3, the current working branch is:
+
+```text
+UI/Jr-and-Aj
+Head: 747e50b65b24b2c256e4e03921df19b13707ecb7
+Ahead of main: 8 commits
+Behind main: 0
+```
+
+Historical UI-S2 branch position was:
 
 ```text
 UI/Jr-and-Aj
@@ -348,7 +358,7 @@ Base main SHA:
 cf39528180262241c7d1fe3bbcd68d2b5ce14444
 ```
 
-The branch was 6 commits ahead and 0 commits behind after UI-S2.
+The branch was 6 commits ahead and 0 commits behind after UI-S2. UI-S3 advanced the branch to 8 commits ahead and 0 behind.
 
 Files changed by the UI work at that point:
 
