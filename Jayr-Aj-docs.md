@@ -3036,3 +3036,70 @@ Exact truncation behavior for unusually long names/office labels remains browser
 Recorded in final Phase 2 evidence.
 
 ---
+
+## EUI-S9 — Top Utility Bar
+
+### Problem
+
+Desktop chrome repeated One Talibon branding already present in the persistent sidebar while Search, Municipal Utilities, Notifications, Workspace Launcher, avatar, employee name, position, and office competed in one dense right-side row.
+
+### Previous state
+
+- desktop left header repeated `One Talibon` plus page title;
+- five right-side concepts appeared with nearly equal separation;
+- Search label appeared from XL upward;
+- Workspace Launcher used a larger 44px hit area than adjacent 40px controls;
+- account identity text appeared from XL upward and carried its own border separator.
+
+### Change
+
+- desktop left-side identity now prioritizes the current page title;
+- One Talibon branding remains in the top bar only on mobile where the persistent sidebar is absent;
+- Search, Utilities, Notifications, and Workspace Launcher form one quiet utility cluster;
+- account identity is separated as a second lightweight region;
+- Search text is deferred to 2XL while icon/search semantics remain unchanged;
+- utility and launcher hit areas standardize at 40px in this Phase 2 composition;
+- Workspace Launcher gains an explicit focus ring consistent with adjacent controls;
+- top-bar account avatar reduces 40px → 36px;
+- account text appears only at 2XL to reduce laptop crowding;
+- title/aria labels are added or retained for utility clarity;
+- notification/search/utility/launcher logic is unchanged.
+
+### Reason
+
+The top bar should orient the employee and provide utilities without becoming a second navigation system or competing with the sidebar.
+
+### Files changed
+
+```text
+resources/js/layouts/AppLayout.tsx
+resources/js/components/shell/PortalHeaderIdentity.tsx
+resources/js/components/shell/RecordsSearch.tsx
+resources/js/components/shell/WorkspaceLauncher.tsx
+Jayr-Aj-docs.md
+docs/ENGINEERING_LOG.md
+```
+
+### Verification
+
+```text
+Search logic changed: NO
+Notification logic changed: NO
+Utility behavior changed: NO
+Workspace launcher routes changed: NO
+Account/auth behavior changed: NO
+Page title preserved: PASS
+Mobile One Talibon identity preserved: PASS
+Source alignment review: PASS
+Runtime: NOT OBSERVED
+```
+
+### Known limitations
+
+Exact utility density at laptop widths and popup positioning remain browser-validation items.
+
+### Commit
+
+Recorded in final Phase 2 evidence.
+
+---

@@ -20,17 +20,17 @@ export default function PortalHeaderIdentity({ user }: { user: AuthUser | null }
     const context = [position, office].filter(Boolean).join(' · ');
 
     return (
-        <div aria-label={`Signed in as ${identityTitle}`} className="flex min-w-0 items-center gap-2 border-l border-slate-200 pl-2.5 dark:border-slate-700">
+        <div aria-label={`Signed in as ${identityTitle}`} className="flex min-w-0 items-center gap-2">
             <span
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-white bg-blue-100 text-sm font-bold text-blue-900 dark:border-slate-700"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-blue-50 text-xs font-bold text-blue-900 dark:border-slate-700 dark:bg-blue-950/40 dark:text-blue-200"
                 aria-hidden="true"
                 title={identityTitle}
             >
                 {initialsFor(user.name) || 'OT'}
             </span>
-            <div className="hidden min-w-0 max-w-48 xl:block">
+            <div className="hidden min-w-0 max-w-44 2xl:block">
                 <div className="truncate text-xs font-bold leading-4" title={user.name}>{user.name}</div>
-                {context && <div className="truncate text-[11px] leading-4 text-slate-500 dark:text-slate-400" title={context}>{context}</div>}
+                {context && <div className="truncate text-[10px] leading-4 text-slate-500 dark:text-slate-400" title={context}>{context}</div>}
             </div>
         </div>
     );

@@ -1687,3 +1687,16 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Sign-out, appearance, showcase session controls, and compact sidebar behavior are preserved.
 - No authentication/session behavior changed.
 - Source review PASS; runtime interaction NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 2 / EUI-S9 utility bar
+
+### `ui: refine employee utility bar`
+
+- Parent SHA: `2d034221aada5e32bbcb2b038c33dab99cf5b221`.
+- Desktop top-bar identity now prioritizes current page title; One Talibon header branding remains mobile-only because desktop sidebar already carries the brand.
+- Search/Utilities/Notifications/Workspace Launcher are grouped as one utility region; account identity is a separate lightweight region.
+- Search text and account text defer to 2XL to reduce laptop crowding.
+- Workspace Launcher standardizes to 40px and gains explicit focus treatment; account avatar reduces to 36px.
+- Search, notifications, utilities, launcher, account, and auth functionality remain unchanged.
+- Phase 1 dashboard and Public Portal remain untouched.
+- Source review PASS; runtime NOT OBSERVED.

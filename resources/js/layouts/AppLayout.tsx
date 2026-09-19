@@ -182,37 +182,43 @@ export default function AppLayout({ title, children }: Props) {
                 {utilitiesOpen && <MunicipalUtilityDrawer onClose={() => setUtilitiesOpen(false)} />}
 
                 <main className="min-w-0 overflow-x-clip">
-                    <header className="sticky top-0 z-20 flex min-h-14 items-center justify-between gap-2 border-b border-slate-200/80 bg-white px-3 transition-colors dark:border-slate-700/80 dark:bg-[#142236] sm:px-4">
-                        <div className="flex min-w-0 items-center gap-2">
-                            <button onClick={() => setMobileOpen(true)} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 lg:hidden" aria-label="Open navigation"><Menu size={20} /></button>
+                    <header className="sticky top-0 z-20 flex min-h-14 items-center justify-between gap-3 border-b border-slate-200/80 bg-white px-3 transition-colors dark:border-slate-700/80 dark:bg-[#142236] sm:px-4">
+                        <div className="flex min-w-0 items-center gap-2.5">
+                            <button type="button" onClick={() => setMobileOpen(true)} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 lg:hidden" aria-label="Open navigation"><Menu size={19} aria-hidden="true" /></button>
                             <div className="min-w-0">
-                                <div className="whitespace-nowrap text-base font-extrabold leading-5 tracking-tight text-[#0b2852] dark:text-white">One <span className="text-[#1769aa] dark:text-blue-400">Talibon</span></div>
-                                <div className="truncate text-[11px] leading-4 text-slate-500 dark:text-slate-400">{title}</div>
+                                <div className="whitespace-nowrap text-sm font-extrabold leading-5 tracking-tight text-[#0b2852] dark:text-white lg:hidden">One <span className="text-[#1769aa] dark:text-blue-400">Talibon</span></div>
+                                <div className="truncate text-xs font-semibold leading-4 text-slate-700 dark:text-slate-200 lg:text-sm">{title}</div>
                             </div>
                         </div>
 
-                        <div className="flex shrink-0 items-center gap-1">
-                            {canSearchRecords && <RecordsSearch />}
-                            <button
-                                onClick={toggleUtilities}
-                                className={`flex h-10 w-10 items-center justify-center rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700/30 ${utilitiesActive ? 'bg-blue-50 text-blue-800 dark:bg-blue-950/45 dark:text-blue-200' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'}`}
-                                aria-label={utilitiesActive ? 'Close municipal utilities' : 'Open municipal utilities'}
-                                aria-expanded={utilitiesActive}
-                            >
-                                <PanelRightOpen size={18} />
-                            </button>
-                            <div ref={notificationsPanel} className="relative">
-                                <button ref={notificationsButton} onClick={() => { setNotificationsOpen((open) => !open); setUnseenWorkflowCount(0); }} className="relative flex h-10 w-10 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800" aria-label="Open notifications" aria-expanded={notificationsOpen} aria-controls="portal-notifications">
-                                    <Bell size={18} />
+                        <div className="flex min-w-0 shrink-0 items-center">
+                            <div className="flex items-center gap-0.5 border-r border-slate-200 pr-2 dark:border-slate-700">
+                                {canSearchRecords && <RecordsSearch />}
+                                <button
+                                    type="button"
+                                    onClick={toggleUtilities}
+                                    className={`flex h-10 w-10 items-center justify-center rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700/30 ${utilitiesActive ? 'bg-blue-50 text-blue-800 dark:bg-blue-950/45 dark:text-blue-200' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'}`}
+                                    aria-label={utilitiesActive ? 'Close municipal utilities' : 'Open municipal utilities'}
+                                    aria-expanded={utilitiesActive}
+                                    title="Municipal utilities"
+                                >
+                                    <PanelRightOpen size={18} aria-hidden="true" />
+                                </button>
+                                <div ref={notificationsPanel} className="relative">
+                                    <button type="button" ref={notificationsButton} onClick={() => { setNotificationsOpen((open) => !open); setUnseenWorkflowCount(0); }} className="relative flex h-10 w-10 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800" aria-label="Open notifications" aria-expanded={notificationsOpen} aria-controls="portal-notifications" title="Notifications">
+                                        <Bell size={18} aria-hidden="true" />
                                     {bellCount > 0 && <span className="absolute -right-0.5 -top-0.5 min-w-4 rounded-full bg-rose-600 px-1 text-center text-xs font-bold text-white">{bellCount > 9 ? '9+' : bellCount}</span>}
                                 </button>
                                 {notificationsOpen && <div id="portal-notifications" className="fixed left-3 right-3 top-16 z-50 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xl dark:border-slate-700 dark:bg-[#142236] sm:absolute sm:left-auto sm:right-0 sm:top-10 sm:w-[350px]">
                                     <div className="flex items-center justify-between border-b border-slate-100 px-4 py-3 dark:border-slate-700"><div><div className="text-sm font-bold text-slate-950 dark:text-slate-100">Recent activity</div><div className="text-xs text-slate-500 dark:text-slate-400">New office arrivals and unread memoranda</div></div><button onClick={() => setNotificationsOpen(false)} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Close notifications"><X size={16} /></button></div>
                                     <div className="max-h-[60vh] divide-y divide-slate-100 overflow-y-auto dark:divide-slate-700">{notifications.map((notification) => <Link key={notification.key} href={notification.url} onClick={() => setNotificationsOpen(false)} className="block px-4 py-3 transition hover:bg-slate-50 dark:hover:bg-slate-800/60"><div className="flex items-start justify-between gap-3"><div className="min-w-0"><div className="text-xs font-bold uppercase tracking-wide text-blue-700 dark:text-blue-300">{notification.title}</div><div className="mt-1 text-sm leading-4 text-slate-700 dark:text-slate-200">{notification.message}</div>{notification.created_at && <div className="mt-1.5 text-xs text-slate-400">{relativeTime(notification.created_at)}</div>}</div>{notification.urgent && <span className="shrink-0 rounded-full bg-rose-50 px-2 py-1 text-xs font-bold uppercase text-rose-700 dark:bg-rose-950/40 dark:text-rose-300">Action</span>}</div></Link>)}{notifications.length === 0 && <div className="px-4 py-8 text-center text-sm text-slate-500 dark:text-slate-400">No recent notifications.</div>}</div>
                                 </div>}
+                                </div>
+                                <PortalLauncher groups={navigationGroups} />
                             </div>
-                            <PortalLauncher groups={navigationGroups} />
-                            <PortalIdentity user={user} />
+                            <div className="pl-2">
+                                <PortalIdentity user={user} />
+                            </div>
                         </div>
                     </header>
 

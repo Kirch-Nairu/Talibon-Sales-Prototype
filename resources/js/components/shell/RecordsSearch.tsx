@@ -43,9 +43,10 @@ export default function RecordsSearch() {
                 aria-label="Search municipal records"
                 aria-expanded={open}
                 aria-haspopup="dialog"
+                title="Search municipal records"
             >
                 <Search size={17} aria-hidden="true" />
-                <span className="hidden xl:inline">Search</span>
+                <span className="hidden 2xl:inline">Search</span>
             </button>
 
             {open && (
