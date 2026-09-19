@@ -26,8 +26,8 @@ export default function StaffWorkloadTable({ rows }: { rows: StaffWorkload[] }) 
                                     <div className="employee-metadata mt-0.5 text-slate-500 dark:text-slate-400">{row.position || 'Position not recorded'}</div>
                                 </th>
                                 <td className="employee-record-row employee-metadata text-slate-600 dark:text-slate-300"><span className="font-bold tabular-nums text-slate-950 dark:text-slate-100">{row.active}</span> active</td>
-                                <td className="employee-record-row employee-metadata text-slate-600 dark:text-slate-300"><span className={row.overdue > 0 ? 'font-bold tabular-nums text-rose-700 dark:text-rose-300' : 'font-bold tabular-nums text-slate-950 dark:text-slate-100'}>{row.overdue}</span> overdue</td>
-                                <td className="employee-record-row employee-metadata text-slate-600 dark:text-slate-300"><span className="font-bold tabular-nums text-blue-800 dark:text-blue-300">{row.requiresAction}</span> items</td>
+                                <td className="employee-record-row employee-metadata text-slate-600 dark:text-slate-300"><span className={row.overdue > 0 ? 'employee-tone-danger font-bold tabular-nums' : 'font-bold tabular-nums text-slate-950 dark:text-slate-100'}>{row.overdue}</span> overdue</td>
+                                <td className="employee-record-row employee-metadata text-slate-600 dark:text-slate-300"><span className="employee-tone-info font-bold tabular-nums">{row.requiresAction}</span> items</td>
                             </tr>
                         ))}
                         {rows.length === 0 ? <tr><td colSpan={4} className="employee-empty-state employee-body-text text-slate-500 dark:text-slate-400">No active assigned office work.</td></tr> : null}

@@ -11,16 +11,16 @@ const formatDate = (value?: string | null) => {
 };
 
 const dueTone = {
-    on_track: 'text-slate-600 dark:text-slate-300',
-    due_soon: 'text-amber-700 dark:text-amber-300',
-    overdue: 'text-rose-700 dark:text-rose-300',
-    completed: 'text-emerald-700 dark:text-emerald-300',
+    on_track: 'employee-tone-neutral',
+    due_soon: 'employee-tone-warning',
+    overdue: 'employee-tone-danger',
+    completed: 'employee-tone-success',
 } as const;
 
 const priorityTone: Record<string, string> = {
-    normal: 'text-slate-500 dark:text-slate-400',
-    high: 'text-amber-700 dark:text-amber-300',
-    urgent: 'text-rose-700 dark:text-rose-300',
+    normal: 'employee-tone-neutral',
+    high: 'employee-tone-warning',
+    urgent: 'employee-tone-danger',
 };
 
 const dueLabel = {
@@ -51,7 +51,7 @@ export default function WorkItemList({ records, title }: { records: Paginator; t
                     <article key={item.id} className="employee-record-row">
                         <div className="grid min-w-0 gap-3 xl:grid-cols-[minmax(250px,1.45fr)_140px_150px_130px_minmax(180px,1fr)_76px] xl:items-center">
                             <div className="min-w-0">
-                                <div className="employee-metadata flex flex-wrap items-center gap-x-2 gap-y-0.5"><span className="font-bold text-blue-700 dark:text-blue-300">{item.reference}</span><span className="text-slate-500 dark:text-slate-400">{humanize(item.transactionType)}</span></div>
+                                <div className="employee-metadata flex flex-wrap items-center gap-x-2 gap-y-0.5"><span className="employee-tone-info font-bold">{item.reference}</span><span className="text-slate-500 dark:text-slate-400">{humanize(item.transactionType)}</span></div>
                                 <h2 className="employee-record-title mt-0.5 line-clamp-2 text-slate-950 dark:text-slate-100">{item.title}</h2>
                                 <div className="employee-metadata mt-1 flex flex-wrap items-center gap-x-2 gap-y-1" aria-label="Work item state">
                                     <span className={priorityTone[item.priority] || priorityTone.normal}>{humanize(item.priority)} priority</span>
@@ -59,7 +59,7 @@ export default function WorkItemList({ records, title }: { records: Paginator; t
                                     <span className="text-slate-600 dark:text-slate-300">{humanize(item.status)}</span>
                                     <span className="text-slate-300 dark:text-slate-600" aria-hidden="true">·</span>
                                     <span className={`font-semibold ${dueTone[item.dueState]}`}>{dueLabel[item.dueState]}</span>
-                                    {item.requiresAction ? <><span className="text-slate-300 dark:text-slate-600" aria-hidden="true">·</span><span className="font-semibold text-blue-700 dark:text-blue-300">Needs action</span></> : null}
+                                    {item.requiresAction ? <><span className="text-slate-300 dark:text-slate-600" aria-hidden="true">·</span><span className="employee-tone-info font-semibold">Needs action</span></> : null}
                                 </div>
                             </div>
 

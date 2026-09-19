@@ -2,9 +2,9 @@ import { CalendarDays, FileText, MapPin, UsersRound } from 'lucide-react';
 import type { MunicipalMeeting } from '../../data/municipal/meetings';
 
 const statusClass: Record<MunicipalMeeting['status'], string> = {
-    Scheduled: 'text-blue-700 dark:text-blue-300',
-    Completed: 'text-emerald-700 dark:text-emerald-300',
-    Rescheduled: 'text-amber-700 dark:text-amber-300',
+    Scheduled: 'employee-tone-info',
+    Completed: 'employee-tone-success',
+    Rescheduled: 'employee-tone-warning',
 };
 
 export default function MeetingRegister({ meetings }: { meetings: MunicipalMeeting[] }) {
@@ -14,7 +14,7 @@ export default function MeetingRegister({ meetings }: { meetings: MunicipalMeeti
         {meetings.map((meeting) => <article key={meeting.id} className="employee-record-row">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                 <div className="min-w-0">
-                    <div className="employee-metadata font-bold text-blue-700 dark:text-blue-300">{meeting.id} · {meeting.organizingOffice}</div>
+                    <div className="employee-metadata employee-tone-info font-bold">{meeting.id} · {meeting.organizingOffice}</div>
                     <h2 className="employee-record-title mt-0.5 text-slate-950 dark:text-slate-100">{meeting.title}</h2>
                 </div>
                 <span className={`employee-metadata shrink-0 font-semibold ${statusClass[meeting.status]}`}>{meeting.status}</span>

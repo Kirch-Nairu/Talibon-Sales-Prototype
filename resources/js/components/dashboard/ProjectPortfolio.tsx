@@ -10,9 +10,9 @@ const statusLabel: Record<DashboardProject['status'], string> = {
 };
 
 const statusClass: Record<DashboardProject['status'], string> = {
-    on_track: 'text-emerald-700 dark:text-emerald-300',
-    attention: 'text-amber-700 dark:text-amber-300',
-    delayed: 'text-rose-700 dark:text-rose-300',
+    on_track: 'employee-tone-success',
+    attention: 'employee-tone-warning',
+    delayed: 'employee-tone-danger',
 };
 
 const statusRank: Record<DashboardProject['status'], number> = {
