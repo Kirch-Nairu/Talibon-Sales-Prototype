@@ -2416,3 +2416,61 @@ The exact threshold and visible row density still need browser/runtime review.
 Recorded in final Phase 1 evidence.
 
 ---
+
+## EUI-S4 — Schedule & Deadlines
+
+### Problem
+
+The schedule inherited the same fixed-height/scroll model as an operational queue. Meetings and deadlines could become a dashboard-within-dashboard with internal scrolling, sticky subheaders, and equal column pressure even when one side had little or no data.
+
+### Previous state
+
+- desktop fixed-height container inherited from `BoundedOperationalPanel`;
+- internal vertical scrolling;
+- sticky inner subheaders;
+- meetings/deadlines forced into equal columns at medium dashboard widths;
+- empty side could occupy disproportionate space.
+
+### Change
+
+- schedule now uses natural page flow with no internal scroll container;
+- meetings and deadlines are each bounded to a four-item homepage preview;
+- existing `Open calendar` remains the full-detail destination;
+- both populated lists use a 1.15fr / .85fr desktop relationship, giving meetings slightly more reading width;
+- when either list is empty, the groups stack naturally instead of preserving an empty half-width column;
+- sticky inner headers removed;
+- empty states reduced to compact operational copy;
+- extra real items are reported as a simple count directing the employee to Calendar.
+
+### Reason
+
+Schedule should be scannable in the page flow and proportionate to actual information density, not a nested scrolling dashboard.
+
+### Files changed
+
+```text
+resources/js/components/dashboard/SchedulePanel.tsx
+Jayr-Aj-docs.md
+docs/ENGINEERING_LOG.md
+```
+
+### Verification
+
+```text
+Nested schedule scrolling removed: PASS
+Existing /calendar destination preserved: PASS
+Fake meetings/deadlines introduced: NO
+Source responsive review: PASS
+Build/typecheck: NOT OBSERVED
+Runtime: NOT OBSERVED
+```
+
+### Known limitation
+
+The four-record preview density and desktop column ratio still require browser validation.
+
+### Commit
+
+Recorded in final Phase 1 evidence.
+
+---

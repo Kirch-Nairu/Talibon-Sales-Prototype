@@ -1602,3 +1602,15 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Empty message compressed to operational copy without invented action controls.
 - Shared component API change is UI-only and preserves existing semantics.
 - Source review PASS; build/typecheck/runtime NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 1 / EUI-S4 schedule composition
+
+### `ui: refine schedule and deadlines composition`
+
+- Parent SHA: `ad3bc8f7b0417c78139f555cfa20374d53a0a548`.
+- Schedule no longer uses the shared bounded-scroll mode after EUI-S3 made that behavior opt-in.
+- Added a four-item homepage preview for meetings and deadlines; full schedule remains available through existing `/calendar`.
+- Removed sticky internal headers and changed populated desktop relationship to 1.15fr/.85fr.
+- One-sided/empty data stacks naturally and uses compact empty copy.
+- No meeting/deadline content, Calendar route, or workflow behavior changed.
+- Source responsive review PASS; build/typecheck/runtime NOT OBSERVED.
