@@ -470,57 +470,114 @@
 .public-section-link:hover { text-decoration: underline; }
 .dark .public-section-link { color: #93c5fd; }
 
-/* Zone 2 — service directory, no independent service cards. */
+/* Zone 2 — civic service directory. */
 .public-services {
     padding: 48px 0 52px;
     border-bottom: 1px solid var(--municipal-border);
 }
 
-.public-service-grid {
+.public-service-directory {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: 30px;
-}
-
-.public-service-tile {
-    display: flex;
-    min-width: 0;
-    align-items: flex-start;
-    gap: 13px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     border-top: 1px solid var(--municipal-border);
-    padding: 20px 4px 20px 0;
 }
 
-.public-service-tile svg {
-    margin-top: 2px;
-    flex-shrink: 0;
-    color: var(--municipal-blue);
+.public-service-group {
+    min-width: 0;
+    padding-top: 18px;
 }
 
-.public-service-tile h3 {
+.public-service-group + .public-service-group {
+    border-left: 1px solid var(--municipal-border);
+    padding-left: 38px;
+    margin-left: 38px;
+}
+
+.public-service-group-header {
+    max-width: 560px;
+    padding-bottom: 14px;
+}
+
+.public-service-group-header h3 {
     color: var(--municipal-text);
-    font-size: 15px;
-    font-weight: 680;
-    line-height: 1.4;
+    font-size: 16px;
+    font-weight: 720;
+    line-height: 1.35;
 }
 
-.public-service-tile p {
+.public-service-group-header p {
     margin-top: 5px;
     color: var(--municipal-muted);
     font-size: 13px;
+    line-height: 1.5;
+}
+
+.public-service-list {
+    border-top: 1px solid var(--municipal-border);
+}
+
+.public-service-row {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 24px;
+    border-bottom: 1px solid var(--municipal-border);
+    padding: 18px 0;
+}
+
+.public-service-copy {
+    min-width: 0;
+}
+
+.public-service-copy h4 {
+    color: var(--municipal-text);
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.public-service-copy > p {
+    max-width: 620px;
+    margin-top: 5px;
+    color: var(--municipal-muted);
+    font-size: 14px;
     line-height: 1.55;
 }
 
-.public-service-tile span {
+.public-service-meta {
     display: block;
     margin-top: 8px;
-    color: var(--municipal-green);
+    color: var(--municipal-muted);
     font-size: 12px;
-    font-weight: 650;
+    font-weight: 600;
+    line-height: 1.4;
 }
 
-.dark .public-service-tile svg { color: #93c5fd; }
-.dark .public-service-tile span { color: #8ec9a0; }
+.public-service-action {
+    display: inline-flex;
+    min-height: 40px;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 7px;
+    color: var(--municipal-blue);
+    font-size: 13px;
+    font-weight: 680;
+    line-height: 1.35;
+}
+
+.public-service-action:hover {
+    text-decoration: underline;
+}
+
+.public-service-action:focus-visible {
+    outline: 2px solid var(--municipal-blue);
+    outline-offset: 3px;
+}
+
+.dark .public-service-action {
+    color: #93c5fd;
+}
 
 /* Zone 3 — context band followed by editorial public information. */
 .public-information-zone {
@@ -862,7 +919,15 @@
     .public-hero-title { font-size: 40px; }
     .public-hero-lead { font-size: 16px; }
 
-    .public-service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 28px; }
+    .public-service-directory { grid-template-columns: 1fr; }
+    .public-service-group + .public-service-group {
+        margin-top: 28px;
+        margin-left: 0;
+        border-top: 1px solid var(--municipal-border);
+        border-left: 0;
+        padding-top: 24px;
+        padding-left: 0;
+    }
 
     .public-about { grid-template-columns: minmax(260px, .9fr) minmax(0, 1.1fr); }
     .public-about-copy { padding: 30px 32px 28px; }
@@ -954,10 +1019,24 @@
     .public-section-heading h2 { font-size: 21px; }
     .public-section-heading p { font-size: 14px; }
     .public-section-link { min-height: 34px; }
-    .public-service-grid { grid-template-columns: 1fr; column-gap: 0; }
-    .public-service-tile { gap: 12px; padding: 18px 0; }
-    .public-service-tile h3 { font-size: 15px; }
-    .public-service-tile p { font-size: 13px; }
+    .public-service-group { padding-top: 16px; }
+    .public-service-group + .public-service-group {
+        margin-top: 22px;
+        padding-top: 20px;
+    }
+    .public-service-group-header { padding-bottom: 12px; }
+    .public-service-group-header h3 { font-size: 15px; }
+    .public-service-group-header p { font-size: 13px; }
+    .public-service-row {
+        grid-template-columns: 1fr;
+        gap: 9px;
+        padding: 16px 0;
+    }
+    .public-service-copy > p { font-size: 14px; }
+    .public-service-action {
+        width: fit-content;
+        min-height: 44px;
+    }
 
     .public-information-zone { gap: 34px; padding-top: 38px; }
     .public-about { grid-template-columns: 1fr; border-top-width: 3px; }

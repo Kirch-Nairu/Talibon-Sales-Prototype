@@ -334,6 +334,178 @@ Runtime acceptance remains pending until the branch is rendered and inspected at
 
 ---
 
+
+# UI-S4 — Municipal Services Information Architecture
+
+## Problem
+
+The Municipal Services section used six equal icon-led entries with generic labels, generic descriptions, and colored status-like text. The entries looked like a feature catalogue even though the current public prototype does not expose six standalone public service routes.
+
+## User task
+
+Help a resident understand:
+
+```text
+What municipal help is represented here?
+Which information area should I open next?
+Is this an online transaction or information only?
+```
+
+## Existing services discovered
+
+The current public content contains six service concepts:
+
+```text
+Business and Permits
+Civil and Community Services
+Public Information
+Emergency and Advisories
+Municipal Departments
+Transparency Resources
+```
+
+Repository route inspection confirmed that these are not standalone public transaction routes. The only public application route is the homepage; useful public destinations are existing in-page sections such as `#news`, `#transparency`, `#about`, and `#contact`.
+
+All authenticated internal routes remain outside the public service directory.
+
+## Information architecture changes
+
+The six entries are now organized into two functional groups:
+
+```text
+Services & office guidance
+- Business permits & licensing
+- Civil & community services
+- Municipal offices
+
+Public information & records
+- News & public information
+- Emergency advisories
+- Public documents & transparency
+```
+
+This grouping is intentionally small and functional rather than decorative.
+
+The previous icon-per-service grid was replaced with structured directory rows.
+
+Each row now exposes:
+
+```text
+Citizen-facing task/service name
+Short explanation
+Neutral availability/content metadata
+Accurate destination action when an existing public destination exists
+```
+
+## Task-language changes
+
+Examples:
+
+```text
+Business and Permits
+→ Business permits & licensing
+
+Public Information
+→ News & public information
+
+Transparency Resources
+→ Public documents & transparency
+```
+
+Generic colored labels such as `Service information` and `Public information` are no longer presented as status-like emphasis.
+
+Metadata is now neutral and honest:
+
+```text
+Information only
+Directory preview
+Prototype content
+```
+
+## Actions
+
+Only existing homepage destinations are used:
+
+```text
+See contact information → #contact
+About Talibon → #about
+Read news & notices → #news
+View advisory preview → #news
+See public documents → #transparency
+```
+
+No public transaction route was invented.
+
+## Services/content deliberately not invented
+
+UI-S4 does NOT add:
+
+- online business permit application;
+- online civil registry requests;
+- department-specific public profile routes;
+- emergency alert feeds;
+- official public document downloads;
+- responsible-office names not present in the public prototype;
+- online/in-person availability claims;
+- citizen accounts or public transactions.
+
+## Visual composition
+
+The section now uses a civic directory pattern rather than a feature-card grid:
+
+- two functional groups on larger screens;
+- structured rows with dividers;
+- no decorative icon per service;
+- no card containers;
+- no status colors;
+- actions visually subordinate to service titles;
+- one-column recomposition below the desktop layout.
+
+## Accessibility
+
+Source-level accessibility provisions include:
+
+- section and group heading hierarchy;
+- semantic `ul` service lists;
+- descriptive action labels;
+- minimum 40px desktop / 44px mobile action height;
+- explicit focus-visible outline;
+- logical DOM reading order;
+- no icon-only controls.
+
+## Files changed
+
+```text
+config/public_portal.php
+resources/js/components/public/PublicServices.tsx
+resources/js/components/public/types.ts
+resources/css/public-portal.css
+Jayr-Aj-docs.md
+docs/ENGINEERING_LOG.md
+```
+
+## Verification
+
+```text
+Source inspection: PASS
+Route/destination inspection: PASS
+Implementation scope inspection: PENDING post-commit
+Git diff inspection: PENDING post-commit
+Build/typecheck: NOT OBSERVED
+Runtime/browser: NOT OBSERVED
+Desktop runtime: NOT OBSERVED
+Mobile runtime: NOT OBSERVED
+Keyboard runtime: NOT OBSERVED
+```
+
+Runtime acceptance remains unresolved until the application is actually rendered and inspected.
+
+## Commit
+
+Implementation SHA will be recorded in the UI-S4 evidence finalization update.
+
+---
+
 # Current UI Branch State
 
 After UI-S3, the current working branch is:
@@ -420,10 +592,11 @@ Status: IMPLEMENTED
 Runtime acceptance: PENDING
 
 UI-S4 — Municipal Services Information Architecture
-Status: NEXT
+Status: IMPLEMENTED
+Runtime acceptance: PENDING
 
 UI-S5 — News / Notices / Documents Editorial Structure
-Status: NOT STARTED
+Status: NEXT
 
 UI-S6 — Talibon Identity + Typography Refinement
 Status: NOT STARTED
@@ -466,7 +639,7 @@ As UI work continues:
 # Next Planned Slice
 
 ```text
-UI-S4 — Municipal Services Information Architecture
+UI-S5 — News / Notices / Documents Editorial Structure
 ```
 
-The next goal is to make the Municipal Services section more task-oriented and informative using only service capabilities supported by the current public prototype.
+The next goal is to refine the public information areas so news, notices, documents, and related records read as official editorial information rather than generic content blocks.

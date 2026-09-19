@@ -1338,3 +1338,20 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Verification before publication: source composition and bounded scope were inspected. Runtime browser rendering, TypeScript execution, production build, keyboard walkthrough, responsive visual inspection, and light/dark runtime checks are **NOT OBSERVED** in this environment and must not be promoted to PASS.
 - Schema/migration/dependency impact: **NONE**. Backend/application business behavior impact: **NONE**.
 
+## 2026-09-19 — Jr/AJ public UI UI-S4 municipal services information architecture
+
+### `ui: improve municipal services information architecture`
+
+- Working branch: `UI/Jr-and-Aj`; exact parent SHA: `a4d62eca453d17059bf608e460a4a220abf4699d`.
+- Scope: **UI/public-content information architecture only** under KIKIAM UI HARNESS V1. No authenticated route, backend domain behavior, database logic, authentication behavior, or business-rule change is introduced.
+- Discovery: the public prototype contains six service concepts but no standalone public service transaction routes. Public route authority remains `/` plus existing in-page destinations; authenticated municipal application routes remain excluded from public discovery.
+- Content model: public service entries now carry citizen-facing title/description, a functional group, neutral metadata, and optional existing-anchor action. The service type contract was updated only to represent this public presentation model.
+- IA: the six entries are grouped into `Services & office guidance` and `Public information & records`. Business/civil/office items remain informational; news/advisory/document items link only to existing homepage sections.
+- Task language: generic module-like labels and status-colored phrases are replaced with citizen language such as `Business permits & licensing`, `News & public information`, and `Public documents & transparency`.
+- Honesty boundary: no online application, citizen transaction, department ownership, public download, official alert feed, availability state, or responsible-office claim is invented.
+- Visual composition: the previous icon-led three-column service grid is replaced with structured civic directory rows, restrained group headings, neutral metadata, descriptive text actions, and a one-column responsive recomposition. Decorative per-entry icons and status-color emphasis are removed.
+- Accessibility source provisions: semantic group headings and lists, descriptive links, focus-visible action outline, logical reading order, and mobile action targets of at least 44px.
+- Project-local UI record: `Jayr-Aj-docs.md` is updated in this same candidate.
+- Verification before publication: source inspection and route/destination inspection **PASS**. Runtime rendering, build/typecheck execution, desktop/mobile browser inspection, and keyboard walkthrough are **NOT OBSERVED** in this environment and must not be promoted to PASS.
+- Schema/migration/dependency impact: **NONE**. Internal application behavior impact: **NONE**.
+
