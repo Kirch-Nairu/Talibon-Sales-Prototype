@@ -1757,3 +1757,13 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Applied the roles to the shared work-context header, section header, attention queue, schedule/deadlines, and workspace shortcuts.
 - Public Portal typography and Phase 1/2 structural decisions remain untouched.
 - Source typography audit PASS; runtime NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 3 / EUI-S12 spacing density
+
+### `ui: align employee portal spacing density`
+
+- Implementation SHA: `b5563ea6d952151e4c2ce72c76c580d12aef7f0d`.
+- Added a small employee-only spacing vocabulary: 14px independent section rhythm, 16px horizontal panel/row padding, 10px operational row/header vertical padding, 8px subsection bars, 12px compact empty states.
+- Applied to dashboard composition, shared dashboard section headers, attention queue, schedule/deadlines, and workspace shortcuts.
+- No fixed heights, Phase 1 structural redesign, Phase 2 navigation restructure, Public Portal change, or backend change introduced.
+- Source density review PASS; runtime NOT OBSERVED.

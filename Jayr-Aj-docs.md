@@ -3595,3 +3595,71 @@ ui: standardize employee portal typography
 ```
 
 ---
+
+## EUI-S12 — Spacing / Density System
+
+### Problem / audit findings
+
+The core employee workspace mixed horizontal padding from 4px through 20px, vertical row padding from 6px through 16px, and independent section gaps mostly at 16px without a shared relationship model.
+
+### Visual-system decision
+
+Use a small employee spacing vocabulary for the authenticated workspace:
+
+```text
+Independent section rhythm   14px
+Panel/header horizontal      16px
+Panel/header vertical        10px
+Operational record row       10px / 16px
+Subsection bar               8px / 16px
+Compact empty state          12px / 16px
+```
+
+### Change
+
+- added scoped employee spacing roles in `app.css`;
+- dashboard top-level and workspace section rhythm now uses a 14px stack;
+- major two-column relationships use the same 14px gap;
+- DashboardSectionHeader uses the shared panel-header spacing;
+- AttentionQueue table heading, rows, and empty state use shared spacing roles;
+- Schedule meeting/deadline bars, rows, empty states, and continuation counts use the same vocabulary;
+- Workspace shortcuts use the shared panel header and record-row spacing;
+- no fixed-height content containers were reintroduced.
+
+### Files changed
+
+```text
+resources/css/app.css
+resources/js/pages/Dashboard.tsx
+resources/js/components/dashboard/DashboardSectionHeader.tsx
+resources/js/components/dashboard/AttentionQueue.tsx
+resources/js/components/dashboard/SchedulePanel.tsx
+resources/js/components/dashboard/QuickActions.tsx
+Jayr-Aj-docs.md
+docs/ENGINEERING_LOG.md
+```
+
+### Verification
+
+```text
+Core section gap vocabulary applied: PASS
+Core record-row padding aligned: PASS
+Compact empty-state spacing aligned: PASS
+Fixed-height regression introduced: NO
+Phase 1 composition changed: NO
+Phase 2 navigation changed: NO
+Runtime density review: NOT OBSERVED
+```
+
+### Known limitations
+
+Feature pages with their own specialized layouts are not globally forced into these roles; EUI-S13 targets shared operational-record patterns next.
+
+### Commit
+
+```text
+b5563ea6d952151e4c2ce72c76c580d12aef7f0d
+ui: align employee portal spacing density
+```
+
+---
