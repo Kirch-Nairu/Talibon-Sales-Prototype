@@ -1,23 +1,25 @@
-import { Link } from '@inertiajs/react';
-import { ArrowRight, LogIn } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { talibonAssets } from '../../branding/talibonAssets';
 import type { PublicContent } from './types';
 
-export default function PublicHero({ content, authenticated }: { content: PublicContent; authenticated: boolean }) {
+export default function PublicHero({ content }: { content: PublicContent; authenticated: boolean }) {
     return <section id="home" className="public-hero" aria-labelledby="public-hero-title">
         <div className="public-hero-intro">
             <div className="public-hero-copy">
-                <p className="public-welcome">Municipality of Talibon · Province of Bohol</p>
-                <h1 id="public-hero-title" className="public-hero-title">{content.hero.title}</h1>
-                <p className="public-hero-lead">Municipal information, public notices, service guidance, and secure employee access in one municipal portal.</p>
+                <p className="public-welcome">One Talibon · Municipality of Talibon, Bohol</p>
+                <h1 id="public-hero-title" className="public-hero-title">Municipal services and public information for Talibon</h1>
+                <p className="public-hero-lead">
+                    Access municipal services, official notices, public documents, and local government information in one place.
+                </p>
                 <p className="public-hero-description">{content.hero.description}</p>
                 <div className="public-hero-actions">
-                    <Link href={authenticated ? '/dashboard' : '/login'} className="public-primary-action">
-                        <LogIn size={17} aria-hidden="true" />
-                        {authenticated ? 'Open Employee Portal' : 'Employee Login'}
+                    <a href="#services" className="public-primary-action">
+                        Explore Municipal Services
                         <ArrowRight size={16} aria-hidden="true" />
-                    </Link>
-                    <a href="#services" className="public-secondary-action">View municipal services</a>
+                    </a>
+                    <a href="#transparency" className="public-secondary-action">
+                        Public Documents
+                    </a>
                 </div>
             </div>
             <figure className="public-hero-landscape" aria-label="Talibon municipal landscape placeholder">
