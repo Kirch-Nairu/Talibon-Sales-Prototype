@@ -10,7 +10,7 @@ export default function PublicGlance({ content }: { content: PublicContent }) {
         <div className="public-about-copy">
             <p className="public-about-place">Talibon, Bohol</p>
             <h2 id="public-about-title">About Talibon</h2>
-            <p className="public-about-description">Talibon is a municipality in the Province of Bohol. One Talibon provides a public starting point for municipal information, notices, documents, service guidance, and secure employee access.</p>
+            <p className="public-about-description">Talibon is a municipality in the Province of Bohol. One Talibon provides a public starting point for municipal service guidance, notices, public documents, and local government information.</p>
             <p className="public-location"><MapPin size={16} aria-hidden="true" />{content.contact.location}</p>
             <div className="public-info-links">
                 <a href="#news">Municipal updates <ArrowRight size={15} aria-hidden="true" /></a>

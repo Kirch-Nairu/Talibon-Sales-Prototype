@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { Building2, LayoutGrid } from 'lucide-react';
+import { ArrowRight, Building2 } from 'lucide-react';
 import { portalDestinations } from '../../navigation/navigationDestinations';
 import type { DashboardExperience } from './types';
 
@@ -20,25 +20,27 @@ export default function QuickActions({ actions }: { actions: DashboardExperience
 
     if (!visibleActions.length) return null;
 
-    const columns = visibleActions.length <= 2 ? 'grid-cols-2'
-        : visibleActions.length === 3 ? 'grid-cols-2 @min-[540px]:grid-cols-3'
-        : visibleActions.length === 4 ? 'grid-cols-2 @min-[650px]:grid-cols-4'
-        : 'grid-cols-2 @min-[540px]:grid-cols-3 @min-[800px]:grid-cols-5';
-
-    return <section className="municipal-panel overflow-hidden" aria-labelledby="dashboard-quick-actions">
-        <div className="flex items-center gap-2 border-b border-slate-200 px-4 py-2.5 dark:border-slate-700 sm:px-5">
-            <LayoutGrid size={15} className="text-slate-500 dark:text-slate-400" aria-hidden="true" />
-            <h3 id="dashboard-quick-actions" className="text-sm font-bold text-slate-950 dark:text-slate-100">Workspace links</h3>
-        </div>
-        <div className={`grid ${columns}`}>
+    return <section className="min-w-0 border-y border-slate-200 dark:border-slate-700" aria-labelledby="dashboard-quick-actions">
+        <header className="employee-panel-header">
+            <h3 id="dashboard-quick-actions" className="employee-section-title text-slate-950 dark:text-slate-100">Workspace shortcuts</h3>
+            <p className="employee-supporting-text mt-0.5 text-slate-500 dark:text-slate-400">Frequent destinations for this role.</p>
+        </header>
+        <div className="divide-y divide-slate-200 border-t border-slate-200 dark:divide-slate-700 dark:border-slate-700">
             {visibleActions.map((action) => {
                 const Icon = Object.values(portalDestinations).find((item) => action.url.split('?')[0] === item.href)?.icon || Building2;
-                return <Link key={action.url} href={action.url} aria-label={`${action.label}. ${action.description}`} className="flex min-h-12 min-w-0 items-center gap-2 border-b border-r border-slate-200 px-3 py-2.5 transition-colors duration-150 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500 dark:border-slate-700 dark:hover:bg-slate-800">
-                    <Icon size={17} className="shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.8} aria-hidden="true" />
-                    <div className="min-w-0">
-                        <div className="text-xs font-semibold leading-4 text-slate-900 dark:text-slate-100 sm:text-sm">{action.label}</div>
-                        <div className="mt-0.5 hidden text-[11px] leading-4 text-slate-500 dark:text-slate-400 @min-[760px]:block">{action.description}</div>
+
+                return <Link
+                    key={action.url}
+                    href={action.url}
+                    aria-label={`${action.label}. ${action.description}`}
+                    className="employee-interactive-row employee-record-row group flex min-h-[3.25rem] min-w-0 items-center gap-3"
+                >
+                    <Icon size={16} className="shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.8} aria-hidden="true" />
+                    <div className="min-w-0 flex-1">
+                        <div className="employee-record-title text-slate-900 dark:text-slate-100">{action.label}</div>
+                        <div className="employee-supporting-text mt-0.5 text-slate-500 dark:text-slate-400">{action.description}</div>
                     </div>
+                    <ArrowRight size={14} className="shrink-0 text-slate-400 dark:text-slate-500" aria-hidden="true" />
                 </Link>;
             })}
         </div>

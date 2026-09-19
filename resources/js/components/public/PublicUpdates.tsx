@@ -1,50 +1,75 @@
-import { Building2, FileText, Megaphone } from 'lucide-react';
 import type { PublicContent } from './types';
 
 export default function PublicUpdates({ content }: { content: PublicContent }) {
-    return <section className="public-updates" aria-label="Public information and updates">
-        <div id="news" className="public-update-column public-update-news">
-            <header>
-                <h2><Megaphone size={18} aria-hidden="true" />News &amp; Notices</h2>
-                <p>Public advisories, events, and municipality updates.</p>
-            </header>
-            <div className="public-update-list">
-                {content.news.map((item, index) => <article key={item.title} className={index === 0 ? 'public-update-feature' : ''}>
-                    <div className="public-item-meta">{item.type}{item.date && item.date !== 'Prototype' ? ' · ' + item.date : ''}</div>
-                    <h3>{item.title}</h3>
-                    <p>{item.summary}</p>
-                </article>)}
-                {!content.news.length && <p className="public-empty-copy">No public updates available.</p>}
-            </div>
-        </div>
+    return <section className="public-official-information" aria-labelledby="public-official-information-title">
+        <header className="public-official-header">
+            <p className="public-official-kicker">Public information</p>
+            <h2 id="public-official-information-title">News, notices & public records</h2>
+            <p>Prototype municipal information is presented here for evaluation. Entries are not official publications unless the municipality later confirms them.</p>
+        </header>
 
-        <div id="transparency" className="public-update-column public-update-documents">
-            <header>
-                <h2><FileText size={18} aria-hidden="true" />Public Documents</h2>
-                <p>Transparency resources prepared for public access.</p>
-            </header>
-            <div className="public-update-list">
-                {content.transparency.map(item => <article key={item.label}>
-                    <div className="public-item-meta">{item.value}</div>
-                    <h3>{item.label}</h3>
-                    <p>{item.note}</p>
-                </article>)}
-                {!content.transparency.length && <p className="public-empty-copy">No public documents available.</p>}
-            </div>
-        </div>
+        <div className="public-editorial-layout">
+            <section id="news" className="public-editorial-primary" aria-labelledby="public-news-title">
+                <header className="public-editorial-section-header">
+                    <h3 id="public-news-title">News &amp; Notices</h3>
+                    <p>Sample advisories, events, and municipality updates.</p>
+                </header>
 
-        <div id="projects" className="public-update-column public-update-projects">
-            <header>
-                <h2><Building2 size={18} aria-hidden="true" />Projects &amp; Programs</h2>
-                <p>Selected municipal project and program updates.</p>
-            </header>
-            <div className="public-update-list">
-                {content.projects.map(item => <article key={item.title}>
-                    <div className="public-item-meta">{item.tag}</div>
-                    <h3>{item.title}</h3>
-                    <p>{item.summary}</p>
-                </article>)}
-                {!content.projects.length && <p className="public-empty-copy">No project updates available.</p>}
+                <ol className="public-record-list public-news-list">
+                    {content.news.map((item, index) => {
+                        const hasDate = item.date && item.date !== 'Prototype';
+
+                        return <li key={item.title}>
+                            <article className={index === 0 ? 'public-record public-record-lead' : 'public-record'}>
+                                <div className="public-record-meta">
+                                    <span>{item.type}</span>
+                                    {hasDate && <span>{item.date}</span>}
+                                </div>
+                                <h4>{item.title}</h4>
+                                <p>{item.summary}</p>
+                            </article>
+                        </li>;
+                    })}
+                    {!content.news.length && <li className="public-empty-copy">No public updates available.</li>}
+                </ol>
+            </section>
+
+            <div className="public-editorial-secondary">
+                <section id="transparency" className="public-record-section" aria-labelledby="public-documents-title">
+                    <header className="public-editorial-section-header">
+                        <h3 id="public-documents-title">Public Documents</h3>
+                        <p>Prototype document and transparency information. No downloadable files are published here.</p>
+                    </header>
+
+                    <ul className="public-record-list">
+                        {content.transparency.map(item => <li key={item.label}>
+                            <article className="public-record">
+                                <div className="public-record-meta"><span>{item.value}</span></div>
+                                <h4>{item.label}</h4>
+                                <p>{item.note}</p>
+                            </article>
+                        </li>)}
+                        {!content.transparency.length && <li className="public-empty-copy">No public documents available.</li>}
+                    </ul>
+                </section>
+
+                <section id="projects" className="public-record-section public-project-updates" aria-labelledby="public-projects-title">
+                    <header className="public-editorial-section-header">
+                        <h3 id="public-projects-title">Projects &amp; Programs</h3>
+                        <p>Prototype municipal project and program updates without invented progress or status data.</p>
+                    </header>
+
+                    <ul className="public-record-list">
+                        {content.projects.map(item => <li key={item.title}>
+                            <article className="public-record">
+                                <div className="public-record-meta"><span>{item.tag}</span></div>
+                                <h4>{item.title}</h4>
+                                <p>{item.summary}</p>
+                            </article>
+                        </li>)}
+                        {!content.projects.length && <li className="public-empty-copy">No project updates available.</li>}
+                    </ul>
+                </section>
             </div>
         </div>
     </section>;

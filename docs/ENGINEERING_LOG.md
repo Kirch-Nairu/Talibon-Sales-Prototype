@@ -1322,3 +1322,561 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - UAT: **NOT STARTED**.
 - Deployment: **NO**.
 - Next action: publish the single R0 candidate commit, then stop for independent source audit and four-gate CI observation before any integration to `main`.
+
+## 2026-09-19 — Jr/AJ public UI UI-S3 quick access hierarchy
+
+### `ui: structure public quick access`
+
+- Working branch: `UI/Jr-and-Aj`; exact parent SHA: `bc11b725ee202991580b714add6a087a109fe186`.
+- Scope: **UI-only public homepage refinement** under KIKIAM UI HARNESS V1. No backend behavior, API, database, authentication, route authority, or business-rule change is introduced.
+- UI-S3 intent: separate Quick Access from the hero and global navigation, then express the shortcut layer as common citizen tasks rather than another duplicate navigation bar.
+- Added `resources/js/components/public/PublicQuickAccess.tsx` with three existing-anchor tasks only: municipal services, news/notices, and public documents. No unavailable service or new route is introduced.
+- `PublicHero.tsx` now owns only the civic hero. The stale prototype description that still mentioned employee access was removed during this source audit so UI-S2 implementation matches its recorded intent.
+- `Public/Home.tsx` now composes `PublicHero` followed by `PublicQuickAccess`, preserving the existing services and information sections below.
+- `resources/css/public-portal.css` replaces the former equal destination-tile strip with a flat editorial Quick Access band using subtle dividers, task language, responsive single-column mobile recomposition, existing municipal tokens, and explicit focus-visible treatment.
+- Project-local change tracking: `Jayr-Aj-docs.md` is updated in this same candidate to record UI-S3 and the UI-S2 source correction.
+- Verification before publication: source composition and bounded scope were inspected. Runtime browser rendering, TypeScript execution, production build, keyboard walkthrough, responsive visual inspection, and light/dark runtime checks are **NOT OBSERVED** in this environment and must not be promoted to PASS.
+- Schema/migration/dependency impact: **NONE**. Backend/application business behavior impact: **NONE**.
+
+## 2026-09-19 — Jr/AJ public UI UI-S4 municipal services information architecture
+
+### `ui: improve municipal services information architecture`
+
+- Working branch: `UI/Jr-and-Aj`; exact parent SHA: `a4d62eca453d17059bf608e460a4a220abf4699d`.
+- Scope: **UI/public-content information architecture only** under KIKIAM UI HARNESS V1. No authenticated route, backend domain behavior, database logic, authentication behavior, or business-rule change is introduced.
+- Discovery: the public prototype contains six service concepts but no standalone public service transaction routes. Public route authority remains `/` plus existing in-page destinations; authenticated municipal application routes remain excluded from public discovery.
+- Content model: public service entries now carry citizen-facing title/description, a functional group, neutral metadata, and optional existing-anchor action. The service type contract was updated only to represent this public presentation model.
+- IA: the six entries are grouped into `Services & office guidance` and `Public information & records`. Business/civil/office items remain informational; news/advisory/document items link only to existing homepage sections.
+- Task language: generic module-like labels and status-colored phrases are replaced with citizen language such as `Business permits & licensing`, `News & public information`, and `Public documents & transparency`.
+- Honesty boundary: no online application, citizen transaction, department ownership, public download, official alert feed, availability state, or responsible-office claim is invented.
+- Visual composition: the previous icon-led three-column service grid is replaced with structured civic directory rows, restrained group headings, neutral metadata, descriptive text actions, and a one-column responsive recomposition. Decorative per-entry icons and status-color emphasis are removed.
+- Accessibility source provisions: semantic group headings and lists, descriptive links, focus-visible action outline, logical reading order, and mobile action targets of at least 44px.
+- Project-local UI record: `Jayr-Aj-docs.md` is updated in this same candidate.
+- Verification before publication: source inspection and route/destination inspection **PASS**. Runtime rendering, build/typecheck execution, desktop/mobile browser inspection, and keyboard walkthrough are **NOT OBSERVED** in this environment and must not be promoted to PASS.
+- Schema/migration/dependency impact: **NONE**. Internal application behavior impact: **NONE**.
+
+## 2026-09-19 — Jr/AJ public UI UI-S5 official-information editorial structure
+
+### `ui: refine public information editorial structure`
+
+- Working branch: `UI/Jr-and-Aj`; exact parent SHA: `6bc2ee882d0c96da45ba2df5aa36b89946a464d3`.
+- Scope: **public information presentation/content-honesty only** under KIKIAM UI HARNESS V1. No authenticated route, backend domain behavior, database logic, authentication behavior, or internal employee functionality changes.
+- Content inventory: news exposes `type/title/summary/date`; transparency exposes `label/value/note`; projects expose `title/summary/tag`. No individual public record route, public download URL, archive route, document ID, responsible office, project progress, project budget, or verified public status is present.
+- Date decision: current news dates contained only the literal placeholder `Prototype`. Those placeholder date values are cleared; the UI renders a date only when a real source value exists.
+- Editorial IA: three equal icon-led update columns are replaced by one `News, notices & public records` publishing region. News is the primary editorial stream; Public Documents and Projects & Programs share a supporting record column while remaining semantically distinct.
+- Documents: placeholder labels now explicitly identify document/report/notice previews, and the section states that no downloadable files are published. No fake download action or file metadata is added.
+- Projects: placeholder titles/tags now explicitly identify preview content. No progress, owner, timeline, budget, or status is invented.
+- Metadata: content types remain neutral metadata. The former green metadata/status-like treatment and decorative section icons are removed from this region.
+- Accessibility source provisions: H2/H3/H4 hierarchy, semantic ordered news list, semantic document/project lists, logical reading order, and natural reflow without table dependence.
+- Responsive source design: primary/supporting two-column editorial structure on large screens; supporting records become two columns below 1024px; all official-information content recomposes to one column on mobile.
+- Project-local record: `Jayr-Aj-docs.md` is updated in this same candidate.
+- Verification before publication: source/content-model/destination inspection **PASS**. Runtime rendering, build/typecheck execution, desktop/mobile browser inspection, and keyboard/focus walkthrough remain **NOT OBSERVED** and are not promoted to PASS.
+- Schema/migration/dependency impact: **NONE**. Internal application behavior impact: **NONE**.
+
+## 2026-09-19 — Jr/AJ public UI UI-S6 Talibon identity and typography
+
+### `ui: refine talibon identity and typography`
+
+- Working branch: `UI/Jr-and-Aj`; exact parent SHA: `cde788b7b45f684b4756d62de6f7a2ed525c47fe`.
+- Scope: **public typography, identity hierarchy, restrained copy, and color-discipline refinement only** under KIKIAM UI HARNESS V1. UI-S1 through UI-S5 information architecture remains intact. No backend, authentication, database, API, internal employee behavior, or UI-S7 composition work is introduced.
+- Typeface audit: global CSS declares `Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`; repository inspection found no bundled Inter asset or external font load. UI-S6 therefore retains the existing stack and adds no font package/request.
+- Type-system correction: public synthetic weights `550/620/650/680/720/740/750/760` are normalized to a smaller 500/600/700/800 family. A public-only type scale now defines display, section, subsection, title, body, supporting, and metadata roles.
+- Readability: meaningful 11px public supporting copy is increased where appropriate; metadata remains subordinate but readable at 12px; Quick Access supporting text rises to 13px; public navigation rises to the 14px body scale.
+- Hero: display range is reduced to 34–46px with calmer line-height and measure; mobile H1 sizes reduce to 32/30px. The identity line now states the municipality directly and drops all-caps/wide tracking.
+- Brand hierarchy: public `MunicipalBrand` subline becomes `Municipal Public Portal`; the header still pairs One Talibon with `Municipality of Talibon, Bohol`; the footer uses the same public-surface label.
+- Talibon asset boundary: current seal/coastal/landmark files are explicitly placeholder assets. UI-S6 does not relabel them as approved official marks or fabricate a seal, landmark, slogan, tourism identity, or historical symbol.
+- Color discipline: existing municipal palette is retained. Decorative green is removed from Quick Access and About locality labels; blue/neutral text and gold-on-navy civic accent take those roles. The established green `ONE` wordmark treatment is preserved.
+- Copy: hero no longer calls placeholder notices `official`; About Talibon no longer mixes employee access into public civic copy; public contact description is limited to the fact that contact details await municipal confirmation.
+- Accessibility source intent: larger supporting copy, less uppercase/tracking dependence, standard weight fallbacks, preserved heading semantics/focus behavior, and hierarchy not dependent on color alone.
+- Documentation: `Jayr-Aj-docs.md` is updated in this same candidate.
+- Verification before publication: source, typography/style, and identity-asset inspection **PASS**. Runtime rendering, build/typecheck execution, desktop/mobile visual inspection, 200% zoom, keyboard/focus, and light/dark runtime inspection are **NOT OBSERVED** and must not be promoted to PASS.
+- Schema/migration/dependency impact: **NONE**. Internal application behavior impact: **NONE**.
+
+## 2026-09-19 — Jr/AJ public UI UI-S6 responsive typography source correction
+
+### `ui: align responsive public typography`
+
+- Exact parent SHA: `6b3d6d2fedeaa90c13979c9671e957cdc5e0b9c4` on `UI/Jr-and-Aj`.
+- Post-implementation source audit found two stale breakpoint overrides from the pre-UI-S6 type system: a <=1023px hero rule still forced `40px`, and the mobile municipal identity line still forced `11px`. The mobile hero image caption also remained at 11px.
+- Correction: the <=1023px hero now uses the shared responsive display token; the mobile municipality line uses the shared 13px supporting role; the mobile hero caption uses the shared 12px metadata role.
+- Scope remains public typography only. No information architecture, backend behavior, route, dependency, color palette, or UI-S7 composition change.
+- Source verification after preparation: stale 40px hero override removed; stale 11px municipality/caption overrides removed; no nonstandard public weights `550/620/650/680/720/740/750/760` remain.
+- Runtime/build/browser evidence remains **NOT OBSERVED**.
+
+## 2026-09-19 — Jr/AJ public UI UI-S6 public brand metadata floor
+
+### `ui: raise public brand subline readability`
+
+- Exact parent SHA: `02e127fe8aaa6badff2d47004b33e0280cf17361` on `UI/Jr-and-Aj`.
+- Final typography audit found the public `Municipal Public Portal` brand subline still fixed at 11px in `MunicipalBrand.tsx`.
+- Correction raises the public-only subline to Tailwind `text-xs` (12px), matching the public metadata floor while leaving the internal portal brand treatment unchanged.
+- No layout/IA, backend, route, dependency, or UI-S7 change.
+- Runtime/build/browser evidence remains **NOT OBSERVED**.
+## 2026-09-19 — Jr/AJ public UI UI-S7 large-screen and responsive composition
+
+### `ui: refine public responsive composition`
+
+- Working branch: `UI/Jr-and-Aj`; exact parent SHA: `af21fb07935db89f0874bcd7e270e455412aaa00`.
+- Scope: **public composition/responsive CSS only** under KIKIAM UI HARNESS V1. UI-S1 through UI-S6 IA, typography, and identity decisions are preserved.
+- Layout audit: masthead, nav, public content, footer grid, and footer bottom were all capped at 1400px while readable text measures were already independently constrained.
+- Frame decision: public composition now uses `--public-frame-max: 1680px` with `--public-page-gutter: clamp(1.375rem, 2.5vw, 2.5rem)`; mobile <=767px resolves the shared gutter to 16px.
+- Hero: base minimum height reduces 360→350px; existing two-column relationship remains until <=900px; the former 768–900 rule simplifies to <=900px.
+- Quick Access: <=1023px places the intro above three task links; <=767px stacks the links.
+- Services: two UI-S4 groups recompose to one column at <=1199px rather than <=1023px.
+- Official information: UI-S5 primary/supporting relationship recomposes at <=1199px; supporting records remain two columns until <=767px.
+- Footer: three columns become two at <=1199px with Employee Access on a full row, then one column at <=767px.
+- CSS cleanup: responsive ownership is consolidated and repeated mobile/grid/outer-padding declarations are removed where superseded by shared rules.
+- Accessibility source intent: no CSS ordering, no DOM/focus divergence, no type reduction below UI-S6 floors, and existing focus/interaction rules remain intact.
+- Documentation: `Jayr-Aj-docs.md` is updated in this same candidate.
+- Verification before publication: source layout and breakpoint/style inspection **PASS**. Runtime viewport checks, build, typecheck, zoom, keyboard, theme, and console evidence remain **NOT OBSERVED**.
+- Schema/migration/dependency/content impact: **NONE**. Backend/internal behavior impact: **NONE**. UI-S8 work: **NOT STARTED**.
+## 2026-09-19 — Jr/AJ public UI UI-S7 verification evidence
+
+### `docs: record UI-S7 verification evidence`
+
+- Executable candidate SHA: `159eb52b50dd8e7aa91b337b50b56b3b02f776c0` on `UI/Jr-and-Aj`.
+- Exact UI-S7 implementation diff: 3 files — `resources/css/public-portal.css`, `Jayr-Aj-docs.md`, and `docs/ENGINEERING_LOG.md`.
+- Post-commit source audit **PASS**: no literal 1400px shell cap remains; 1680px frame and fluid gutter tokens are present; no CSS `order` or grid-area visual reordering is introduced; responsive source authorities are internally consistent with the UI-S7 plan.
+- Branch isolation **PASS**: candidate is 18 commits ahead of `main` and 0 behind at the executable SHA.
+- CI evidence: **NOT OBSERVED**. GitHub reports no combined statuses and no workflow runs for the executable candidate.
+- Local verification attempt: repository clone was attempted in the execution environment and was **BLOCKED** because `github.com` could not be resolved. Therefore build, TypeScript typecheck, runtime/browser, viewport screenshots, console inspection, 200% zoom, keyboard, and light/dark runtime checks remain **NOT OBSERVED**.
+- Acceptance split: source-responsive candidate **PASS**; runtime-responsive acceptance **NOT OBSERVED**; overall UI-S7 acceptance **NOT OBSERVED** per harness rules.
+- UI-S8 remains **NOT STARTED**.
+## 2026-09-19 — Jr/AJ public UI UI-S8 accessibility and interaction states
+
+### `ui: strengthen public accessibility states`
+
+- Working branch: `UI/Jr-and-Aj`; exact parent SHA: `fd92e7d53bb5af5b55030152c149bdc197c43d5a`.
+- Scope: **public interaction semantics/accessibility states only** under KIKIAM UI HARNESS V1. UI-S1 through UI-S7 IA, typography, identity, and responsive composition remain intact. UI-S9 theme verification is not started.
+- Semantic audit: public navigation remains anchors; mobile disclosure remains a native button; desktop appearance remains native `details/summary`; appearance choices remain native buttons with `aria-pressed`; no clickable non-interactive public elements were discovered.
+- Skip navigation: label becomes `Skip to main content`; destination remains the unique `#public-content` main landmark with `tabIndex={-1}`.
+- Mobile navigation: accessible trigger name becomes `Open public navigation` / `Close public navigation`; existing `aria-expanded` and `aria-controls` remain accurate; an expanded visual state is added; no modal semantics or focus trap is introduced.
+- Escape behavior: the existing mobile-nav Escape behavior is preserved and desktop appearance disclosure can now also close on Escape with focus returned to its summary.
+- Theme control: group label becomes `Appearance preference`; `aria-pressed` remains the selected-state mechanism; public-surface choice buttons rise to a 44px minimum target. Full theme visual verification remains UI-S9.
+- Focus system: coherent 3px focus-visible outlines are added/refined across skip, brand, navigation, employee access, hero actions, Quick Access, service actions, About/contact links, and footer links. Gold is used on dark/navy surfaces and municipal blue on light surfaces.
+- Touch targets: appearance trigger 42→44px; public appearance buttons 44px minimum; mobile About/contact links 44px; mobile footer public links 38→44px. Existing mobile menu/hero/Quick Access/service/footer-login controls already meet the target.
+- Motion: current UI uses only short color transitions; targeted reduced-motion CSS collapses those durations without adding new animation.
+- NOT APPLICABLE: current-section tracking, disabled controls, loading/busy states, public form states, and editorial record actions without real destinations.
+- Documentation: `Jayr-Aj-docs.md` is updated in this same candidate.
+- Pre-publication source verification: interactive inventory, semantics, ARIA/tabIndex, skip target, DOM order, focus CSS, touch targets, mobile-nav semantics, theme-control semantics, interaction states, and source contrast review **PASS**. Measured contrast/runtime keyboard/zoom/screen-reader/browser evidence remain **NOT OBSERVED**.
+- Backend/auth/database/API/routing/content IA impact: **NONE**.
+## 2026-09-19 — Jr/AJ public UI UI-S8 verification evidence
+
+### `docs: record UI-S8 verification evidence`
+
+- Executable candidate SHA: `c1aa7b8a1855ba93d1ba683233e35cdb810fafe4` on `UI/Jr-and-Aj`.
+- Exact UI-S8 implementation diff: 6 files — `resources/js/pages/Public/Home.tsx`, `resources/js/components/public/PublicHeader.tsx`, `resources/js/components/AppearanceControl.tsx`, `resources/css/public-portal.css`, `Jayr-Aj-docs.md`, and `docs/ENGINEERING_LOG.md`.
+- Post-commit accessibility source audit **PASS**: positive tabindex 0; one intentional main-target `tabIndex={-1}`; no clickable div/span controls; mobile `aria-expanded`/`aria-controls` present; appearance uses `aria-pressed`; no fabricated `aria-current`; reduced-motion rule present; explicit focus-visible system present; public/mobile target-size corrections present.
+- AppearanceControl's Tailwind `focus-visible:outline-none` remains paired with `focus-visible:ring-2` in the same component and is therefore not an un-replaced outline removal.
+- Branch isolation **PASS**: candidate is 20 commits ahead of `main` and 0 behind at the executable SHA.
+- CI evidence: **NOT OBSERVED**. GitHub reports no combined statuses and no workflow runs for the executable candidate.
+- Repository-defined scripts confirmed in `package.json`: `npm run types:check` and `npm run build`.
+- Local checkout/build attempt: **BLOCKED** because the execution environment could not resolve `github.com`; npm install, typecheck, build, runtime/browser, Tab/Shift+Tab, skip-link activation, mobile-menu keyboard behavior, appearance keyboard behavior, 200% zoom, screen-reader smoke test, measured contrast, and console inspection are therefore **NOT OBSERVED**.
+- Acceptance split: source accessibility candidate **PASS**; runtime accessibility acceptance **NOT OBSERVED**; overall UI-S8 **NOT OBSERVED** under harness rules.
+- NOT APPLICABLE: disabled public controls, loading/busy states, public form states, current-section tracking, and editorial actions without real destinations.
+- UI-S9 remains **NOT STARTED**.
+## 2026-09-19 — Jr/AJ public UI UI-S9 light/dark theme verification
+
+### `ui: verify public light and dark themes`
+
+- Working branch: `UI/Jr-and-Aj`; exact parent SHA: `bfd438ac11e0fa5885b0017302c1c77a3a87b895`.
+- Scope: **public theme architecture and theme-sensitive color/state refinement only** under KIKIAM UI HARNESS V1. UI-S1 through UI-S8 structure, IA, typography, responsive composition, and accessibility semantics remain intact. UI-S10 is not started.
+- Theme architecture audit: preference values are `system/light/dark`; persistence uses `localStorage` key `talibon.appearance`; System resolves through `prefers-color-scheme`; System subscribes to OS changes; `.dark`, `data-appearance`, and root `colorScheme` are applied by the existing TypeScript theme module.
+- Initial-render correction: Blade now performs a minimal pre-module bootstrap using the same storage key/preference validation/System media query so resolved appearance is present before Vite/React initialization. Runtime theme module remains authoritative after startup.
+- Public theme roles: page background, public surfaces, text, muted text, dividers, links, hover/active, header, Employee Login action, and focus are expressed through public-only semantic variables. This avoids changing shared internal municipal tokens.
+- Light reference: existing civic light values are preserved as the primary visual reference; no new card/tint/gradient system is added.
+- Dark refinement: public dark canvas/surfaces are softened and differentiated from the internal console while retaining One Talibon identity. Hero/footer remain fixed institutional dark regions rather than becoming theme-specific cards.
+- Interaction theme fix: dark general public focus resolves to municipal gold; Quick Access active state becomes theme-aware; menu/nav hover/expanded states use shared public roles.
+- Appearance control: public styling moves from hardcoded Tailwind slate light/dark classes to semantic public classes; selected state remains `aria-pressed` and gains background+border+inset underline. Stale CSS targeting old `aria-label="Appearance"` is removed after UI-S8 renamed the group to `Appearance preference`.
+- Persistence source **PASS**; System source behavior **PASS**; runtime switching/persistence/System response/flash remain **NOT OBSERVED**.
+- Placeholder assets unchanged; reduced-motion rule preserved and extended to the public appearance-choice transition.
+- Documentation: `Jayr-Aj-docs.md` updated in this candidate.
+- Pre-publication source verification: architecture, appearance state, System/persistence logic, hardcoded-color review, token roles, light/dark hierarchy, interaction/focus states, dividers/surfaces, placeholders, responsive theme behavior, and reduced-motion **PASS** by source review. Runtime visual evidence and measured runtime contrast remain **NOT OBSERVED**.
+- Backend/auth/database/API/routing/public content impact: **NONE**.
+## 2026-09-19 — Jr/AJ public UI UI-S9 verification evidence
+
+### `docs: record UI-S9 verification evidence`
+
+- Executable candidate SHA: `62ccd1b4b649b5d4fa2243c916889c1507210934` on `UI/Jr-and-Aj`.
+- Exact UI-S9 implementation diff: 7 files — `resources/views/app.blade.php`, `resources/js/pages/Public/Home.tsx`, `resources/js/components/public/PublicHeader.tsx`, `resources/js/components/AppearanceControl.tsx`, `resources/css/public-portal.css`, `Jayr-Aj-docs.md`, and `docs/ENGINEERING_LOG.md`.
+- Theme source audit **PASS**: System resolution/persistence/event behavior remain intact; pre-module bootstrap now mirrors the stored/System resolution before Vite; public-only semantic theme roles isolate public surface refinement from shared internal municipal tokens.
+- Appearance source audit **PASS**: stale old aria-label selector removed; public AppearanceControl no longer depends on Tailwind slate dark variants; selected state still uses `aria-pressed` and adds non-color-only border/underline treatment.
+- Hardcoded-color/source role audit **PASS**: theme-sensitive public surface/text/divider/link/interaction values are role-based; fixed hero/footer/brand colors remain intentionally institutional.
+- Interaction theme audit **PASS**: dark public focus token is gold; Quick Access active state is theme-aware; mobile-nav/nav hover states use roles; reduced-motion coverage remains present.
+- Static source contrast calculations observed for representative pairs: light primary/muted/link on page 14.65:1 / 5.07:1 / 5.37:1; dark primary/muted/link on page 15.77:1 / 9.14:1 / 9.69:1; dark surface primary/muted/link 13.79:1 / 7.99:1 / 8.47:1; gold focus 10.91:1 on dark page and 9.54:1 on dark surface. These are source color calculations, not runtime visual acceptance.
+- Branch isolation **PASS**: executable candidate is 22 commits ahead of `main` and 0 behind.
+- CI evidence: **NOT OBSERVED** — no combined statuses or workflow runs attached to the executable candidate.
+- Build/typecheck attempt: **BLOCKED** because `git clone` could not resolve `github.com`; repository-defined `npm run types:check` and `npm run build` were therefore not executed.
+- Runtime theme switching, System preference response, reload persistence, first-paint flash, desktop/mobile light/dark/System visuals, keyboard theme selection, 200% zoom, measured runtime contrast, and console inspection remain **NOT OBSERVED**.
+- Acceptance split: source theme candidate **PASS**; runtime theme acceptance **NOT OBSERVED**; overall UI-S9 **NOT OBSERVED** under harness rules.
+- UI-S10 remains **NOT STARTED**.
+## 2026-09-19 — Jr/AJ public UI UI-S10 final integrated source QA
+
+### `ui: complete final public portal qa`
+
+- Working branch: `UI/Jr-and-Aj`; exact parent SHA: `7ea299876a3748f08a6b6e647b0ccc809dd502fb`.
+- UI-S10 is the final bounded UI slice. No UI-S11 is created.
+- Runtime-first attempt: environment provides Git 2.47.3, Node 22.16.0, npm 10.9.2, and PHP 8.4.23; Composer is unavailable. Actual branch clone failed with `Could not resolve host: github.com`, so build/typecheck/Laravel/browser runtime remain blocked or not observed.
+- Per final-slice rules, no speculative redesign followed the runtime block. Maximum integrated source audit was performed instead.
+- MEDIUM content-honesty defect: Quick Access described public documents as `Transparency and published information` while the final document section contains preview-only/non-official content. Fixed to `Transparency and document previews`.
+- LOW/COSMETIC integration residue: repository search found no usage for `.public-nav-link-active`, `.public-section-link`, `.public-panel`, `.public-panel-heading`, or `.public-panel-link`; the stylesheet itself identified the panel selectors as legacy. Removed those dead rules plus the stale mobile active-nav override.
+- Route/destination source audit **PASS** for `#home`, `#services`, `#news`, `#transparency`, `#projects`, `#about`, `#contact`, guest `/login`, and authenticated `/dashboard`; no internal municipal workflow route is exposed as a public shortcut.
+- Anti-AI-slop source audit **PASS**: no dashboard-card proliferation, fake analytics, gradients, glassmorphism, neon dark styling, invented record metadata, or extra final-slice decoration; service directory/editorial records/placeholder honesty remain intact.
+- UI-S1 through UI-S9 architecture is preserved; UI-S10 changes only one supporting-copy phrase and proven-dead CSS.
+- Documentation: `Jayr-Aj-docs.md` updated in the same candidate.
+- Pre-publication verification: integrated source hierarchy, content honesty, route source audit, anti-AI-slop, dead-selector cleanup, and prior-slice preservation **PASS**. Build/typecheck **BLOCKED**; runtime/console/viewports/themes/keyboard/zoom/screen-reader/measured contrast **NOT OBSERVED**.
+- Backend/domain/database/auth/API/routing/product-functionality impact: **NONE**.
+## 2026-09-19 — Jr/AJ public UI UI-S10 orphaned selector follow-up
+
+### `ui: remove final orphaned public selector`
+
+- Exact parent SHA: `0a4b2f6e21706291866424a740a83ed88e26985d` on `UI/Jr-and-Aj`.
+- Post-commit source audit found one remaining mobile `.public-section-link { min-height: 34px; }` rule after the unused base selector was removed.
+- Repository search confirms `.public-section-link` has no current component usage.
+- The orphaned mobile rule is removed. No active homepage selector, layout, theme, interaction, or content behavior changes.
+- Runtime/build/typecheck remain blocked/not observed because repository checkout still cannot resolve `github.com`.
+## 2026-09-19 — Jr/AJ One Talibon final UI acceptance evidence
+
+### `docs: record final UI acceptance evidence`
+
+- Final executable UI-S10 SHA: `999a080408ab3d2f9b6fc8138a3bff3d241463ec` on `UI/Jr-and-Aj`.
+- UI-S10 starting SHA: `7ea299876a3748f08a6b6e647b0ccc809dd502fb`.
+- Final executable branch position: 25 commits ahead of `main`, 0 behind.
+- Post-fix source audit **PASS**: Quick Access now says `Transparency and document previews`; old published-information phrase absent; `.public-nav-link-active`, `.public-section-link`, and legacy `.public-panel*` selectors absent; no gradients/backdrop-filter; no 50px+ fixed public font-size residue; public semantic theme roles remain present.
+- Defect disposition: BLOCKER 0; HIGH 0; MEDIUM 1 fixed (prototype publication wording); LOW/COSMETIC 1 integration-residue group fixed (dead/orphaned public CSS). Runtime-only defects remain unknown.
+- Build/typecheck re-attempt after fixes: **BLOCKED** because the environment still cannot resolve `github.com`; Composer is also unavailable. This is not classified as an application-code failure.
+- CI evidence: **NOT OBSERVED** — no combined status and no workflow run on the final executable SHA.
+- Runtime, console, all viewport visuals, Light/Dark/System visuals, theme switching, OS System response, reload persistence, first-paint flash, keyboard walkthrough, skip link, mobile menu, appearance control, 200% zoom, screen-reader smoke test, and measured rendered contrast remain **NOT OBSERVED**.
+- Final classification: **SOURCE CANDIDATE — RUNTIME NOT OBSERVED**.
+- Final recommendation: **RUNTIME VERIFICATION REQUIRED**. Do not label merge-ready until the final executable candidate is built and observed.
+- Roadmap closure: 4 phases / 10 slices complete at source-candidate level; UI-S10 is final; no UI-S11.
+
+## 2026-09-19 — One Talibon final runtime acceptance gate
+
+### `docs: record runtime acceptance gate`
+
+- Required executable under test: `999a080408ab3d2f9b6fc8138a3bff3d241463ec` on `UI/Jr-and-Aj`.
+- Evidence branch HEAD before this record: `1edd64816a42b6fc11018b72c8eaf330036b9908`.
+- Runtime environment observed: Linux 6.18.44 x86_64; Git 2.47.3; Node 22.16.0; npm 10.9.2; PHP 8.4.23; Chromium 144.0.7559.96; Composer unavailable.
+- Exact branch clone attempted for the required candidate. Checkout was **BLOCKED** with `Could not resolve host: github.com`.
+- Because the executable tree could not be materialized, repository-defined `npm run types:check`, `npm run build`, Laravel boot, browser rendering, console inspection, viewport/theme/keyboard/zoom/route runtime checks could not be executed.
+- GitHub evidence on executable SHA: no combined commit statuses and no workflow runs observed.
+- No runtime defect was observed because runtime was unavailable; runtime-only defects remain unknown.
+- No source correction was made during this gate.
+- Final acceptance: **RUNTIME VERIFICATION REQUIRED**.
+- Final merge recommendation: **DO NOT MERGE YET**.
+- Roadmap remains 4 phases / 10 UI slices complete; this is not UI-S11.
+
+## 2026-09-19 — Employee UI Phase 1 / EUI-S1 work context
+
+### `ui: refine employee dashboard work context`
+
+- Branch: `masterlogin-UI-by-Jr-and-Aj`; parent SHA: `109fa0424a56872303ab3eeb4f659b2fc7651b69`.
+- Scope: Employee Portal dashboard composition only. Public Portal UI branch, sidebar, top utility bar, auth, permissions, routes, APIs, and data behavior remain untouched.
+- Removed the redundant `municipal-panel` page-heading container from `DashboardHeader`.
+- Added the existing role-specific `dashboardRoleBrief` as real work-context copy.
+- Preserved employee/role/department/scope identity and made the dashboard date explicitly Philippine-time.
+- Added semantic description-list structure for employee/department context.
+- Source verification PASS; build/typecheck/runtime NOT OBSERVED at this slice.
+
+## 2026-09-19 — Employee UI Phase 1 / EUI-S2 immediate attention
+
+### `ui: restructure employee attention summary`
+
+- Parent SHA: `16b4dad298203790b7b2a5cf18c3800473de07ad`.
+- Replaced the equal-weight attention panel with a divider-based operational strip.
+- Reordered categories by actionable urgency: overdue, due today, work requiring attention, correspondence, project follow-up.
+- Positive values retain existing semantically supported rose/amber/blue text tones; zero values are visually quieter rather than hidden.
+- Added only a derived count of active categories; no new data or fake KPI was introduced.
+- Sidebar/top utility bar/backend/auth/routes remain untouched.
+- Source review PASS; build/typecheck/runtime NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 1 / EUI-S3 attention empty states
+
+### `ui: improve employee work empty states`
+
+- Parent SHA: `865a685dfdd57a3d9259b3e9e0acc8f8a8fbdcc9`.
+- Root cause was the shared 22rem `BoundedOperationalPanel` height applying even to zero-record queues.
+- Bounded height and scrolling are now explicit opt-in behaviors.
+- AttentionQueue opts into bounded scrolling only for more than five real records; empty/small queues use natural flow.
+- Empty message compressed to operational copy without invented action controls.
+- Shared component API change is UI-only and preserves existing semantics.
+- Source review PASS; build/typecheck/runtime NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 1 / EUI-S4 schedule composition
+
+### `ui: refine schedule and deadlines composition`
+
+- Parent SHA: `ad3bc8f7b0417c78139f555cfa20374d53a0a548`.
+- Schedule no longer uses the shared bounded-scroll mode after EUI-S3 made that behavior opt-in.
+- Added a four-item homepage preview for meetings and deadlines; full schedule remains available through existing `/calendar`.
+- Removed sticky internal headers and changed populated desktop relationship to 1.15fr/.85fr.
+- One-sided/empty data stacks naturally and uses compact empty copy.
+- No meeting/deadline content, Calendar route, or workflow behavior changed.
+- Source responsive review PASS; build/typecheck/runtime NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 1 / EUI-S5 dashboard workspace composition
+
+### `ui: restructure employee dashboard workspace`
+
+- Parent SHA: `70e8b7f9b23e5c91a4d839474a6223435d868453`.
+- Dashboard shell widens 1480→1560px to use employee desktop width more intentionally.
+- Priority work and Schedule become the first main two-column operational relationship at 1.2fr/.8fr.
+- Personal metric group is separated as `My Work` and paired with existing Workspace Links at 1.25fr/.75fr.
+- Workspace Links is removed from the priority-work column, eliminating the previous stacked-left/blank-right relationship.
+- Office/executive/system context remains below under a clearer operating-context divider; ProjectPortfolio remains the active municipal-workstream record.
+- Conditional context grid avoids rendering an empty structural grid for roles without broader context panels.
+- Reference/history details remains unchanged.
+- No sidebar, top-bar, backend, route, auth, permission, data, or Phase 2 work introduced.
+- Source composition review PASS; runtime visual acceptance NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Session 1 / Phase 1 evidence
+
+### `docs: record employee ui phase 1 evidence`
+
+- Repository: `Kirch-Nairu/Talibon-Sales-Prototype`; branch: `masterlogin-UI-by-Jr-and-Aj`.
+- Phase 1 start: `109fa0424a56872303ab3eeb4f659b2fc7651b69`.
+- Executable Phase 1 candidate: `e70ca258cc123e5c05e2ee4675e661ae640f0bc6`.
+- EUI-S1 `16b4dad298203790b7b2a5cf18c3800473de07ad` — employee work-context header.
+- EUI-S2 `865a685dfdd57a3d9259b3e9e0acc8f8a8fbdcc9` — priority-aware Immediate Attention.
+- EUI-S3 `ad3bc8f7b0417c78139f555cfa20374d53a0a548` — adaptive attention queue / empty state.
+- EUI-S4 `70e8b7f9b23e5c91a4d839474a6223435d868453` — natural-flow Schedule/Deadlines preview.
+- EUI-S5 `e70ca258cc123e5c05e2ee4675e661ae640f0bc6` — primary work/schedule + My Work/workspace composition.
+- Exact Phase 1 diff: 5 commits, 8 files; only employee dashboard UI plus the two documentation files.
+- Protected boundaries: no AppLayout/top-bar/sidebar/public-portal/backend/auth/route/database changes.
+- Responsive source review PASS; accessibility regression source review PASS; anti-AI-slop source review PASS.
+- Local verification environment: Git 2.47.3, Node 22.16.0, npm 10.9.2, PHP 8.4.23; Composer unavailable.
+- Exact branch clone attempt BLOCKED with `Could not resolve host: github.com`; therefore `npm run types:check`, `npm run build`, Laravel runtime, and browser visual verification are not observed.
+- GitHub CI evidence: no combined status/workflow run attached to executable Phase 1 SHA.
+- Phase 1 classification: **SOURCE CANDIDATE — RUNTIME NOT OBSERVED**.
+- Phase 2 EUI-S6 through EUI-S10: **NOT STARTED**.
+
+## 2026-09-19 — Employee UI Phase 2 / EUI-S6 sidebar hierarchy
+
+### `ui: refine employee sidebar hierarchy`
+
+- Branch: `masterlogin-UI-by-Jr-and-Aj`; parent SHA: `fc387e60eb8bc74dfff0ace1a333fe56205d5a9c`.
+- Expanded sidebar width changes 220→232px to support municipal labels without becoming oversized.
+- Home group heading is removed as redundant; Home link remains visible.
+- Home/Work are treated as primary navigation; organization/planning/administration/systems receive restrained section separators.
+- Group-label readability increases from 9px / heavy tracking to 10px / reduced tracking.
+- Active navigation changes from full blue pill treatment to subtle background + left structural indicator while retaining `aria-current="page"`.
+- No destinations, permissions, routes, Phase 1 dashboard components, public UI, or backend behavior changed.
+- Source review PASS; runtime NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 2 / EUI-S7 navigation groups
+
+### `ui: organize employee navigation groups`
+
+- Parent SHA: `d3d2913baeed6977d2f89b3bc69f2b0a8e1d3342`.
+- Home and Work remain permanently expanded as daily operations.
+- Municipal Organization, Planning, Administration, and Municipal Systems become controlled disclosures only in expanded sidebar mode.
+- Disclosures use native buttons with `aria-expanded` / `aria-controls`; active groups auto-expand.
+- Compact sidebar keeps all icon destinations directly visible.
+- No destinations, permissions, labels, route visibility rules, backend, or public UI changed.
+- Source semantics PASS; runtime disclosure behavior NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 2 / EUI-S8 sidebar account context
+
+### `ui: simplify employee sidebar account context`
+
+- Parent SHA: `69c9d0240e1f4b158ca5e2ef9d77f5d885f1100a`.
+- Expanded SidebarIdentity now pairs a compact initials marker with employee name and role/office context.
+- Existing `AuthUser.role` is formatted for display; no new identity or authorization source is introduced.
+- Footer utility row becomes a quieter `Account` line without the previous secondary border.
+- Sign-out, appearance, showcase session controls, and compact sidebar behavior are preserved.
+- No authentication/session behavior changed.
+- Source review PASS; runtime interaction NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 2 / EUI-S9 utility bar
+
+### `ui: refine employee utility bar`
+
+- Parent SHA: `2d034221aada5e32bbcb2b038c33dab99cf5b221`.
+- Desktop top-bar identity now prioritizes current page title; One Talibon header branding remains mobile-only because desktop sidebar already carries the brand.
+- Search/Utilities/Notifications/Workspace Launcher are grouped as one utility region; account identity is a separate lightweight region.
+- Search text and account text defer to 2XL to reduce laptop crowding.
+- Workspace Launcher standardizes to 40px and gains explicit focus treatment; account avatar reduces to 36px.
+- Search, notifications, utilities, launcher, account, and auth functionality remain unchanged.
+- Phase 1 dashboard and Public Portal remain untouched.
+- Source review PASS; runtime NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 2 / EUI-S10 workspace shortcuts
+
+### `ui: improve employee workspace shortcuts`
+
+- Parent SHA: `c4290364190eb8507631effc8806fe434252d9e9`.
+- Role-specific homepage links are retained but reframed as `Workspace shortcuts`.
+- Card/grid treatment is replaced by a flat divided list with always-visible descriptions.
+- Existing administrator safe-link substitution, audit/security filtering, URL deduplication, labels, descriptions, and routes are preserved.
+- Sidebar remains the complete navigation system; shortcut duplication is intentionally limited to frequent role-specific work.
+- Phase 1 My Work + Workspace Links placement is preserved.
+- Source review PASS; runtime NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 2 source-review correction
+
+### `ui: align employee utility targets`
+
+- Parent SHA: `27448dbc6f8561377e3f97292053d0fd4f16fbb7`.
+- Corrected Phase 2 source QA findings before evidence closure.
+- Mobile navigation trigger, Search, Municipal Utilities, Notifications, and Workspace Launcher now use 44px hit areas.
+- Removed the EUI-S10 shortcut arrow hover translation so Phase 2 does not introduce motion-based polish.
+- Documentation wording updated to match source truth.
+- No navigation behavior, route, auth, data, Phase 1 dashboard composition, or public UI changed.
+
+## 2026-09-19 — Employee UI Session 2 / Phase 2 evidence
+
+### `docs: record employee ui phase 2 evidence`
+
+- Repository: `Kirch-Nairu/Talibon-Sales-Prototype`; branch: `masterlogin-UI-by-Jr-and-Aj`.
+- Phase 2 start: `fc387e60eb8bc74dfff0ace1a333fe56205d5a9c`.
+- Executable Phase 2 candidate: `a6a1aa41a46deeea496f1dae663ae7c6a99f8a34`.
+- EUI-S6 `d3d2913baeed6977d2f89b3bc69f2b0a8e1d3342` — sidebar hierarchy / active state / 232px width.
+- EUI-S7 `69c9d0240e1f4b158ca5e2ef9d77f5d885f1100a` — lower-priority navigation disclosure.
+- EUI-S8 `2d034221aada5e32bbcb2b038c33dab99cf5b221` — compact employee account/work context.
+- EUI-S9 `c4290364190eb8507631effc8806fe434252d9e9` — quieter utility/header composition.
+- EUI-S10 `27448dbc6f8561377e3f97292053d0fd4f16fbb7` — flat role-specific workspace shortcuts.
+- Source QA correction `a6a1aa41a46deeea496f1dae663ae7c6a99f8a34` — restore/standardize 44px utility targets and remove shortcut arrow motion.
+- Exact Phase 2 diff: 6 commits before evidence, 12 files, only shell/workspace shortcut UI plus documentation.
+- Phase 1 dashboard composition files unchanged; Dashboard.tsx unchanged. Public Portal/backend/routes/auth/database unchanged by Phase 2 diff.
+- Responsive source review PASS; accessibility regression source review PASS; anti-AI-slop source review PASS.
+- No positive tabindex or clickable div/span controls introduced. Group disclosures use native button + aria-expanded/aria-controls; active navigation retains aria-current.
+- Local verification environment: Git 2.47.3, Node 22.16.0, npm 10.9.2, PHP 8.4.23; Composer unavailable.
+- Branch clone BLOCKED with `Could not resolve host: github.com`; therefore npm typecheck/build and runtime/browser verification are not observed.
+- GitHub CI evidence: no status/workflow run attached to executable candidate.
+- Phase 2 classification: **SOURCE CANDIDATE — RUNTIME NOT OBSERVED**.
+- Phase 3 EUI-S11 through EUI-S16: **NOT STARTED**.
+
+## 2026-09-19 — Employee UI Phase 3 / EUI-S11 typography system
+
+### `ui: standardize employee portal typography`
+
+- Implementation SHA: `fb14544531b11002fd494872cd194ccf5160f892`.
+- Added employee-only typography roles under `#portal-content`: page title, section title, operational title, body, supporting, metadata, functional label, and table heading.
+- Existing Inter/system font stack remains authoritative.
+- Applied the roles to the shared work-context header, section header, attention queue, schedule/deadlines, and workspace shortcuts.
+- Public Portal typography and Phase 1/2 structural decisions remain untouched.
+- Source typography audit PASS; runtime NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 3 / EUI-S12 spacing density
+
+### `ui: align employee portal spacing density`
+
+- Implementation SHA: `b5563ea6d952151e4c2ce72c76c580d12aef7f0d`.
+- Added a small employee-only spacing vocabulary: 14px independent section rhythm, 16px horizontal panel/row padding, 10px operational row/header vertical padding, 8px subsection bars, 12px compact empty states.
+- Applied to dashboard composition, shared dashboard section headers, attention queue, schedule/deadlines, and workspace shortcuts.
+- No fixed heights, Phase 1 structural redesign, Phase 2 navigation restructure, Public Portal change, or backend change introduced.
+- Source density review PASS; runtime NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 3 / EUI-S13 operational records
+
+### `ui: refine employee operational records`
+
+- Executable EUI-S13 SHA: `36fad27e55cc940e9b7c3f4ccef305bc25d6bc69`.
+- WorkItemList removes four badge-like state chips and uses one inline state hierarchy for priority/status/due/action.
+- StaffWorkloadTable is now a real semantic table with thead/tbody, scoped column headers, and employee row headers.
+- MeetingRegister changes from card grid to divided operational list without changing meeting data.
+- Recent correspondence, recent documents, and project rows now reuse the employee record title/metadata/spacing vocabulary.
+- No routes, record logic, business state, backend, Public Portal, or Phase 1/2 structural decisions changed.
+- Source record-structure review PASS; runtime NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 3 / EUI-S14 urgency semantics
+
+### `ui: standardize employee urgency semantics`
+
+- Executable EUI-S14 SHA: `59a6128298340b8429d640136ecb693c38be351b`.
+- Added employee-only neutral/info/success/warning/danger tone roles under `#portal-content`.
+- Metrics, Immediate Attention, Schedule/Deadlines, WorkItemList, ProjectPortfolio, MeetingRegister, and StaffWorkloadTable now use the same semantic vocabulary.
+- Default metrics and zero attention values stay neutral; urgency color is reserved for real state.
+- No business-state mapping, record data, routes, backend, Phase 1 composition, Phase 2 navigation, or Public Portal styling changed.
+- Source color-semantic review PASS; runtime contrast/theme review NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 3 / EUI-S15 interaction states
+
+### `ui: unify employee interaction states`
+
+- Executable EUI-S15 SHA: `9ff767895fe9be5a62447fa8391f9fe34de701e4`.
+- Employee-content transition vocabulary no longer includes transform; reduced-motion preference collapses the remaining duration.
+- Shared interactive rows use one subtle hover surface and rely on the portal-wide focus-visible outline rather than mixed local inset rings.
+- Sidebar disclosures retain native button semantics and now communicate expanded state with chevron direction plus a restrained background.
+- Existing active navigation keeps background + weight + left indicator + aria-current.
+- Empty-state role remains compact, neutral, transparent, and illustration-free.
+- No movement-heavy interaction, route, auth, backend, Public Portal, Phase 1 composition, or Phase 2 navigation hierarchy change introduced.
+- Source state review PASS; runtime interaction review NOT OBSERVED.
+
+
+## 2026-09-19 — Employee UI Phase 3 / EUI-S16 accessibility
+
+### `docs: record employee accessibility slice`
+
+- Executable EUI-S16 SHA: `c357edf4d842b8228773072e6e85481fd1e8a0d6`.
+- Semantic work-queue pagination removes fake `#` links, uses a labelled nav, real links only where destinations exist, and non-interactive disabled states.
+- Project progress exposes progressbar role, min/max/now values, and project-derived accessible naming without fabricating progress.
+- Records Search now has trigger/dialog linkage and Escape/Close focus return to the still-mounted trigger.
+- Compact account, appearance, sidebar-toggle, pagination, search-close, and memo controls are aligned around practical 44px targets where appropriate.
+- Existing live workflow alert uses `role="status"` + `aria-live="polite"`; static notification content is not globally live.
+- Pending memorandum overlay has dialog/modal/label semantics and native 44px close/dismiss controls; runtime focus trapping remains unverified.
+- Shell identity semantics use grouped accessible context instead of image semantics for initials.
+- Source audit: positive tabindex 0; clickable div 0; clickable span 0; fake role=button 0.
+- Full keyboard, screen-reader, rendered-focus, zoom, runtime modal, and measured contrast verification remain NOT OBSERVED.
+- No WCAG compliance claim is made.
+- No backend/auth/route/data/Public Portal/Phase 1/Phase 2 functional behavior changed.
+
+
+## 2026-09-19 — Employee UI Session 3 / Phase 3 closure
+
+### `docs: record employee ui phase 3 evidence`
+
+- Phase 3 start: `8d85f8fcc984b44f327670c2b9d81472c2b0803a`.
+- Pre-closure HEAD: `c357edf4d842b8228773072e6e85481fd1e8a0d6`.
+- Final executable Phase 3 candidate: `7330514c7ff44b197eae1a8aca8777e8566d3c0d`.
+- EUI-S11 through EUI-S16: source PASS; runtime NOT OBSERVED.
+- EUI-S16 documentation recorded separately in `2b68d11a83d3194b36c7ce5b92ec64b17253b567`.
+- Closure corrections:
+  - `e3bb8ba0f8153a2f9dbaa0179922d972d044d282` — align remaining typography/progress-value integration;
+  - `f021c7f4e31d41f92b0c20a6e8474ca881808853` — align navigation/disclosure/search targets around 44px;
+  - `7330514c7ff44b197eae1a8aca8777e8566d3c0d` — align sidebar functional-label and search-support typography.
+- Final source QA: typography PASS; spacing/density PASS; tables/lists/records PASS; color/urgency PASS; interaction-state PASS; accessibility PASS.
+- Accessibility counts: positive tabindex 0; clickable div controls 0; clickable span controls 0; fake role=button 0; invalid aria-controls 0; invalid aria-labelledby 0 after component-prop resolution.
+- Pagination PASS: labelled nav, real links only, disabled non-interactive states, current page communicated.
+- Progressbar PASS: role/min/max/now/name and visible value use the same clamped progress.
+- Records Search source focus-return path PASS; runtime focus behavior NOT OBSERVED.
+- Conditional live workflow status semantics PASS; static notification content remains non-live.
+- Pending memo dialog semantics PASS at source level; runtime focus trapping remains NOT OBSERVED.
+- Phase 1 dashboard composition and Phase 2 navigation/workspace architecture preserved.
+- Anti-AI-slop integration review PASS: no gradients/glassmorphism/new badge proliferation/movement-heavy effects/card-grid regression.
+- Responsive source safety PASS; Phase 4 breakpoint/runtime QA NOT STARTED.
+- Final build/typecheck attempt BLOCKED because checkout cannot resolve `github.com`; runtime NOT OBSERVED; no CI status/workflow run attached.
+- Phase 3 classification: **SOURCE CANDIDATE — RUNTIME NOT OBSERVED**.
+- Phase 4 / EUI-S17 through EUI-S22: **NOT STARTED**.
+
+
+## 2026-09-19 — Employee UI Session 4 / Phase 4 final QA
+
+### `docs: record employee ui final acceptance evidence`
+
+- Repository: `Kirch-Nairu/Talibon-Sales-Prototype`; branch: `masterlogin-UI-by-Jr-and-Aj`.
+- Phase 4 starting/evidence HEAD: `707c5f88156879bed8ea0baf413fe06bd5efa316`.
+- Exact executable candidate tested by identity/source: `7330514c7ff44b197eae1a8aca8777e8566d3c0d`.
+- Branch entering Phase 4: 61 commits ahead of main, 0 behind.
+- Environment observed: Linux 6.18.44 x86_64; Git 2.47.3; Node 22.16.0; npm 10.9.2; PHP 8.4.23; Chromium 144.0.7559.96; Composer unavailable.
+- Repository-defined commands confirmed: `npm run types:check` → `tsc --noEmit`; `npm run build` → `vite build`.
+- Real clone of `masterlogin-UI-by-Jr-and-Aj` attempted and BLOCKED with `Could not resolve host: github.com`.
+- No cached repository checkout was found in the runtime container.
+- TYPECHECK: BLOCKED; BUILD: BLOCKED; APPLICATION BOOT: BLOCKED; RUNTIME: NOT OBSERVED; CONSOLE: NOT OBSERVED.
+- EUI-S17 Large Desktop: NOT OBSERVED.
+- EUI-S18 Laptop: NOT OBSERVED.
+- EUI-S19 Tablet/Smaller Desktop: NOT OBSERVED.
+- Mobile 390/360 safety runtime: NOT OBSERVED.
+- EUI-S20 Accessibility Runtime Verification: NOT OBSERVED. Source fallback still reports positive tabindex 0, clickable div 0, clickable span 0, semantic table/pagination/progress/search/dialog/status architecture present.
+- EUI-S21 Anti-AI-Slop runtime critique: NOT OBSERVED. Source fallback remains clean: no gradients/glassmorphism/translate/scale/transition-transform; work badge cluster absent; meeting card-grid absent.
+- Original 11 UI problem areas each retain a source-level structural correction; visual confirmation remains NOT OBSERVED.
+- EUI-S22 Final Cleanup/Acceptance: BLOCKED by unavailable runtime acceptance.
+- No executable Phase 4 source correction was made because runtime evidence was unavailable and source fallback found no new evidence-backed Phase 4 defect.
+- Final executable SHA remains `7330514c7ff44b197eae1a8aca8777e8566d3c0d`.
+- Phase 4 changes documentation only.
+- Confirmed application defect count during Phase 4: 0; runtime-only defects remain unknown. DNS/repository checkout is an environment blocker, not an application defect.
+- Final classification: **SOURCE CANDIDATE — RUNTIME VERIFICATION REQUIRED**.
+- Branch status: **NOT READY FOR FINAL RUNTIME ACCEPTANCE**.
+- Merge status: **NOT AUTHORIZED**.
+- Phase 5 does not exist; EUI-S23 does not exist.

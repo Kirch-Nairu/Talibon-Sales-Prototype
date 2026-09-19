@@ -43,8 +43,10 @@ export default function Dashboard({
     const openDeadlines = dashboardOpenDeadlines(municipal.deadlines);
     const dueToday = dashboardDueToday(openDeadlines);
     const upcomingDeadlines = dashboardUpcomingDeadlines(openDeadlines);
-    const operationalMetricGroups = metricGroups.filter((group) => group.key !== 'system');
     const isAdministrator = experience.key === 'system_administration';
+    const personalMetricGroup = metricGroups.find((group) => group.key === 'personal');
+    const contextMetricGroups = metricGroups.filter((group) => group.key !== 'system' && group.key !== 'personal');
+    const hasWorkspaceLinks = isAdministrator || experience.quickActions.length > 0;
     const isMpdo = experience.key === 'department_head' && experience.department.code.toUpperCase() === 'MPDO';
     const administrativeFollowUp = systemOverview?.operations.departmentWorkload.filter((office) => office.overdue > 0 || office.unassigned > 0).length ?? 0;
     const workAttentionCount = isAdministrator ? administrativeFollowUp : attentionWork.length;
@@ -65,10 +67,10 @@ export default function Dashboard({
     const announcements = <MunicipalUpdates announcements={municipal.announcements} planningUpdates={municipal.planningUpdates} mode="announcements" />;
 
     return <AppLayout title="Home">
-        <div className="mx-auto max-w-[1480px] space-y-2.5">
+        <div className="employee-section-stack mx-auto max-w-[1560px]">
             <DashboardHeader experience={experience} />
 
-            <div className="@container min-w-0 space-y-2.5">
+            <div className="@container employee-section-stack min-w-0">
                 <AttentionSummary
                     workCount={workAttentionCount}
                     overdueWorkCount={isAdministrator
@@ -81,30 +83,35 @@ export default function Dashboard({
                     overdueLabel={isAdministrator ? 'Offices with overdue work' : undefined}
                 />
 
-                <div className="grid min-w-0 gap-2.5 @min-[1120px]:grid-cols-[minmax(0,.92fr)_minmax(0,1.08fr)] @min-[1120px]:items-start">
-                    <div className="min-w-0 space-y-2.5">
-                        {!isAdministrator ? <AttentionQueue items={attentionWork} href={attentionQueueHref} linkLabel={attentionQueueLabel} /> : null}
-                        {isAdministrator && systemOverview ? <AdministrativeAttention workload={systemOverview.operations.departmentWorkload} /> : null}
-                        <QuickActions actions={experience.quickActions} />
-                    </div>
+                <section aria-label="Priority work and schedule" className="grid min-w-0 gap-[0.875rem] @min-[1120px]:grid-cols-[minmax(0,1.2fr)_minmax(360px,.8fr)] @min-[1120px]:items-start">
+                    {!isAdministrator ? <AttentionQueue items={attentionWork} href={attentionQueueHref} linkLabel={attentionQueueLabel} /> : null}
+                    {isAdministrator && systemOverview ? <AdministrativeAttention workload={systemOverview.operations.departmentWorkload} /> : null}
                     <SchedulePanel meetings={municipal.meetings} deadlines={upcomingDeadlines} />
-                </div>
+                </section>
 
-                <section aria-labelledby="dashboard-operating-picture" className="space-y-2.5">
-                    <div className="flex flex-wrap items-center justify-between gap-2 px-1">
-                        <div className="flex items-baseline gap-2.5">
-                            <div className="text-[9px] font-bold uppercase tracking-[0.14em] text-blue-700 dark:text-blue-300">Current work context</div>
-                            <h2 id="dashboard-operating-picture" className="text-sm font-bold text-slate-950 dark:text-slate-100">Workload, office state, and delivery</h2>
+                {(personalMetricGroup || hasWorkspaceLinks) ? <section aria-label="My work and workspace" className={personalMetricGroup && hasWorkspaceLinks
+                    ? 'grid min-w-0 gap-[0.875rem] @min-[1120px]:grid-cols-[minmax(0,1.25fr)_minmax(320px,.75fr)] @min-[1120px]:items-start'
+                    : 'grid min-w-0 gap-4'
+                }>
+                    {personalMetricGroup ? <MetricGroup group={personalMetricGroup} /> : null}
+                    {hasWorkspaceLinks ? <QuickActions actions={experience.quickActions} /> : null}
+                </section> : null}
+
+                <section aria-labelledby="dashboard-operating-picture" className="space-y-[0.875rem]">
+                    <div className="flex flex-wrap items-end justify-between gap-2 border-b border-slate-200 pb-2 dark:border-slate-700">
+                        <div>
+                            <div className="employee-functional-label text-blue-700 dark:text-blue-300">Current work context</div>
+                            <h2 id="dashboard-operating-picture" className="employee-section-title mt-0.5 text-slate-950 dark:text-slate-100">Office state, municipal delivery, and active projects</h2>
                         </div>
                     </div>
 
-                    <div className="grid min-w-0 gap-2.5 @min-[1120px]:grid-cols-2">
-                        {operationalMetricGroups.map((group) => <MetricGroup key={group.key} group={group} />)}
+                    {(contextMetricGroups.length > 0 || officeOverview || executiveOverview || systemOverview || isMpdo) ? <div className="grid min-w-0 gap-[0.875rem] @min-[1120px]:grid-cols-2">
+                        {contextMetricGroups.map((group) => <MetricGroup key={group.key} group={group} />)}
                         {experience.key === 'department_head' && officeOverview ? <OfficeOverview overview={officeOverview} /> : null}
                         {experience.key === 'executive_oversight' && executiveOverview ? <ExecutiveOverview overview={executiveOverview} /> : null}
                         {isAdministrator && systemOverview ? <SystemOverview overview={systemOverview} /> : null}
                         {isMpdo ? planningUpdates : null}
-                    </div>
+                    </div> : null}
 
                     <ProjectPortfolio projects={municipal.projects} />
                 </section>
@@ -112,11 +119,11 @@ export default function Dashboard({
                 <details className="group municipal-panel overflow-hidden">
                     <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-3 py-2.5 marker:hidden sm:px-4">
                         <div>
-                            <div className="text-[9px] font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">Reference and history</div>
-                            <div className="mt-0.5 text-xs font-bold text-slate-950 dark:text-slate-100 sm:text-sm">Recent records, correspondence, announcements, and activity</div>
+                            <div className="employee-functional-label text-slate-500 dark:text-slate-400">Reference and history</div>
+                            <div className="employee-record-title mt-0.5 text-slate-950 dark:text-slate-100">Recent records, correspondence, announcements, and activity</div>
                         </div>
-                        <span className="shrink-0 text-[11px] font-semibold text-blue-700 group-open:hidden dark:text-blue-300">Show context</span>
-                        <span className="hidden shrink-0 text-[11px] font-semibold text-blue-700 group-open:inline dark:text-blue-300">Hide context</span>
+                        <span className="employee-supporting-text shrink-0 font-semibold text-blue-700 group-open:hidden dark:text-blue-300">Show context</span>
+                        <span className="employee-supporting-text hidden shrink-0 font-semibold text-blue-700 group-open:inline dark:text-blue-300">Hide context</span>
                     </summary>
                     <div className="space-y-2.5 border-t border-slate-200 p-3 dark:border-slate-700">
                         <div className="grid min-w-0 gap-2.5 @min-[1120px]:grid-cols-2">

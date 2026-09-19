@@ -29,15 +29,21 @@ export default function SidebarNavItem({
             aria-current={active ? 'page' : undefined}
             aria-label={compact ? label : undefined}
             title={compact ? label : undefined}
-            className={`relative flex items-center rounded-md text-[12px] font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-1 focus-visible:ring-offset-[#0b2852] ${
-                compact ? 'h-9 justify-center px-2' : 'min-h-11 gap-2.5 px-2.5 py-2 lg:min-h-9 lg:py-1.5'
+            className={`group relative flex items-center text-[12px] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-1 focus-visible:ring-offset-[#0b2852] ${
+                compact ? 'h-11 justify-center rounded-md px-2' : 'min-h-11 gap-2.5 rounded-sm px-2.5 py-1.5'
             } ${
                 active
-                    ? 'bg-[#1769aa] text-white shadow-sm ring-1 ring-white/10'
-                    : 'text-blue-100 hover:bg-white/10 hover:text-white'
+                    ? 'bg-white/10 font-semibold text-white'
+                    : 'font-medium text-blue-100/90 hover:bg-white/[0.07] hover:text-white'
             }`}
         >
-            <Icon size={compact ? 17 : 16} aria-hidden="true" className="shrink-0" />
+            {active && !compact ? <span className="absolute inset-y-2 left-0 w-0.5 rounded-r bg-white" aria-hidden="true" /> : null}
+            <Icon
+                size={compact ? 17 : 15}
+                strokeWidth={active ? 2 : 1.8}
+                aria-hidden="true"
+                className={`shrink-0 ${active ? 'text-white' : 'text-blue-200/85 group-hover:text-white'}`}
+            />
             {!compact && <span className="min-w-0 flex-1 truncate">{item.label}</span>}
             {trailing}
         </Link>

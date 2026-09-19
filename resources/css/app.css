@@ -75,7 +75,9 @@ button, input, select, textarea {
 /* Keep interaction movement restrained and avoid interpolating text colors through
    low-contrast transient states when appearance changes. */
 #portal-content :where(a, button, input, select, textarea) {
-    transition-property: background-color, border-color, box-shadow, opacity, transform;
+    transition-property: background-color, border-color, box-shadow, opacity;
+    transition-duration: 150ms;
+    transition-timing-function: ease-out;
 }
 
 a:focus-visible,
@@ -110,4 +112,137 @@ summary:focus-visible,
         outline: 2px solid CanvasText;
         outline-offset: 3px;
     }
+}
+
+/* Employee Portal typography roles.
+   Scoped to authenticated portal content so Public Portal typography remains independent. */
+#portal-content .employee-page-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+#portal-content .employee-section-title {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+#portal-content .employee-record-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+#portal-content .employee-body-text {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+}
+
+#portal-content .employee-supporting-text,
+#portal-content .employee-metadata {
+    font-size: 0.75rem;
+    line-height: 1.45;
+}
+
+#portal-content .employee-functional-label {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+#portal-content .employee-table-heading {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+/* Employee Portal spacing / density roles. */
+#portal-content .employee-section-stack {
+    display: grid;
+    gap: 0.875rem;
+}
+
+#portal-content .employee-panel-header {
+    padding: 0.625rem 1rem;
+}
+
+#portal-content .employee-record-row {
+    padding: 0.625rem 1rem;
+}
+
+#portal-content .employee-subsection-bar {
+    padding: 0.5rem 1rem;
+}
+
+#portal-content .employee-empty-state {
+    padding: 0.75rem 1rem;
+    background: transparent;
+    text-align: left;
+}
+
+#portal-content .employee-interactive-row {
+    transition: background-color 150ms ease-out;
+}
+
+#portal-content .employee-interactive-row:hover {
+    background: #f8fafc;
+}
+
+:root.dark #portal-content .employee-interactive-row:hover {
+    background: rgba(30, 41, 59, 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #portal-content :where(a, button, input, select, textarea),
+    #portal-content .employee-interactive-row {
+        transition-duration: 0.01ms;
+    }
+}
+
+/* Employee Portal semantic color roles.
+   Most surfaces remain neutral; urgency color is reserved for real operational meaning. */
+#portal-content .employee-tone-neutral {
+    color: #475569;
+}
+
+#portal-content .employee-tone-info {
+    color: #1769aa;
+}
+
+#portal-content .employee-tone-success {
+    color: #2f7d45;
+}
+
+#portal-content .employee-tone-warning {
+    color: #996410;
+}
+
+#portal-content .employee-tone-danger {
+    color: #c83d4e;
+}
+
+:root.dark #portal-content .employee-tone-neutral {
+    color: #cbd5e1;
+}
+
+:root.dark #portal-content .employee-tone-info {
+    color: #93c5fd;
+}
+
+:root.dark #portal-content .employee-tone-success {
+    color: #8ec9a0;
+}
+
+:root.dark #portal-content .employee-tone-warning {
+    color: #e5b63a;
+}
+
+:root.dark #portal-content .employee-tone-danger {
+    color: #f29ca7;
 }

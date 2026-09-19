@@ -18,22 +18,26 @@ export default function AppearanceControl({ publicSurface = false, compact = fal
     return <div className={compact ? 'w-11' : undefined}>
         {!publicSurface && !compact && <div className="mb-2 text-xs font-semibold text-blue-300">Appearance</div>}
         <div
-            className={`grid gap-1 rounded-lg border p-1 ${compact ? 'grid-cols-1' : 'grid-cols-3'} ${publicSurface ? 'border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-800' : 'border-white/10 bg-white/5'}`}
+            className={`grid gap-1 rounded-lg border p-1 ${compact ? 'grid-cols-1' : 'grid-cols-3'} ${publicSurface ? 'public-appearance-options' : 'border-white/10 bg-white/5'}`}
             role="group"
-            aria-label="Appearance"
+            aria-label="Appearance preference"
         >
-            {choices.map(({ value, label, icon: Icon }) => <button
-                key={value}
-                type="button"
-                onClick={() => choose(value)}
-                aria-label={compact ? label : undefined}
-                aria-pressed={appearance === value}
-                title={compact ? label : undefined}
-                className={`flex min-h-10 items-center justify-center gap-1.5 rounded-md px-2 text-xs font-semibold transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 ${compact ? 'focus-visible:ring-white/80' : 'focus-visible:ring-blue-500'} ${appearance === value ? 'bg-white text-[#0b2852]' : publicSurface ? 'text-slate-600 hover:bg-slate-200 dark:text-slate-300 dark:hover:bg-slate-700' : 'text-blue-100 hover:bg-white/10 hover:text-white'}`}
-            >
-                <Icon size={compact ? 16 : 14} aria-hidden="true" />
-                {!compact && <span>{label}</span>}
-            </button>)}
+            {choices.map(({ value, label, icon: Icon }) => {
+                const internalState = `${compact ? 'focus-visible:ring-white/80' : 'focus-visible:ring-blue-500'} ${appearance === value ? 'bg-white text-[#0b2852]' : 'text-blue-100 hover:bg-white/10 hover:text-white'}`;
+
+                return <button
+                    key={value}
+                    type="button"
+                    onClick={() => choose(value)}
+                    aria-label={compact ? label : undefined}
+                    aria-pressed={appearance === value}
+                    title={compact ? label : undefined}
+                    className={`flex ${publicSurface ? 'public-appearance-choice min-h-11' : 'min-h-10 focus-visible:outline-none focus-visible:ring-2'} items-center justify-center gap-1.5 rounded-md px-2 text-xs font-semibold transition-colors duration-150 ${publicSurface ? '' : internalState}`}
+                >
+                    <Icon size={compact ? 16 : 14} aria-hidden="true" />
+                    {!compact && <span>{label}</span>}
+                </button>;
+            })}
         </div>
     </div>;
 }

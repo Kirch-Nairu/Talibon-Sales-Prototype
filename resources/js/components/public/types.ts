@@ -1,4 +1,4 @@
-export type ServiceItem = { title: string; description: string; status: string };
+export type ServiceItem = { title: string; description: string; group: 'services' | 'information'; meta: string; action?: string; href?: string };
 export type TransparencyItem = { label: string; value: string; note: string };
 export type ProjectItem = { title: string; summary: string; tag: string };
 export type DashboardItem = { label: string; value: string; detail: string };
