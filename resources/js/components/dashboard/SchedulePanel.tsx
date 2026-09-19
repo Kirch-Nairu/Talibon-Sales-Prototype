@@ -40,28 +40,28 @@ export default function SchedulePanel({ meetings, deadlines }: { meetings: Dashb
         />
         <BoundedOperationalPanelBody className={bodyClass}>
             <div className="min-w-0">
-                <div className="border-b border-slate-100 bg-slate-50/70 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:border-slate-700 dark:bg-slate-900/30 dark:text-slate-400 sm:px-4">Next meetings</div>
+                <div className="employee-functional-label border-b border-slate-100 bg-slate-50/70 px-3 py-1.5 text-slate-500 dark:border-slate-700 dark:bg-slate-900/30 dark:text-slate-400 sm:px-4">Next meetings</div>
                 <div className="divide-y divide-slate-100 dark:divide-slate-700">
                     {visibleMeetings.map((meeting) => <article key={meeting.id} className="px-3 py-2.5 sm:px-4">
                         <div className="flex items-start gap-3">
                             <div className="w-14 shrink-0">
-                                <div className="text-xs font-bold text-blue-700 dark:text-blue-300">{formatTime(meeting.startsAt)}</div>
-                                <div className="mt-0.5 text-[10px] text-slate-500 dark:text-slate-400">{new Date(meeting.startsAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</div>
+                                <div className="employee-metadata font-bold text-blue-700 dark:text-blue-300">{formatTime(meeting.startsAt)}</div>
+                                <div className="employee-metadata mt-0.5 text-slate-500 dark:text-slate-400">{new Date(meeting.startsAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</div>
                             </div>
                             <div className="min-w-0 flex-1">
-                                <div className="text-xs font-semibold leading-4 text-slate-950 dark:text-slate-100">{meeting.title}</div>
-                                <div className="mt-1 text-[11px] leading-4 text-slate-500 dark:text-slate-400">{meeting.location} · {meeting.convenor}</div>
-                                <div className="mt-0.5 line-clamp-2 text-[11px] leading-4 text-slate-600 dark:text-slate-300">{meeting.purpose}</div>
+                                <div className="employee-record-title text-slate-950 dark:text-slate-100">{meeting.title}</div>
+                                <div className="employee-metadata mt-1 text-slate-500 dark:text-slate-400">{meeting.location} · {meeting.convenor}</div>
+                                <div className="employee-supporting-text mt-0.5 line-clamp-2 text-slate-600 dark:text-slate-300">{meeting.purpose}</div>
                             </div>
                         </div>
                     </article>)}
-                    {orderedMeetings.length === 0 ? <div className="px-3 py-3 text-xs text-slate-500 dark:text-slate-400 sm:px-4">No upcoming meetings in this scope.</div> : null}
+                    {orderedMeetings.length === 0 ? <div className="employee-supporting-text px-3 py-3 text-slate-500 dark:text-slate-400 sm:px-4">No upcoming meetings in this scope.</div> : null}
                 </div>
-                {orderedMeetings.length > visibleMeetings.length ? <div className="border-t border-slate-100 px-3 py-2 text-[11px] text-slate-500 dark:border-slate-700 dark:text-slate-400 sm:px-4">{orderedMeetings.length - visibleMeetings.length} more meeting{orderedMeetings.length - visibleMeetings.length === 1 ? '' : 's'} available in Calendar.</div> : null}
+                {orderedMeetings.length > visibleMeetings.length ? <div className="employee-metadata border-t border-slate-100 px-3 py-2 text-slate-500 dark:border-slate-700 dark:text-slate-400 sm:px-4">{orderedMeetings.length - visibleMeetings.length} more meeting{orderedMeetings.length - visibleMeetings.length === 1 ? '' : 's'} available in Calendar.</div> : null}
             </div>
 
             <div className="min-w-0">
-                <div className="border-b border-slate-100 bg-slate-50/70 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wide text-slate-500 dark:border-slate-700 dark:bg-slate-900/30 dark:text-slate-400 sm:px-4">Upcoming deadlines</div>
+                <div className="employee-functional-label border-b border-slate-100 bg-slate-50/70 px-3 py-1.5 text-slate-500 dark:border-slate-700 dark:bg-slate-900/30 dark:text-slate-400 sm:px-4">Upcoming deadlines</div>
                 <div className="divide-y divide-slate-100 dark:divide-slate-700">
                     {visibleDeadlines.map((deadline) => {
                         const urgency = deadlineUrgency(deadline);
@@ -69,17 +69,17 @@ export default function SchedulePanel({ meetings, deadlines }: { meetings: Dashb
                             <div className="flex items-start gap-2.5">
                                 <Clock3 size={14} className={'mt-0.5 shrink-0 ' + urgencyClass[urgency]} aria-hidden="true" />
                                 <div className="min-w-0 flex-1">
-                                    <div className="text-xs font-semibold leading-4 text-slate-950 dark:text-slate-100">{deadline.title}</div>
-                                    <div className={'mt-1 text-[10px] font-semibold ' + urgencyClass[urgency]}>{urgencyCopy[urgency]} · {formatDate(deadline.dueAt)}</div>
-                                    <div className="mt-0.5 text-[10px] text-slate-500 dark:text-slate-400">{deadline.ownerOffice}</div>
-                                    <div className="mt-0.5 line-clamp-2 text-[11px] leading-4 text-slate-600 dark:text-slate-300">{deadline.requirement}</div>
+                                    <div className="employee-record-title text-slate-950 dark:text-slate-100">{deadline.title}</div>
+                                    <div className={'employee-metadata mt-1 font-semibold ' + urgencyClass[urgency]}>{urgencyCopy[urgency]} · {formatDate(deadline.dueAt)}</div>
+                                    <div className="employee-metadata mt-0.5 text-slate-500 dark:text-slate-400">{deadline.ownerOffice}</div>
+                                    <div className="employee-supporting-text mt-0.5 line-clamp-2 text-slate-600 dark:text-slate-300">{deadline.requirement}</div>
                                 </div>
                             </div>
                         </article>;
                     })}
-                    {orderedDeadlines.length === 0 ? <div className="px-3 py-3 text-xs text-slate-500 dark:text-slate-400 sm:px-4">No upcoming deadlines in this scope.</div> : null}
+                    {orderedDeadlines.length === 0 ? <div className="employee-supporting-text px-3 py-3 text-slate-500 dark:text-slate-400 sm:px-4">No upcoming deadlines in this scope.</div> : null}
                 </div>
-                {orderedDeadlines.length > visibleDeadlines.length ? <div className="border-t border-slate-100 px-3 py-2 text-[11px] text-slate-500 dark:border-slate-700 dark:text-slate-400 sm:px-4">{orderedDeadlines.length - visibleDeadlines.length} more deadline{orderedDeadlines.length - visibleDeadlines.length === 1 ? '' : 's'} available in Calendar.</div> : null}
+                {orderedDeadlines.length > visibleDeadlines.length ? <div className="employee-metadata border-t border-slate-100 px-3 py-2 text-slate-500 dark:border-slate-700 dark:text-slate-400 sm:px-4">{orderedDeadlines.length - visibleDeadlines.length} more deadline{orderedDeadlines.length - visibleDeadlines.length === 1 ? '' : 's'} available in Calendar.</div> : null}
             </div>
         </BoundedOperationalPanelBody>
     </BoundedOperationalPanel>;

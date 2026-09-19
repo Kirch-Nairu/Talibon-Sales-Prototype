@@ -22,8 +22,8 @@ export default function QuickActions({ actions }: { actions: DashboardExperience
 
     return <section className="min-w-0 border-y border-slate-200 dark:border-slate-700" aria-labelledby="dashboard-quick-actions">
         <header className="px-1 py-2.5">
-            <h3 id="dashboard-quick-actions" className="text-sm font-bold text-slate-950 dark:text-slate-100">Workspace shortcuts</h3>
-            <p className="mt-0.5 text-xs leading-4 text-slate-500 dark:text-slate-400">Frequent destinations for this role.</p>
+            <h3 id="dashboard-quick-actions" className="employee-section-title text-slate-950 dark:text-slate-100">Workspace shortcuts</h3>
+            <p className="employee-supporting-text mt-0.5 text-slate-500 dark:text-slate-400">Frequent destinations for this role.</p>
         </header>
         <div className="divide-y divide-slate-200 border-t border-slate-200 dark:divide-slate-700 dark:border-slate-700">
             {visibleActions.map((action) => {
@@ -37,8 +37,8 @@ export default function QuickActions({ actions }: { actions: DashboardExperience
                 >
                     <Icon size={16} className="shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.8} aria-hidden="true" />
                     <div className="min-w-0 flex-1">
-                        <div className="text-xs font-semibold leading-4 text-slate-900 dark:text-slate-100 sm:text-sm">{action.label}</div>
-                        <div className="mt-0.5 text-[11px] leading-4 text-slate-500 dark:text-slate-400">{action.description}</div>
+                        <div className="employee-record-title text-slate-900 dark:text-slate-100">{action.label}</div>
+                        <div className="employee-supporting-text mt-0.5 text-slate-500 dark:text-slate-400">{action.description}</div>
                     </div>
                     <ArrowRight size={14} className="shrink-0 text-slate-400 dark:text-slate-500" aria-hidden="true" />
                 </Link>;

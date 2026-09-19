@@ -18,19 +18,19 @@ export default function DashboardHeader({ experience }: { experience: DashboardE
     return <header className="border-b border-slate-200 pb-3 dark:border-slate-700" aria-labelledby="dashboard-title">
         <div className="flex min-w-0 flex-col gap-3 lg:flex-row lg:items-start lg:justify-between lg:gap-8">
             <div className="min-w-0 max-w-3xl">
-                <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-blue-700 dark:text-blue-300">Employee workspace</div>
-                <h1 id="dashboard-title" className="mt-0.5 text-2xl font-bold tracking-tight text-slate-950 dark:text-slate-100">Home</h1>
-                <p className="mt-1 max-w-3xl text-xs leading-5 text-slate-600 dark:text-slate-300 sm:text-sm">{dashboardRoleBrief(experience)}</p>
+                <div className="employee-functional-label text-blue-700 dark:text-blue-300">Employee workspace</div>
+                <h1 id="dashboard-title" className="employee-page-title mt-0.5 text-slate-950 dark:text-slate-100">Home</h1>
+                <p className="employee-body-text mt-1 max-w-3xl text-slate-600 dark:text-slate-300">{dashboardRoleBrief(experience)}</p>
             </div>
 
-            <div className="flex shrink-0 items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+            <div className="employee-metadata flex shrink-0 items-center gap-2 text-slate-500 dark:text-slate-400">
                 <CalendarDays size={14} className="text-slate-400 dark:text-slate-500" aria-hidden="true" />
                 <span>{today}</span>
                 <span className="hidden text-slate-400 sm:inline">· Philippine time</span>
             </div>
         </div>
 
-        <dl className="mt-3 flex min-w-0 flex-wrap gap-x-5 gap-y-2 border-t border-slate-100 pt-2.5 text-xs dark:border-slate-800">
+        <dl className="employee-metadata mt-3 flex min-w-0 flex-wrap gap-x-5 gap-y-2 border-t border-slate-100 pt-2.5 dark:border-slate-800">
             <div className="flex min-w-0 items-center gap-1.5">
                 <UserRound size={13} className="shrink-0 text-blue-700 dark:text-blue-300" aria-hidden="true" />
                 <dt className="sr-only">Employee</dt>
