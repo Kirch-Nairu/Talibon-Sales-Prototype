@@ -2100,3 +2100,134 @@ Before merge-ready classification, run the executable candidate and observe:
 - all public routes/anchors by activation.
 
 Do not start another design phase to address this missing evidence; verify the existing final candidate.
+
+# FINAL RUNTIME ACCEPTANCE GATE
+
+## Tested executable identity
+
+- Repository: `Kirch-Nairu/Talibon-Sales-Prototype`
+- Branch under review: `UI/Jr-and-Aj`
+- Required executable SHA: `999a080408ab3d2f9b6fc8138a3bff3d241463ec`
+- Evidence branch HEAD before this record: `1edd64816a42b6fc11018b72c8eaf330036b9908`
+
+The runtime gate explicitly targeted the executable SHA above. The evidence commit was not substituted as the executable candidate.
+
+## Environment observed
+
+```text
+OS: Linux 6.18.44 x86_64
+Git: 2.47.3
+Node: 22.16.0
+npm: 10.9.2
+PHP: 8.4.23
+Composer: NOT AVAILABLE
+Browser available in environment: Chromium 144.0.7559.96
+```
+
+## Checkout / application execution attempt
+
+The exact branch checkout was attempted with:
+
+```text
+git clone --branch UI/Jr-and-Aj --single-branch https://github.com/Kirch-Nairu/Talibon-Sales-Prototype.git
+```
+
+Result:
+
+```text
+fatal: unable to access repository
+Could not resolve host: github.com
+```
+
+Because the repository could not be materialized into the execution environment, the following repository-defined commands could not actually be executed against the required candidate:
+
+```text
+npm run types:check
+npm run build
+Laravel application boot
+```
+
+Composer is also unavailable in the execution environment.
+
+## GitHub evidence
+
+- Executable commit exists: `999a080408ab3d2f9b6fc8138a3bff3d241463ec` — `ui: remove final orphaned public selector`.
+- Combined commit statuses attached to executable SHA: NONE OBSERVED.
+- Workflow runs attached to executable SHA: NONE OBSERVED.
+- Branch position before this documentation commit: 26 commits ahead of main / 0 behind.
+
+## Runtime matrix
+
+```text
+APPLICATION BOOT: BLOCKED
+BROWSER RENDERING: NOT OBSERVED
+CONSOLE: NOT OBSERVED
+
+1920: NOT OBSERVED
+1600: NOT OBSERVED
+1440: NOT OBSERVED
+1280: NOT OBSERVED
+1024: NOT OBSERVED
+768:  NOT OBSERVED
+390:  NOT OBSERVED
+360:  NOT OBSERVED
+
+LIGHT MODE: NOT OBSERVED
+DARK MODE: NOT OBSERVED
+SYSTEM MODE: NOT OBSERVED
+
+THEME PERSISTENCE: NOT OBSERVED
+FIRST-PAINT FLASH: NOT OBSERVED
+
+TAB: NOT OBSERVED
+SHIFT+TAB: NOT OBSERVED
+SKIP LINK: NOT OBSERVED
+MOBILE MENU: NOT OBSERVED
+APPEARANCE CONTROL: NOT OBSERVED
+ESCAPE: NOT OBSERVED
+FOCUS VISIBILITY: NOT OBSERVED
+
+200% LIGHT: NOT OBSERVED
+200% DARK: NOT OBSERVED
+
+SCREEN-READER SMOKE TEST: NOT OBSERVED
+MEASURED RUNTIME CONTRAST: NOT OBSERVED
+ROUTE ACTIVATION: NOT OBSERVED
+ANTI-AI-SLOP RUNTIME REVIEW: NOT OBSERVED
+```
+
+## Defects discovered during this gate
+
+```text
+BLOCKER: 0 application defects observed
+HIGH: 0 application defects observed
+MEDIUM: 0 runtime defects observed
+LOW: 0 runtime defects observed
+COSMETIC: 0 runtime defects observed
+```
+
+This does not mean zero runtime defects exist; runtime was unavailable, so runtime-only defects remain unknown.
+
+## Corrections made
+
+None.
+
+No source code, CSS, layout, content, theme, accessibility, route, backend, database, or authentication behavior was changed during the Runtime Acceptance Gate.
+
+## Final acceptance
+
+```text
+TYPECHECK: BLOCKED
+BUILD: BLOCKED
+APPLICATION BOOT: BLOCKED
+RUNTIME: NOT OBSERVED
+CONSOLE: NOT OBSERVED
+
+FINAL ACCEPTANCE:
+RUNTIME VERIFICATION REQUIRED
+
+FINAL MERGE RECOMMENDATION:
+DO NOT MERGE YET
+```
+
+The implementation roadmap remains 4 phases / 10 slices complete. This gate is verification activity, not UI-S11 or a new phase.

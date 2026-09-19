@@ -1550,3 +1550,19 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Final classification: **SOURCE CANDIDATE — RUNTIME NOT OBSERVED**.
 - Final recommendation: **RUNTIME VERIFICATION REQUIRED**. Do not label merge-ready until the final executable candidate is built and observed.
 - Roadmap closure: 4 phases / 10 slices complete at source-candidate level; UI-S10 is final; no UI-S11.
+
+## 2026-09-19 — One Talibon final runtime acceptance gate
+
+### `docs: record runtime acceptance gate`
+
+- Required executable under test: `999a080408ab3d2f9b6fc8138a3bff3d241463ec` on `UI/Jr-and-Aj`.
+- Evidence branch HEAD before this record: `1edd64816a42b6fc11018b72c8eaf330036b9908`.
+- Runtime environment observed: Linux 6.18.44 x86_64; Git 2.47.3; Node 22.16.0; npm 10.9.2; PHP 8.4.23; Chromium 144.0.7559.96; Composer unavailable.
+- Exact branch clone attempted for the required candidate. Checkout was **BLOCKED** with `Could not resolve host: github.com`.
+- Because the executable tree could not be materialized, repository-defined `npm run types:check`, `npm run build`, Laravel boot, browser rendering, console inspection, viewport/theme/keyboard/zoom/route runtime checks could not be executed.
+- GitHub evidence on executable SHA: no combined commit statuses and no workflow runs observed.
+- No runtime defect was observed because runtime was unavailable; runtime-only defects remain unknown.
+- No source correction was made during this gate.
+- Final acceptance: **RUNTIME VERIFICATION REQUIRED**.
+- Final merge recommendation: **DO NOT MERGE YET**.
+- Roadmap remains 4 phases / 10 UI slices complete; this is not UI-S11.
