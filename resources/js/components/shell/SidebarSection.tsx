@@ -52,7 +52,7 @@ export default function SidebarSection({
                         aria-controls={contentId}
                         className={`flex min-h-8 w-full items-center justify-between gap-2 rounded-sm px-2 text-left text-[10px] font-bold uppercase tracking-[0.08em] transition-colors hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 ${
                             active ? 'text-white' : 'text-blue-300/75 hover:text-blue-100'
-                        }`}
+                        } ${expanded && !active ? 'bg-white/[0.04] text-blue-100' : ''}`}
                     >
                         <span className="truncate">{label}</span>
                         {expanded

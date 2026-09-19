@@ -32,7 +32,7 @@ function CorrespondenceRow({ row }: { row: Row }) {
     </>;
 
     return row.url
-        ? <Link href={row.url} className="employee-record-row block transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/40">{content}</Link>
+        ? <Link href={row.url} className="employee-interactive-row employee-record-row block">{content}</Link>
         : <article className="employee-record-row">{content}</article>;
 }
 
