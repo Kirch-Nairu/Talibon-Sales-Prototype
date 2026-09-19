@@ -2231,3 +2231,77 @@ DO NOT MERGE YET
 ```
 
 The implementation roadmap remains 4 phases / 10 slices complete. This gate is verification activity, not UI-S11 or a new phase.
+
+# ONE TALIBON — EMPLOYEE PORTAL UI REDESIGN
+
+## Session 1 — Phase 1: Dashboard Structure & Composition
+
+### Authority
+
+```text
+Repository: Kirch-Nairu/Talibon-Sales-Prototype
+Branch: masterlogin-UI-by-Jr-and-Aj
+Starting SHA: 109fa0424a56872303ab3eeb4f659b2fc7651b69
+Phase: 1 / 4
+Slices in session: EUI-S1 through EUI-S5
+```
+
+The public-portal history above remains unchanged. Employee Portal work is recorded separately from this point forward.
+
+## EUI-S1 — Page Header / Work Context
+
+### Problem
+
+The global application shell already identifies One Talibon and the current page, while the dashboard started with another `municipal-panel` containing `Home / MUNICIPAL OPERATIONS`. That duplicated framing and consumed vertical space without adding work context.
+
+### Previous state
+
+- rounded/panel page heading;
+- `Home` plus `MUNICIPAL OPERATIONS`;
+- user/role/department/scope/date compressed into one row;
+- repository role-specific dashboard brief was not shown.
+
+### Change
+
+- removed the dashboard-header card/panel wrapper;
+- introduced a plain page header separated by a restrained divider;
+- added the existing role-specific `dashboardRoleBrief(experience)`;
+- retained signed-in user, role, department, and scope;
+- moved date to a clear right-side context position;
+- date now explicitly formats in `Asia/Manila`;
+- added semantic `dl/dt/dd` metadata structure;
+- preserved all identity/authentication data sources.
+
+### Reason
+
+The employee homepage should begin with operational context, not another card duplicating the application shell.
+
+### Files changed
+
+```text
+resources/js/components/dashboard/DashboardHeader.tsx
+Jayr-Aj-docs.md
+docs/ENGINEERING_LOG.md
+```
+
+### Verification
+
+```text
+Source inspection: PASS
+Scope inspection: PASS
+Authentication/user logic changed: NO
+Sidebar/top bar changed: NO
+Build/typecheck: NOT OBSERVED
+Runtime: NOT OBSERVED
+```
+
+### Known limitation
+
+Browser rendering remains required to confirm exact vertical rhythm and wrapping.
+
+### Commit
+
+Recorded in final Phase 1 evidence.
+
+---
+

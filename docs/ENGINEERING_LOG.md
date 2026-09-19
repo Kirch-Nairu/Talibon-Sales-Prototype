@@ -1566,3 +1566,16 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Final acceptance: **RUNTIME VERIFICATION REQUIRED**.
 - Final merge recommendation: **DO NOT MERGE YET**.
 - Roadmap remains 4 phases / 10 UI slices complete; this is not UI-S11.
+
+## 2026-09-19 — Employee UI Phase 1 / EUI-S1 work context
+
+### `ui: refine employee dashboard work context`
+
+- Branch: `masterlogin-UI-by-Jr-and-Aj`; parent SHA: `109fa0424a56872303ab3eeb4f659b2fc7651b69`.
+- Scope: Employee Portal dashboard composition only. Public Portal UI branch, sidebar, top utility bar, auth, permissions, routes, APIs, and data behavior remain untouched.
+- Removed the redundant `municipal-panel` page-heading container from `DashboardHeader`.
+- Added the existing role-specific `dashboardRoleBrief` as real work-context copy.
+- Preserved employee/role/department/scope identity and made the dashboard date explicitly Philippine-time.
+- Added semantic description-list structure for employee/department context.
+- Source verification PASS; build/typecheck/runtime NOT OBSERVED at this slice.
+
