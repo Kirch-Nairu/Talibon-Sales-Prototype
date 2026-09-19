@@ -4133,3 +4133,515 @@ RUNTIME: NOT OBSERVED
 ```
 
 ---
+
+
+# EMPLOYEE PORTAL UI — SESSION 3 / PHASE 3 CLOSURE
+
+## Phase identity
+
+```text
+Repository: Kirch-Nairu/Talibon-Sales-Prototype
+Branch: masterlogin-UI-by-Jr-and-Aj
+
+Phase 3 starting SHA:
+8d85f8fcc984b44f327670c2b9d81472c2b0803a
+
+Pre-closure HEAD:
+c357edf4d842b8228773072e6e85481fd1e8a0d6
+
+Final executable Phase 3 SHA:
+7330514c7ff44b197eae1a8aca8777e8566d3c0d
+```
+
+## Roadmap position
+
+```text
+4 PHASES / 22 BOUNDED SLICES
+
+PHASE 1 — DASHBOARD STRUCTURE & COMPOSITION
+COMPLETE — SOURCE CANDIDATE
+
+PHASE 2 — NAVIGATION & WORKSPACE EXPERIENCE
+COMPLETE — SOURCE CANDIDATE
+
+PHASE 3 — VISUAL SYSTEM & INTERACTION
+COMPLETE — SOURCE CANDIDATE
+
+PHASE 4 — RESPONSIVE QA & FINAL ACCEPTANCE
+NOT STARTED
+```
+
+## Phase 3 slice status
+
+```text
+EUI-S11 — Typography System
+SOURCE: PASS
+RUNTIME: NOT OBSERVED
+
+EUI-S12 — Spacing / Density System
+SOURCE: PASS
+RUNTIME: NOT OBSERVED
+
+EUI-S13 — Tables / Lists / Operational Records
+SOURCE: PASS
+RUNTIME: NOT OBSERVED
+
+EUI-S14 — Color / Urgency Semantics
+SOURCE: PASS
+RUNTIME: NOT OBSERVED
+
+EUI-S15 — Hover / Focus / Active / Empty States
+SOURCE: PASS
+RUNTIME: NOT OBSERVED
+
+EUI-S16 — Accessibility
+SOURCE: PASS
+RUNTIME: NOT OBSERVED
+```
+
+## Phase 3 integration corrections discovered during closure
+
+The integrated audit found bounded Phase 3 residue after EUI-S16 documentation:
+
+1. meaningful dashboard/shell context labels still included legacy 9–10px text;
+2. visible project progress could theoretically diverge from clamped progressbar ARIA value;
+3. sidebar navigation/disclosure targets remained below the intended ~44px practical target;
+4. Records Search input remained 40px;
+5. navigation group headings still used the old 10px / 0.08em treatment while the Phase 3 functional-label hierarchy uses 11px / 0.06em;
+6. Records Search explanatory copy remained 11px despite being meaningful support text.
+
+Corrections were intentionally limited to those findings.
+
+### Closure correction commits
+
+```text
+e3bb8ba0f8153a2f9dbaa0179922d972d044d282
+ui: align employee visual system
+
+f021c7f4e31d41f92b0c20a6e8474ca881808853
+ui: align employee navigation targets
+
+7330514c7ff44b197eae1a8aca8777e8566d3c0d
+ui: finish employee visual system alignment
+```
+
+## Typography integration findings
+
+Final source review confirms:
+
+- employee page, section, record, body, supporting, metadata, functional-label, and table-heading roles exist as one scoped system;
+- core Phase 3 dashboard/record patterns contain no 9px or 10px meaningful text;
+- remaining 11px shell text is limited to compact functional labels such as navigation group headings / Account;
+- dashboard context headings now use the Phase 3 typography roles rather than legacy 9px labels;
+- employee role/office context in sidebar/topbar is no longer rendered at 10px;
+- no new typeface was introduced;
+- Public Portal typography remains independent.
+
+```text
+Typography integration: PASS
+Runtime typography: NOT OBSERVED
+```
+
+## Spacing / density integration findings
+
+Final source review confirms:
+
+- 14px independent-section rhythm remains present;
+- shared 16px horizontal panel/row padding remains present;
+- 10px operational row/header vertical padding remains present;
+- 8px subsection-bar and 12px compact empty-state roles remain present;
+- EUI-S3/EUI-S4 fixed-height dead-zone correction remains preserved;
+- Phase 3 did not reintroduce the previous 22rem fixed operational panel behavior;
+- relational spacing remains denser than the public portal without becoming an all-8px admin layout.
+
+```text
+Spacing / density integration: PASS
+Runtime density: NOT OBSERVED
+```
+
+## Table / list / operational-record integration findings
+
+Final source review confirms:
+
+- StaffWorkloadTable uses semantic `table`, `thead`, `tbody`, scoped column headers, and an employee row header;
+- WorkItemList no longer renders priority/status/due/action as four badge-like chips;
+- work queue pagination uses semantic navigation and no fake `#` link;
+- MeetingRegister remains a divided linear record list rather than a card grid;
+- recent correspondence/documents/projects reuse shared record-title, metadata, spacing, and empty-state vocabulary;
+- records remain lists where linear scanning matters and tables where comparison matters.
+
+```text
+Tables / lists / records integration: PASS
+Runtime record scanning: NOT OBSERVED
+```
+
+## Color / urgency integration findings
+
+Final source review confirms the employee semantic tone layer:
+
+```text
+Neutral  → default / non-urgent state
+Info     → informational / interactive structure
+Success  → completed / healthy state
+Warning  → due soon / follow-up / attention
+Danger   → overdue / critical
+```
+
+Checks:
+
+- zero attention values remain muted instead of urgent;
+- default metric values are neutral;
+- overdue/critical states use danger;
+- due-soon/follow-up states use warning;
+- completed/healthy states use success;
+- navigation current-state treatment remains structurally separate from urgency colors;
+- focus treatment remains separate from selected/current state;
+- status meaning is also communicated through text, not color alone;
+- Phase 3 shared operational patterns no longer depend on scattered raw rose/amber/emerald text colors.
+
+```text
+Color / urgency integration: PASS
+Rendered contrast/theme verification: NOT OBSERVED
+```
+
+## Interaction-state integration findings
+
+Final state vocabulary:
+
+```text
+Default   → neutral
+Hover     → subtle surface only
+Focus     → visible outline/ring
+Current   → navigation background + weight + left indicator + aria-current
+Expanded  → chevron direction + restrained surface + aria-expanded
+Disabled  → only where real
+Empty     → compact neutral text
+```
+
+Source checks:
+
+- transform-based employee transitions: 0 in audited Phase 3 surfaces;
+- translate effects: 0;
+- scale effects: 0;
+- shortcut arrow motion: 0;
+- shared record/shortcut hover surface remains non-moving;
+- dark sidebar focus treatment remains explicit/high-contrast;
+- every audited `outline-none` use is paired with an explicit focus ring or input focus-ring treatment;
+- reduced-motion override remains present.
+
+```text
+Interaction-state integration: PASS
+Runtime interaction verification: NOT OBSERVED
+```
+
+## Accessibility integration findings
+
+### Source-control audit
+
+```text
+Positive tabindex: 0
+Clickable div controls: 0
+Clickable span controls: 0
+Fake role=button controls: 0
+Intentional tabIndex={-1}: 1 — portal skip target
+```
+
+### ARIA / semantic audit
+
+Verified source relationships include:
+
+- active navigation: `aria-current="page"`;
+- secondary disclosure: native button + `aria-expanded` + `aria-controls`;
+- Records Search trigger/dialog: `aria-controls="records-search-dialog"` with matching id;
+- notification trigger/panel: `aria-controls="portal-notifications"` with matching id;
+- live workflow alert: conditional `role="status"` + `aria-live="polite"`;
+- pending memorandum: `role="dialog"`, `aria-modal="true"`, matching `aria-labelledby`;
+- StaffWorkloadTable: native table semantics + `scope="col"` / `scope="row"`;
+- project progress: `role="progressbar"` + min/max/now + accessible project name;
+- visible project percentage now uses the same clamped value as bar width / `aria-valuenow`;
+- RecentDocuments section uses a heading id passed through `DashboardSectionHeader`, so its dynamic `aria-labelledby` reference is valid;
+- work-list section/record heading hierarchy is explicit;
+- semantic work-queue pagination uses real links only when real destinations exist.
+
+Static ARIA reference audit after resolving component-prop relationships:
+
+```text
+Invalid aria-controls references: 0
+Invalid aria-labelledby references: 0
+ARIA contradicting native semantics discovered: 0
+```
+
+### Records Search focus audit
+
+Source flow:
+
+```text
+Open
+→ search input receives focus
+→ Escape or explicit Close
+→ dialog closes
+→ requestAnimationFrame
+→ still-mounted trigger receives focus
+```
+
+Outside-pointer close does not force focus back because pointer focus has intentionally moved elsewhere. Search submission navigates to Records rather than restoring focus.
+
+```text
+Records Search focus source audit: PASS
+Runtime focus return: NOT OBSERVED
+```
+
+### Pagination audit
+
+```text
+Meaningful nav semantics: PASS
+Current page communicated: PASS
+Previous/Next names understandable: PASS
+Disabled state non-interactive: PASS
+Fake page state: NONE
+Native keyboard support: PASS by element choice
+Runtime pagination: NOT OBSERVED
+```
+
+### Progressbar audit
+
+```text
+Real progress data only: PASS
+role=progressbar: PASS
+aria-valuemin: PASS
+aria-valuemax: PASS
+aria-valuenow: PASS
+Accessible project-derived name: PASS
+Visible value consistency: PASS
+Decorative-only bar mislabeled as progressbar: NO
+Runtime screen-reader result: NOT OBSERVED
+```
+
+### Live / status semantics audit
+
+The polite live region is conditional on a real workflow alert. Static notification-panel content is not placed in a live region, reducing unnecessary announcements.
+
+```text
+Live/status source semantics: PASS
+Runtime announcement behavior: NOT OBSERVED
+```
+
+### Memo dialog audit
+
+```text
+Dialog role: PASS
+aria-modal: PASS
+Heading label reference: PASS
+Native close/dismiss controls: PASS
+44px close target: PASS
+Existing detail navigation preserved: PASS
+Runtime focus trap/background interaction: NOT OBSERVED
+```
+
+### Control-target audit
+
+Important shell/navigation controls source-align around 44px:
+
+- expanded navigation links;
+- compact icon navigation links;
+- secondary navigation disclosures;
+- sidebar toggle;
+- appearance control;
+- logout/account controls;
+- Records Search trigger/input/close;
+- Phase 2 top utility controls;
+- semantic pagination controls;
+- memo close/dismiss actions.
+
+Normal inline links remain appropriately inline.
+
+```text
+Accessibility source integration: PASS
+Full runtime accessibility acceptance: NOT OBSERVED
+```
+
+No full WCAG compliance claim is made.
+
+## Cross-phase regression findings
+
+### Phase 1
+
+Preserved source anchors include:
+
+- 1560px dashboard composition frame;
+- Immediate Attention;
+- `Priority work and schedule` section;
+- `My work and workspace` section;
+- Current Work Context;
+- compact natural-flow queue/schedule behavior.
+
+Phase 3 changed visual roles and semantics, not the Phase 1 information architecture.
+
+### Phase 2
+
+Preserved source anchors include:
+
+- Home / Work primary visibility;
+- lower-group disclosure architecture;
+- active-group auto expansion;
+- `aria-current` route semantics;
+- structural left active indicator;
+- 232px expanded sidebar;
+- page-title-led top utility bar;
+- account context;
+- Workspace shortcuts as role-specific frequent destinations.
+
+Phase 3 increased navigation/disclosure target height but did not change route grouping or destinations.
+
+```text
+Phase 1 regression source audit: PASS
+Phase 2 regression source audit: PASS
+```
+
+## Anti-AI-slop integration findings
+
+The final Phase 3 source remains operational rather than decorative:
+
+- no gradients introduced in audited Phase 3 operational surfaces;
+- no glassmorphism/backdrop-filter;
+- no new badge proliferation;
+- WorkItemList removed badge-like status chips;
+- MeetingRegister removed card-grid treatment;
+- records remain row/list/table structures;
+- semantic colors have jobs instead of decoration;
+- no hover lift / bounce / translate / scale motion;
+- typography/spacing hierarchy does the work rather than shadows;
+- rounded/shadowed surfaces that remain in AppLayout are functional overlays/popovers/dialogs, not general content hierarchy;
+- density comes from shared row/header spacing rather than artificial micro-text;
+- municipal navy/slate operational character remains intact.
+
+```text
+Anti-AI-slop integration review: PASS
+```
+
+## Responsive source safety
+
+Phase 4 breakpoint QA was not started.
+
+Phase 3 source-only safety review found:
+
+- no new 22rem/fixed operational content heights;
+- no new meaningful nowrap dependency in core Phase 3 records;
+- StaffWorkloadTable intentionally uses a 640px minimum table width inside `overflow-x-auto`, which is appropriate for relational comparison;
+- notification/live-alert fixed widths are already guarded by mobile left/right constraints or responsive prefixes;
+- dashboard max width remains a `max-w`, not a fixed viewport width;
+- natural wrapping/min-width safeguards remain present in `app.css`.
+
+```text
+Responsive source safety: PASS
+Full responsive runtime QA: NOT STARTED — Phase 4
+```
+
+## Build / typecheck / runtime
+
+Repository-defined scripts confirmed from `package.json`:
+
+```text
+npm run types:check → tsc --noEmit
+npm run build       → vite build
+```
+
+Final executable checkout attempt:
+
+```text
+git clone --branch masterlogin-UI-by-Jr-and-Aj --single-branch https://github.com/Kirch-Nairu/Talibon-Sales-Prototype.git
+```
+
+Environment:
+
+```text
+Git: 2.47.3
+Node: 22.16.0
+npm: 10.9.2
+PHP: 8.4.23
+Composer: NOT AVAILABLE
+```
+
+Checkout result:
+
+```text
+Could not resolve host: github.com
+```
+
+Therefore:
+
+```text
+TYPECHECK: BLOCKED
+BUILD: BLOCKED
+RUNTIME: NOT OBSERVED
+```
+
+GitHub reports no combined status and no workflow run attached to the final executable Phase 3 SHA.
+
+This environment/network block is not classified as an application failure.
+
+## Files changed during closure after pre-closure HEAD
+
+```text
+Jayr-Aj-docs.md
+docs/ENGINEERING_LOG.md
+resources/js/pages/Dashboard.tsx
+resources/js/components/dashboard/ProjectPortfolio.tsx
+resources/js/components/shell/SidebarIdentity.tsx
+resources/js/components/shell/PortalHeaderIdentity.tsx
+resources/js/components/shell/SidebarFooter.tsx
+resources/js/components/shell/SidebarNavItem.tsx
+resources/js/components/shell/SidebarSection.tsx
+resources/js/components/shell/RecordsSearch.tsx
+```
+
+## Visual acceptance question
+
+> Does the Employee Portal now feel like one deliberate visual and interaction system rather than a collection of individually styled components?
+
+```text
+SOURCE-LEVEL ANSWER: YES
+BROWSER-VISIBLE CONFIRMATION: NOT OBSERVED
+```
+
+The source answer is YES because typography, spacing, operational records, semantic color, interaction states, navigation hierarchy, and accessibility now share repeatable roles rather than isolated local treatments.
+
+## Known limitations
+
+- TypeScript/build execution remains blocked by repository checkout DNS;
+- browser runtime is not available;
+- rendered typography/density balance is not observed;
+- rendered color contrast is not measured;
+- keyboard traversal and focus restoration are source-reviewed but not runtime-observed;
+- screen-reader output is not observed;
+- memo focus trapping/background behavior remains runtime-unverified;
+- full responsive viewport program has not begun;
+- Phase 4 anti-AI-slop runtime critique has not begun.
+
+## Phase 3 classification
+
+```text
+SOURCE CANDIDATE — RUNTIME NOT OBSERVED
+```
+
+## Stop boundary
+
+```text
+PHASE 3 COMPLETE AT SOURCE-CANDIDATE LEVEL
+
+DO NOT START:
+EUI-S17
+EUI-S18
+EUI-S19
+EUI-S20
+EUI-S21
+EUI-S22
+
+NEXT:
+PHASE 4 — RESPONSIVE QA & FINAL ACCEPTANCE
+
+PHASE 4 STARTED:
+NO
+```
+
+---

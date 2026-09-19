@@ -1821,3 +1821,31 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Full keyboard, screen-reader, rendered-focus, zoom, runtime modal, and measured contrast verification remain NOT OBSERVED.
 - No WCAG compliance claim is made.
 - No backend/auth/route/data/Public Portal/Phase 1/Phase 2 functional behavior changed.
+
+
+## 2026-09-19 — Employee UI Session 3 / Phase 3 closure
+
+### `docs: record employee ui phase 3 evidence`
+
+- Phase 3 start: `8d85f8fcc984b44f327670c2b9d81472c2b0803a`.
+- Pre-closure HEAD: `c357edf4d842b8228773072e6e85481fd1e8a0d6`.
+- Final executable Phase 3 candidate: `7330514c7ff44b197eae1a8aca8777e8566d3c0d`.
+- EUI-S11 through EUI-S16: source PASS; runtime NOT OBSERVED.
+- EUI-S16 documentation recorded separately in `2b68d11a83d3194b36c7ce5b92ec64b17253b567`.
+- Closure corrections:
+  - `e3bb8ba0f8153a2f9dbaa0179922d972d044d282` — align remaining typography/progress-value integration;
+  - `f021c7f4e31d41f92b0c20a6e8474ca881808853` — align navigation/disclosure/search targets around 44px;
+  - `7330514c7ff44b197eae1a8aca8777e8566d3c0d` — align sidebar functional-label and search-support typography.
+- Final source QA: typography PASS; spacing/density PASS; tables/lists/records PASS; color/urgency PASS; interaction-state PASS; accessibility PASS.
+- Accessibility counts: positive tabindex 0; clickable div controls 0; clickable span controls 0; fake role=button 0; invalid aria-controls 0; invalid aria-labelledby 0 after component-prop resolution.
+- Pagination PASS: labelled nav, real links only, disabled non-interactive states, current page communicated.
+- Progressbar PASS: role/min/max/now/name and visible value use the same clamped progress.
+- Records Search source focus-return path PASS; runtime focus behavior NOT OBSERVED.
+- Conditional live workflow status semantics PASS; static notification content remains non-live.
+- Pending memo dialog semantics PASS at source level; runtime focus trapping remains NOT OBSERVED.
+- Phase 1 dashboard composition and Phase 2 navigation/workspace architecture preserved.
+- Anti-AI-slop integration review PASS: no gradients/glassmorphism/new badge proliferation/movement-heavy effects/card-grid regression.
+- Responsive source safety PASS; Phase 4 breakpoint/runtime QA NOT STARTED.
+- Final build/typecheck attempt BLOCKED because checkout cannot resolve `github.com`; runtime NOT OBSERVED; no CI status/workflow run attached.
+- Phase 3 classification: **SOURCE CANDIDATE — RUNTIME NOT OBSERVED**.
+- Phase 4 / EUI-S17 through EUI-S22: **NOT STARTED**.
