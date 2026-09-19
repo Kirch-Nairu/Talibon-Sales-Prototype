@@ -20,11 +20,11 @@ function CorrespondenceRow({ row }: { row: Row }) {
     const content = <>
         <div className="flex flex-wrap items-start justify-between gap-2">
             <div className="min-w-0 flex-1">
-                <div className="break-all text-[11px] font-bold uppercase tracking-wide text-blue-700 dark:text-blue-300">{row.reference}</div>
-                <div className="mt-0.5 text-sm font-semibold leading-5 text-slate-950 dark:text-slate-100">{row.subject}</div>
-                <div className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{row.sender} · {row.office}</div>
+                <div className="employee-metadata break-all font-bold text-blue-700 dark:text-blue-300">{row.reference}</div>
+                <div className="employee-record-title mt-0.5 text-slate-950 dark:text-slate-100">{row.subject}</div>
+                <div className="employee-metadata mt-0.5 text-slate-500 dark:text-slate-400">{row.sender} · {row.office}</div>
             </div>
-            <div className="shrink-0 text-right text-xs">
+            <div className="employee-metadata shrink-0 text-right">
                 <div className="font-semibold text-slate-600 dark:text-slate-300">{humanize(row.lifecycle)}</div>
                 <div className="mt-0.5 text-slate-500 dark:text-slate-400">{formatDate(row.occurredAt)}</div>
             </div>
@@ -32,8 +32,8 @@ function CorrespondenceRow({ row }: { row: Row }) {
     </>;
 
     return row.url
-        ? <Link href={row.url} className="block px-4 py-2.5 transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500 dark:hover:bg-slate-800/40 sm:px-5">{content}</Link>
-        : <article className="px-4 py-2.5 sm:px-5">{content}</article>;
+        ? <Link href={row.url} className="employee-record-row block transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/40">{content}</Link>
+        : <article className="employee-record-row">{content}</article>;
 }
 
 export default function RecentCorrespondence({
@@ -78,7 +78,7 @@ export default function RecentCorrespondence({
         />
         <div className="divide-y divide-slate-100 dark:divide-slate-700">
             {rows.map((row) => <CorrespondenceRow key={row.key} row={row} />)}
-            {rows.length === 0 ? <div className="px-5 py-6 text-center text-sm text-slate-500 dark:text-slate-400">No recent correspondence in this dashboard scope.</div> : null}
+            {rows.length === 0 ? <div className="employee-empty-state employee-body-text text-slate-500 dark:text-slate-400">No recent correspondence in this dashboard scope.</div> : null}
         </div>
     </section>;
 }
