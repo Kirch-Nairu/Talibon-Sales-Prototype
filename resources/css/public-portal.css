@@ -9,6 +9,8 @@
     --public-type-meta: .75rem;
     --public-frame-max: 1680px;
     --public-page-gutter: clamp(1.375rem, 2.5vw, 2.5rem);
+    --public-focus-ring: #1769aa;
+    --public-focus-on-dark: #f0c85a;
 }
 
 .public-content {
@@ -84,8 +86,8 @@
 
 .public-appearance-trigger {
     display: inline-flex;
-    width: 42px;
-    min-height: 42px;
+    width: 44px;
+    min-height: 44px;
     cursor: pointer;
     align-items: center;
     justify-content: center;
@@ -101,7 +103,7 @@
 }
 
 .public-appearance-trigger:focus-visible {
-    outline: 2px solid var(--municipal-blue);
+    outline: 3px solid var(--public-focus-ring);
     outline-offset: 2px;
 }
 
@@ -177,7 +179,15 @@
 }
 
 .public-menu-button:hover { background: #eef3f8; }
+.public-menu-button[aria-expanded="true"] {
+    background: #e5edf5;
+    color: var(--municipal-navy);
+}
 .dark .public-menu-button:hover { background: #1b2b40; }
+.dark .public-menu-button[aria-expanded="true"] {
+    background: #243750;
+    color: #f8fbff;
+}
 
 .public-navigation {
     max-height: 70dvh;
@@ -221,6 +231,39 @@
 
 .dark .public-nav-link:hover,
 .dark .public-nav-link-active { color: #eef4fa; }
+
+/* Public interaction states: consistent keyboard focus without changing IA. */
+.public-skip-link:focus-visible,
+.public-brand:focus-visible,
+.public-login-link:focus-visible,
+.public-menu-button:focus-visible,
+.public-nav-link:focus-visible,
+.public-primary-action:focus-visible,
+.public-secondary-action:focus-visible,
+.public-info-links a:focus-visible,
+.public-footer-links a:focus-visible,
+.public-footer-login:focus-visible {
+    outline: 3px solid var(--public-focus-ring);
+    outline-offset: 3px;
+}
+
+.public-nav-link:focus-visible,
+.public-brand:focus-visible {
+    outline-offset: 2px;
+}
+
+.public-hero .public-primary-action:focus-visible,
+.public-hero .public-secondary-action:focus-visible,
+.public-footer a:focus-visible {
+    outline-color: var(--public-focus-on-dark);
+}
+
+.dark .public-appearance-trigger:focus-visible,
+.dark .public-login-link:focus-visible,
+.dark .public-menu-button:focus-visible,
+.dark .public-nav-link:focus-visible {
+    outline-color: var(--public-focus-on-dark);
+}
 
 .public-mobile-appearance {
     border-top: 1px solid var(--municipal-border);
@@ -303,6 +346,7 @@
 }
 
 .public-primary-action:hover { background: #eef4fa; }
+.public-primary-action:active { background: #dfeaf5; }
 
 .public-secondary-action {
     border: 1px solid rgba(255, 255, 255, .28);
@@ -310,6 +354,7 @@
 }
 
 .public-secondary-action:hover { border-color: rgba(255, 255, 255, .55); }
+.public-secondary-action:active { background: rgba(255, 255, 255, .1); }
 
 .public-hero-landscape {
     position: relative;
@@ -423,10 +468,13 @@
     background: #f5f8fb;
     color: var(--municipal-blue);
 }
+.public-quick-access-link:active {
+    background: #e9f0f6;
+}
 
 .public-quick-access-link:focus-visible {
-    outline: 2px solid var(--municipal-blue);
-    outline-offset: -2px;
+    outline: 3px solid var(--public-focus-ring);
+    outline-offset: -3px;
 }
 
 .dark .public-quick-access-link {
@@ -582,7 +630,7 @@
 }
 
 .public-service-action:focus-visible {
-    outline: 2px solid var(--municipal-blue);
+    outline: 3px solid var(--public-focus-ring);
     outline-offset: 3px;
 }
 
@@ -686,7 +734,8 @@
     font-weight: 600;
 }
 
-.public-info-links a:hover { text-decoration: underline; }
+.public-info-links a:hover,
+.public-info-links a:active { text-decoration: underline; }
 .dark .public-info-links a { color: #93c5fd; }
 
 /* Official information — editorial publishing and public-record structure. */
@@ -894,7 +943,8 @@
     font-size: 13px;
 }
 
-.public-footer-links a:hover { color: white; text-decoration: underline; }
+.public-footer-links a:hover,
+.public-footer-links a:active { color: white; text-decoration: underline; }
 
 .public-footer-access > p {
     max-width: 420px;
@@ -918,6 +968,7 @@
 }
 
 .public-footer-login:hover { border-color: rgba(255, 255, 255, .55); }
+.public-footer-login:active { background: rgba(255, 255, 255, .08); }
 
 .public-footer-contact {
     margin-top: 24px;
@@ -1126,6 +1177,7 @@
     .public-about-copy h2 { font-size: 21px; }
     .public-about-description { font-size: 14px; }
     .public-info-links { display: grid; gap: 0; }
+    .public-info-links a { min-height: 44px; }
     .public-info-links a + a { border-top: 1px solid var(--municipal-border); }
 
     .public-official-header { padding: 24px 0 20px; }
@@ -1152,12 +1204,23 @@
 
     .public-footer-grid { grid-template-columns: 1fr; gap: 26px; padding-block: 30px 24px; }
     .public-footer-links { border-top: 1px solid rgba(255, 255, 255, .14); padding-top: 24px; }
-    .public-footer-links a { min-height: 38px; }
+    .public-footer-links a { min-height: 44px; }
     .public-footer-access { grid-column: auto; border-top: 1px solid rgba(255, 255, 255, .14); padding-top: 24px; }
     .public-footer-login { min-height: 44px; }
     .public-footer-bottom { flex-direction: column; align-items: flex-start; gap: 4px; padding-block: 14px 18px; }
 
     .public-portal [id] { scroll-margin-top: 78px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .public-appearance-trigger,
+    .public-login-link,
+    .public-nav-link,
+    .public-primary-action,
+    .public-secondary-action,
+    .public-quick-access-link {
+        transition-duration: 0.01ms;
+    }
 }
 
 @media (max-width: 390px) {

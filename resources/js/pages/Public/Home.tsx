@@ -15,7 +15,7 @@ export default function Home({ appName, authenticated, content }: Props) {
     return <>
         <Head title={`One Talibon — ${appName}`} />
         <div className="public-portal min-h-screen bg-[var(--municipal-canvas)] text-slate-900 dark:bg-[#0d1624] dark:text-slate-100">
-            <a href="#public-content" className="sr-only z-[80] rounded bg-white p-3 text-blue-900 focus:not-sr-only focus:fixed focus:left-4 focus:top-4">Skip to content</a>
+            <a href="#public-content" className="public-skip-link sr-only z-[80] rounded bg-white p-3 text-blue-900 focus:not-sr-only focus:fixed focus:left-4 focus:top-4">Skip to main content</a>
             <PublicHeader authenticated={authenticated} />
             <main id="public-content" tabIndex={-1}>
                 <div className="public-content">

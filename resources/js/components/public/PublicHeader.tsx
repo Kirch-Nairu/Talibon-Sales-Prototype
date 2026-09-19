@@ -18,15 +18,24 @@ export const publicLinks = [
 export default function PublicHeader({ authenticated }: Props) {
     const [open, setOpen] = useState(false);
     const trigger = useRef<HTMLButtonElement>(null);
+    const appearanceMenu = useRef<HTMLDetailsElement>(null);
 
     useEffect(() => {
-        if (!open) return;
         const escape = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') {
+            if (event.key !== 'Escape') return;
+
+            if (open) {
                 setOpen(false);
                 trigger.current?.focus();
             }
+
+            if (appearanceMenu.current?.open) {
+                appearanceMenu.current.open = false;
+                const summary = appearanceMenu.current.querySelector('summary');
+                if (summary instanceof HTMLElement) summary.focus();
+            }
         };
+
         window.addEventListener('keydown', escape);
         return () => window.removeEventListener('keydown', escape);
     }, [open]);
@@ -39,8 +48,8 @@ export default function PublicHeader({ authenticated }: Props) {
             </a>
 
             <div className="public-header-actions">
-                <details className="public-appearance-menu hidden lg:block">
-                    <summary className="public-appearance-trigger" aria-label="Appearance settings" title="Appearance settings">
+                <details ref={appearanceMenu} className="public-appearance-menu hidden lg:block">
+                    <summary className="public-appearance-trigger" title="Appearance settings">
                         <Sun size={16} aria-hidden="true" />
                         <span className="sr-only">Appearance settings</span>
                     </summary>
@@ -61,7 +70,7 @@ export default function PublicHeader({ authenticated }: Props) {
                     type="button"
                     onClick={() => setOpen(!open)}
                     className="public-menu-button lg:hidden"
-                    aria-label={open ? 'Close menu' : 'Open menu'}
+                    aria-label={open ? 'Close public navigation' : 'Open public navigation'}
                     aria-expanded={open}
                     aria-controls="public-navigation"
                 >

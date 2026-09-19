@@ -1442,3 +1442,21 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Local verification attempt: repository clone was attempted in the execution environment and was **BLOCKED** because `github.com` could not be resolved. Therefore build, TypeScript typecheck, runtime/browser, viewport screenshots, console inspection, 200% zoom, keyboard, and light/dark runtime checks remain **NOT OBSERVED**.
 - Acceptance split: source-responsive candidate **PASS**; runtime-responsive acceptance **NOT OBSERVED**; overall UI-S7 acceptance **NOT OBSERVED** per harness rules.
 - UI-S8 remains **NOT STARTED**.
+## 2026-09-19 — Jr/AJ public UI UI-S8 accessibility and interaction states
+
+### `ui: strengthen public accessibility states`
+
+- Working branch: `UI/Jr-and-Aj`; exact parent SHA: `fd92e7d53bb5af5b55030152c149bdc197c43d5a`.
+- Scope: **public interaction semantics/accessibility states only** under KIKIAM UI HARNESS V1. UI-S1 through UI-S7 IA, typography, identity, and responsive composition remain intact. UI-S9 theme verification is not started.
+- Semantic audit: public navigation remains anchors; mobile disclosure remains a native button; desktop appearance remains native `details/summary`; appearance choices remain native buttons with `aria-pressed`; no clickable non-interactive public elements were discovered.
+- Skip navigation: label becomes `Skip to main content`; destination remains the unique `#public-content` main landmark with `tabIndex={-1}`.
+- Mobile navigation: accessible trigger name becomes `Open public navigation` / `Close public navigation`; existing `aria-expanded` and `aria-controls` remain accurate; an expanded visual state is added; no modal semantics or focus trap is introduced.
+- Escape behavior: the existing mobile-nav Escape behavior is preserved and desktop appearance disclosure can now also close on Escape with focus returned to its summary.
+- Theme control: group label becomes `Appearance preference`; `aria-pressed` remains the selected-state mechanism; public-surface choice buttons rise to a 44px minimum target. Full theme visual verification remains UI-S9.
+- Focus system: coherent 3px focus-visible outlines are added/refined across skip, brand, navigation, employee access, hero actions, Quick Access, service actions, About/contact links, and footer links. Gold is used on dark/navy surfaces and municipal blue on light surfaces.
+- Touch targets: appearance trigger 42→44px; public appearance buttons 44px minimum; mobile About/contact links 44px; mobile footer public links 38→44px. Existing mobile menu/hero/Quick Access/service/footer-login controls already meet the target.
+- Motion: current UI uses only short color transitions; targeted reduced-motion CSS collapses those durations without adding new animation.
+- NOT APPLICABLE: current-section tracking, disabled controls, loading/busy states, public form states, and editorial record actions without real destinations.
+- Documentation: `Jayr-Aj-docs.md` is updated in this same candidate.
+- Pre-publication source verification: interactive inventory, semantics, ARIA/tabIndex, skip target, DOM order, focus CSS, touch targets, mobile-nav semantics, theme-control semantics, interaction states, and source contrast review **PASS**. Measured contrast/runtime keyboard/zoom/screen-reader/browser evidence remain **NOT OBSERVED**.
+- Backend/auth/database/API/routing/content IA impact: **NONE**.

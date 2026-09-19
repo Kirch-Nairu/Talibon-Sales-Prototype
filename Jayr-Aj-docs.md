@@ -1153,6 +1153,162 @@ ui: refine public responsive composition
 Build, typecheck, browser rendering, screenshots, 200% zoom, keyboard, console, and theme checks remain unresolved because an executable checkout could not be obtained in this environment.
 
 ---
+
+# UI-S8 — Accessibility + Interaction States
+
+## Starting point
+
+`fd92e7d53bb5af5b55030152c149bdc197c43d5a`
+
+## Interactive-element inventory
+
+Public controls discovered:
+
+- skip-to-main-content link;
+- One Talibon brand/home anchor;
+- public section navigation anchors;
+- desktop appearance disclosure using native `details/summary`;
+- System / Light / Dark appearance buttons;
+- Employee Login / Employee Portal route link;
+- mobile public-navigation toggle button;
+- hero primary and secondary anchors;
+- three Quick Access anchors;
+- Municipal Service destination anchors;
+- About/contact anchors;
+- footer public-information anchors;
+- footer Employee Login / Employee Portal route link.
+
+News, document, and project records intentionally have no actions because UI-S5 did not create fake destinations.
+
+## Semantic-control findings
+
+- navigation uses anchors;
+- mobile expand/collapse uses a native button;
+- appearance choices use native buttons;
+- desktop appearance uses native `details/summary` rather than custom ARIA disclosure semantics;
+- no `div onClick` or `span onClick` public controls were discovered;
+- no fake link/button roles were introduced.
+
+## ARIA findings
+
+- mobile navigation trigger retains accurate `aria-expanded` and `aria-controls="public-navigation"`;
+- mobile trigger accessible name is refined to `Open public navigation` / `Close public navigation`;
+- appearance-choice group is labelled `Appearance preference`;
+- each appearance button communicates the current state with `aria-pressed`;
+- redundant `aria-label` on the appearance summary is removed because screen-reader-only text already provides the name;
+- no `aria-current` is added because the portal has no reliable active-section tracker;
+- decorative control icons remain `aria-hidden="true"`.
+
+## tabIndex / keyboard-order findings
+
+The only explicit tabindex in the public homepage is `tabIndex={-1}` on the unique main-content skip destination. No positive tabindex values are used.
+
+DOM interaction order remains source-driven; UI-S8 introduces no CSS ordering or visual/focus-order divergence.
+
+## Skip-navigation changes
+
+The existing destination remains `#public-content` on the single `<main>` landmark. The visible label changes from `Skip to content` to `Skip to main content`, and the focused skip link now participates in the common visible focus system.
+
+## Focus-visible changes
+
+A common 3px public focus vocabulary is added for:
+
+- skip link;
+- brand/home link;
+- Employee Login;
+- mobile navigation trigger;
+- public navigation links;
+- hero actions;
+- Quick Access links;
+- service-row actions;
+- About/contact links;
+- footer links and Employee Access.
+
+Dark/navy surfaces use the existing gold family for focus outlines. Light surfaces use municipal blue. Quick Access retains an inset outline so focus is not clipped by its divided row container.
+
+## Hover / active changes
+
+Hover remains restrained. Keyboard focus is no longer dependent on hover styling.
+
+Small `:active` feedback is added to primary/secondary hero actions, Quick Access, footer employee access, and text-link groups without introducing movement or animation.
+
+## Touch-target changes
+
+- desktop appearance trigger increases 42px → 44px;
+- public appearance preference buttons use a 44px minimum height when rendered on the public surface;
+- mobile About/contact links increase to a 44px minimum;
+- mobile footer public links increase 38px → 44px;
+- existing mobile navigation, hero actions, Quick Access, service actions, and footer employee login already meet or exceed the public 44px target.
+
+## Mobile-navigation findings
+
+The navigation remains an ordinary inline disclosure rather than a modal overlay, so no focus trap or modal role is added.
+
+Open/closed state continues to use `aria-expanded`; the trigger now also has a persistent visual expanded state. Escape closes the open mobile navigation and returns focus to its trigger.
+
+## Appearance-control findings
+
+The existing `aria-pressed` model correctly communicates System / Light / Dark selection. UI-S8 does not perform full light/dark verification; that remains UI-S9.
+
+Escape handling is extended so an open desktop appearance disclosure can be closed from the keyboard and focus returns to its summary trigger.
+
+## Motion / reduced-motion findings
+
+The public portal contains short color transitions but no large movement, parallax, sliding, or decorative animation. A targeted `prefers-reduced-motion: reduce` rule collapses the duration of the public interactive color transitions without creating a broader animation framework.
+
+## Interaction states classified NOT APPLICABLE
+
+- current-section navigation state: NOT APPLICABLE — no active-section tracking exists;
+- disabled public controls: NOT APPLICABLE;
+- loading/busy states: NOT APPLICABLE;
+- public form states: NOT APPLICABLE;
+- news/document/project record actions: NOT APPLICABLE because no real destinations exist.
+
+## Contrast and reflow source findings
+
+Source contrast review: PASS for the presence and separation of explicit focus/link/button state colors; measured contrast remains NOT OBSERVED.
+
+No new fixed-height text controls or nowrap action labels are introduced. Existing 44px minimum-height controls can grow with content. Actual 200% zoom/reflow remains browser evidence and is NOT OBSERVED.
+
+## Files changed
+
+- `resources/js/pages/Public/Home.tsx`
+- `resources/js/components/public/PublicHeader.tsx`
+- `resources/js/components/AppearanceControl.tsx`
+- `resources/css/public-portal.css`
+- `Jayr-Aj-docs.md`
+- `docs/ENGINEERING_LOG.md`
+
+## Verification
+
+- Interactive-element inventory: PASS
+- Semantic control inspection: PASS
+- ARIA source audit: PASS
+- tabIndex source audit: PASS
+- Skip-navigation source audit: PASS
+- DOM-order source audit: PASS
+- Focus CSS source audit: PASS
+- Touch-target source audit: PASS
+- Mobile-nav source audit: PASS
+- Theme-control source audit: PASS
+- Interaction-state CSS audit: PASS
+- Source contrast review: PASS
+- Measured contrast: NOT OBSERVED
+- Build/typecheck: PENDING environment attempt
+- Runtime/browser: NOT OBSERVED
+- Tab / Shift+Tab walkthrough: NOT OBSERVED
+- Skip-link runtime activation: NOT OBSERVED
+- Mobile navigation keyboard runtime: NOT OBSERVED
+- Appearance control keyboard runtime: NOT OBSERVED
+- 200% zoom: NOT OBSERVED
+- Screen-reader smoke test: NOT OBSERVED
+- Console inspection: NOT OBSERVED
+
+## Commit
+
+Implementation SHA will be recorded after post-commit verification.
+
+---
 # Current UI Branch State
 
 UI-S7 implementation candidate:
@@ -1290,10 +1446,11 @@ Status: IMPLEMENTED
 Runtime acceptance: PENDING
 
 UI-S8 — Accessibility + Interaction States
-Status: NEXT
+Status: IMPLEMENTED
+Runtime acceptance: PENDING
 
 UI-S9 — Light / Dark Verification
-Status: NOT STARTED
+Status: NEXT
 
 UI-S10 — Full Runtime Critique + Anti-AI-Slop Cleanup
 Status: NOT STARTED
@@ -1324,7 +1481,7 @@ As UI work continues:
 # Next Planned Slice
 
 ```text
-UI-S8 — Accessibility + Interaction States
+UI-S9 — Light / Dark Verification
 ```
 
-The next goal is to audit keyboard, focus, interaction, semantic, and accessible-state behavior without changing the responsive information architecture established through UI-S7.
+The next goal is to verify the established public interface across light and dark themes without changing the accessibility interaction architecture established through UI-S8.
