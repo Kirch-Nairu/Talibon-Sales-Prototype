@@ -2841,3 +2841,78 @@ WAIT FOR NEXT SESSION / HANDOFF
 ```
 
 ---
+
+## SESSION 2 — PHASE 2: NAVIGATION & WORKSPACE EXPERIENCE
+
+### Phase authority
+
+```text
+Branch: masterlogin-UI-by-Jr-and-Aj
+Phase 2 starting SHA: fc387e60eb8bc74dfff0ace1a333fe56205d5a9c
+Phase 1 executable candidate: e70ca258cc123e5c05e2ee4675e661ae640f0bc6
+```
+
+Phase 1 dashboard composition remains protected.
+
+## EUI-S6 — Sidebar Hierarchy
+
+### Problem
+
+The expanded sidebar rendered Home, Work, Municipal Organization, Planning, Administration, and Municipal Systems with nearly equal section rhythm. Active navigation used a fully filled blue rounded row, causing the sidebar to read as a continuous stack of button-like items rather than a municipal workspace hierarchy. The 220px desktop width also left longer government labels unnecessarily tight.
+
+### Previous state
+
+- every group used almost identical spacing;
+- Home had both a Home group label and Home navigation item;
+- active route used a full blue fill plus ring/shadow;
+- section labels were 9px with heavy tracking;
+- expanded desktop sidebar was 220px.
+
+### Change
+
+- expanded desktop sidebar width changes 220px → 232px;
+- Home group label is hidden while the Home destination remains fully visible;
+- Home and Work are explicitly treated as primary navigation regions;
+- lower-priority groups receive restrained top separators;
+- group labels increase to 10px with less tracking for readability;
+- active route changes to a restrained white/10 background plus a structural left indicator;
+- inactive icons are slightly quieter and active icons remain clear;
+- icon-only collapsed navigation behavior and route semantics remain intact.
+
+### Reason
+
+Employees should identify daily work first while still retaining every legitimate municipal destination. Hierarchy is strengthened through grouping, separators, active indication, and readable labels rather than decoration.
+
+### Files changed
+
+```text
+resources/js/layouts/AppLayout.tsx
+resources/js/components/shell/PortalSidebar.tsx
+resources/js/components/shell/SidebarNavItem.tsx
+resources/js/components/shell/SidebarSection.tsx
+Jayr-Aj-docs.md
+docs/ENGINEERING_LOG.md
+```
+
+### Verification
+
+```text
+All navigation destinations retained: PASS
+Active aria-current preserved: PASS
+Compact sidebar preserved: PASS
+Public Portal files changed: NO
+Backend/routes/auth changed: NO
+Phase 1 dashboard component changed: NO
+Source review: PASS
+Runtime: NOT OBSERVED
+```
+
+### Known limitations
+
+Rendered label fit and long-sidebar scrolling still require browser validation.
+
+### Commit
+
+Recorded in final Phase 2 evidence.
+
+---

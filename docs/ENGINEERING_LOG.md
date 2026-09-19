@@ -1650,3 +1650,16 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - GitHub CI evidence: no combined status/workflow run attached to executable Phase 1 SHA.
 - Phase 1 classification: **SOURCE CANDIDATE — RUNTIME NOT OBSERVED**.
 - Phase 2 EUI-S6 through EUI-S10: **NOT STARTED**.
+
+## 2026-09-19 — Employee UI Phase 2 / EUI-S6 sidebar hierarchy
+
+### `ui: refine employee sidebar hierarchy`
+
+- Branch: `masterlogin-UI-by-Jr-and-Aj`; parent SHA: `fc387e60eb8bc74dfff0ace1a333fe56205d5a9c`.
+- Expanded sidebar width changes 220→232px to support municipal labels without becoming oversized.
+- Home group heading is removed as redundant; Home link remains visible.
+- Home/Work are treated as primary navigation; organization/planning/administration/systems receive restrained section separators.
+- Group-label readability increases from 9px / heavy tracking to 10px / reduced tracking.
+- Active navigation changes from full blue pill treatment to subtle background + left structural indicator while retaining `aria-current="page"`.
+- No destinations, permissions, routes, Phase 1 dashboard components, public UI, or backend behavior changed.
+- Source review PASS; runtime NOT OBSERVED.
