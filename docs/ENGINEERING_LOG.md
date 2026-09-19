@@ -1767,3 +1767,15 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Applied to dashboard composition, shared dashboard section headers, attention queue, schedule/deadlines, and workspace shortcuts.
 - No fixed heights, Phase 1 structural redesign, Phase 2 navigation restructure, Public Portal change, or backend change introduced.
 - Source density review PASS; runtime NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 3 / EUI-S13 operational records
+
+### `ui: refine employee operational records`
+
+- Executable EUI-S13 SHA: `36fad27e55cc940e9b7c3f4ccef305bc25d6bc69`.
+- WorkItemList removes four badge-like state chips and uses one inline state hierarchy for priority/status/due/action.
+- StaffWorkloadTable is now a real semantic table with thead/tbody, scoped column headers, and employee row headers.
+- MeetingRegister changes from card grid to divided operational list without changing meeting data.
+- Recent correspondence, recent documents, and project rows now reuse the employee record title/metadata/spacing vocabulary.
+- No routes, record logic, business state, backend, Public Portal, or Phase 1/2 structural decisions changed.
+- Source record-structure review PASS; runtime NOT OBSERVED.

@@ -3663,3 +3663,92 @@ ui: align employee portal spacing density
 ```
 
 ---
+
+## EUI-S13 — Tables / Lists / Operational Records
+
+### Problem / audit findings
+
+Operational information used several unrelated presentation patterns:
+
+- WorkItemList used four small bordered/badge treatments for priority, status, due state, and required action;
+- Staff workload visually behaved like a table but used generic grid divs;
+- Meeting records were two-column rounded cards despite being linear records;
+- Recent documents, correspondence, and projects used slightly different title/metadata/spacing hierarchies.
+
+### Visual-system decision
+
+Use the weakest sufficient structure:
+
+```text
+Relational comparison → semantic table
+Linear operational scanning → divided list / row
+Status/due/priority → concise inline text unless a container is genuinely necessary
+Record title → primary visual anchor
+Metadata → subordinate
+Action → quiet but discoverable
+```
+
+### Change
+
+- WorkItemList:
+  - outer panel aligned to municipal panel pattern;
+  - title/count/table headings use employee typography/spacing roles;
+  - priority/status/due/action badges removed;
+  - state becomes one inline metadata line;
+  - next action loses unnecessary filled mini-panel treatment;
+  - Open action becomes a simple text action;
+  - empty state becomes compact.
+- StaffWorkloadTable:
+  - converted from visual grid divs to semantic `table / thead / tbody / th / td`;
+  - column headers use `scope="col"`;
+  - employee row headers use `scope="row"`;
+  - real horizontal overflow is retained for narrow source widths.
+- MeetingRegister:
+  - two-column card grid replaced by a single divided operational list;
+  - status remains plain semantic text rather than a pill;
+  - meeting metadata, participants, documents, and agenda keep the same content.
+- RecentCorrespondence / RecentDocuments / ProjectPortfolio:
+  - shared employee record-title, metadata, spacing, and empty-state roles applied.
+
+### Files changed
+
+```text
+resources/js/components/work-queue/WorkItemList.tsx
+resources/js/components/work-queue/StaffWorkloadTable.tsx
+resources/js/components/meetings/MeetingRegister.tsx
+resources/js/components/dashboard/RecentCorrespondence.tsx
+resources/js/components/dashboard/RecentDocuments.tsx
+resources/js/components/dashboard/ProjectPortfolio.tsx
+Jayr-Aj-docs.md
+docs/ENGINEERING_LOG.md
+```
+
+### Verification
+
+```text
+Staff workload semantic table: PASS
+thead/tbody present: PASS
+Column/row header scope present: PASS
+Work-item badge cluster removed: PASS
+Meeting card grid removed: PASS
+Record content/data changed: NO
+Fake fields/statuses introduced: NO
+Source record hierarchy review: PASS
+Runtime record scanning: NOT OBSERVED
+```
+
+### Known limitations
+
+Other specialized feature pages may retain their own record structures where they are not shared or where changing them would become an unrelated redesign.
+
+### Commits
+
+```text
+f938477339befec51f181775807a7c280a6a17c5
+ui: refine employee operational records
+
+36fad27e55cc940e9b7c3f4ccef305bc25d6bc69
+ui: align employee record lists
+```
+
+---
