@@ -14,7 +14,9 @@ export default function AttentionQueue({
     href?: string;
     linkLabel?: string;
 }) {
-    return <BoundedOperationalPanel headingId="dashboard-attention-work">
+    const useBoundedQueue = items.length > 5;
+
+    return <BoundedOperationalPanel headingId="dashboard-attention-work" bounded={useBoundedQueue}>
         <DashboardSectionHeader
             headingId="dashboard-attention-work"
             icon={<AlertCircle size={16} className="text-amber-700 dark:text-amber-300" aria-hidden="true" />}
@@ -23,7 +25,7 @@ export default function AttentionQueue({
             href={href}
             linkLabel={linkLabel}
         />
-        <BoundedOperationalPanelBody>
+        <BoundedOperationalPanelBody scrollable={useBoundedQueue}>
             <div className="hidden grid-cols-[minmax(0,2fr)_minmax(0,.85fr)_minmax(0,1fr)_minmax(0,.9fr)] gap-3 border-b border-slate-200 bg-slate-50 px-5 py-2 text-[11px] font-bold uppercase tracking-wide text-slate-500 dark:border-slate-700 dark:bg-slate-900/30 dark:text-slate-400 @min-[760px]:grid @min-[1120px]:sticky @min-[1120px]:top-0 @min-[1120px]:z-10">
                 <div>Record</div><div>Status</div><div>Assigned</div><div>Due</div>
             </div>
@@ -43,7 +45,7 @@ export default function AttentionQueue({
                         <span className="@min-[760px]:hidden">Due: </span><span className="break-words">{formatDate(item.dueAt)}</span>
                     </div>
                 </Link>)}
-                {items.length === 0 ? <div className="px-5 py-6 text-center text-sm text-slate-500 dark:text-slate-400">No transaction records currently require attention in this dashboard scope.</div> : null}
+                {items.length === 0 ? <div className="px-4 py-4 text-sm text-slate-500 dark:text-slate-400 sm:px-5">No work currently requires attention in this scope.</div> : null}
             </div>
         </BoundedOperationalPanelBody>
     </BoundedOperationalPanel>;

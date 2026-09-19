@@ -1590,3 +1590,15 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Added only a derived count of active categories; no new data or fake KPI was introduced.
 - Sidebar/top utility bar/backend/auth/routes remain untouched.
 - Source review PASS; build/typecheck/runtime NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 1 / EUI-S3 attention empty states
+
+### `ui: improve employee work empty states`
+
+- Parent SHA: `865a685dfdd57a3d9259b3e9e0acc8f8a8fbdcc9`.
+- Root cause was the shared 22rem `BoundedOperationalPanel` height applying even to zero-record queues.
+- Bounded height and scrolling are now explicit opt-in behaviors.
+- AttentionQueue opts into bounded scrolling only for more than five real records; empty/small queues use natural flow.
+- Empty message compressed to operational copy without invented action controls.
+- Shared component API change is UI-only and preserves existing semantics.
+- Source review PASS; build/typecheck/runtime NOT OBSERVED.

@@ -2359,3 +2359,60 @@ Exact visual prominence between zero and non-zero values still requires browser 
 Recorded in final Phase 1 evidence.
 
 ---
+
+## EUI-S3 — Work Requiring Attention
+
+### Problem
+
+The shared bounded panel forced a 22rem desktop height and nested scrolling even when the Work Requiring Attention queue was empty. This turned a useful zero state into a large dead zone.
+
+### Previous state
+
+- fixed 22rem panel at large dashboard widths;
+- scrollable body regardless of record count;
+- empty queue still consumed the full panel height;
+- empty copy was centered inside a large blank region.
+
+### Change
+
+- `BoundedOperationalPanel` now supports opt-in bounded height instead of forcing it universally;
+- `BoundedOperationalPanelBody` now supports opt-in scrolling;
+- Work Requiring Attention uses bounded/scrollable behavior only when more than five real records are present;
+- empty and small queues use natural page flow;
+- empty-state copy is compact and operational: `No work currently requires attention in this scope.`;
+- no record, action, state, or route was fabricated.
+
+### Reason
+
+Empty state must reduce visual weight while real operational lists remain usable when they grow.
+
+### Files changed
+
+```text
+resources/js/components/dashboard/BoundedOperationalPanel.tsx
+resources/js/components/dashboard/AttentionQueue.tsx
+Jayr-Aj-docs.md
+docs/ENGINEERING_LOG.md
+```
+
+### Verification
+
+```text
+Empty queue fixed-height dependency removed: PASS
+Large queue bounded behavior preserved: PASS
+Record/table semantics changed: NO
+Fake records/actions introduced: NO
+Source inspection: PASS
+Build/typecheck: NOT OBSERVED
+Runtime: NOT OBSERVED
+```
+
+### Known limitation
+
+The exact threshold and visible row density still need browser/runtime review.
+
+### Commit
+
+Recorded in final Phase 1 evidence.
+
+---
