@@ -44,7 +44,14 @@ export default function ProjectPortfolio({ projects }: { projects: DashboardProj
                     <div className={`employee-metadata shrink-0 font-semibold ${statusClass[project.status]}`}>{statusLabel[project.status]}</div>
                 </div>
                 <div className="mt-2 flex items-center gap-3">
-                    <div className="h-1.5 min-w-0 flex-1 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700" aria-label={`${project.progress}% complete`}>
+                    <div
+                        className="h-1.5 min-w-0 flex-1 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700"
+                        role="progressbar"
+                        aria-label={`${project.title} progress`}
+                        aria-valuemin={0}
+                        aria-valuemax={100}
+                        aria-valuenow={Math.max(0, Math.min(100, project.progress))}
+                    >
                         <div className="h-full bg-[#1769aa] dark:bg-blue-400" style={{ width: `${Math.max(0, Math.min(100, project.progress))}%` }} />
                     </div>
                     <div className="employee-metadata w-10 text-right font-semibold tabular-nums text-slate-600 dark:text-slate-300">{project.progress}%</div>
