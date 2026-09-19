@@ -1614,3 +1614,18 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - One-sided/empty data stacks naturally and uses compact empty copy.
 - No meeting/deadline content, Calendar route, or workflow behavior changed.
 - Source responsive review PASS; build/typecheck/runtime NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 1 / EUI-S5 dashboard workspace composition
+
+### `ui: restructure employee dashboard workspace`
+
+- Parent SHA: `70e8b7f9b23e5c91a4d839474a6223435d868453`.
+- Dashboard shell widens 1480→1560px to use employee desktop width more intentionally.
+- Priority work and Schedule become the first main two-column operational relationship at 1.2fr/.8fr.
+- Personal metric group is separated as `My Work` and paired with existing Workspace Links at 1.25fr/.75fr.
+- Workspace Links is removed from the priority-work column, eliminating the previous stacked-left/blank-right relationship.
+- Office/executive/system context remains below under a clearer operating-context divider; ProjectPortfolio remains the active municipal-workstream record.
+- Conditional context grid avoids rendering an empty structural grid for roles without broader context panels.
+- Reference/history details remains unchanged.
+- No sidebar, top-bar, backend, route, auth, permission, data, or Phase 2 work introduced.
+- Source composition review PASS; runtime visual acceptance NOT OBSERVED.

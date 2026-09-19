@@ -2474,3 +2474,84 @@ The four-record preview density and desktop column ratio still require browser v
 Recorded in final Phase 1 evidence.
 
 ---
+
+## EUI-S5 — Main Dashboard Grid / Empty-State Composition
+
+### Problem
+
+The dashboard's major components were individually functional but compositionally disconnected:
+
+- Work Requiring Attention and Workspace Links were stacked together in the left column;
+- Schedule occupied the entire right column;
+- My Work appeared later inside broader operating-context metrics;
+- related employee tasks did not read as one intentional work area;
+- the 1480px shell left avoidable unused width on large employee workspaces.
+
+### Change
+
+The dashboard is recomposed into four deliberate layers:
+
+```text
+1. Immediate Attention
+
+2. Priority Work | Schedule & Deadlines
+
+3. My Work | Workspace Links
+
+4. Office / Municipal Context
+   + Active Projects
+   + Reference / History
+```
+
+Implementation details:
+
+- dashboard max width increases 1480px → 1560px;
+- primary work gets the wider 1.2fr column and schedule the .8fr column;
+- `personal` metric group is separated from broader office/executive context;
+- My Work and Workspace Links now share one intentional desktop row at 1.25fr/.75fr;
+- Workspace Links is no longer nested below the priority queue;
+- office/executive context metric groups remain in the broader operating-context region;
+- administrator SystemOverview remains in context and administrator links remain available;
+- ProjectPortfolio remains below context as the active municipal-workstream record;
+- Reference and History remains collapsed and unchanged.
+
+### Empty-state composition
+
+EUI-S3/EUI-S4 compact states now participate in the new grid without forcing fixed-height blank regions. Conditional context rendering avoids an empty metrics grid when the current role does not provide broader office/executive/system panels.
+
+### Reason
+
+The dashboard should visually express operational priority and related work relationships rather than look like independent cards placed sequentially.
+
+### Files changed
+
+```text
+resources/js/pages/Dashboard.tsx
+Jayr-Aj-docs.md
+docs/ENGINEERING_LOG.md
+```
+
+### Verification
+
+```text
+Existing components/data reused: PASS
+Sidebar redesigned: NO
+Top utility bar redesigned: NO
+Backend/API/routes changed: NO
+Phase 2 work started: NO
+Source composition review: PASS
+Build/typecheck: NOT OBSERVED
+Runtime: NOT OBSERVED
+```
+
+### Visual acceptance expectation
+
+The source-level structure is materially different from the Phase 1 starting point: redundant page framing is removed, attention is prioritized, empty states collapse, schedule no longer nests scrolling, My Work is paired with Workspace Links, and desktop relationships are rebalanced.
+
+Actual visual acceptance remains NOT OBSERVED until browser runtime is available.
+
+### Commit
+
+Recorded in final Phase 1 evidence.
+
+---
