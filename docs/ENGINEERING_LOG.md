@@ -1430,3 +1430,15 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Documentation: `Jayr-Aj-docs.md` is updated in this same candidate.
 - Verification before publication: source layout and breakpoint/style inspection **PASS**. Runtime viewport checks, build, typecheck, zoom, keyboard, theme, and console evidence remain **NOT OBSERVED**.
 - Schema/migration/dependency/content impact: **NONE**. Backend/internal behavior impact: **NONE**. UI-S8 work: **NOT STARTED**.
+## 2026-09-19 — Jr/AJ public UI UI-S7 verification evidence
+
+### `docs: record UI-S7 verification evidence`
+
+- Executable candidate SHA: `159eb52b50dd8e7aa91b337b50b56b3b02f776c0` on `UI/Jr-and-Aj`.
+- Exact UI-S7 implementation diff: 3 files — `resources/css/public-portal.css`, `Jayr-Aj-docs.md`, and `docs/ENGINEERING_LOG.md`.
+- Post-commit source audit **PASS**: no literal 1400px shell cap remains; 1680px frame and fluid gutter tokens are present; no CSS `order` or grid-area visual reordering is introduced; responsive source authorities are internally consistent with the UI-S7 plan.
+- Branch isolation **PASS**: candidate is 18 commits ahead of `main` and 0 behind at the executable SHA.
+- CI evidence: **NOT OBSERVED**. GitHub reports no combined statuses and no workflow runs for the executable candidate.
+- Local verification attempt: repository clone was attempted in the execution environment and was **BLOCKED** because `github.com` could not be resolved. Therefore build, TypeScript typecheck, runtime/browser, viewport screenshots, console inspection, 200% zoom, keyboard, and light/dark runtime checks remain **NOT OBSERVED**.
+- Acceptance split: source-responsive candidate **PASS**; runtime-responsive acceptance **NOT OBSERVED**; overall UI-S7 acceptance **NOT OBSERVED** per harness rules.
+- UI-S8 remains **NOT STARTED**.

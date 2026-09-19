@@ -1110,8 +1110,11 @@ DOM order, keyboard order, heading order, focus styles, and touch-target rules a
 
 - Source layout inspection: PASS
 - Breakpoint/style inspection: PASS
-- Implementation scope inspection: PENDING post-commit
-- Git diff inspection: PENDING post-commit
+- Source-responsive candidate: PASS
+- Implementation scope inspection: PASS
+- Git diff inspection: PASS
+- Branch isolation: PASS
+- Local repository checkout for verification: BLOCKED — execution environment could not resolve github.com
 - 1920px runtime: NOT OBSERVED
 - 1600px runtime: NOT OBSERVED
 - 1440px runtime: NOT OBSERVED
@@ -1130,14 +1133,40 @@ DOM order, keyboard order, heading order, focus styles, and touch-target rules a
 
 Source-responsive candidate is implemented, but runtime-responsive acceptance remains unresolved.
 
-## Commit
+## Implementation commit
 
-Implementation SHA will be recorded after post-commit verification.
+```text
+159eb52b50dd8e7aa91b337b50b56b3b02f776c0
+ui: refine public responsive composition
+```
+
+## Post-commit source audit
+
+- remaining literal `1400px` shell caps: 0;
+- shared `1680px` frame token present;
+- shared fluid gutter token present;
+- CSS `order` declarations: 0;
+- grid-area visual reordering: 0;
+- responsive authorities now resolve through `<=1199`, `<=1023`, `1024–1199`, `<=900`, `<=767`, and `<=390` rules;
+- implementation commit has no CI status or workflow run attached.
+
+Build, typecheck, browser rendering, screenshots, 200% zoom, keyboard, console, and theme checks remain unresolved because an executable checkout could not be obtained in this environment.
 
 ---
 # Current UI Branch State
 
-UI-S6 final executable candidate:
+UI-S7 implementation candidate:
+
+```text
+UI/Jr-and-Aj
+Implementation SHA: 159eb52b50dd8e7aa91b337b50b56b3b02f776c0
+Ahead of main at implementation: 18 commits
+Behind main: 0
+```
+
+The evidence finalization commit that updates this document is documentation-only and advances the branch after the implementation candidate.
+
+Historical UI-S6 final executable candidate:
 
 ```text
 UI/Jr-and-Aj
