@@ -489,8 +489,9 @@ docs/ENGINEERING_LOG.md
 ```text
 Source inspection: PASS
 Route/destination inspection: PASS
-Implementation scope inspection: PENDING post-commit
-Git diff inspection: PENDING post-commit
+Implementation scope inspection: PASS
+Git diff inspection: PASS
+Branch isolation: PASS
 Build/typecheck: NOT OBSERVED
 Runtime/browser: NOT OBSERVED
 Desktop runtime: NOT OBSERVED
@@ -502,20 +503,39 @@ Runtime acceptance remains unresolved until the application is actually rendered
 
 ## Commit
 
-Implementation SHA will be recorded in the UI-S4 evidence finalization update.
+```text
+77a10ccf209b53f81a3405e0f05271d36665b45d
+ui: improve municipal services information architecture
+```
+
+## Anti-AI-slop critique
+
+Source inspection confirms:
+
+- the section no longer resembles a generic feature-card grid;
+- service grouping exists to distinguish office/service guidance from public information;
+- no decorative per-service icons remain;
+- no badge or status color is used for visual decoration;
+- actions say what destination will open;
+- hierarchy is carried primarily by typography, grouping, dividers, and spacing;
+- no unsupported transaction depth was introduced.
+
+The remaining limitation is runtime visual proof, which is still not observed.
 
 ---
 
 # Current UI Branch State
 
-After UI-S3, the current working branch is:
+UI-S4 implementation candidate:
 
 ```text
 UI/Jr-and-Aj
-Head: 747e50b65b24b2c256e4e03921df19b13707ecb7
-Ahead of main: 8 commits
+Implementation SHA: 77a10ccf209b53f81a3405e0f05271d36665b45d
+Ahead of main at implementation: 10 commits
 Behind main: 0
 ```
+
+The evidence finalization commit that updates this document is documentation-only and advances the branch after the implementation candidate.
 
 Historical UI-S2 branch position was:
 
