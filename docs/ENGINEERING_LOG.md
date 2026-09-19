@@ -1629,3 +1629,24 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Reference/history details remains unchanged.
 - No sidebar, top-bar, backend, route, auth, permission, data, or Phase 2 work introduced.
 - Source composition review PASS; runtime visual acceptance NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Session 1 / Phase 1 evidence
+
+### `docs: record employee ui phase 1 evidence`
+
+- Repository: `Kirch-Nairu/Talibon-Sales-Prototype`; branch: `masterlogin-UI-by-Jr-and-Aj`.
+- Phase 1 start: `109fa0424a56872303ab3eeb4f659b2fc7651b69`.
+- Executable Phase 1 candidate: `e70ca258cc123e5c05e2ee4675e661ae640f0bc6`.
+- EUI-S1 `16b4dad298203790b7b2a5cf18c3800473de07ad` — employee work-context header.
+- EUI-S2 `865a685dfdd57a3d9259b3e9e0acc8f8a8fbdcc9` — priority-aware Immediate Attention.
+- EUI-S3 `ad3bc8f7b0417c78139f555cfa20374d53a0a548` — adaptive attention queue / empty state.
+- EUI-S4 `70e8b7f9b23e5c91a4d839474a6223435d868453` — natural-flow Schedule/Deadlines preview.
+- EUI-S5 `e70ca258cc123e5c05e2ee4675e661ae640f0bc6` — primary work/schedule + My Work/workspace composition.
+- Exact Phase 1 diff: 5 commits, 8 files; only employee dashboard UI plus the two documentation files.
+- Protected boundaries: no AppLayout/top-bar/sidebar/public-portal/backend/auth/route/database changes.
+- Responsive source review PASS; accessibility regression source review PASS; anti-AI-slop source review PASS.
+- Local verification environment: Git 2.47.3, Node 22.16.0, npm 10.9.2, PHP 8.4.23; Composer unavailable.
+- Exact branch clone attempt BLOCKED with `Could not resolve host: github.com`; therefore `npm run types:check`, `npm run build`, Laravel runtime, and browser visual verification are not observed.
+- GitHub CI evidence: no combined status/workflow run attached to executable Phase 1 SHA.
+- Phase 1 classification: **SOURCE CANDIDATE — RUNTIME NOT OBSERVED**.
+- Phase 2 EUI-S6 through EUI-S10: **NOT STARTED**.
