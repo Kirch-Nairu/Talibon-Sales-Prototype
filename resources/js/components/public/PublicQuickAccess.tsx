@@ -16,7 +16,7 @@ const quickLinks = [
     {
         href: '#transparency',
         title: 'Open public documents',
-        description: 'Transparency and published information',
+        description: 'Transparency and document previews',
         icon: FileText,
     },
 ] as const;

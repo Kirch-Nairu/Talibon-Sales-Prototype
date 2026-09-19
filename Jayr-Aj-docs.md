@@ -1577,6 +1577,214 @@ A repository checkout was attempted for the actual `npm run types:check` and `np
 Static source color-pair calculations provide additional evidence for the chosen role values, but do not replace real browser/theme/zoom/visual contrast verification.
 
 ---
+
+# UI-S10 — Full Runtime Critique + Anti-AI-Slop Cleanup
+
+## Phase
+
+Phase 4 — Final QA & Acceptance
+
+## Starting SHA
+
+`7ea299876a3748f08a6b6e647b0ccc809dd502fb`
+
+## Runtime environment attempt
+
+Observed toolchain in the execution environment:
+
+- Git 2.47.3;
+- Node 22.16.0 — matches repository `.nvmrc` expectation;
+- npm 10.9.2 — matches repository package-manager declaration;
+- PHP 8.4.23 — satisfies the deployment runbook recommendation;
+- Composer: unavailable in this environment.
+
+Actual branch checkout was attempted with:
+
+`git clone --branch UI/Jr-and-Aj --single-branch https://github.com/Kirch-Nairu/Talibon-Sales-Prototype.git`
+
+The checkout failed before application execution with `Could not resolve host: github.com`.
+
+Therefore:
+
+- build: BLOCKED by repository checkout/network resolution;
+- typecheck: BLOCKED by repository checkout/network resolution;
+- Laravel runtime: BLOCKED;
+- browser runtime: NOT OBSERVED;
+- console runtime: NOT OBSERVED.
+
+Per UI-S10 rules, runtime blockage did not trigger further speculative redesign.
+
+## Integrated source review
+
+The final public source was reviewed as one product rather than slice-by-slice. The integrated hierarchy remains:
+
+- civic header / public navigation;
+- task-first hero;
+- Quick Access citizen-task layer;
+- Municipal Services civic directory;
+- About Talibon local-context band;
+- News / Notices / Documents / Projects editorial records;
+- municipal footer with clearly separate Employee Access.
+
+All public anchors referenced by header, hero, Quick Access, service rows, About links, and footer resolve to existing page IDs. Employee Login/Portal points only to the existing `/login` or authenticated `/dashboard` route.
+
+## Problems discovered
+
+### MEDIUM — public-document Quick Access wording overstated the prototype
+
+Evidence: Quick Access described Public Documents as `Transparency and published information`, while the final document section explicitly states there are no downloadable/official published files and all document records are previews.
+
+User impact: the shortcut could imply a publication state that the prototype does not actually support.
+
+Smallest sufficient fix: change the supporting copy to `Transparency and document previews`.
+
+### LOW / COSMETIC — obsolete public CSS remained after slice integration
+
+Repository-wide search found no usage for:
+
+- `.public-nav-link-active`;
+- `.public-section-link`;
+- `.public-panel`;
+- `.public-panel-heading`;
+- `.public-panel-link`.
+
+The stylesheet itself labelled the public-panel selectors as legacy V2 residue. These selectors no longer participate in the current homepage.
+
+Smallest sufficient fix: remove only those proven-dead selectors and the associated stale mobile active-nav override.
+
+## Anti-AI-slop final source findings
+
+- no card-everything service/dashboard composition;
+- no gradients;
+- no glassmorphism;
+- no neon dark mode;
+- no fake metrics or progress bars on the public homepage;
+- no decorative status badges;
+- no invented dates, downloads, project progress, budgets, owners, or live feeds;
+- no giant marketing hero after UI-S6/UI-S7 restraint;
+- no repeated fake analytics;
+- service area remains a directory rather than feature cards;
+- official-information area remains editorial/record-like;
+- color is role-based rather than decorative;
+- placeholder assets remain explicitly placeholder assets;
+- Employee Access remains distinct from public tasks;
+- the final cleanup removes residue instead of adding another component/color/container.
+
+## Elements removed / simplified
+
+- dead `.public-nav-link-active` rules;
+- dead `.public-section-link` rules;
+- dead legacy `.public-panel*` rules;
+- stale mobile `.public-nav-link-active` override;
+- Quick Access phrase `published information` simplified to `document previews`.
+
+## Items deliberately retained
+
+- existing One Talibon / Municipality of Talibon identity hierarchy;
+- task-first hero;
+- three Quick Access destinations;
+- two Municipal Services groups;
+- editorial News/Documents/Projects structure;
+- UI-S6 typography system;
+- UI-S7 responsive frame and breakpoints;
+- UI-S8 focus/interaction architecture;
+- UI-S9 public theme-role system and initial theme bootstrap;
+- placeholder municipal mark/coastal/landmark assets.
+
+## Route / destination source audit
+
+Existing public destinations confirmed:
+
+- `#home`;
+- `#services`;
+- `#news`;
+- `#transparency`;
+- `#projects`;
+- `#about`;
+- `#contact`;
+- `/login` for guests;
+- `/dashboard` for authenticated employees.
+
+No authenticated municipal-domain route is exposed as a public service shortcut.
+
+Runtime activation of each link remains NOT OBSERVED.
+
+## Accessibility / keyboard evidence
+
+Source semantics and UI-S8 evidence remain intact. No accessibility semantics were changed by UI-S10.
+
+Actual Tab / Shift+Tab / Enter / Space / Escape walkthrough: NOT OBSERVED.
+
+Skip-link activation: NOT OBSERVED.
+
+Mobile-menu runtime: NOT OBSERVED.
+
+Appearance-control runtime: NOT OBSERVED.
+
+Screen-reader smoke test: NOT OBSERVED.
+
+## Responsive / viewport evidence
+
+Source responsive matrix remains governed by UI-S7.
+
+Runtime inspection at 1920 / 1600 / 1440 / 1280 / 1024 / 768 / 390 / 360: NOT OBSERVED.
+
+The original excessive-wide-screen whitespace correction remains source-present through the 1680px frame and fluid gutter, but UI-S10 does not promote that to runtime PASS.
+
+## Theme evidence
+
+UI-S9 source theme candidate remains intact.
+
+Light runtime: NOT OBSERVED.
+
+Dark runtime: NOT OBSERVED.
+
+System runtime: NOT OBSERVED.
+
+Theme switching / persistence / first-paint flash runtime: NOT OBSERVED.
+
+## 200% zoom / contrast / console
+
+200% Light: NOT OBSERVED.
+
+200% Dark: NOT OBSERVED.
+
+Measured runtime contrast: NOT OBSERVED.
+
+Console inspection: NOT OBSERVED.
+
+Static UI-S9 color calculations remain source evidence only.
+
+## Files changed
+
+- `resources/js/components/public/PublicQuickAccess.tsx`;
+- `resources/css/public-portal.css`;
+- `Jayr-Aj-docs.md`;
+- `docs/ENGINEERING_LOG.md`.
+
+## Verification before commit
+
+- integrated source hierarchy audit: PASS;
+- content-honesty audit: PASS after correction;
+- route/destination source audit: PASS;
+- anti-AI-slop source audit: PASS;
+- dead-selector cleanup audit: PASS;
+- prior-slice preservation audit: PASS;
+- implementation scope: PENDING post-commit;
+- git diff: PENDING post-commit;
+- build: BLOCKED;
+- typecheck: BLOCKED;
+- runtime: NOT OBSERVED.
+
+## Acceptance classification before post-commit evidence
+
+Source integration candidate: PASS.
+
+Final runtime acceptance: NOT OBSERVED.
+
+Overall UI program: implementation complete at source level; final runtime acceptance pending.
+
+---
 # Current UI Branch State
 
 UI-S9 implementation candidate:
@@ -1744,7 +1952,8 @@ Status: IMPLEMENTED
 Runtime acceptance: PENDING
 
 UI-S10 — Full Runtime Critique + Anti-AI-Slop Cleanup
-Status: NEXT — NOT STARTED
+Status: SOURCE CANDIDATE
+Runtime acceptance: NOT OBSERVED
 ```
 
 ---
@@ -1769,11 +1978,13 @@ As UI work continues:
 
 ---
 
-# Next Planned Slice
+# UI ROADMAP CLOSURE
 
 ```text
-PHASE 4
-UI-S10 — Full Runtime Critique + Anti-AI-Slop Cleanup
+4 PHASES
+10 UI SLICES
+UI-S10 is the final slice
+No UI-S11
 ```
 
-UI-S10 is the recommended next slice, but it has not been started. It should begin only after an explicit instruction and should prioritize runtime evidence.
+Source implementation is complete. The remaining work is runtime verification of the existing UI candidate, not another design slice.

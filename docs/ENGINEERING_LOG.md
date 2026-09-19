@@ -1510,3 +1510,19 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Runtime theme switching, System preference response, reload persistence, first-paint flash, desktop/mobile light/dark/System visuals, keyboard theme selection, 200% zoom, measured runtime contrast, and console inspection remain **NOT OBSERVED**.
 - Acceptance split: source theme candidate **PASS**; runtime theme acceptance **NOT OBSERVED**; overall UI-S9 **NOT OBSERVED** under harness rules.
 - UI-S10 remains **NOT STARTED**.
+## 2026-09-19 — Jr/AJ public UI UI-S10 final integrated source QA
+
+### `ui: complete final public portal qa`
+
+- Working branch: `UI/Jr-and-Aj`; exact parent SHA: `7ea299876a3748f08a6b6e647b0ccc809dd502fb`.
+- UI-S10 is the final bounded UI slice. No UI-S11 is created.
+- Runtime-first attempt: environment provides Git 2.47.3, Node 22.16.0, npm 10.9.2, and PHP 8.4.23; Composer is unavailable. Actual branch clone failed with `Could not resolve host: github.com`, so build/typecheck/Laravel/browser runtime remain blocked or not observed.
+- Per final-slice rules, no speculative redesign followed the runtime block. Maximum integrated source audit was performed instead.
+- MEDIUM content-honesty defect: Quick Access described public documents as `Transparency and published information` while the final document section contains preview-only/non-official content. Fixed to `Transparency and document previews`.
+- LOW/COSMETIC integration residue: repository search found no usage for `.public-nav-link-active`, `.public-section-link`, `.public-panel`, `.public-panel-heading`, or `.public-panel-link`; the stylesheet itself identified the panel selectors as legacy. Removed those dead rules plus the stale mobile active-nav override.
+- Route/destination source audit **PASS** for `#home`, `#services`, `#news`, `#transparency`, `#projects`, `#about`, `#contact`, guest `/login`, and authenticated `/dashboard`; no internal municipal workflow route is exposed as a public shortcut.
+- Anti-AI-slop source audit **PASS**: no dashboard-card proliferation, fake analytics, gradients, glassmorphism, neon dark styling, invented record metadata, or extra final-slice decoration; service directory/editorial records/placeholder honesty remain intact.
+- UI-S1 through UI-S9 architecture is preserved; UI-S10 changes only one supporting-copy phrase and proven-dead CSS.
+- Documentation: `Jayr-Aj-docs.md` updated in the same candidate.
+- Pre-publication verification: integrated source hierarchy, content honesty, route source audit, anti-AI-slop, dead-selector cleanup, and prior-slice preservation **PASS**. Build/typecheck **BLOCKED**; runtime/console/viewports/themes/keyboard/zoom/screen-reader/measured contrast **NOT OBSERVED**.
+- Backend/domain/database/auth/API/routing/product-functionality impact: **NONE**.

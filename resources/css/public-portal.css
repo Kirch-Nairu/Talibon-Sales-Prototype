@@ -274,11 +274,6 @@
     color: var(--public-text);
 }
 
-.public-nav-link-active {
-    border-bottom-color: var(--municipal-gold);
-    color: var(--public-text);
-}
-
 /* Public interaction states: consistent keyboard focus without changing IA. */
 .public-skip-link:focus-visible,
 .public-brand:focus-visible,
@@ -541,19 +536,6 @@
     font-size: 14px;
     line-height: 1.55;
 }
-
-.public-section-link {
-    display: inline-flex;
-    min-height: 36px;
-    flex-shrink: 0;
-    align-items: center;
-    gap: 7px;
-    color: var(--public-link);
-    font-size: 13px;
-    font-weight: 600;
-}
-
-.public-section-link:hover { text-decoration: underline; }
 
 /* Zone 2 — civic service directory. */
 .public-services {
@@ -1023,12 +1005,6 @@
     font-size: 12px;
 }
 
-/* Retained for legacy public components not used in the V2 homepage composition. */
-.public-panel { padding: 18px; border-radius: 8px; }
-.public-panel-heading { margin-bottom: 14px; }
-.public-panel .municipal-panel-title { font-size: 18px; font-weight: 700; line-height: 1.3; gap: 8px; }
-.public-panel-link { display: inline-flex; align-items: center; min-height: 32px; margin-top: 8px; font-size: 13px; }
-
 @media (max-width: 1199px) {
     .public-service-directory { grid-template-columns: 1fr; }
     .public-service-group + .public-service-group {
@@ -1087,8 +1063,6 @@
         border-bottom: 1px solid var(--public-divider);
         padding: 0 4px;
     }
-    .public-nav-link-active { border-bottom-color: var(--public-divider); color: var(--municipal-navy); }
-
     .public-hero-intro {
         grid-template-columns: minmax(0, 1.05fr) minmax(300px, .95fr);
         min-height: 350px;
