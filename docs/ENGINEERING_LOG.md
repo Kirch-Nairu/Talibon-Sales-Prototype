@@ -1412,4 +1412,21 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Correction raises the public-only subline to Tailwind `text-xs` (12px), matching the public metadata floor while leaving the internal portal brand treatment unchanged.
 - No layout/IA, backend, route, dependency, or UI-S7 change.
 - Runtime/build/browser evidence remains **NOT OBSERVED**.
+## 2026-09-19 — Jr/AJ public UI UI-S7 large-screen and responsive composition
 
+### `ui: refine public responsive composition`
+
+- Working branch: `UI/Jr-and-Aj`; exact parent SHA: `af21fb07935db89f0874bcd7e270e455412aaa00`.
+- Scope: **public composition/responsive CSS only** under KIKIAM UI HARNESS V1. UI-S1 through UI-S6 IA, typography, and identity decisions are preserved.
+- Layout audit: masthead, nav, public content, footer grid, and footer bottom were all capped at 1400px while readable text measures were already independently constrained.
+- Frame decision: public composition now uses `--public-frame-max: 1680px` with `--public-page-gutter: clamp(1.375rem, 2.5vw, 2.5rem)`; mobile <=767px resolves the shared gutter to 16px.
+- Hero: base minimum height reduces 360→350px; existing two-column relationship remains until <=900px; the former 768–900 rule simplifies to <=900px.
+- Quick Access: <=1023px places the intro above three task links; <=767px stacks the links.
+- Services: two UI-S4 groups recompose to one column at <=1199px rather than <=1023px.
+- Official information: UI-S5 primary/supporting relationship recomposes at <=1199px; supporting records remain two columns until <=767px.
+- Footer: three columns become two at <=1199px with Employee Access on a full row, then one column at <=767px.
+- CSS cleanup: responsive ownership is consolidated and repeated mobile/grid/outer-padding declarations are removed where superseded by shared rules.
+- Accessibility source intent: no CSS ordering, no DOM/focus divergence, no type reduction below UI-S6 floors, and existing focus/interaction rules remain intact.
+- Documentation: `Jayr-Aj-docs.md` is updated in this same candidate.
+- Verification before publication: source layout and breakpoint/style inspection **PASS**. Runtime viewport checks, build, typecheck, zoom, keyboard, theme, and console evidence remain **NOT OBSERVED**.
+- Schema/migration/dependency/content impact: **NONE**. Backend/internal behavior impact: **NONE**. UI-S8 work: **NOT STARTED**.

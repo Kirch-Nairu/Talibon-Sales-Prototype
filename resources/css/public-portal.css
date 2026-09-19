@@ -7,12 +7,14 @@
     --public-type-body: .875rem;
     --public-type-supporting: .8125rem;
     --public-type-meta: .75rem;
+    --public-frame-max: 1680px;
+    --public-page-gutter: clamp(1.375rem, 2.5vw, 2.5rem);
 }
 
 .public-content {
-    max-width: 1400px;
+    max-width: var(--public-frame-max);
     margin: 0 auto;
-    padding: 0 28px 56px;
+    padding: 0 var(--public-page-gutter) 56px;
 }
 
 .public-disclosure {
@@ -39,9 +41,9 @@
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    max-width: 1400px;
+    max-width: var(--public-frame-max);
     margin: 0 auto;
-    padding: 14px 28px 12px;
+    padding: 14px var(--public-page-gutter) 12px;
 }
 
 .public-brand {
@@ -186,11 +188,11 @@
 
 .public-nav-inner {
     display: flex;
-    max-width: 1400px;
+    max-width: var(--public-frame-max);
     margin: 0 auto;
     align-items: center;
     gap: 26px;
-    padding: 0 28px;
+    padding: 0 var(--public-page-gutter);
 }
 
 .public-nav-link {
@@ -235,7 +237,7 @@
 .public-hero-intro {
     display: grid;
     grid-template-columns: minmax(0, 1.14fr) minmax(360px, .86fr);
-    min-height: 360px;
+    min-height: 350px;
 }
 
 .public-hero-copy {
@@ -842,9 +844,9 @@
     display: grid;
     grid-template-columns: minmax(0, 1.25fr) minmax(180px, .7fr) minmax(260px, 1fr);
     gap: 56px;
-    max-width: 1400px;
+    max-width: var(--public-frame-max);
     margin: 0 auto;
-    padding: 44px 28px 38px;
+    padding: 44px var(--public-page-gutter) 38px;
 }
 
 .public-footer-municipality,
@@ -938,13 +940,13 @@
 
 .public-footer-bottom {
     display: flex;
-    max-width: 1400px;
+    max-width: var(--public-frame-max);
     margin: 0 auto;
     align-items: center;
     justify-content: space-between;
     gap: 20px;
     border-top: 1px solid rgba(255, 255, 255, .14);
-    padding: 14px 28px 18px;
+    padding: 14px var(--public-page-gutter) 18px;
     color: #8fa5bd;
     font-size: 12px;
 }
@@ -955,32 +957,7 @@
 .public-panel .municipal-panel-title { font-size: 18px; font-weight: 700; line-height: 1.3; gap: 8px; }
 .public-panel-link { display: inline-flex; align-items: center; min-height: 32px; margin-top: 8px; font-size: 13px; }
 
-@media (max-width: 1023px) {
-    .public-masthead { padding-inline: 22px; }
-    .public-brand-caption { display: none; }
-
-    .public-navigation { border-top: 1px solid var(--municipal-border); }
-    .public-nav-inner {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0;
-        padding: 4px 16px 8px;
-    }
-    .public-nav-link {
-        min-height: 44px;
-        border-bottom: 1px solid var(--municipal-border);
-        padding: 0 4px;
-    }
-    .public-nav-link-active { border-bottom-color: var(--municipal-border); color: var(--municipal-navy); }
-
-    .public-hero-intro {
-        grid-template-columns: minmax(0, 1.05fr) minmax(300px, .95fr);
-        min-height: 350px;
-    }
-    .public-hero-copy { padding: 38px 34px; }
-    .public-hero-title { font-size: var(--public-type-display); }
-    .public-hero-lead { font-size: 16px; }
-
+@media (max-width: 1199px) {
     .public-service-directory { grid-template-columns: 1fr; }
     .public-service-group + .public-service-group {
         margin-top: 28px;
@@ -990,9 +967,6 @@
         padding-top: 24px;
         padding-left: 0;
     }
-
-    .public-about { grid-template-columns: minmax(260px, .9fr) minmax(0, 1.1fr); }
-    .public-about-copy { padding: 30px 32px 28px; }
 
     .public-editorial-layout {
         grid-template-columns: 1fr;
@@ -1018,23 +992,65 @@
     .public-footer-grid {
         grid-template-columns: minmax(0, 1.2fr) minmax(220px, .8fr);
         gap: 38px;
-        padding-inline: 22px;
     }
-    .public-footer-access { grid-column: 1 / -1; border-top: 1px solid rgba(255, 255, 255, .14); padding-top: 28px; }
-    .public-footer-bottom { padding-inline: 22px; }
+    .public-footer-access {
+        grid-column: 1 / -1;
+        border-top: 1px solid rgba(255, 255, 255, .14);
+        padding-top: 28px;
+    }
+}
+
+@media (max-width: 1023px) {
+    .public-brand-caption { display: none; }
+
+    .public-navigation { border-top: 1px solid var(--municipal-border); }
+    .public-nav-inner {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 4px var(--public-page-gutter) 8px;
+    }
+    .public-nav-link {
+        min-height: 44px;
+        border-bottom: 1px solid var(--municipal-border);
+        padding: 0 4px;
+    }
+    .public-nav-link-active { border-bottom-color: var(--municipal-border); color: var(--municipal-navy); }
+
+    .public-hero-intro {
+        grid-template-columns: minmax(0, 1.05fr) minmax(300px, .95fr);
+        min-height: 350px;
+    }
+    .public-hero-copy { padding: 38px 34px; }
+    .public-hero-title { font-size: var(--public-type-display); }
+    .public-hero-lead { font-size: 16px; }
+
+    .public-quick-access { grid-template-columns: 1fr; }
+    .public-quick-access-intro {
+        border-right: 0;
+        border-bottom: 1px solid var(--municipal-border);
+        padding: 13px 18px;
+    }
+    .public-quick-access-link {
+        min-height: 70px;
+        padding-inline: 16px;
+    }
+
+    .public-about { grid-template-columns: minmax(260px, .9fr) minmax(0, 1.1fr); }
+    .public-about-copy { padding: 30px 32px 28px; }
 }
 
 @media (min-width: 1024px) and (max-width: 1199px) {
-    .public-masthead { gap: 18px; padding: 11px 22px 10px; }
+    .public-masthead { gap: 18px; padding-block: 11px 10px; }
     .public-brand { gap: 14px; }
     .public-brand-caption { max-width: 172px; padding-left: 14px; }
-    .public-nav-inner { gap: 19px; padding-inline: 22px; }
+    .public-nav-inner { gap: 19px; }
     .public-hero-intro { grid-template-columns: minmax(0, 1.12fr) minmax(330px, .88fr); min-height: 350px; }
     .public-hero-copy { padding: 38px 42px 36px; }
     .public-hero-actions { margin-top: 20px; }
 }
 
-@media (min-width: 768px) and (max-width: 900px) {
+@media (max-width: 900px) {
     .public-hero-intro { grid-template-columns: 1fr; min-height: 0; }
     .public-hero-copy { padding: 42px 44px 40px; }
     .public-hero-landscape { min-height: 290px; aspect-ratio: 16 / 7; }
@@ -1045,10 +1061,11 @@
 }
 
 @media (max-width: 767px) {
-    .public-content { padding: 0 16px 40px; }
+    .public-portal { --public-page-gutter: 16px; }
+    .public-content { padding-bottom: 40px; }
     .public-disclosure { padding: 9px 0 10px; font-size: 12px; line-height: 17px; }
 
-    .public-masthead { gap: 10px; padding: 10px 16px; }
+    .public-masthead { gap: 10px; padding-block: 10px; }
     .public-brand { flex: 1; overflow: hidden; }
     .public-brand .municipal-brand { gap: 9px; }
     .public-brand .municipal-brand img { width: 42px; height: 42px; }
@@ -1058,7 +1075,6 @@
     .public-login-link { min-height: 44px; padding: 0 11px; font-size: 12px; }
     .public-menu-button { width: 44px; min-height: 44px; }
 
-    .public-hero-intro { grid-template-columns: 1fr; min-height: 0; }
     .public-hero-copy { padding: 30px 24px 28px; }
     .public-welcome { font-size: var(--public-type-supporting); line-height: 1.5; }
     .public-hero-title { margin-top: 10px; font-size: 32px; line-height: 1.08; }
@@ -1069,12 +1085,6 @@
     .public-hero-landscape { display: block; min-height: 210px; aspect-ratio: 16 / 9; }
     .public-hero-landscape figcaption { right: 14px; bottom: 12px; font-size: var(--public-type-meta); }
 
-    .public-quick-access { grid-template-columns: 1fr; }
-    .public-quick-access-intro {
-        border-right: 0;
-        border-bottom: 1px solid var(--municipal-border);
-        padding: 13px 18px;
-    }
     .public-quick-access-links { grid-template-columns: 1fr; }
     .public-quick-access-link {
         min-height: 64px;
@@ -1110,7 +1120,7 @@
     }
 
     .public-information-zone { gap: 34px; padding-top: 38px; }
-    .public-about { grid-template-columns: 1fr; border-top-width: 3px; }
+    .public-about { border-top-width: 3px; }
     .public-about-visual { min-height: 190px; aspect-ratio: 16 / 9; }
     .public-about-copy { padding: 25px 22px 22px; }
     .public-about-copy h2 { font-size: 21px; }
@@ -1140,17 +1150,18 @@
         padding-left: 0;
     }
 
-    .public-footer-grid { grid-template-columns: 1fr; gap: 26px; padding: 30px 16px 24px; }
+    .public-footer-grid { grid-template-columns: 1fr; gap: 26px; padding-block: 30px 24px; }
     .public-footer-links { border-top: 1px solid rgba(255, 255, 255, .14); padding-top: 24px; }
     .public-footer-links a { min-height: 38px; }
     .public-footer-access { grid-column: auto; border-top: 1px solid rgba(255, 255, 255, .14); padding-top: 24px; }
     .public-footer-login { min-height: 44px; }
-    .public-footer-bottom { flex-direction: column; align-items: flex-start; gap: 4px; padding: 14px 16px 18px; }
+    .public-footer-bottom { flex-direction: column; align-items: flex-start; gap: 4px; padding-block: 14px 18px; }
 
     .public-portal [id] { scroll-margin-top: 78px; }
 }
 
 @media (max-width: 390px) {
+    .public-brand .municipal-brand { gap: 7px; }
     .public-brand .municipal-brand img { width: 38px; height: 38px; }
     .public-brand .municipal-brand .font-extrabold { font-size: 17px; }
     .public-login-link { padding-inline: 10px; }

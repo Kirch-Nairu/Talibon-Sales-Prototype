@@ -1025,6 +1025,116 @@ Runtime visual judgment is still unresolved because the page has not been render
 
 ---
 
+
+# UI-S7 — Large-Screen Composition + Responsive Refinement
+
+## Starting point
+
+Starting SHA: `af21fb07935db89f0874bcd7e270e455412aaa00`
+
+UI-S6 executable baseline: `f69bcea406d25403eb301faa12edb2dd08c18d41`
+
+## Layout problems found
+
+The public homepage used one universal `1400px` maximum for the content shell, masthead, navigation, and footer. On a 1920px display that could leave roughly 260px of outer canvas on each side before the existing 28px internal gutter was considered.
+
+Readable text measures were already separately bounded inside the page: hero title 720px, hero lead 620px, service descriptions 620px, public-information introduction 720px, record summaries 720–760px, and footer note 520px. The shell could therefore widen without stretching body copy.
+
+The 1024–1199 laptop range also retained two-column services, a narrow editorial supporting column, and a three-column footer longer than was useful.
+
+## Breakpoint audit
+
+Before UI-S7 the public stylesheet used `<=1023`, `1024–1199`, `768–900`, `<=767`, and `<=390` behavior zones.
+
+UI-S7 keeps a small breakpoint system but moves information-heavy recomposition to `<=1199`, simplifies the tablet hero/About range to `<=900`, and removes mobile declarations that duplicated those larger transitions.
+
+## Container and gutter decisions
+
+New public layout tokens:
+
+- `--public-frame-max: 1680px`
+- `--public-page-gutter: clamp(22px, 2.5vw, 40px)`
+- at `<=767px`, shared page gutter resolves to 16px
+
+The shared frame now aligns public content, masthead, desktop navigation, footer grid, and footer bottom.
+
+Approximate wide-screen behavior: at 1920px the frame leaves about 120px outer margin per side before its internal gutter; at 1600px and 1440px the frame uses the available viewport with 40px and ~36px internal gutters respectively.
+
+## Hero composition changes
+
+- base desktop hero minimum height reduces from 360px to 350px;
+- desktop/laptop two-column hierarchy remains intact;
+- hero and About switch to one column at `<=900px`;
+- the former `768–900px` media query is simplified to `<=900px`;
+- mobile duplicate one-column declarations are removed;
+- hero content/copy/typography strategy remains unchanged.
+
+## Quick Access changes
+
+At `<=1023px`, the Quick Access intro becomes a full row above the three task links. At `<=767px`, the three task links become one column. This avoids forcing the four-part desktop grid into tablet width.
+
+## Municipal Services changes
+
+The UI-S4 two-group IA is unchanged. The two groups now recompose to one column at `<=1199px` rather than waiting until `<=1023px`, preserving useful title/description/action width on laptops.
+
+## Public Information changes
+
+At `>1199px`, News & Notices remains beside the supporting public-record column. At `<=1199px`, News becomes full width followed by Public Documents and Projects & Programs in two supporting columns. At `<=767px`, all three content groups become one column.
+
+## About / Footer changes
+
+About remains two-column at wider widths and becomes one column at `<=900px`. The footer becomes two columns at `<=1199px`, with Employee Access on a full row, then one column at `<=767px`.
+
+## Mobile and small-mobile decisions
+
+At `<=767px`, the common outer gutter is 16px and inherited composition rules handle hero/About/services before the mobile-specific stack rules. At `<=390px`, brand gap is reduced slightly before any readable type is reduced.
+
+## CSS cleanup
+
+- service/editorial/footer recomposition is consolidated under one `<=1199px` authority;
+- tablet hero/About behavior simplifies to `<=900px`;
+- duplicate mobile hero/About/Quick Access declarations are removed;
+- repeated 1400/28/22/16 outer-layout values are replaced by shared frame/gutter tokens where appropriate.
+
+## Accessibility considerations
+
+DOM order, keyboard order, heading order, focus styles, and touch-target rules are unchanged. No CSS visual reordering is introduced and no type is reduced below the UI-S6 readability floor.
+
+## Files changed
+
+- `resources/css/public-portal.css`
+- `Jayr-Aj-docs.md`
+- `docs/ENGINEERING_LOG.md`
+
+## Verification matrix
+
+- Source layout inspection: PASS
+- Breakpoint/style inspection: PASS
+- Implementation scope inspection: PENDING post-commit
+- Git diff inspection: PENDING post-commit
+- 1920px runtime: NOT OBSERVED
+- 1600px runtime: NOT OBSERVED
+- 1440px runtime: NOT OBSERVED
+- 1280px runtime: NOT OBSERVED
+- 1024px runtime: NOT OBSERVED
+- 768px runtime: NOT OBSERVED
+- 390px runtime: NOT OBSERVED
+- 360px runtime: NOT OBSERVED
+- Build: NOT OBSERVED
+- Typecheck: NOT OBSERVED
+- Runtime/browser: NOT OBSERVED
+- 200% zoom: NOT OBSERVED
+- Keyboard runtime: NOT OBSERVED
+- Light/dark runtime: NOT OBSERVED
+- Console inspection: NOT OBSERVED
+
+Source-responsive candidate is implemented, but runtime-responsive acceptance remains unresolved.
+
+## Commit
+
+Implementation SHA will be recorded after post-commit verification.
+
+---
 # Current UI Branch State
 
 UI-S6 final executable candidate:
@@ -1146,11 +1256,12 @@ UI-S6 — Talibon Identity + Typography Refinement
 Status: IMPLEMENTED
 Runtime acceptance: PENDING
 
-UI-S7 — Large-screen Composition + Responsive Refinement
-Status: NEXT
+UI-S7 — Large-Screen Composition + Responsive Refinement
+Status: IMPLEMENTED
+Runtime acceptance: PENDING
 
 UI-S8 — Accessibility + Interaction States
-Status: NOT STARTED
+Status: NEXT
 
 UI-S9 — Light / Dark Verification
 Status: NOT STARTED
@@ -1184,7 +1295,7 @@ As UI work continues:
 # Next Planned Slice
 
 ```text
-UI-S7 — Large-Screen Composition + Responsive Refinement
+UI-S8 — Accessibility + Interaction States
 ```
 
-The next goal is to audit large-screen use of space and responsive composition without changing the information architecture established through UI-S6.
+The next goal is to audit keyboard, focus, interaction, semantic, and accessible-state behavior without changing the responsive information architecture established through UI-S7.
