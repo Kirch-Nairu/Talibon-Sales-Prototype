@@ -56,6 +56,7 @@ export default function PortalSidebar({
                                 label={group.label}
                                 primary={group.key === 'home' || group.key === 'work'}
                                 showLabel={group.key !== 'home'}
+                                collapsible={!compact && group.key !== 'home' && group.key !== 'work'}
                             >
                                 {group.items.map((item) => {
                                     const active = isPortalPathActive(currentUrl, item.href);

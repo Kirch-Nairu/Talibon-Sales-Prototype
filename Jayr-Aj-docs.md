@@ -2916,3 +2916,62 @@ Rendered label fit and long-sidebar scrolling still require browser validation.
 Recorded in final Phase 2 evidence.
 
 ---
+
+## EUI-S7 — Navigation Groups
+
+### Problem
+
+Even after EUI-S6 established visual hierarchy, all secondary/reference groups remained fully expanded. Municipal Organization, Planning, Administration, and Municipal Systems could still create a long, equally exposed navigation stack that competed with daily Work destinations.
+
+### Previous state
+
+- Home and Work visible;
+- all lower groups also permanently expanded;
+- no structural disclosure for lower-priority areas;
+- long sidebar depended entirely on scrolling.
+
+### Change
+
+- Home and Work remain permanently expanded and directly reachable;
+- Municipal Organization, Planning, Administration, and Municipal Systems use controlled disclosure in expanded sidebar mode;
+- disclosure uses native `button` controls with `aria-expanded` and `aria-controls`;
+- active secondary group automatically opens so the current route is never hidden;
+- compact/icon-only desktop mode does not collapse groups, preserving direct icon access;
+- group contents remain the same routes and permission-filtered destinations;
+- no group is removed or renamed.
+
+### Reason
+
+Lower-priority/reference destinations should be available without competing continuously with daily work. Native disclosure reduces scroll burden while preserving semantic navigation.
+
+### Files changed
+
+```text
+resources/js/components/shell/PortalSidebar.tsx
+resources/js/components/shell/SidebarSection.tsx
+Jayr-Aj-docs.md
+docs/ENGINEERING_LOG.md
+```
+
+### Verification
+
+```text
+Home permanently visible: PASS
+Work permanently visible: PASS
+Active secondary group forced visible: PASS
+Native button disclosure: PASS
+aria-expanded / aria-controls: PASS
+Positive tabindex introduced: NO
+Routes/permissions changed: NO
+Runtime disclosure behavior: NOT OBSERVED
+```
+
+### Known limitations
+
+Default collapsed state and long-navigation scroll feel still require browser observation across roles with different permissions.
+
+### Commit
+
+Recorded in final Phase 2 evidence.
+
+---

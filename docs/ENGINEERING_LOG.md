@@ -1663,3 +1663,15 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Active navigation changes from full blue pill treatment to subtle background + left structural indicator while retaining `aria-current="page"`.
 - No destinations, permissions, routes, Phase 1 dashboard components, public UI, or backend behavior changed.
 - Source review PASS; runtime NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 2 / EUI-S7 navigation groups
+
+### `ui: organize employee navigation groups`
+
+- Parent SHA: `d3d2913baeed6977d2f89b3bc69f2b0a8e1d3342`.
+- Home and Work remain permanently expanded as daily operations.
+- Municipal Organization, Planning, Administration, and Municipal Systems become controlled disclosures only in expanded sidebar mode.
+- Disclosures use native buttons with `aria-expanded` / `aria-controls`; active groups auto-expand.
+- Compact sidebar keeps all icon destinations directly visible.
+- No destinations, permissions, labels, route visibility rules, backend, or public UI changed.
+- Source semantics PASS; runtime disclosure behavior NOT OBSERVED.
