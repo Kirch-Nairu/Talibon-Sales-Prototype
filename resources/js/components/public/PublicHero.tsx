@@ -6,7 +6,7 @@ export default function PublicHero({ content }: { content: PublicContent; authen
     return <section id="home" className="public-hero" aria-labelledby="public-hero-title">
         <div className="public-hero-intro">
             <div className="public-hero-copy">
-                <p className="public-welcome">One Talibon · Municipality of Talibon, Bohol</p>
+                <p className="public-welcome">One Talibon · {content.municipality}</p>
                 <h1 id="public-hero-title" className="public-hero-title">Municipal services and public information for Talibon</h1>
                 <p className="public-hero-lead">
                     Access municipal services, official notices, public documents, and local government information in one place.
