@@ -1650,7 +1650,7 @@ Repository-wide search found no usage for:
 
 The stylesheet itself labelled the public-panel selectors as legacy V2 residue. These selectors no longer participate in the current homepage.
 
-Smallest sufficient fix: remove only those proven-dead selectors and the associated stale mobile active-nav override.
+Smallest sufficient fix: remove only those proven-dead selectors, the associated stale mobile active-nav override, and the orphaned mobile `.public-section-link` rule discovered during post-commit re-check.
 
 ## Anti-AI-slop final source findings
 

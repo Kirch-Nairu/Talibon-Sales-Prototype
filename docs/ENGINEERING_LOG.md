@@ -1526,3 +1526,12 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Documentation: `Jayr-Aj-docs.md` updated in the same candidate.
 - Pre-publication verification: integrated source hierarchy, content honesty, route source audit, anti-AI-slop, dead-selector cleanup, and prior-slice preservation **PASS**. Build/typecheck **BLOCKED**; runtime/console/viewports/themes/keyboard/zoom/screen-reader/measured contrast **NOT OBSERVED**.
 - Backend/domain/database/auth/API/routing/product-functionality impact: **NONE**.
+## 2026-09-19 — Jr/AJ public UI UI-S10 orphaned selector follow-up
+
+### `ui: remove final orphaned public selector`
+
+- Exact parent SHA: `0a4b2f6e21706291866424a740a83ed88e26985d` on `UI/Jr-and-Aj`.
+- Post-commit source audit found one remaining mobile `.public-section-link { min-height: 34px; }` rule after the unused base selector was removed.
+- Repository search confirms `.public-section-link` has no current component usage.
+- The orphaned mobile rule is removed. No active homepage selector, layout, theme, interaction, or content behavior changes.
+- Runtime/build/typecheck remain blocked/not observed because repository checkout still cannot resolve `github.com`.
