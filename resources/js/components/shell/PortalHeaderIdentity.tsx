@@ -20,7 +20,7 @@ export default function PortalHeaderIdentity({ user }: { user: AuthUser | null }
     const context = [position, office].filter(Boolean).join(' · ');
 
     return (
-        <div aria-label={`Signed in as ${identityTitle}`} className="flex min-w-0 items-center gap-2">
+        <div role="group" aria-label={`Signed in as ${identityTitle}`} className="flex min-w-0 items-center gap-2">
             <span
                 className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-blue-50 text-xs font-bold text-blue-900 dark:border-slate-700 dark:bg-blue-950/40 dark:text-blue-200"
                 aria-hidden="true"
