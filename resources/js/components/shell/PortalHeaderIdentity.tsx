@@ -30,7 +30,7 @@ export default function PortalHeaderIdentity({ user }: { user: AuthUser | null }
             </span>
             <div className="hidden min-w-0 max-w-44 2xl:block">
                 <div className="truncate text-xs font-bold leading-4" title={user.name}>{user.name}</div>
-                {context && <div className="truncate text-[10px] leading-4 text-slate-500 dark:text-slate-400" title={context}>{context}</div>}
+                {context && <div className="truncate text-xs leading-4 text-slate-500 dark:text-slate-400" title={context}>{context}</div>}
             </div>
         </div>
     );

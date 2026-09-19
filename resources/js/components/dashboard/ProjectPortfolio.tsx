@@ -54,7 +54,7 @@ export default function ProjectPortfolio({ projects }: { projects: DashboardProj
                     >
                         <div className="h-full bg-[#1769aa] dark:bg-blue-400" style={{ width: `${Math.max(0, Math.min(100, project.progress))}%` }} />
                     </div>
-                    <div className="employee-metadata w-10 text-right font-semibold tabular-nums text-slate-600 dark:text-slate-300">{project.progress}%</div>
+                    <div className="employee-metadata w-10 text-right font-semibold tabular-nums text-slate-600 dark:text-slate-300">{Math.max(0, Math.min(100, project.progress))}%</div>
                 </div>
                 <div className="employee-metadata mt-2 grid gap-1 text-slate-600 dark:text-slate-300 sm:grid-cols-[110px_minmax(0,1fr)]">
                     <span className="font-semibold text-slate-500 dark:text-slate-400">Next action</span><span>{project.nextAction}</span>

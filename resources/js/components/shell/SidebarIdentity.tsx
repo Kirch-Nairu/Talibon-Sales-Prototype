@@ -37,7 +37,7 @@ export default function SidebarIdentity({ compact, user, persona = null }: Props
                 role="group"
                 aria-label={title ? `Signed in as ${title}` : 'Signed in user'}
                 title={title || undefined}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/10 text-[11px] font-bold text-white"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/10 text-xs font-bold text-white"
             >
                 {userInitials(name)}
             </div>
@@ -46,7 +46,7 @@ export default function SidebarIdentity({ compact, user, persona = null }: Props
 
     return (
         <div className="flex min-w-0 items-center gap-2.5" role="group" aria-label={title ? `Signed in as ${title}` : 'Signed in user'} title={title || undefined}>
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/10 text-[11px] font-bold text-white" aria-hidden="true">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/10 text-xs font-bold text-white" aria-hidden="true">
                 {userInitials(name)}
             </div>
             <div className="min-w-0">
@@ -54,7 +54,7 @@ export default function SidebarIdentity({ compact, user, persona = null }: Props
                     {name || 'Signed-in employee'}
                 </div>
                 {context && (
-                    <div className="mt-0.5 truncate text-[10px] leading-4 text-blue-200" title={context}>
+                    <div className="mt-0.5 truncate text-xs leading-4 text-blue-200" title={context}>
                         {context}
                     </div>
                 )}
