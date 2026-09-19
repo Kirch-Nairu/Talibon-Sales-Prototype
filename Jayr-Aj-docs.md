@@ -959,8 +959,10 @@ docs/ENGINEERING_LOG.md
 Source inspection: PASS
 Typography/style inspection: PASS
 Identity-asset inspection: PASS
-Implementation scope inspection: PENDING post-commit
-Git diff inspection: PENDING post-commit
+Responsive source inspection: PASS
+Implementation scope inspection: PASS
+Git diff inspection: PASS
+Branch isolation: PASS
 Build/typecheck: NOT OBSERVED
 Runtime/browser: NOT OBSERVED
 Desktop visual: NOT OBSERVED
@@ -972,15 +974,71 @@ Light/dark runtime: NOT OBSERVED
 
 Runtime acceptance remains unresolved until the public portal is actually rendered and inspected.
 
-## Commit
+## Commits
 
-Implementation SHA will be recorded in the UI-S6 evidence finalization update.
+Initial UI-S6 implementation:
+
+```text
+6b3d6d2fedeaa90c13979c9671e957cdc5e0b9c4
+ui: refine talibon identity and typography
+```
+
+Responsive typography correction:
+
+```text
+02e127fe8aaa6badff2d47004b33e0280cf17361
+ui: align responsive public typography
+```
+
+Final executable UI-S6 candidate:
+
+```text
+f69bcea406d25403eb301faa12edb2dd08c18d41
+ui: raise public brand subline readability
+```
+
+## Final source audit
+
+The final public stylesheet/source audit confirms:
+
+```text
+11px CSS font-size rules: 0
+Stale 40px hero overrides: 0
+Old synthetic weights (550/620/650/680/720/740/750/760): 0
+Public brand subline: 12px
+```
+
+## Anti-AI-slop critique
+
+Source inspection confirms:
+
+- no decorative display font was added;
+- the existing readable sans stack was kept rather than changing fonts for novelty;
+- the hero is calmer and no longer depends on oversized display text;
+- public headings now derive from a small coherent type scale;
+- uppercase/tracking dependence is reduced;
+- unrelated green accents are reduced rather than multiplied;
+- municipal identity is communicated through real repository language and existing colors, not fabricated civic symbols;
+- One Talibon is more clearly positioned inside Municipality of Talibon context rather than as a standalone commercial brand.
+
+Runtime visual judgment is still unresolved because the page has not been rendered in this environment.
 
 ---
 
 # Current UI Branch State
 
-UI-S5 implementation candidate:
+UI-S6 final executable candidate:
+
+```text
+UI/Jr-and-Aj
+Implementation SHA: f69bcea406d25403eb301faa12edb2dd08c18d41
+Ahead of main at implementation: 16 commits
+Behind main: 0
+```
+
+The evidence finalization commit that updates this document is documentation-only and advances the branch after the executable candidate.
+
+Historical UI-S5 implementation candidate:
 
 ```text
 UI/Jr-and-Aj
