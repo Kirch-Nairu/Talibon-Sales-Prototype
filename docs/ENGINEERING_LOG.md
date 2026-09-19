@@ -1779,3 +1779,14 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Recent correspondence, recent documents, and project rows now reuse the employee record title/metadata/spacing vocabulary.
 - No routes, record logic, business state, backend, Public Portal, or Phase 1/2 structural decisions changed.
 - Source record-structure review PASS; runtime NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 3 / EUI-S14 urgency semantics
+
+### `ui: standardize employee urgency semantics`
+
+- Executable EUI-S14 SHA: `59a6128298340b8429d640136ecb693c38be351b`.
+- Added employee-only neutral/info/success/warning/danger tone roles under `#portal-content`.
+- Metrics, Immediate Attention, Schedule/Deadlines, WorkItemList, ProjectPortfolio, MeetingRegister, and StaffWorkloadTable now use the same semantic vocabulary.
+- Default metrics and zero attention values stay neutral; urgency color is reserved for real state.
+- No business-state mapping, record data, routes, backend, Phase 1 composition, Phase 2 navigation, or Public Portal styling changed.
+- Source color-semantic review PASS; runtime contrast/theme review NOT OBSERVED.

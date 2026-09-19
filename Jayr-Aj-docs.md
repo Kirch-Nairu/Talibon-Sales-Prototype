@@ -3752,3 +3752,79 @@ ui: align employee record lists
 ```
 
 ---
+
+## EUI-S14 — Color / Urgency Semantics
+
+### Problem / audit findings
+
+The employee portal already used broadly correct red/amber/green/blue meanings, but the implementation repeated raw Tailwind and hex color classes across metrics, deadlines, attention, projects, meetings, work records, and workload tables. Default metric values could also read as unnecessarily accent-heavy.
+
+### Visual-system decision
+
+Define employee-only semantic color roles:
+
+```text
+Neutral  → default / non-urgent operational state
+Info     → navigation / interactive / informational municipal structure
+Success  → completed / healthy / approved state where real
+Warning  → due soon / follow-up / pending attention where real
+Danger   → overdue / failed / denied / urgent where real
+```
+
+Urgency color remains scarce. Zero values do not inherit their category urgency color.
+
+### Change
+
+- added `employee-tone-neutral`, `employee-tone-info`, `employee-tone-success`, `employee-tone-warning`, and `employee-tone-danger` under `#portal-content`;
+- metric presentation now returns semantic tone classes and defaults to neutral;
+- Immediate Attention maps overdue→danger, due today/project follow-up→warning, work/correspondence→info, while zero values remain slate/muted;
+- Schedule maps overdue/today/upcoming/submitted to danger/warning/neutral/success;
+- Schedule section icon becomes informational blue rather than warning amber;
+- WorkItemList due/priority/action tones use semantic roles;
+- Project statuses use success/warning/danger;
+- Meeting status uses info/success/warning;
+- Staff workload overdue uses danger only when the value is greater than zero; required-action count uses info.
+
+### Files changed
+
+```text
+resources/css/app.css
+resources/js/components/dashboard/metricPresentation.ts
+resources/js/components/dashboard/AttentionSummary.tsx
+resources/js/components/dashboard/SchedulePanel.tsx
+resources/js/components/work-queue/WorkItemList.tsx
+resources/js/components/dashboard/ProjectPortfolio.tsx
+resources/js/components/meetings/MeetingRegister.tsx
+resources/js/components/work-queue/StaffWorkloadTable.tsx
+Jayr-Aj-docs.md
+docs/ENGINEERING_LOG.md
+```
+
+### Verification
+
+```text
+Zero attention values remain neutral: PASS
+Default metric values neutral: PASS
+Overdue/critical uses danger: PASS
+Due soon/follow-up uses warning: PASS
+Completed/healthy uses success: PASS
+Interactive/informational uses info: PASS
+Business-state logic changed: NO
+Runtime color/contrast verification: NOT OBSERVED
+```
+
+### Known limitations
+
+Rendered contrast and color differentiation in every theme remain Phase 4 runtime-verification items.
+
+### Commits
+
+```text
+8d3a34697685f4a3a339df68b24df489208b9328
+ui: standardize employee urgency semantics
+
+59a6128298340b8429d640136ecb693c38be351b
+ui: align employee semantic tones
+```
+
+---
