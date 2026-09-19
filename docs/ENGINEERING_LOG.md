@@ -1579,3 +1579,14 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Added semantic description-list structure for employee/department context.
 - Source verification PASS; build/typecheck/runtime NOT OBSERVED at this slice.
 
+## 2026-09-19 — Employee UI Phase 1 / EUI-S2 immediate attention
+
+### `ui: restructure employee attention summary`
+
+- Parent SHA: `16b4dad298203790b7b2a5cf18c3800473de07ad`.
+- Replaced the equal-weight attention panel with a divider-based operational strip.
+- Reordered categories by actionable urgency: overdue, due today, work requiring attention, correspondence, project follow-up.
+- Positive values retain existing semantically supported rose/amber/blue text tones; zero values are visually quieter rather than hidden.
+- Added only a derived count of active categories; no new data or fake KPI was introduced.
+- Sidebar/top utility bar/backend/auth/routes remain untouched.
+- Source review PASS; build/typecheck/runtime NOT OBSERVED.

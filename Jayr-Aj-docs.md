@@ -2305,3 +2305,57 @@ Recorded in final Phase 1 evidence.
 
 ---
 
+## EUI-S2 — Immediate Attention
+
+### Problem
+
+Five attention metrics were presented as equal tiles, so zero states competed visually with real overdue, due-today, correspondence, and project-follow-up values.
+
+### Previous state
+
+- one panel containing five structurally equal metric cells;
+- zero and positive values used nearly identical weight;
+- work attention appeared before the more time-sensitive due-today item;
+- the section did not summarize whether any attention category was actually active.
+
+### Change
+
+- removed the outer card-style `municipal-panel` containment;
+- converted the area into a compact operational strip separated by top/bottom dividers;
+- ordered the visible hierarchy as overdue → due today → work → correspondence → project follow-up;
+- positive values use the existing meaning-supported rose/amber/blue text tones;
+- zero values remain visible but are intentionally quieter;
+- added a small summary of active categories using the existing five values only.
+
+### Reason
+
+Immediate Attention should answer what needs action now rather than behaving like five equal KPI cards.
+
+### Files changed
+
+```text
+resources/js/components/dashboard/AttentionSummary.tsx
+Jayr-Aj-docs.md
+docs/ENGINEERING_LOG.md
+```
+
+### Verification
+
+```text
+Existing values reused: PASS
+Fake metrics introduced: NO
+Unsupported urgency semantics introduced: NO
+Source hierarchy inspection: PASS
+Build/typecheck: NOT OBSERVED
+Runtime: NOT OBSERVED
+```
+
+### Known limitation
+
+Exact visual prominence between zero and non-zero values still requires browser inspection.
+
+### Commit
+
+Recorded in final Phase 1 evidence.
+
+---
