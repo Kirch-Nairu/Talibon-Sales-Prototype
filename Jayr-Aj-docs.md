@@ -4645,3 +4645,647 @@ NO
 ```
 
 ---
+
+
+# ONE TALIBON EMPLOYEE UI — PHASE 4 FINAL QA
+
+## Session / phase identity
+
+```text
+SESSION 4
+PHASE 4 — RESPONSIVE QA & FINAL ACCEPTANCE
+
+Repository:
+Kirch-Nairu/Talibon-Sales-Prototype
+
+Branch:
+masterlogin-UI-by-Jr-and-Aj
+
+Phase 4 starting / evidence HEAD:
+707c5f88156879bed8ea0baf413fe06bd5efa316
+
+Executable candidate under test:
+7330514c7ff44b197eae1a8aca8777e8566d3c0d
+```
+
+## Golden-rule result
+
+Phase 4 followed:
+
+```text
+VERIFY BEFORE MODIFYING
+```
+
+A real checkout/runtime attempt was made before any Phase 4 UI correction.
+
+Result:
+
+```text
+fatal: unable to access
+https://github.com/Kirch-Nairu/Talibon-Sales-Prototype.git/
+
+Could not resolve host: github.com
+```
+
+No repository checkout exists in the runtime container and no earlier cached copy was found.
+
+Therefore no Phase 4 UI code correction was made. The handoff explicitly prohibits speculative responsive redesign when runtime remains unavailable.
+
+## Environment
+
+```text
+OS:
+Linux localhost 6.18.44 x86_64
+Debian-based runtime
+
+Git:
+2.47.3
+
+Node:
+22.16.0
+
+npm:
+10.9.2
+
+PHP:
+8.4.23
+
+Composer:
+NOT AVAILABLE
+
+Browser:
+Chromium 144.0.7559.96
+```
+
+Browser availability does not make application runtime available because the exact branch cannot be materialized and the Laravel application cannot be booted.
+
+## Repository-defined commands
+
+Verified from `package.json`:
+
+```text
+npm run types:check
+→ tsc --noEmit
+
+npm run build
+→ vite build
+```
+
+Repository setup documentation also requires the real Laravel application, PostgreSQL, Composer-installed PHP dependencies, seeded demo data, and a private `PROTOTYPE_DEMO_PASSWORD` for demo logins.
+
+No password was invented or authentication bypass introduced.
+
+## TYPECHECK
+
+Command required:
+
+```text
+npm run types:check
+```
+
+Result:
+
+```text
+BLOCKED
+```
+
+Reason: exact repository checkout could not be obtained because the environment cannot resolve `github.com`. The command was not falsely classified as a TypeScript failure.
+
+## BUILD
+
+Command required:
+
+```text
+npm run build
+```
+
+Result:
+
+```text
+BLOCKED
+```
+
+Reason: exact repository checkout/dependencies unavailable due environment DNS failure.
+
+## APPLICATION BOOT
+
+Required application:
+
+```text
+Laravel + Inertia + React employee portal
+```
+
+Result:
+
+```text
+BLOCKED
+```
+
+Runtime URL:
+
+```text
+NONE — APPLICATION NOT BOOTED
+```
+
+Login route is source-confirmed as `/login`; employee dashboard route is source-confirmed as `/dashboard`, but neither was runtime-tested.
+
+## Authentication / test-account status
+
+Repository documentation identifies seeded demo accounts, including:
+
+```text
+admin@talibon.demo
+engineering@talibon.demo
+employee@talibon.demo
+```
+
+Their password is intentionally supplied only through a private local `PROTOTYPE_DEMO_PASSWORD`.
+
+Phase 4 did not invent credentials, disable authentication, bypass MFA/permissions, or change auth behavior.
+
+## EUI-S17 — Large Desktop
+
+Required runtime widths:
+
+```text
+1920px
+1600px
+1440px
+```
+
+Result:
+
+```text
+NOT OBSERVED
+```
+
+Source fallback confirms:
+
+- dashboard retains the 1560px max composition frame;
+- expanded sidebar remains 232px;
+- compact sidebar remains 68px;
+- Priority Work + Schedule retain the 1.2fr / .8fr wide relationship;
+- My Work + Workspace retain the 1.25fr / .75fr relationship;
+- employee content uses `min-width: 0` / wrapping safeguards.
+
+These are source-safety findings only and are not viewport acceptance evidence.
+
+## EUI-S18 — Laptop
+
+Required runtime widths:
+
+```text
+1366px
+1280px
+```
+
+Result:
+
+```text
+NOT OBSERVED
+```
+
+Source fallback confirms:
+
+- top utility/search/account text deferral logic from Phase 2 remains;
+- sidebar hierarchy/disclosures remain intact;
+- employee content can shrink through `minmax(0, 1fr)` and `min-width: 0`;
+- no Phase 4 source change was made to laptop breakpoints.
+
+Actual crowding, overlap, short-height behavior, and utility balance remain unknown until runtime.
+
+## EUI-S19 — Tablet / Smaller Desktop
+
+Required runtime widths:
+
+```text
+1024px
+900px
+768px
+```
+
+Result:
+
+```text
+NOT OBSERVED
+```
+
+Source fallback confirms:
+
+- mobile/sidebar architecture remains available below desktop breakpoint;
+- staff workload relational table intentionally uses `min-w-[640px]` inside `overflow-x-auto`;
+- whole-page content has min-width/wrapping safeguards;
+- no new 22rem fixed operational content height exists;
+- responsive source contains no evidence-backed reason for speculative breakpoint redesign.
+
+Actual table scrolling, utility compression, navigation transition, and page overflow remain unverified.
+
+## Mobile safety check
+
+Required sanity widths:
+
+```text
+390px
+360px
+```
+
+Result:
+
+```text
+NOT OBSERVED
+```
+
+Source fallback notes:
+
+- notification panel uses left/right mobile constraints before its `sm:w-[350px]` width;
+- live workflow alert uses left/right mobile constraints before `sm:w-[390px]`;
+- Records Search dialog width uses `min(22rem, calc(100vw - 2rem))`;
+- shared content allows wrapping/min-width shrinkage.
+
+No mobile-first redesign was performed.
+
+## VIEWPORT MATRIX
+
+```text
+1920: NOT OBSERVED
+1600: NOT OBSERVED
+1440: NOT OBSERVED
+1366: NOT OBSERVED
+1280: NOT OBSERVED
+1024: NOT OBSERVED
+900:  NOT OBSERVED
+768:  NOT OBSERVED
+390:  NOT OBSERVED
+360:  NOT OBSERVED
+```
+
+## EUI-S20 — Accessibility Runtime Verification
+
+Result:
+
+```text
+NOT OBSERVED
+```
+
+Runtime checks that could not be performed:
+
+```text
+Tab walkthrough
+Shift+Tab
+Enter / Space
+Escape behavior
+Skip-navigation activation
+Sidebar disclosure keyboard operation
+Records Search focus return
+Memo dialog focus containment / return
+Pagination keyboard use
+Project progress screen-reader exposure
+Focus visibility in rendered UI
+200% zoom
+Screen-reader smoke test
+Rendered target sizes
+Live-region announcement behavior
+```
+
+### Source fallback accessibility review
+
+The final executable candidate still source-confirms:
+
+```text
+Positive tabindex: 0
+Clickable div controls: 0
+Clickable span controls: 0
+Fake role=button controls: 0
+Intentional tabIndex={-1}: portal skip target only
+
+Semantic staff workload table: PRESENT
+Work queue pagination nav: PRESENT
+Project progressbar semantics: PRESENT
+Records Search focus-return source path: PRESENT
+Sidebar disclosure aria-expanded / aria-controls: PRESENT
+Active route aria-current: PRESENT
+Memo dialog semantics: PRESENT
+Polite workflow status live region: PRESENT
+```
+
+Dynamic section-label relationships for shared dashboard headers were resolved through their `headingId` prop and matching rendered heading id.
+
+This remains source evidence, not assistive-technology runtime evidence.
+
+## EUI-S21 — Anti-AI-Slop Critique
+
+Runtime result:
+
+```text
+NOT OBSERVED
+```
+
+Safe source fallback review:
+
+```text
+New gradients in audited operational surfaces: 0
+Backdrop-filter / glassmorphism: 0
+Translate motion: 0
+Scale motion: 0
+transition-transform: 0
+WorkItem badge-cluster regression: NO
+Meeting card-grid regression: NO
+Compact empty-state role: PRESENT
+Semantic color roles: PRESENT
+Operational table/list structures: PRESENT
+```
+
+Source-level conclusion:
+
+The final candidate continues to encode the intended municipal operations direction rather than a generic card-heavy admin dashboard.
+
+Rendered anti-AI-slop acceptance remains NOT OBSERVED.
+
+## Original UI issues recheck
+
+This recheck is SOURCE-LEVEL ONLY.
+
+### 1. Redundant Home framing
+
+```text
+SOURCE: IMPROVED
+RUNTIME: NOT OBSERVED
+```
+
+DashboardHeader is no longer wrapped as another `municipal-panel`; Home group heading is suppressed while Home destination remains.
+
+### 2. Equal-weight Immediate Attention metrics
+
+```text
+SOURCE: IMPROVED
+RUNTIME: NOT OBSERVED
+```
+
+Overdue and due-today states lead the attention ordering; zero values are visually muted in source.
+
+### 3. Giant empty Work Requiring Attention region
+
+```text
+SOURCE: IMPROVED
+RUNTIME: NOT OBSERVED
+```
+
+BoundedOperationalPanel defaults to natural flow and AttentionQueue opts into bounded scrolling only when more than five records exist.
+
+### 4. Schedule nested scrollbar
+
+```text
+SOURCE: IMPROVED
+RUNTIME: NOT OBSERVED
+```
+
+SchedulePanel does not request bounded/scrollable panel behavior.
+
+### 5. Lower-grid unused space
+
+```text
+SOURCE: IMPROVED
+RUNTIME: NOT OBSERVED
+```
+
+Priority Work + Schedule and My Work + Workspace relationships remain explicitly composed.
+
+### 6. Crowded sidebar
+
+```text
+SOURCE: IMPROVED
+RUNTIME: NOT OBSERVED
+```
+
+Home/Work remain primary; lower-priority groups remain disclosures; 232px expanded / 68px compact architecture remains.
+
+### 7. Heavy employee footer
+
+```text
+SOURCE: IMPROVED
+RUNTIME: NOT OBSERVED
+```
+
+Identity + Account structure remains compact and no stacked footer border treatment has returned.
+
+### 8. Busy top utility bar
+
+```text
+SOURCE: IMPROVED
+RUNTIME: NOT OBSERVED
+```
+
+Utility controls remain grouped and desktop One Talibon branding remains suppressed where the sidebar already carries identity.
+
+### 9. Excessive card/panel dependence
+
+```text
+SOURCE: IMPROVED
+RUNTIME: NOT OBSERVED
+```
+
+Core records are lists/tables/divided rows; WorkItem badge cluster and Meeting card-grid treatment remain removed.
+
+### 10. Tiny secondary text
+
+```text
+SOURCE: IMPROVED
+RUNTIME: NOT OBSERVED
+```
+
+Final integrated Phase 3 audit eliminated 9px/10px meaningful text in core audited employee patterns; remaining compact labels follow the functional-label role.
+
+### 11. Weak priority hierarchy
+
+```text
+SOURCE: IMPROVED
+RUNTIME: NOT OBSERVED
+```
+
+Immediate Attention and Priority Work remain before Current Work Context/reference history in source order.
+
+## EUI-S22 — Final Cleanup / Acceptance
+
+Result:
+
+```text
+BLOCKED — RUNTIME ACCEPTANCE UNAVAILABLE
+```
+
+Phase 4 found no runtime UI defect because no runtime could be produced.
+
+Confirmed application defect counts:
+
+```text
+BLOCKER: 0 confirmed
+HIGH:    0 confirmed
+MEDIUM:  0 confirmed
+LOW:     0 confirmed
+COSMETIC:0 confirmed
+```
+
+Environment blocker:
+
+```text
+Repository checkout/network:
+Could not resolve host: github.com
+```
+
+This is not classified as an application defect.
+
+Runtime-only defects remain UNKNOWN.
+
+## Corrections implemented during Phase 4
+
+```text
+NONE
+```
+
+Reason:
+
+The Phase 4 golden rule requires runtime evidence before modifying successful areas when runtime should be available. The environment prevented that evidence, and the source fallback audit did not reveal a new blocker/high-confidence Phase 4 source defect requiring correction.
+
+No speculative responsive polishing was performed.
+
+## Post-correction verification
+
+Not applicable because Phase 4 made no executable-source correction.
+
+The exact executable remains:
+
+```text
+7330514c7ff44b197eae1a8aca8777e8566d3c0d
+```
+
+## Console
+
+```text
+NOT OBSERVED
+```
+
+Browser developer console could not be inspected because the application could not boot.
+
+Therefore:
+
+```text
+Console errors: UNKNOWN
+Console warnings: UNKNOWN
+Failed runtime assets: UNKNOWN
+React runtime warnings: UNKNOWN
+Runtime exceptions: UNKNOWN
+```
+
+## Performance sanity
+
+```text
+NOT OBSERVED
+```
+
+Layout shift, asset-loading, repeated rendering, overlay speed, theme flash, and console resource behavior require a real booted application.
+
+No performance optimization project was started.
+
+## Cross-phase source acceptance
+
+```text
+PHASE 1 — Dashboard composition:
+PRESERVED
+
+PHASE 2 — Navigation / workspace:
+PRESERVED
+
+PHASE 3 — Visual system / interaction / accessibility:
+PRESERVED
+```
+
+No Phase 4 executable code change was made.
+
+## Files changed during Phase 4
+
+```text
+Jayr-Aj-docs.md
+docs/ENGINEERING_LOG.md
+```
+
+Documentation only.
+
+## Known limitations
+
+- exact repository cannot be cloned in the current runtime because `github.com` does not resolve;
+- Composer is unavailable;
+- npm dependencies cannot be installed from this environment;
+- typecheck is blocked;
+- build is blocked;
+- Laravel boot is blocked;
+- employee authentication cannot be runtime-tested;
+- all requested viewport checks are not observed;
+- keyboard walkthrough is not observed;
+- 200% zoom is not observed;
+- screen-reader output is not observed;
+- console is not observed;
+- rendered visual comparison against the original screenshot is not observed;
+- runtime-only responsive/accessibility/visual defects may still exist.
+
+## Final visual question
+
+> Is the employee UI visibly better than the original screenshot?
+
+```text
+NOT OBSERVED
+```
+
+Source structure strongly indicates the original issues were addressed, but Phase 4 does not convert source evidence into visual runtime evidence.
+
+## Final system question
+
+> Does it feel like one coherent municipal operations product?
+
+```text
+RUNTIME: NOT OBSERVED
+SOURCE-LEVEL SYSTEM COHERENCE: YES
+```
+
+## Final classification
+
+```text
+SOURCE CANDIDATE — RUNTIME VERIFICATION REQUIRED
+```
+
+This follows the explicit Phase 4 fallback classification for an otherwise coherent implementation whose runtime cannot be obtained.
+
+## Branch status
+
+```text
+NOT READY FOR FINAL RUNTIME ACCEPTANCE
+```
+
+The source candidate remains intact, but the branch is not promoted to runtime-verified readiness.
+
+## Merge status
+
+```text
+NOT AUTHORIZED
+```
+
+No merge was performed.
+
+## Roadmap stop condition
+
+```text
+PHASE 1: COMPLETE — SOURCE CANDIDATE
+PHASE 2: COMPLETE — SOURCE CANDIDATE
+PHASE 3: COMPLETE — SOURCE CANDIDATE
+PHASE 4: SOURCE-FALLBACK QA COMPLETE — RUNTIME ACCEPTANCE BLOCKED
+
+EUI-S17: NOT OBSERVED
+EUI-S18: NOT OBSERVED
+EUI-S19: NOT OBSERVED
+EUI-S20: NOT OBSERVED
+EUI-S21: NOT OBSERVED
+EUI-S22: BLOCKED
+
+PHASE 5: DOES NOT EXIST
+EUI-S23: DOES NOT EXIST
+```
+
+STOP.

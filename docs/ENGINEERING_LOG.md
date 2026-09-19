@@ -1849,3 +1849,34 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Final build/typecheck attempt BLOCKED because checkout cannot resolve `github.com`; runtime NOT OBSERVED; no CI status/workflow run attached.
 - Phase 3 classification: **SOURCE CANDIDATE — RUNTIME NOT OBSERVED**.
 - Phase 4 / EUI-S17 through EUI-S22: **NOT STARTED**.
+
+
+## 2026-09-19 — Employee UI Session 4 / Phase 4 final QA
+
+### `docs: record employee ui final acceptance evidence`
+
+- Repository: `Kirch-Nairu/Talibon-Sales-Prototype`; branch: `masterlogin-UI-by-Jr-and-Aj`.
+- Phase 4 starting/evidence HEAD: `707c5f88156879bed8ea0baf413fe06bd5efa316`.
+- Exact executable candidate tested by identity/source: `7330514c7ff44b197eae1a8aca8777e8566d3c0d`.
+- Branch entering Phase 4: 61 commits ahead of main, 0 behind.
+- Environment observed: Linux 6.18.44 x86_64; Git 2.47.3; Node 22.16.0; npm 10.9.2; PHP 8.4.23; Chromium 144.0.7559.96; Composer unavailable.
+- Repository-defined commands confirmed: `npm run types:check` → `tsc --noEmit`; `npm run build` → `vite build`.
+- Real clone of `masterlogin-UI-by-Jr-and-Aj` attempted and BLOCKED with `Could not resolve host: github.com`.
+- No cached repository checkout was found in the runtime container.
+- TYPECHECK: BLOCKED; BUILD: BLOCKED; APPLICATION BOOT: BLOCKED; RUNTIME: NOT OBSERVED; CONSOLE: NOT OBSERVED.
+- EUI-S17 Large Desktop: NOT OBSERVED.
+- EUI-S18 Laptop: NOT OBSERVED.
+- EUI-S19 Tablet/Smaller Desktop: NOT OBSERVED.
+- Mobile 390/360 safety runtime: NOT OBSERVED.
+- EUI-S20 Accessibility Runtime Verification: NOT OBSERVED. Source fallback still reports positive tabindex 0, clickable div 0, clickable span 0, semantic table/pagination/progress/search/dialog/status architecture present.
+- EUI-S21 Anti-AI-Slop runtime critique: NOT OBSERVED. Source fallback remains clean: no gradients/glassmorphism/translate/scale/transition-transform; work badge cluster absent; meeting card-grid absent.
+- Original 11 UI problem areas each retain a source-level structural correction; visual confirmation remains NOT OBSERVED.
+- EUI-S22 Final Cleanup/Acceptance: BLOCKED by unavailable runtime acceptance.
+- No executable Phase 4 source correction was made because runtime evidence was unavailable and source fallback found no new evidence-backed Phase 4 defect.
+- Final executable SHA remains `7330514c7ff44b197eae1a8aca8777e8566d3c0d`.
+- Phase 4 changes documentation only.
+- Confirmed application defect count during Phase 4: 0; runtime-only defects remain unknown. DNS/repository checkout is an environment blocker, not an application defect.
+- Final classification: **SOURCE CANDIDATE — RUNTIME VERIFICATION REQUIRED**.
+- Branch status: **NOT READY FOR FINAL RUNTIME ACCEPTANCE**.
+- Merge status: **NOT AUTHORIZED**.
+- Phase 5 does not exist; EUI-S23 does not exist.
