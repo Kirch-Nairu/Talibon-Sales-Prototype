@@ -1803,3 +1803,21 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Empty-state role remains compact, neutral, transparent, and illustration-free.
 - No movement-heavy interaction, route, auth, backend, Public Portal, Phase 1 composition, or Phase 2 navigation hierarchy change introduced.
 - Source state review PASS; runtime interaction review NOT OBSERVED.
+
+
+## 2026-09-19 — Employee UI Phase 3 / EUI-S16 accessibility
+
+### `docs: record employee accessibility slice`
+
+- Executable EUI-S16 SHA: `c357edf4d842b8228773072e6e85481fd1e8a0d6`.
+- Semantic work-queue pagination removes fake `#` links, uses a labelled nav, real links only where destinations exist, and non-interactive disabled states.
+- Project progress exposes progressbar role, min/max/now values, and project-derived accessible naming without fabricating progress.
+- Records Search now has trigger/dialog linkage and Escape/Close focus return to the still-mounted trigger.
+- Compact account, appearance, sidebar-toggle, pagination, search-close, and memo controls are aligned around practical 44px targets where appropriate.
+- Existing live workflow alert uses `role="status"` + `aria-live="polite"`; static notification content is not globally live.
+- Pending memorandum overlay has dialog/modal/label semantics and native 44px close/dismiss controls; runtime focus trapping remains unverified.
+- Shell identity semantics use grouped accessible context instead of image semantics for initials.
+- Source audit: positive tabindex 0; clickable div 0; clickable span 0; fake role=button 0.
+- Full keyboard, screen-reader, rendered-focus, zoom, runtime modal, and measured contrast verification remain NOT OBSERVED.
+- No WCAG compliance claim is made.
+- No backend/auth/route/data/Public Portal/Phase 1/Phase 2 functional behavior changed.

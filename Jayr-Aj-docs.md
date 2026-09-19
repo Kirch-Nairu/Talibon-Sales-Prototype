@@ -3908,3 +3908,228 @@ ui: align employee state feedback
 ```
 
 ---
+
+
+## EUI-S16 — Accessibility
+
+### Problem / purpose
+
+Phase 3 needed a source-level accessibility pass over the employee workspace after typography, density, record structure, semantic color, and interaction-state work had stabilized. The goal was to correct real semantic/keyboard issues without adding ARIA for decoration or changing application behavior.
+
+### Accessibility audit findings
+
+Concrete source findings included:
+
+- disabled work-queue pagination used focusable placeholder `href="#"` links;
+- project completion bars exposed visible progress but not full progressbar semantics;
+- Records Search could close on Escape but did not explicitly return focus to its trigger;
+- several compact account/shell controls remained below the Phase 2 44px interaction target;
+- pending memo/modal semantics were incomplete;
+- live notification/status feedback needed an explicit polite live-region contract;
+- work-list section and record heading structure could be clearer;
+- meaningful mobile work metadata still contained 9–10px legacy labels.
+
+### Changes implemented
+
+#### Semantic pagination
+
+Work queue pagination now uses:
+
+- a semantic `nav` landmark with `aria-label="Work queue pagination"`;
+- real links only when Previous/Next destinations exist;
+- non-interactive disabled text using `aria-disabled="true"` when a destination does not exist;
+- visible current page text with `aria-current="page"`;
+- 44px/min-height pagination controls where interactive.
+
+The previous fake `#` pagination destination is removed.
+
+#### Progressbar semantics
+
+Project progress now uses:
+
+- `role="progressbar"`;
+- `aria-valuemin={0}`;
+- `aria-valuemax={100}`;
+- clamped `aria-valuenow`;
+- an accessible name derived from the real project title;
+- the existing visible percentage as the visual value.
+
+No new project percentage is fabricated.
+
+#### Records Search focus return
+
+Records Search now:
+
+- keeps a ref to the trigger button;
+- links trigger and dialog using `aria-controls`;
+- focuses the search field when opened;
+- closes on Escape;
+- returns focus to the trigger on Escape or explicit Close;
+- performs focus return only while the trigger remains mounted.
+
+Outside-pointer dismissal continues to close without inventing a focus jump.
+
+#### Control targets
+
+Source-level target sizing was aligned around 44px where appropriate for:
+
+- compact sidebar account controls;
+- sidebar appearance control;
+- sidebar collapse/expand toggle;
+- Records Search close button;
+- memo dialog close/dismiss actions;
+- work pagination actions;
+- existing top utility controls retained from Phase 2.
+
+Normal inline record links remain inline rather than being inflated into large blocks.
+
+#### Notification / live-region semantics
+
+The existing live workflow alert container now uses:
+
+```text
+role="status"
+aria-live="polite"
+```
+
+The notification trigger accessible name also includes the unread count when one exists. Static notification text is not globally placed in a live region.
+
+#### Memo / dialog semantics
+
+The pending memorandum overlay now has:
+
+- `role="dialog"`;
+- `aria-modal="true"`;
+- `aria-labelledby="pending-memo-title"`;
+- a stable labelled heading;
+- native button close/dismiss controls;
+- 44px close target;
+- existing memorandum detail link preserved.
+
+No new focus-trap implementation was invented in Phase 3. Runtime focus-trap and background-interaction behavior remain Phase 4 verification concerns.
+
+#### Shell accessibility cleanup
+
+- compact sidebar identity uses group semantics rather than presenting employee initials as an image;
+- expanded sidebar and top-bar employee identity expose grouped accessible context;
+- utility buttons receive explicit `type="button"` where needed;
+- global skip-target `tabIndex={-1}` remains intentional;
+- no positive tabindex was introduced;
+- no clickable div/span surrogate controls were introduced.
+
+### ARIA decisions
+
+ARIA was added only where native semantics did not already communicate the required state or relationship.
+
+Used where justified:
+
+```text
+aria-current
+aria-expanded
+aria-controls
+aria-disabled
+aria-live
+aria-modal
+aria-labelledby
+aria-valuemin
+aria-valuemax
+aria-valuenow
+```
+
+Native link/button/table semantics remain primary.
+
+### Keyboard / source behavior
+
+Source architecture supports:
+
+- native link/button keyboard activation;
+- disclosure controls via native buttons;
+- active-route semantics via `aria-current`;
+- Records Search Escape close + trigger focus return;
+- non-focusable disabled pagination state;
+- global `:focus-visible` outline;
+- specialized high-contrast sidebar focus treatment;
+- reduced-motion preference handling.
+
+Actual keyboard traversal remains runtime-not-observed.
+
+### Files changed
+
+```text
+resources/js/components/work-queue/WorkItemList.tsx
+resources/js/components/dashboard/ProjectPortfolio.tsx
+resources/js/components/shell/RecordsSearch.tsx
+resources/js/components/shell/SidebarFooter.tsx
+resources/js/components/shell/SidebarAppearanceMenu.tsx
+resources/js/components/shell/SidebarToggle.tsx
+resources/js/layouts/AppLayout.tsx
+resources/js/components/shell/SidebarIdentity.tsx
+resources/js/components/shell/PortalHeaderIdentity.tsx
+Jayr-Aj-docs.md
+docs/ENGINEERING_LOG.md
+```
+
+### Verification performed
+
+```text
+Positive tabindex in audited employee surfaces: 0
+Clickable div controls: 0
+Clickable span controls: 0
+Fake role=button controls: 0
+Semantic staff table: PASS
+Table column/row scope: PASS
+Fake # pagination destination: REMOVED
+Project progressbar semantics: PASS
+Records Search aria-controls: PASS
+Records Search source focus-return path: PASS
+Native disclosure buttons: PASS
+44px compact account targets: PASS
+44px appearance control target: PASS
+Pending memo dialog semantics: PASS
+Polite live status semantics: PASS
+Source accessibility review: PASS
+Runtime accessibility verification: NOT OBSERVED
+```
+
+### Runtime verification
+
+```text
+Keyboard runtime: NOT OBSERVED
+Screen-reader smoke test: NOT OBSERVED
+Focus trap/runtime modal behavior: NOT OBSERVED
+Rendered focus visibility: NOT OBSERVED
+200% zoom: NOT OBSERVED
+Measured runtime contrast: NOT OBSERVED
+```
+
+No full WCAG compliance claim is made.
+
+### Known limitations
+
+- runtime focus order and actual focus restoration require browser verification;
+- memo-dialog focus trapping/background interaction are not source-proven as complete modal behavior;
+- screen-reader announcement behavior is not observed;
+- target-size sufficiency is source-level only until rendered;
+- complete responsive/accessibility runtime acceptance belongs to Phase 4.
+
+### Implementation commits
+
+```text
+2f69254e8e1a95c3773f270d20bdc7cbe846668e
+ui: strengthen employee portal accessibility
+
+bcdd8aedef466193b42ec6b3593cdc8364553c9f
+ui: align employee control targets
+
+c357edf4d842b8228773072e6e85481fd1e8a0d6
+ui: improve employee shell accessibility
+```
+
+### EUI-S16 classification
+
+```text
+SOURCE: PASS
+RUNTIME: NOT OBSERVED
+```
+
+---
