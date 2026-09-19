@@ -23,8 +23,8 @@ export default function SidebarAppearanceMenu({ align = 'start', compact = false
         <details ref={details} onKeyDown={closeOnEscape} className="group relative shrink-0">
             <summary
                 ref={summary}
-                className={`flex min-h-10 cursor-pointer list-none items-center justify-center rounded-lg text-blue-100 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 [&::-webkit-details-marker]:hidden ${
-                    compact ? 'w-10' : 'gap-2 px-2'
+                className={`flex min-h-11 cursor-pointer list-none items-center justify-center rounded-lg text-blue-100 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80 [&::-webkit-details-marker]:hidden ${
+                    compact ? 'w-11' : 'gap-2 px-2.5'
                 }`}
                 title="Appearance"
             >
