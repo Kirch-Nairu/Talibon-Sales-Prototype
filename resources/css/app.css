@@ -75,7 +75,9 @@ button, input, select, textarea {
 /* Keep interaction movement restrained and avoid interpolating text colors through
    low-contrast transient states when appearance changes. */
 #portal-content :where(a, button, input, select, textarea) {
-    transition-property: background-color, border-color, box-shadow, opacity, transform;
+    transition-property: background-color, border-color, box-shadow, opacity;
+    transition-duration: 150ms;
+    transition-timing-function: ease-out;
 }
 
 a:focus-visible,
@@ -180,6 +182,27 @@ summary:focus-visible,
 
 #portal-content .employee-empty-state {
     padding: 0.75rem 1rem;
+    background: transparent;
+    text-align: left;
+}
+
+#portal-content .employee-interactive-row {
+    transition: background-color 150ms ease-out;
+}
+
+#portal-content .employee-interactive-row:hover {
+    background: #f8fafc;
+}
+
+:root.dark #portal-content .employee-interactive-row:hover {
+    background: rgba(30, 41, 59, 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #portal-content :where(a, button, input, select, textarea),
+    #portal-content .employee-interactive-row {
+        transition-duration: 0.01ms;
+    }
 }
 
 /* Employee Portal semantic color roles.
