@@ -1700,3 +1700,15 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Search, notifications, utilities, launcher, account, and auth functionality remain unchanged.
 - Phase 1 dashboard and Public Portal remain untouched.
 - Source review PASS; runtime NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 2 / EUI-S10 workspace shortcuts
+
+### `ui: improve employee workspace shortcuts`
+
+- Parent SHA: `c4290364190eb8507631effc8806fe434252d9e9`.
+- Role-specific homepage links are retained but reframed as `Workspace shortcuts`.
+- Card/grid treatment is replaced by a flat divided list with always-visible descriptions.
+- Existing administrator safe-link substitution, audit/security filtering, URL deduplication, labels, descriptions, and routes are preserved.
+- Sidebar remains the complete navigation system; shortcut duplication is intentionally limited to frequent role-specific work.
+- Phase 1 My Work + Workspace Links placement is preserved.
+- Source review PASS; runtime NOT OBSERVED.

@@ -3103,3 +3103,69 @@ Exact utility density at laptop widths and popup positioning remain browser-vali
 Recorded in final Phase 2 evidence.
 
 ---
+
+## EUI-S10 — Workspace Shortcuts
+
+### Problem
+
+Phase 1 correctly retained role-specific Workspace Links, but the component still looked like another dashboard card/grid. Because many destinations also exist in the sidebar, the duplicated presentation needed a clearer workflow purpose.
+
+### Existing source behavior
+
+The shortcuts are repository-backed and role-specific. Examples include:
+
+- Needs Action;
+- Correspondence;
+- Search Records;
+- Office Work;
+- Mayor's Office;
+- Operational Reports;
+- Administration;
+- Calendar.
+
+Administrator filtering also intentionally excludes audit/security links from this homepage block and supplies a curated administrative set.
+
+### Change
+
+- rename `Workspace links` → `Workspace shortcuts`;
+- replace the bordered card/grid treatment with a flat divider-based list;
+- add a concise explanation: `Frequent destinations for this role.`;
+- keep every existing legitimate shortcut after the component's existing safety/deduplication logic;
+- keep descriptions visible instead of hiding them at smaller container widths;
+- use restrained icons and one directional arrow per row;
+- preserve link destinations, labels, descriptions, and authorization-dependent source inputs.
+
+### Reason
+
+The sidebar is the complete navigation system. Workspace shortcuts should instead answer: “Which destinations am I likely to need repeatedly in this role?” The flatter list makes that duplication intentional rather than decorative.
+
+### Files changed
+
+```text
+resources/js/components/dashboard/QuickActions.tsx
+Jayr-Aj-docs.md
+docs/ENGINEERING_LOG.md
+```
+
+### Verification
+
+```text
+Existing role-specific shortcuts retained: PASS
+Duplicate URLs still deduplicated: PASS
+Administrator safety filtering preserved: PASS
+Routes invented: NO
+Authorization logic changed: NO
+Phase 1 My Work + shortcuts relationship preserved: PASS
+Source review: PASS
+Runtime: NOT OBSERVED
+```
+
+### Known limitations
+
+Final row density and visual balance beside My Work still require browser inspection.
+
+### Commit
+
+Recorded in final Phase 2 evidence.
+
+---
