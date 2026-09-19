@@ -224,8 +224,8 @@
 
 .public-hero-intro {
     display: grid;
-    grid-template-columns: minmax(0, 1.18fr) minmax(360px, .82fr);
-    min-height: 430px;
+    grid-template-columns: minmax(0, 1.14fr) minmax(360px, .86fr);
+    min-height: 360px;
 }
 
 .public-hero-copy {
@@ -233,7 +233,7 @@
     min-width: 0;
     flex-direction: column;
     justify-content: center;
-    padding: 52px 56px 50px;
+    padding: 42px 52px 40px;
 }
 
 .public-welcome {
@@ -246,18 +246,18 @@
 }
 
 .public-hero-title {
+    max-width: 760px;
     margin-top: 12px;
     color: white;
-    font-size: clamp(46px, 4.25vw, 58px);
+    font-size: clamp(38px, 3.55vw, 50px);
     font-weight: 800;
-    letter-spacing: -.045em;
-    line-height: .98;
-    text-transform: uppercase;
+    letter-spacing: -.035em;
+    line-height: 1.04;
 }
 
 .public-hero-lead {
-    max-width: 620px;
-    margin-top: 20px;
+    max-width: 650px;
+    margin-top: 18px;
     color: #f3f7fb;
     font-size: 17px;
     font-weight: 500;
@@ -265,11 +265,11 @@
 }
 
 .public-hero-description {
-    max-width: 590px;
-    margin-top: 10px;
+    max-width: 640px;
+    margin-top: 8px;
     color: #b9c8da;
-    font-size: 14px;
-    line-height: 1.65;
+    font-size: 13px;
+    line-height: 1.6;
 }
 
 .public-hero-actions {
@@ -277,7 +277,7 @@
     flex-wrap: wrap;
     align-items: center;
     gap: 10px;
-    margin-top: 26px;
+    margin-top: 22px;
 }
 
 .public-primary-action,
@@ -808,10 +808,10 @@
 
     .public-hero-intro {
         grid-template-columns: minmax(0, 1.05fr) minmax(300px, .95fr);
-        min-height: 390px;
+        min-height: 350px;
     }
-    .public-hero-copy { padding: 42px 36px; }
-    .public-hero-title { font-size: 44px; }
+    .public-hero-copy { padding: 38px 34px; }
+    .public-hero-title { font-size: 40px; }
     .public-hero-lead { font-size: 16px; }
 
     .public-service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 28px; }
@@ -845,9 +845,9 @@
     .public-brand { gap: 14px; }
     .public-brand-caption { max-width: 172px; padding-left: 14px; }
     .public-nav-inner { gap: 19px; padding-inline: 22px; }
-    .public-hero-intro { grid-template-columns: minmax(0, 1.15fr) minmax(330px, .85fr); min-height: 400px; }
-    .public-hero-copy { padding: 42px 44px 40px; }
-    .public-hero-actions { margin-top: 22px; }
+    .public-hero-intro { grid-template-columns: minmax(0, 1.12fr) minmax(330px, .88fr); min-height: 350px; }
+    .public-hero-copy { padding: 38px 42px 36px; }
+    .public-hero-actions { margin-top: 20px; }
 }
 
 @media (min-width: 768px) and (max-width: 900px) {
@@ -875,9 +875,9 @@
     .public-menu-button { width: 44px; min-height: 44px; }
 
     .public-hero-intro { grid-template-columns: 1fr; min-height: 0; }
-    .public-hero-copy { padding: 32px 24px 30px; }
+    .public-hero-copy { padding: 30px 24px 28px; }
     .public-welcome { font-size: 11px; line-height: 1.5; }
-    .public-hero-title { margin-top: 10px; font-size: 36px; line-height: 1; }
+    .public-hero-title { margin-top: 10px; font-size: 34px; line-height: 1.06; }
     .public-hero-lead { margin-top: 16px; font-size: 16px; line-height: 1.5; }
     .public-hero-description { margin-top: 8px; font-size: 14px; line-height: 1.6; }
     .public-hero-actions { align-items: stretch; margin-top: 22px; }
@@ -940,7 +940,7 @@
     .public-brand .municipal-brand .font-extrabold { font-size: 17px; }
     .public-login-link { padding-inline: 10px; }
     .public-hero-copy { padding-inline: 21px; }
-    .public-hero-title { font-size: 34px; }
+    .public-hero-title { font-size: 32px; }
     .public-destinations { grid-template-columns: 1fr; }
     .public-destinations a:first-child { grid-column: auto; }
     .public-destinations a + a { border-left: 0; }
