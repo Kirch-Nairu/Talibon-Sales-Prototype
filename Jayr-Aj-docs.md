@@ -919,7 +919,10 @@ The existing green treatment inside the established One Talibon wordmark is pres
 
 ## Responsive considerations
 
+- the tablet/laptop breakpoint now keeps the same responsive display token instead of forcing the old 40px hero size;
 - mobile hero display is reduced to 32px and 30px at the smallest breakpoint;
+- the mobile municipality line remains at the 13px supporting-text role instead of dropping to 11px;
+- the mobile Talibon image caption uses the 12px metadata role instead of 11px;
 - supporting text no longer collapses to 11px in Quick Access;
 - section/subsection/title relationships remain stable across recomposition;
 - no new fixed-width text container or font dependency was introduced.

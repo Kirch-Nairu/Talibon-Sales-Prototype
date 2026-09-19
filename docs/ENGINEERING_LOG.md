@@ -1392,3 +1392,14 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Verification before publication: source, typography/style, and identity-asset inspection **PASS**. Runtime rendering, build/typecheck execution, desktop/mobile visual inspection, 200% zoom, keyboard/focus, and light/dark runtime inspection are **NOT OBSERVED** and must not be promoted to PASS.
 - Schema/migration/dependency impact: **NONE**. Internal application behavior impact: **NONE**.
 
+## 2026-09-19 — Jr/AJ public UI UI-S6 responsive typography source correction
+
+### `ui: align responsive public typography`
+
+- Exact parent SHA: `6b3d6d2fedeaa90c13979c9671e957cdc5e0b9c4` on `UI/Jr-and-Aj`.
+- Post-implementation source audit found two stale breakpoint overrides from the pre-UI-S6 type system: a <=1023px hero rule still forced `40px`, and the mobile municipal identity line still forced `11px`. The mobile hero image caption also remained at 11px.
+- Correction: the <=1023px hero now uses the shared responsive display token; the mobile municipality line uses the shared 13px supporting role; the mobile hero caption uses the shared 12px metadata role.
+- Scope remains public typography only. No information architecture, backend behavior, route, dependency, color palette, or UI-S7 composition change.
+- Source verification after preparation: stale 40px hero override removed; stale 11px municipality/caption overrides removed; no nonstandard public weights `550/620/650/680/720/740/750/760` remain.
+- Runtime/build/browser evidence remains **NOT OBSERVED**.
+
