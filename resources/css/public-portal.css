@@ -264,14 +264,6 @@
     line-height: 1.55;
 }
 
-.public-hero-description {
-    max-width: 640px;
-    margin-top: 8px;
-    color: #b9c8da;
-    font-size: 13px;
-    line-height: 1.6;
-}
-
 .public-hero-actions {
     display: flex;
     flex-wrap: wrap;
@@ -879,7 +871,6 @@
     .public-welcome { font-size: 11px; line-height: 1.5; }
     .public-hero-title { margin-top: 10px; font-size: 34px; line-height: 1.06; }
     .public-hero-lead { margin-top: 16px; font-size: 16px; line-height: 1.5; }
-    .public-hero-description { margin-top: 8px; font-size: 14px; line-height: 1.6; }
     .public-hero-actions { align-items: stretch; margin-top: 22px; }
     .public-primary-action,
     .public-secondary-action { width: 100%; min-height: 44px; }
