@@ -243,6 +243,96 @@ ui: clean obsolete public hero description styles
 
 ---
 
+
+# UI-S3 — Quick Access Structure
+
+## Problem
+
+The existing shortcut band sat inside the hero and repeated the same destination names already present in the public navigation.
+
+Observed issues:
+
+- the shortcut layer read like a second navigation bar rather than a task aid;
+- equal destination blocks competed with the hero hierarchy;
+- labels described site sections instead of common citizen actions;
+- Quick Access had no explicit section identity;
+- the shortcut layer was coupled to the hero component.
+
+## Changes
+
+### Quick Access separated from the hero
+
+The shortcut layer is now rendered as its own homepage component:
+
+```text
+resources/js/components/public/PublicQuickAccess.tsx
+```
+
+The hero now owns only municipal identity, public-purpose messaging, the primary citizen CTA, and supporting Talibon imagery.
+
+### Task-oriented shortcut language
+
+Quick Access now presents:
+
+```text
+Find a municipal service
+Office and service guidance
+
+Read news & notices
+Public announcements and advisories
+
+Open public documents
+Transparency and published information
+```
+
+These links use existing homepage anchors only. No unavailable public service or new route was invented.
+
+### Flat editorial presentation
+
+The previous equal destination tiles were replaced with a restrained horizontal task band on larger screens.
+
+The layer uses:
+
+- one explicit `Quick access` label;
+- one compact heading;
+- three task links;
+- subtle dividers;
+- no rounded cards;
+- no decorative badges;
+- no fake status colors.
+
+On mobile the band recomposes into a single-column task list with full-width touch targets.
+
+### UI-S2 source correction
+
+During the UI-S3 source audit, the old prototype hero description was found still present even though UI-S2 documentation recorded it as removed.
+
+That stale line has now been removed so the implementation and documentation agree. The public hero no longer repeats employee-access messaging.
+
+## Files changed
+
+```text
+resources/js/components/public/PublicHero.tsx
+resources/js/components/public/PublicQuickAccess.tsx
+resources/js/pages/Public/Home.tsx
+resources/css/public-portal.css
+Jayr-Aj-docs.md
+docs/ENGINEERING_LOG.md
+```
+
+## Verification
+
+```text
+Source inspection: PASS
+Diff/scope inspection: PENDING post-commit check
+Runtime visual inspection: NOT OBSERVED
+Build/typecheck: NOT OBSERVED
+```
+
+Runtime acceptance remains pending until the branch is rendered and inspected at real browser widths.
+
+---
+
 # Current UI Branch State
 
 At the end of UI-S2, the working branch is:
@@ -316,10 +406,11 @@ Status: IMPLEMENTED
 Runtime acceptance: PENDING
 
 UI-S3 — Quick Access Structure
-Status: NEXT
+Status: IMPLEMENTED
+Runtime acceptance: PENDING
 
 UI-S4 — Municipal Services Information Architecture
-Status: NOT STARTED
+Status: NEXT
 
 UI-S5 — News / Notices / Documents Editorial Structure
 Status: NOT STARTED
@@ -365,7 +456,7 @@ As UI work continues:
 # Next Planned Slice
 
 ```text
-UI-S3 — Quick Access Structure
+UI-S4 — Municipal Services Information Architecture
 ```
 
-The next goal is to turn the current public shortcut band into a deliberate Quick Access layer without duplicating the primary navigation.
+The next goal is to make the Municipal Services section more task-oriented and informative using only service capabilities supported by the current public prototype.

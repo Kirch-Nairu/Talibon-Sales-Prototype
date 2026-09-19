@@ -1322,3 +1322,19 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - UAT: **NOT STARTED**.
 - Deployment: **NO**.
 - Next action: publish the single R0 candidate commit, then stop for independent source audit and four-gate CI observation before any integration to `main`.
+
+## 2026-09-19 — Jr/AJ public UI UI-S3 quick access hierarchy
+
+### `ui: structure public quick access`
+
+- Working branch: `UI/Jr-and-Aj`; exact parent SHA: `bc11b725ee202991580b714add6a087a109fe186`.
+- Scope: **UI-only public homepage refinement** under KIKIAM UI HARNESS V1. No backend behavior, API, database, authentication, route authority, or business-rule change is introduced.
+- UI-S3 intent: separate Quick Access from the hero and global navigation, then express the shortcut layer as common citizen tasks rather than another duplicate navigation bar.
+- Added `resources/js/components/public/PublicQuickAccess.tsx` with three existing-anchor tasks only: municipal services, news/notices, and public documents. No unavailable service or new route is introduced.
+- `PublicHero.tsx` now owns only the civic hero. The stale prototype description that still mentioned employee access was removed during this source audit so UI-S2 implementation matches its recorded intent.
+- `Public/Home.tsx` now composes `PublicHero` followed by `PublicQuickAccess`, preserving the existing services and information sections below.
+- `resources/css/public-portal.css` replaces the former equal destination-tile strip with a flat editorial Quick Access band using subtle dividers, task language, responsive single-column mobile recomposition, existing municipal tokens, and explicit focus-visible treatment.
+- Project-local change tracking: `Jayr-Aj-docs.md` is updated in this same candidate to record UI-S3 and the UI-S2 source correction.
+- Verification before publication: source composition and bounded scope were inspected. Runtime browser rendering, TypeScript execution, production build, keyboard walkthrough, responsive visual inspection, and light/dark runtime checks are **NOT OBSERVED** in this environment and must not be promoted to PASS.
+- Schema/migration/dependency impact: **NONE**. Backend/application business behavior impact: **NONE**.
+

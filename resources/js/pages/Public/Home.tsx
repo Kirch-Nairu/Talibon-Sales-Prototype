@@ -4,6 +4,7 @@ import PublicFooter from '../../components/public/PublicFooter';
 import PublicGlance from '../../components/public/PublicGlance';
 import PublicHeader from '../../components/public/PublicHeader';
 import PublicHero from '../../components/public/PublicHero';
+import PublicQuickAccess from '../../components/public/PublicQuickAccess';
 import PublicServices from '../../components/public/PublicServices';
 import PublicUpdates from '../../components/public/PublicUpdates';
 import type { PublicContent } from '../../components/public/types';
@@ -23,7 +24,8 @@ export default function Home({ appName, authenticated, content }: Props) {
                         <p>Prototype preview — sample public content is shown for evaluation and does not represent official municipal reporting.</p>
                     </div>
                     <div className="public-primary">
-                        <PublicHero content={content} authenticated={authenticated} />
+                        <PublicHero content={content} />
+                        <PublicQuickAccess />
                         <PublicServices content={content} />
                         <div className="public-information-zone">
                             <PublicGlance content={content} />
