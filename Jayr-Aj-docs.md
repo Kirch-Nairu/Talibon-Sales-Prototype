@@ -2975,3 +2975,64 @@ Default collapsed state and long-navigation scroll feel still require browser ob
 Recorded in final Phase 2 evidence.
 
 ---
+
+## EUI-S8 — Employee Profile / Sidebar Footer
+
+### Problem
+
+The expanded sidebar footer presented identity as plain text above a separately bordered utility row. The account area felt like another stacked navigation panel and did not explicitly surface the real application role even though that value already exists on the authenticated user.
+
+### Previous state
+
+- employee name as text-only block;
+- position + department combined below;
+- second border-separated utility row;
+- expanded and collapsed identity used noticeably different visual language;
+- role value was not surfaced in the footer.
+
+### Change
+
+- expanded identity now uses the same initials avatar language as compact mode;
+- employee name remains the primary identity;
+- real authenticated role is converted from repository role key to readable text;
+- role + office/department form one concise operating-context line;
+- account utilities move into a quieter line labelled `Account`;
+- secondary border between identity and account utilities is removed;
+- sign-out, appearance, and showcase-switcher behavior is preserved;
+- compact footer remains available and slightly tightened.
+
+### Reason
+
+The footer should answer who is signed in, what operating context they are using, and where account/session actions live without becoming another heavy navigation panel.
+
+### Files changed
+
+```text
+resources/js/components/shell/SidebarIdentity.tsx
+resources/js/components/shell/SidebarFooter.tsx
+Jayr-Aj-docs.md
+docs/ENGINEERING_LOG.md
+```
+
+### Verification
+
+```text
+User name preserved: PASS
+Role source reused from AuthUser: PASS
+Office/department preserved: PASS
+Logout behavior changed: NO
+Appearance behavior changed: NO
+Authentication changed: NO
+Clickable non-button controls introduced: NO
+Runtime account interaction: NOT OBSERVED
+```
+
+### Known limitations
+
+Exact truncation behavior for unusually long names/office labels remains browser-dependent.
+
+### Commit
+
+Recorded in final Phase 2 evidence.
+
+---

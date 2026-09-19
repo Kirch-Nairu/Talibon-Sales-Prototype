@@ -1675,3 +1675,15 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Compact sidebar keeps all icon destinations directly visible.
 - No destinations, permissions, labels, route visibility rules, backend, or public UI changed.
 - Source semantics PASS; runtime disclosure behavior NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 2 / EUI-S8 sidebar account context
+
+### `ui: simplify employee sidebar account context`
+
+- Parent SHA: `69c9d0240e1f4b158ca5e2ef9d77f5d885f1100a`.
+- Expanded SidebarIdentity now pairs a compact initials marker with employee name and role/office context.
+- Existing `AuthUser.role` is formatted for display; no new identity or authorization source is introduced.
+- Footer utility row becomes a quieter `Account` line without the previous secondary border.
+- Sign-out, appearance, showcase session controls, and compact sidebar behavior are preserved.
+- No authentication/session behavior changed.
+- Source review PASS; runtime interaction NOT OBSERVED.
