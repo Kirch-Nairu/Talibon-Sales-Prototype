@@ -1712,3 +1712,14 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Sidebar remains the complete navigation system; shortcut duplication is intentionally limited to frequent role-specific work.
 - Phase 1 My Work + Workspace Links placement is preserved.
 - Source review PASS; runtime NOT OBSERVED.
+
+## 2026-09-19 — Employee UI Phase 2 source-review correction
+
+### `ui: align employee utility targets`
+
+- Parent SHA: `27448dbc6f8561377e3f97292053d0fd4f16fbb7`.
+- Corrected Phase 2 source QA findings before evidence closure.
+- Mobile navigation trigger, Search, Municipal Utilities, Notifications, and Workspace Launcher now use 44px hit areas.
+- Removed the EUI-S10 shortcut arrow hover translation so Phase 2 does not introduce motion-based polish.
+- Documentation wording updated to match source truth.
+- No navigation behavior, route, auth, data, Phase 1 dashboard composition, or public UI changed.

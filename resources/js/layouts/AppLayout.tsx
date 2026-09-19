@@ -184,7 +184,7 @@ export default function AppLayout({ title, children }: Props) {
                 <main className="min-w-0 overflow-x-clip">
                     <header className="sticky top-0 z-20 flex min-h-14 items-center justify-between gap-3 border-b border-slate-200/80 bg-white px-3 transition-colors dark:border-slate-700/80 dark:bg-[#142236] sm:px-4">
                         <div className="flex min-w-0 items-center gap-2.5">
-                            <button type="button" onClick={() => setMobileOpen(true)} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 lg:hidden" aria-label="Open navigation"><Menu size={19} aria-hidden="true" /></button>
+                            <button type="button" onClick={() => setMobileOpen(true)} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800 lg:hidden" aria-label="Open navigation"><Menu size={19} aria-hidden="true" /></button>
                             <div className="min-w-0">
                                 <div className="whitespace-nowrap text-sm font-extrabold leading-5 tracking-tight text-[#0b2852] dark:text-white lg:hidden">One <span className="text-[#1769aa] dark:text-blue-400">Talibon</span></div>
                                 <div className="truncate text-xs font-semibold leading-4 text-slate-700 dark:text-slate-200 lg:text-sm">{title}</div>
@@ -197,7 +197,7 @@ export default function AppLayout({ title, children }: Props) {
                                 <button
                                     type="button"
                                     onClick={toggleUtilities}
-                                    className={`flex h-10 w-10 items-center justify-center rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700/30 ${utilitiesActive ? 'bg-blue-50 text-blue-800 dark:bg-blue-950/45 dark:text-blue-200' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'}`}
+                                    className={`flex h-11 w-11 items-center justify-center rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-700/30 ${utilitiesActive ? 'bg-blue-50 text-blue-800 dark:bg-blue-950/45 dark:text-blue-200' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'}`}
                                     aria-label={utilitiesActive ? 'Close municipal utilities' : 'Open municipal utilities'}
                                     aria-expanded={utilitiesActive}
                                     title="Municipal utilities"
@@ -205,7 +205,7 @@ export default function AppLayout({ title, children }: Props) {
                                     <PanelRightOpen size={18} aria-hidden="true" />
                                 </button>
                                 <div ref={notificationsPanel} className="relative">
-                                    <button type="button" ref={notificationsButton} onClick={() => { setNotificationsOpen((open) => !open); setUnseenWorkflowCount(0); }} className="relative flex h-10 w-10 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800" aria-label="Open notifications" aria-expanded={notificationsOpen} aria-controls="portal-notifications" title="Notifications">
+                                    <button type="button" ref={notificationsButton} onClick={() => { setNotificationsOpen((open) => !open); setUnseenWorkflowCount(0); }} className="relative flex h-11 w-11 items-center justify-center rounded-lg text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800" aria-label="Open notifications" aria-expanded={notificationsOpen} aria-controls="portal-notifications" title="Notifications">
                                         <Bell size={18} aria-hidden="true" />
                                     {bellCount > 0 && <span className="absolute -right-0.5 -top-0.5 min-w-4 rounded-full bg-rose-600 px-1 text-center text-xs font-bold text-white">{bellCount > 9 ? '9+' : bellCount}</span>}
                                 </button>

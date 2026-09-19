@@ -44,7 +44,7 @@ export default function WorkspaceLauncher({ groups }: { groups: PortalNavigation
                 aria-controls="workspace-sections"
                 title="Workspace sections"
                 onClick={() => setOpen((value) => !value)}
-                className="flex h-10 w-10 items-center justify-center rounded-lg text-[#0b2852] hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-700/30 dark:text-blue-200 dark:hover:bg-slate-800"
+                className="flex h-11 w-11 items-center justify-center rounded-lg text-[#0b2852] hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-700/30 dark:text-blue-200 dark:hover:bg-slate-800"
             >
                 <Grid3X3 size={19} aria-hidden="true" />
             </button>

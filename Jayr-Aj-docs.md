@@ -3058,7 +3058,7 @@ Desktop chrome repeated One Talibon branding already present in the persistent s
 - Search, Utilities, Notifications, and Workspace Launcher form one quiet utility cluster;
 - account identity is separated as a second lightweight region;
 - Search text is deferred to 2XL while icon/search semantics remain unchanged;
-- utility and launcher hit areas standardize at 40px in this Phase 2 composition;
+- utility/search/notification/launcher hit areas standardize at 44px, preserving the existing mobile touch target;
 - Workspace Launcher gains an explicit focus ring consistent with adjacent controls;
 - top-bar account avatar reduces 40px → 36px;
 - account text appears only at 2XL to reduce laptop crowding;
@@ -3132,7 +3132,7 @@ Administrator filtering also intentionally excludes audit/security links from th
 - add a concise explanation: `Frequent destinations for this role.`;
 - keep every existing legitimate shortcut after the component's existing safety/deduplication logic;
 - keep descriptions visible instead of hiding them at smaller container widths;
-- use restrained icons and one directional arrow per row;
+- use restrained icons and one static directional arrow per row;
 - preserve link destinations, labels, descriptions, and authorization-dependent source inputs.
 
 ### Reason
@@ -3169,3 +3169,19 @@ Final row density and visual balance beside My Work still require browser inspec
 Recorded in final Phase 2 evidence.
 
 ---
+
+
+### Phase 2 source-review correction
+
+The phase-wide source review found two small issues before closure:
+
+- EUI-S9 had reduced the mobile menu / Workspace Launcher target from the previous 44px treatment while claiming standardization;
+- EUI-S10 used a small hover translation on the directional arrow even though Phase 2 explicitly avoids animation-led refinement.
+
+Correction:
+
+- mobile menu, Search, Municipal Utilities, Notifications, and Workspace Launcher now use 44px hit areas;
+- the Workspace shortcut arrow remains static;
+- no behavior, routes, or data changed.
+
+Verification: source review PASS; runtime NOT OBSERVED.

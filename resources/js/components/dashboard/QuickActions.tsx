@@ -40,7 +40,7 @@ export default function QuickActions({ actions }: { actions: DashboardExperience
                         <div className="text-xs font-semibold leading-4 text-slate-900 dark:text-slate-100 sm:text-sm">{action.label}</div>
                         <div className="mt-0.5 text-[11px] leading-4 text-slate-500 dark:text-slate-400">{action.description}</div>
                     </div>
-                    <ArrowRight size={14} className="shrink-0 text-slate-400 transition-transform group-hover:translate-x-0.5 dark:text-slate-500" aria-hidden="true" />
+                    <ArrowRight size={14} className="shrink-0 text-slate-400 dark:text-slate-500" aria-hidden="true" />
                 </Link>;
             })}
         </div>
