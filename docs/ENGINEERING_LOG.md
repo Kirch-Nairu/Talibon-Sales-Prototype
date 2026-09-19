@@ -1460,3 +1460,18 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Documentation: `Jayr-Aj-docs.md` is updated in this same candidate.
 - Pre-publication source verification: interactive inventory, semantics, ARIA/tabIndex, skip target, DOM order, focus CSS, touch targets, mobile-nav semantics, theme-control semantics, interaction states, and source contrast review **PASS**. Measured contrast/runtime keyboard/zoom/screen-reader/browser evidence remain **NOT OBSERVED**.
 - Backend/auth/database/API/routing/content IA impact: **NONE**.
+## 2026-09-19 — Jr/AJ public UI UI-S8 verification evidence
+
+### `docs: record UI-S8 verification evidence`
+
+- Executable candidate SHA: `c1aa7b8a1855ba93d1ba683233e35cdb810fafe4` on `UI/Jr-and-Aj`.
+- Exact UI-S8 implementation diff: 6 files — `resources/js/pages/Public/Home.tsx`, `resources/js/components/public/PublicHeader.tsx`, `resources/js/components/AppearanceControl.tsx`, `resources/css/public-portal.css`, `Jayr-Aj-docs.md`, and `docs/ENGINEERING_LOG.md`.
+- Post-commit accessibility source audit **PASS**: positive tabindex 0; one intentional main-target `tabIndex={-1}`; no clickable div/span controls; mobile `aria-expanded`/`aria-controls` present; appearance uses `aria-pressed`; no fabricated `aria-current`; reduced-motion rule present; explicit focus-visible system present; public/mobile target-size corrections present.
+- AppearanceControl's Tailwind `focus-visible:outline-none` remains paired with `focus-visible:ring-2` in the same component and is therefore not an un-replaced outline removal.
+- Branch isolation **PASS**: candidate is 20 commits ahead of `main` and 0 behind at the executable SHA.
+- CI evidence: **NOT OBSERVED**. GitHub reports no combined statuses and no workflow runs for the executable candidate.
+- Repository-defined scripts confirmed in `package.json`: `npm run types:check` and `npm run build`.
+- Local checkout/build attempt: **BLOCKED** because the execution environment could not resolve `github.com`; npm install, typecheck, build, runtime/browser, Tab/Shift+Tab, skip-link activation, mobile-menu keyboard behavior, appearance keyboard behavior, 200% zoom, screen-reader smoke test, measured contrast, and console inspection are therefore **NOT OBSERVED**.
+- Acceptance split: source accessibility candidate **PASS**; runtime accessibility acceptance **NOT OBSERVED**; overall UI-S8 **NOT OBSERVED** under harness rules.
+- NOT APPLICABLE: disabled public controls, loading/busy states, public form states, current-section tracking, and editorial actions without real destinations.
+- UI-S9 remains **NOT STARTED**.

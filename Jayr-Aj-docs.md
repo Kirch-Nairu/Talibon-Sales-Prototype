@@ -1294,7 +1294,12 @@ No new fixed-height text controls or nowrap action labels are introduced. Existi
 - Interaction-state CSS audit: PASS
 - Source contrast review: PASS
 - Measured contrast: NOT OBSERVED
-- Build/typecheck: PENDING environment attempt
+- Source accessibility candidate: PASS
+- Implementation scope inspection: PASS
+- Git diff inspection: PASS
+- Branch isolation: PASS
+- Build: BLOCKED — repository checkout unavailable because `github.com` could not be resolved
+- Typecheck: BLOCKED — repository checkout unavailable because `github.com` could not be resolved
 - Runtime/browser: NOT OBSERVED
 - Tab / Shift+Tab walkthrough: NOT OBSERVED
 - Skip-link runtime activation: NOT OBSERVED
@@ -1304,14 +1309,53 @@ No new fixed-height text controls or nowrap action labels are introduced. Existi
 - Screen-reader smoke test: NOT OBSERVED
 - Console inspection: NOT OBSERVED
 
-## Commit
+## Implementation commit
 
-Implementation SHA will be recorded after post-commit verification.
+```text
+c1aa7b8a1855ba93d1ba683233e35cdb810fafe4
+ui: strengthen public accessibility states
+```
+
+## Post-commit source audit
+
+```text
+Positive tabIndex values: 0
+Intentional tabIndex={-1}: 1
+aria-expanded references: 1
+aria-controls references: 1
+aria-pressed source mechanism: PRESENT
+aria-current: 0 — intentionally not manufactured
+Clickable div controls: 0
+Clickable span controls: 0
+Public CSS outline:none declarations: 0
+focus-visible selector occurrences: 22
+Reduced-motion rule: PRESENT
+Expanded mobile-nav visual state: PRESENT
+Mobile About/contact 44px targets: PRESENT
+Mobile footer public-link 44px targets: PRESENT
+```
+
+The AppearanceControl component still uses Tailwind `focus-visible:outline-none`, but it replaces the browser outline in the same rule with a visible two-pixel focus ring; UI-S8 did not remove that valid replacement.
+
+GitHub reports no CI status and no workflow run for the implementation SHA.
+
+A real checkout/build attempt was made with the repository-defined scripts `npm run types:check` and `npm run build`, but cloning was BLOCKED because the execution environment could not resolve `github.com`. Therefore browser, keyboard, screen-reader, measured contrast, and zoom evidence remain NOT OBSERVED.
 
 ---
 # Current UI Branch State
 
-UI-S7 implementation candidate:
+UI-S8 implementation candidate:
+
+```text
+UI/Jr-and-Aj
+Implementation SHA: c1aa7b8a1855ba93d1ba683233e35cdb810fafe4
+Ahead of main at implementation: 20 commits
+Behind main: 0
+```
+
+The evidence finalization commit that updates this document is documentation-only and advances the branch after the implementation candidate.
+
+Historical UI-S7 implementation candidate:
 
 ```text
 UI/Jr-and-Aj
