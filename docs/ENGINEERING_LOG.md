@@ -1746,3 +1746,14 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - GitHub CI evidence: no status/workflow run attached to executable candidate.
 - Phase 2 classification: **SOURCE CANDIDATE — RUNTIME NOT OBSERVED**.
 - Phase 3 EUI-S11 through EUI-S16: **NOT STARTED**.
+
+## 2026-09-19 — Employee UI Phase 3 / EUI-S11 typography system
+
+### `ui: standardize employee portal typography`
+
+- Implementation SHA: `fb14544531b11002fd494872cd194ccf5160f892`.
+- Added employee-only typography roles under `#portal-content`: page title, section title, operational title, body, supporting, metadata, functional label, and table heading.
+- Existing Inter/system font stack remains authoritative.
+- Applied the roles to the shared work-context header, section header, attention queue, schedule/deadlines, and workspace shortcuts.
+- Public Portal typography and Phase 1/2 structural decisions remain untouched.
+- Source typography audit PASS; runtime NOT OBSERVED.

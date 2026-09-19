@@ -3514,3 +3514,84 @@ WAIT FOR PHASE 3 HANDOFF
 ```
 
 ---
+
+## SESSION 3 — PHASE 3: VISUAL SYSTEM & INTERACTION
+
+### Phase authority
+
+```text
+Branch: masterlogin-UI-by-Jr-and-Aj
+Phase 3 starting SHA: 8d85f8fcc984b44f327670c2b9d81472c2b0803a
+Phase 2 executable candidate: a6a1aa41a46deeea496f1dae663ae7c6a99f8a34
+```
+
+Phase 1 composition and Phase 2 navigation hierarchy remain protected.
+
+## EUI-S11 — Typography System
+
+### Problem / audit findings
+
+Meaningful employee information was distributed across ad-hoc 9px, 10px, 11px, 12px, and 14px sizes with repeated uppercase/tracking and inconsistent section-title treatment.
+
+### Visual-system decision
+
+Keep the existing Inter/system font stack and introduce a compact employee-only type role layer scoped to `#portal-content`:
+
+```text
+Page title          24px / 700
+Section title       15px / 700
+Operational title   14px / 600
+Body                13px
+Supporting text     12px
+Metadata            12px
+Functional label    11px / 700 / restrained uppercase
+Table heading       11px / 700 / restrained uppercase
+```
+
+### Change
+
+- added employee typography roles to `resources/css/app.css`;
+- standardized DashboardHeader, DashboardSectionHeader, AttentionQueue, SchedulePanel, and Workspace shortcuts;
+- core operational record titles now use one 14px/600 role;
+- metadata/supporting copy uses one 12px family of roles;
+- core table headings use one 11px functional heading role;
+- several meaningful 9px/10px labels were removed from these shared dashboard patterns;
+- no new typeface was introduced.
+
+### Files changed
+
+```text
+resources/css/app.css
+resources/js/components/dashboard/DashboardHeader.tsx
+resources/js/components/dashboard/DashboardSectionHeader.tsx
+resources/js/components/dashboard/AttentionQueue.tsx
+resources/js/components/dashboard/SchedulePanel.tsx
+resources/js/components/dashboard/QuickActions.tsx
+Jayr-Aj-docs.md
+docs/ENGINEERING_LOG.md
+```
+
+### Verification
+
+```text
+Existing typeface preserved: PASS
+Employee-only CSS scope: PASS
+Public Portal files changed: NO
+Phase 1 composition changed: NO
+Phase 2 navigation changed: NO
+Source typography review: PASS
+Runtime typography review: NOT OBSERVED
+```
+
+### Known limitations
+
+Feature-specific employee pages may still contain legacy typography; shared operational-pattern review continues in EUI-S13/EUI-S16.
+
+### Commit
+
+```text
+fb14544531b11002fd494872cd194ccf5160f892
+ui: standardize employee portal typography
+```
+
+---
