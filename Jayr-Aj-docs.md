@@ -867,6 +867,7 @@ This strengthens scanning without placing every section inside a new visual cont
 ## Metadata typography changes
 
 - useful 11px Quick Access supporting text is increased to 13px;
+- the public brand subline is raised from 11px to the 12px metadata floor;
 - metadata remains 12px but receives consistent line-height and weight;
 - appearance labels and civic kickers no longer depend on uppercase;
 - neutral metadata remains neutral rather than badge-like.

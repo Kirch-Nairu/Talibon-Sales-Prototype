@@ -1403,3 +1403,13 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Source verification after preparation: stale 40px hero override removed; stale 11px municipality/caption overrides removed; no nonstandard public weights `550/620/650/680/720/740/750/760` remain.
 - Runtime/build/browser evidence remains **NOT OBSERVED**.
 
+## 2026-09-19 — Jr/AJ public UI UI-S6 public brand metadata floor
+
+### `ui: raise public brand subline readability`
+
+- Exact parent SHA: `02e127fe8aaa6badff2d47004b33e0280cf17361` on `UI/Jr-and-Aj`.
+- Final typography audit found the public `Municipal Public Portal` brand subline still fixed at 11px in `MunicipalBrand.tsx`.
+- Correction raises the public-only subline to Tailwind `text-xs` (12px), matching the public metadata floor while leaving the internal portal brand treatment unchanged.
+- No layout/IA, backend, route, dependency, or UI-S7 change.
+- Runtime/build/browser evidence remains **NOT OBSERVED**.
+

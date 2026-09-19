@@ -27,7 +27,7 @@ export default function MunicipalBrand({
                 <span className={inverse ? 'text-white' : 'text-[#2f7d45] dark:text-[#8ec9a0]'}>ONE</span> TALIBON
             </div>
             <div className={publicPortal
-                ? 'mt-1 text-[11px] font-semibold leading-snug tracking-[.02em]'
+                ? 'mt-1 text-xs font-semibold leading-snug tracking-[.02em]'
                 : 'mt-1 text-[10px] font-semibold uppercase leading-snug tracking-wider'
             }>{publicPortal ? 'Municipal Public Portal' : 'LGU Intra-Office Portal'}</div>
         </div>}
