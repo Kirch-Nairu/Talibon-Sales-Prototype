@@ -35,26 +35,26 @@ export default function ProjectPortfolio({ projects }: { projects: DashboardProj
             description="Active municipal workstreams relevant to this role, with delayed and follow-up items first."
         />
         <div className="divide-y divide-slate-100 dark:divide-slate-700">
-            {orderedProjects.slice(0, 6).map((project) => <article key={project.id} className="px-4 py-3 sm:px-5">
+            {orderedProjects.slice(0, 6).map((project) => <article key={project.id} className="employee-record-row">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                     <div className="min-w-0">
-                        <div className="text-sm font-semibold leading-5 text-slate-950 dark:text-slate-100">{project.title}</div>
-                        <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">{project.leadOffice} · {project.stage}</div>
+                        <div className="employee-record-title text-slate-950 dark:text-slate-100">{project.title}</div>
+                        <div className="employee-metadata mt-0.5 text-slate-500 dark:text-slate-400">{project.leadOffice} · {project.stage}</div>
                     </div>
-                    <div className={`shrink-0 text-xs font-semibold ${statusClass[project.status]}`}>{statusLabel[project.status]}</div>
+                    <div className={`employee-metadata shrink-0 font-semibold ${statusClass[project.status]}`}>{statusLabel[project.status]}</div>
                 </div>
                 <div className="mt-2 flex items-center gap-3">
                     <div className="h-1.5 min-w-0 flex-1 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700" aria-label={`${project.progress}% complete`}>
                         <div className="h-full bg-[#1769aa] dark:bg-blue-400" style={{ width: `${Math.max(0, Math.min(100, project.progress))}%` }} />
                     </div>
-                    <div className="w-10 text-right text-xs font-semibold tabular-nums text-slate-600 dark:text-slate-300">{project.progress}%</div>
+                    <div className="employee-metadata w-10 text-right font-semibold tabular-nums text-slate-600 dark:text-slate-300">{project.progress}%</div>
                 </div>
-                <div className="mt-2 grid gap-1 text-xs leading-5 text-slate-600 dark:text-slate-300 sm:grid-cols-[110px_minmax(0,1fr)]">
+                <div className="employee-metadata mt-2 grid gap-1 text-slate-600 dark:text-slate-300 sm:grid-cols-[110px_minmax(0,1fr)]">
                     <span className="font-semibold text-slate-500 dark:text-slate-400">Next action</span><span>{project.nextAction}</span>
                     <span className="font-semibold text-slate-500 dark:text-slate-400">Target</span><span>{formatDate(project.nextActionDate)}</span>
                 </div>
             </article>)}
-            {orderedProjects.length === 0 ? <div className="px-5 py-7 text-center text-sm text-slate-500 dark:text-slate-400">No active project records are assigned to this dashboard scope.</div> : null}
+            {orderedProjects.length === 0 ? <div className="employee-empty-state employee-body-text text-slate-500 dark:text-slate-400">No active project records are assigned to this dashboard scope.</div> : null}
         </div>
     </section>;
 }
