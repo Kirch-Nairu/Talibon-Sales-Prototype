@@ -723,8 +723,9 @@ docs/ENGINEERING_LOG.md
 Source inspection: PASS
 Content-model inspection: PASS
 Destination/route inspection: PASS
-Implementation scope inspection: PENDING post-commit
-Git diff inspection: PENDING post-commit
+Implementation scope inspection: PASS
+Git diff inspection: PASS
+Branch isolation: PASS
 Build/typecheck: NOT OBSERVED
 Runtime/browser: NOT OBSERVED
 Desktop runtime: NOT OBSERVED
@@ -736,13 +737,41 @@ Runtime acceptance remains unresolved until the actual homepage is rendered and 
 
 ## Commit
 
-Implementation SHA will be recorded in the UI-S5 evidence finalization update.
+```text
+6b6250c9b5d83b5a8af8bf038df224616ac9c32e
+ui: refine public information editorial structure
+```
+
+## Anti-AI-slop critique
+
+Source inspection confirms:
+
+- the region no longer reads as three equal dashboard widgets;
+- section icons were removed because the hierarchy does not require them;
+- records are represented through lists, titles, metadata, summaries, and dividers;
+- neutral metadata is not styled as status;
+- placeholder records remain explicitly identified as previews;
+- no fake dates, download actions, file metadata, project metrics, or record-detail routes were added;
+- the structure remains credible if more real municipal records are added later.
+
+The remaining limitation is runtime visual proof, which is still not observed.
 
 ---
 
 # Current UI Branch State
 
-UI-S4 implementation candidate:
+UI-S5 implementation candidate:
+
+```text
+UI/Jr-and-Aj
+Implementation SHA: 6b6250c9b5d83b5a8af8bf038df224616ac9c32e
+Ahead of main at implementation: 12 commits
+Behind main: 0
+```
+
+The evidence finalization commit that updates this document is documentation-only and advances the branch after the implementation candidate.
+
+Historical UI-S4 implementation candidate:
 
 ```text
 UI/Jr-and-Aj
