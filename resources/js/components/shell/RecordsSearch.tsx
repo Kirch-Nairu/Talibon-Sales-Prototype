@@ -63,7 +63,7 @@ export default function RecordsSearch() {
                         <div className="flex items-center justify-between gap-3 px-1 pb-2">
                             <div>
                                 <div className="text-xs font-bold uppercase tracking-wide text-slate-700 dark:text-slate-200">Records search</div>
-                                <div className="text-[11px] text-slate-500 dark:text-slate-400">Find municipal records without occupying the workspace header.</div>
+                                <div className="text-xs leading-4 text-slate-500 dark:text-slate-400">Find municipal records without occupying the workspace header.</div>
                             </div>
                             <button type="button" onClick={closeAndRestoreFocus} className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Close records search"><X size={16} aria-hidden="true" /></button>
                         </div>
