@@ -1493,3 +1493,20 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Documentation: `Jayr-Aj-docs.md` updated in this candidate.
 - Pre-publication source verification: architecture, appearance state, System/persistence logic, hardcoded-color review, token roles, light/dark hierarchy, interaction/focus states, dividers/surfaces, placeholders, responsive theme behavior, and reduced-motion **PASS** by source review. Runtime visual evidence and measured runtime contrast remain **NOT OBSERVED**.
 - Backend/auth/database/API/routing/public content impact: **NONE**.
+## 2026-09-19 — Jr/AJ public UI UI-S9 verification evidence
+
+### `docs: record UI-S9 verification evidence`
+
+- Executable candidate SHA: `62ccd1b4b649b5d4fa2243c916889c1507210934` on `UI/Jr-and-Aj`.
+- Exact UI-S9 implementation diff: 7 files — `resources/views/app.blade.php`, `resources/js/pages/Public/Home.tsx`, `resources/js/components/public/PublicHeader.tsx`, `resources/js/components/AppearanceControl.tsx`, `resources/css/public-portal.css`, `Jayr-Aj-docs.md`, and `docs/ENGINEERING_LOG.md`.
+- Theme source audit **PASS**: System resolution/persistence/event behavior remain intact; pre-module bootstrap now mirrors the stored/System resolution before Vite; public-only semantic theme roles isolate public surface refinement from shared internal municipal tokens.
+- Appearance source audit **PASS**: stale old aria-label selector removed; public AppearanceControl no longer depends on Tailwind slate dark variants; selected state still uses `aria-pressed` and adds non-color-only border/underline treatment.
+- Hardcoded-color/source role audit **PASS**: theme-sensitive public surface/text/divider/link/interaction values are role-based; fixed hero/footer/brand colors remain intentionally institutional.
+- Interaction theme audit **PASS**: dark public focus token is gold; Quick Access active state is theme-aware; mobile-nav/nav hover states use roles; reduced-motion coverage remains present.
+- Static source contrast calculations observed for representative pairs: light primary/muted/link on page 14.65:1 / 5.07:1 / 5.37:1; dark primary/muted/link on page 15.77:1 / 9.14:1 / 9.69:1; dark surface primary/muted/link 13.79:1 / 7.99:1 / 8.47:1; gold focus 10.91:1 on dark page and 9.54:1 on dark surface. These are source color calculations, not runtime visual acceptance.
+- Branch isolation **PASS**: executable candidate is 22 commits ahead of `main` and 0 behind.
+- CI evidence: **NOT OBSERVED** — no combined statuses or workflow runs attached to the executable candidate.
+- Build/typecheck attempt: **BLOCKED** because `git clone` could not resolve `github.com`; repository-defined `npm run types:check` and `npm run build` were therefore not executed.
+- Runtime theme switching, System preference response, reload persistence, first-paint flash, desktop/mobile light/dark/System visuals, keyboard theme selection, 200% zoom, measured runtime contrast, and console inspection remain **NOT OBSERVED**.
+- Acceptance split: source theme candidate **PASS**; runtime theme acceptance **NOT OBSERVED**; overall UI-S9 **NOT OBSERVED** under harness rules.
+- UI-S10 remains **NOT STARTED**.

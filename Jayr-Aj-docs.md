@@ -1521,10 +1521,12 @@ UI-S9 does not change navigation, hero strategy, Quick Access IA, Municipal Serv
 - Placeholder-asset source audit: PASS
 - Responsive-theme source audit: PASS
 - Reduced-motion regression: PASS
-- Implementation scope: PENDING post-commit
-- Git diff: PENDING post-commit
-- Build: PENDING environment attempt
-- Typecheck: PENDING environment attempt
+- Source theme candidate: PASS
+- Implementation scope: PASS
+- Git diff: PASS
+- Branch isolation: PASS
+- Build: BLOCKED — repository checkout failed because `github.com` could not be resolved
+- Typecheck: BLOCKED — repository checkout failed because `github.com` could not be resolved
 - Light runtime: NOT OBSERVED
 - Dark runtime: NOT OBSERVED
 - System runtime: NOT OBSERVED
@@ -1537,17 +1539,58 @@ UI-S9 does not change navigation, hero strategy, Quick Access IA, Municipal Serv
 - Keyboard theme selection: NOT OBSERVED
 - 200% light: NOT OBSERVED
 - 200% dark: NOT OBSERVED
+- Static source color-pair calculation: OBSERVED for representative public roles
+- Light page: primary text 14.65:1; muted text 5.07:1; link 5.37:1
+- Dark page: primary text 15.77:1; muted text 9.14:1; link 9.69:1
+- Dark surface: primary text 13.79:1; muted text 7.99:1; link 8.47:1
+- Dark gold focus: 10.91:1 on page / 9.54:1 on surface
 - Measured runtime contrast: NOT OBSERVED
 - Console inspection: NOT OBSERVED
 
-## Commit
+## Implementation commit
 
-Implementation SHA will be recorded after post-commit verification.
+```text
+62ccd1b4b649b5d4fa2243c916889c1507210934
+ui: verify public light and dark themes
+```
+
+## Post-commit source audit
+
+```text
+Stale [aria-label="Appearance"] CSS selector: 0
+Public AppearanceControl hardcoded slate dark classes: 0
+Public shared municipal surface/muted/border/text/blue refs: 0
+Public semantic role layer: PRESENT
+Dark public role override: PRESENT
+Pre-module theme bootstrap: PRESENT
+Home hardcoded dark background class: 0
+Header hardcoded dark background class: 0
+Reduced-motion coverage for appearance choice: PRESENT
+Dark public focus token = municipal gold: PRESENT
+Light-only Quick Access active literal: 0
+```
+
+GitHub reports no CI status and no workflow run for the implementation SHA.
+
+A repository checkout was attempted for the actual `npm run types:check` and `npm run build` scripts. Git failed with `Could not resolve host: github.com`, so both checks are BLOCKED by environment/network access rather than classified as code failures.
+
+Static source color-pair calculations provide additional evidence for the chosen role values, but do not replace real browser/theme/zoom/visual contrast verification.
 
 ---
 # Current UI Branch State
 
-UI-S8 implementation candidate:
+UI-S9 implementation candidate:
+
+```text
+UI/Jr-and-Aj
+Implementation SHA: 62ccd1b4b649b5d4fa2243c916889c1507210934
+Ahead of main at implementation: 22 commits
+Behind main: 0
+```
+
+The evidence finalization commit that updates this document is documentation-only and advances the branch after the implementation candidate.
+
+Historical UI-S8 implementation candidate:
 
 ```text
 UI/Jr-and-Aj
