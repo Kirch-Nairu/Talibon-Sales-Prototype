@@ -524,6 +524,222 @@ The remaining limitation is runtime visual proof, which is still not observed.
 
 ---
 
+
+# UI-S5 — News / Notices / Documents Editorial Structure
+
+## Problem
+
+The homepage presented News & Notices, Public Documents, and Projects & Programs as three equal columns with section icons and green metadata. That structure read more like dashboard widgets than municipal publishing, while several content fields were explicitly prototype placeholders.
+
+## User need
+
+The public-information area should help a resident answer:
+
+```text
+What kind of information is this?
+What item am I reading?
+Is a date actually known?
+Is this an official document or only prototype content?
+Where are public documents located on the page?
+```
+
+## Content types discovered
+
+### News / notices
+
+Fields actually available:
+
+```text
+type
+title
+summary
+date
+```
+
+Current items use real content categories such as `Advisory`, `Event`, and `News`, but no real publication dates are present.
+
+The previous literal placeholder value `Prototype` was removed from the date field rather than presenting it as civic date metadata.
+
+### Public documents / transparency
+
+Fields actually available:
+
+```text
+label
+value
+note
+```
+
+There is no public file URL, download route, document ID, publication date, responsible office, or individual document-detail route.
+
+The placeholder content is now explicitly titled as document/report/notice previews so it cannot be mistaken for an official publication.
+
+### Projects / programs
+
+Fields actually available:
+
+```text
+title
+summary
+tag
+```
+
+There is no project percentage, budget, owner, timeline, verified status, or detail destination.
+
+Project titles and tags were rewritten to explicitly identify them as previews.
+
+## Implemented information structure
+
+The three equal dashboard-like columns were replaced with one civic editorial system:
+
+```text
+Public information
+News, notices & public records
+│
+├─ News & Notices
+│  └─ Primary editorial stream
+│
+└─ Supporting records column
+   ├─ Public Documents
+   └─ Projects & Programs
+```
+
+News remains visually primary because it represents the current publishing stream.
+
+Documents and projects share the same restrained record language while retaining separate headings and meanings.
+
+## News / notices changes
+
+News now uses a semantic ordered list of editorial records.
+
+Each entry presents:
+
+```text
+Content type
+Date only when a real date exists
+Title
+Summary
+```
+
+The first configured news entry retains slightly stronger typographic emphasis without being labelled `Latest`, because the repository does not provide real recency evidence.
+
+No fake publication date was added.
+
+## Public document changes
+
+Public Documents now reads like a record index rather than a feature panel.
+
+Prototype entries are explicitly named:
+
+```text
+Public document library preview
+Municipal report preview
+Public notice preview
+```
+
+Metadata is neutral:
+
+```text
+Document preview
+Report preview
+Notice preview
+```
+
+The section states that no downloadable files are currently published.
+
+No `Download PDF` or individual document action was invented.
+
+## Project / update changes
+
+Project content uses the same editorial record vocabulary but remains a distinct section.
+
+Current placeholder titles now state that they are previews, and no progress bar, percent complete, budget, owner, timeline, or project status was added.
+
+## Metadata decisions
+
+- Content types such as `Advisory`, `Event`, and `News` are retained because they exist in source.
+- Missing dates are omitted.
+- Neutral preview types remain visually neutral.
+- Green status-like metadata styling was removed from the official-information area.
+- No metadata is presented as verified official status.
+
+## Content deliberately not invented
+
+UI-S5 does NOT add:
+
+- publication dates;
+- document numbers;
+- authors;
+- departments/responsible offices;
+- download URLs or file sizes;
+- view counts;
+- urgency levels;
+- project percentages;
+- budgets;
+- timelines;
+- project owners;
+- verified approval/status labels;
+- record-detail routes;
+- archive/view-all routes.
+
+## Visual composition
+
+The official-information area now uses:
+
+- one overall editorial heading;
+- a primary news stream;
+- a supporting records column;
+- semantic lists;
+- divided editorial rows;
+- neutral metadata;
+- typography and spacing rather than decorative icons/cards;
+- responsive recomposition into one column on smaller screens.
+
+## Accessibility
+
+Source-level provisions include:
+
+- one section H2 with H3 content groups and H4 record titles;
+- ordered list semantics for news;
+- unordered list semantics for document/project records;
+- logical DOM order;
+- no icon-only record controls;
+- natural title wrapping;
+- no horizontal record table dependency.
+
+## Files changed
+
+```text
+config/public_portal.php
+resources/js/components/public/PublicUpdates.tsx
+resources/css/public-portal.css
+Jayr-Aj-docs.md
+docs/ENGINEERING_LOG.md
+```
+
+## Verification
+
+```text
+Source inspection: PASS
+Content-model inspection: PASS
+Destination/route inspection: PASS
+Implementation scope inspection: PENDING post-commit
+Git diff inspection: PENDING post-commit
+Build/typecheck: NOT OBSERVED
+Runtime/browser: NOT OBSERVED
+Desktop runtime: NOT OBSERVED
+Mobile runtime: NOT OBSERVED
+Keyboard/focus runtime: NOT OBSERVED
+```
+
+Runtime acceptance remains unresolved until the actual homepage is rendered and inspected.
+
+## Commit
+
+Implementation SHA will be recorded in the UI-S5 evidence finalization update.
+
+---
+
 # Current UI Branch State
 
 UI-S4 implementation candidate:
@@ -616,10 +832,11 @@ Status: IMPLEMENTED
 Runtime acceptance: PENDING
 
 UI-S5 — News / Notices / Documents Editorial Structure
-Status: NEXT
+Status: IMPLEMENTED
+Runtime acceptance: PENDING
 
 UI-S6 — Talibon Identity + Typography Refinement
-Status: NOT STARTED
+Status: NEXT
 
 UI-S7 — Large-screen Composition + Responsive Refinement
 Status: NOT STARTED
@@ -659,7 +876,7 @@ As UI work continues:
 # Next Planned Slice
 
 ```text
-UI-S5 — News / Notices / Documents Editorial Structure
+UI-S6 — Talibon Identity + Typography Refinement
 ```
 
-The next goal is to refine the public information areas so news, notices, documents, and related records read as official editorial information rather than generic content blocks.
+The next goal is to refine Talibon-specific civic identity and the public typography system without undoing the information hierarchy established in UI-S1 through UI-S5.

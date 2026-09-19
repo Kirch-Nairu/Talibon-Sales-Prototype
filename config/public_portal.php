@@ -61,14 +61,14 @@ return [
         ],
     ],
     'transparency' => [
-        ['label' => 'Published Documents', 'value' => 'Sample library', 'note' => 'Sample library; no official documents are published here.'],
-        ['label' => 'Municipal Reports', 'value' => 'Sample summaries', 'note' => 'Sample summaries; not official municipal reports.'],
-        ['label' => 'Public Notices', 'value' => 'Sample notices', 'note' => 'Sample notices for evaluation.'],
+        ['label' => 'Public document library preview', 'value' => 'Document preview', 'note' => 'No official documents are published in this prototype.'],
+        ['label' => 'Municipal report preview', 'value' => 'Report preview', 'note' => 'Sample report information for layout evaluation; not an official municipal report.'],
+        ['label' => 'Public notice preview', 'value' => 'Notice preview', 'note' => 'Sample notice information for evaluation; not an official municipal notice.'],
     ],
     'projects' => [
-        ['title' => 'Community Infrastructure', 'summary' => 'Sample summary of a municipal infrastructure project.', 'tag' => 'Sample project'],
-        ['title' => 'Service Modernization', 'summary' => 'Sample update on municipal digital services.', 'tag' => 'Prototype concept'],
-        ['title' => 'Public Information Access', 'summary' => 'Sample initiative to improve access to public information.', 'tag' => 'Sample initiative'],
+        ['title' => 'Community infrastructure update preview', 'summary' => 'Sample project-update structure for evaluation; no official project record is published here.', 'tag' => 'Project preview'],
+        ['title' => 'Service modernization update preview', 'summary' => 'Sample municipal digital-service update for evaluation.', 'tag' => 'Program preview'],
+        ['title' => 'Public information access update preview', 'summary' => 'Sample public-information initiative update for evaluation.', 'tag' => 'Initiative preview'],
     ],
     'dashboard' => [
         ['label' => 'Public projects', 'value' => 'Sample view', 'detail' => 'Future public project summaries'],
@@ -77,9 +77,9 @@ return [
         ['label' => 'Announcements', 'value' => 'Prototype', 'detail' => 'Public news and advisories'],
     ],
     'news' => [
-        ['type' => 'Advisory', 'title' => 'Municipal advisory preview', 'summary' => 'Sample advisory for evaluation. No active warning is issued here.', 'date' => 'Prototype'],
-        ['type' => 'Event', 'title' => 'Community event preview', 'summary' => 'Sample event for evaluation. An official schedule has not been published.', 'date' => 'Prototype'],
-        ['type' => 'News', 'title' => 'Municipal update preview', 'summary' => 'Sample municipal update for evaluation.', 'date' => 'Prototype'],
+        ['type' => 'Advisory', 'title' => 'Municipal advisory preview', 'summary' => 'Sample advisory for evaluation. No active warning is issued here.', 'date' => ''],
+        ['type' => 'Event', 'title' => 'Community event preview', 'summary' => 'Sample event for evaluation. An official schedule has not been published.', 'date' => ''],
+        ['type' => 'News', 'title' => 'Municipal update preview', 'summary' => 'Sample municipal update for evaluation.', 'date' => ''],
     ],
     'contact' => [
         'heading' => 'Municipality of Talibon',

@@ -1355,3 +1355,21 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Verification before publication: source inspection and route/destination inspection **PASS**. Runtime rendering, build/typecheck execution, desktop/mobile browser inspection, and keyboard walkthrough are **NOT OBSERVED** in this environment and must not be promoted to PASS.
 - Schema/migration/dependency impact: **NONE**. Internal application behavior impact: **NONE**.
 
+## 2026-09-19 — Jr/AJ public UI UI-S5 official-information editorial structure
+
+### `ui: refine public information editorial structure`
+
+- Working branch: `UI/Jr-and-Aj`; exact parent SHA: `6bc2ee882d0c96da45ba2df5aa36b89946a464d3`.
+- Scope: **public information presentation/content-honesty only** under KIKIAM UI HARNESS V1. No authenticated route, backend domain behavior, database logic, authentication behavior, or internal employee functionality changes.
+- Content inventory: news exposes `type/title/summary/date`; transparency exposes `label/value/note`; projects expose `title/summary/tag`. No individual public record route, public download URL, archive route, document ID, responsible office, project progress, project budget, or verified public status is present.
+- Date decision: current news dates contained only the literal placeholder `Prototype`. Those placeholder date values are cleared; the UI renders a date only when a real source value exists.
+- Editorial IA: three equal icon-led update columns are replaced by one `News, notices & public records` publishing region. News is the primary editorial stream; Public Documents and Projects & Programs share a supporting record column while remaining semantically distinct.
+- Documents: placeholder labels now explicitly identify document/report/notice previews, and the section states that no downloadable files are published. No fake download action or file metadata is added.
+- Projects: placeholder titles/tags now explicitly identify preview content. No progress, owner, timeline, budget, or status is invented.
+- Metadata: content types remain neutral metadata. The former green metadata/status-like treatment and decorative section icons are removed from this region.
+- Accessibility source provisions: H2/H3/H4 hierarchy, semantic ordered news list, semantic document/project lists, logical reading order, and natural reflow without table dependence.
+- Responsive source design: primary/supporting two-column editorial structure on large screens; supporting records become two columns below 1024px; all official-information content recomposes to one column on mobile.
+- Project-local record: `Jayr-Aj-docs.md` is updated in this same candidate.
+- Verification before publication: source/content-model/destination inspection **PASS**. Runtime rendering, build/typecheck execution, desktop/mobile browser inspection, and keyboard/focus walkthrough remain **NOT OBSERVED** and are not promoted to PASS.
+- Schema/migration/dependency impact: **NONE**. Internal application behavior impact: **NONE**.
+
