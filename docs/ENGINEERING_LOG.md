@@ -1475,3 +1475,21 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Acceptance split: source accessibility candidate **PASS**; runtime accessibility acceptance **NOT OBSERVED**; overall UI-S8 **NOT OBSERVED** under harness rules.
 - NOT APPLICABLE: disabled public controls, loading/busy states, public form states, current-section tracking, and editorial actions without real destinations.
 - UI-S9 remains **NOT STARTED**.
+## 2026-09-19 — Jr/AJ public UI UI-S9 light/dark theme verification
+
+### `ui: verify public light and dark themes`
+
+- Working branch: `UI/Jr-and-Aj`; exact parent SHA: `bfd438ac11e0fa5885b0017302c1c77a3a87b895`.
+- Scope: **public theme architecture and theme-sensitive color/state refinement only** under KIKIAM UI HARNESS V1. UI-S1 through UI-S8 structure, IA, typography, responsive composition, and accessibility semantics remain intact. UI-S10 is not started.
+- Theme architecture audit: preference values are `system/light/dark`; persistence uses `localStorage` key `talibon.appearance`; System resolves through `prefers-color-scheme`; System subscribes to OS changes; `.dark`, `data-appearance`, and root `colorScheme` are applied by the existing TypeScript theme module.
+- Initial-render correction: Blade now performs a minimal pre-module bootstrap using the same storage key/preference validation/System media query so resolved appearance is present before Vite/React initialization. Runtime theme module remains authoritative after startup.
+- Public theme roles: page background, public surfaces, text, muted text, dividers, links, hover/active, header, Employee Login action, and focus are expressed through public-only semantic variables. This avoids changing shared internal municipal tokens.
+- Light reference: existing civic light values are preserved as the primary visual reference; no new card/tint/gradient system is added.
+- Dark refinement: public dark canvas/surfaces are softened and differentiated from the internal console while retaining One Talibon identity. Hero/footer remain fixed institutional dark regions rather than becoming theme-specific cards.
+- Interaction theme fix: dark general public focus resolves to municipal gold; Quick Access active state becomes theme-aware; menu/nav hover/expanded states use shared public roles.
+- Appearance control: public styling moves from hardcoded Tailwind slate light/dark classes to semantic public classes; selected state remains `aria-pressed` and gains background+border+inset underline. Stale CSS targeting old `aria-label="Appearance"` is removed after UI-S8 renamed the group to `Appearance preference`.
+- Persistence source **PASS**; System source behavior **PASS**; runtime switching/persistence/System response/flash remain **NOT OBSERVED**.
+- Placeholder assets unchanged; reduced-motion rule preserved and extended to the public appearance-choice transition.
+- Documentation: `Jayr-Aj-docs.md` updated in this candidate.
+- Pre-publication source verification: architecture, appearance state, System/persistence logic, hardcoded-color review, token roles, light/dark hierarchy, interaction/focus states, dividers/surfaces, placeholders, responsive theme behavior, and reduced-motion **PASS** by source review. Runtime visual evidence and measured runtime contrast remain **NOT OBSERVED**.
+- Backend/auth/database/API/routing/public content impact: **NONE**.

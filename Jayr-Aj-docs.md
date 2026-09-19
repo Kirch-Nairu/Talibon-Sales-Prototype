@@ -1342,6 +1342,209 @@ GitHub reports no CI status and no workflow run for the implementation SHA.
 A real checkout/build attempt was made with the repository-defined scripts `npm run types:check` and `npm run build`, but cloning was BLOCKED because the execution environment could not resolve `github.com`. Therefore browser, keyboard, screen-reader, measured contrast, and zoom evidence remain NOT OBSERVED.
 
 ---
+
+# UI-S9 — Light / Dark Verification
+
+## Phase
+
+Phase 3 — Visual System, Responsiveness & Accessibility
+
+## Starting SHA
+
+`bfd438ac11e0fa5885b0017302c1c77a3a87b895`
+
+## Theme architecture findings
+
+- preference type: `system | light | dark`;
+- storage key: `talibon.appearance` in `localStorage`;
+- invalid/missing stored values resolve to `system`;
+- System resolves from `matchMedia('(prefers-color-scheme: dark)')`;
+- while System is selected, the hook subscribes to OS preference changes and reapplies the resolved appearance;
+- the root `<html>` receives `.dark` according to the resolved theme;
+- `data-appearance` stores the explicit preference (`system`, `light`, or `dark`);
+- `colorScheme` is written to the root for native-control rendering;
+- explicit changes dispatch `talibon:appearance`; storage changes are also observed;
+- the public and internal application share the same runtime appearance architecture.
+
+## Initial-render finding and change
+
+Before UI-S9, `initializeAppearance()` ran in `app.tsx` before React mounted, but only after the Vite module began executing. That left a possible first-paint light/dark mismatch before module execution.
+
+UI-S9 adds a small pre-module bootstrap in `resources/views/app.blade.php`. It reads the same storage key, validates the same three preferences, resolves System with the same media query, and applies `.dark`, `data-appearance`, and `colorScheme` before Vite/React initialization.
+
+The TypeScript theme module remains the runtime authority after the app starts; the Blade bootstrap exists only to align initial paint.
+
+## Public color-role inventory
+
+Theme-aware public roles now cover:
+
+- page background;
+- primary surface;
+- supporting surface;
+- primary text;
+- muted/supporting text;
+- divider and stronger divider;
+- link and link-hover;
+- hover and active interaction surfaces;
+- header background;
+- Employee Login action background/hover;
+- focus ring.
+
+Fixed institutional colors remain fixed where they communicate identity rather than surface theme:
+
+- municipal navy/deep hero and footer;
+- municipal gold accent/focus-on-dark;
+- established One Talibon green wordmark treatment;
+- hero white text;
+- placeholder-image treatment.
+
+## Light-mode findings
+
+Light remains the source-of-truth public visual reference. The public role values intentionally preserve the existing open civic composition:
+
+- background `#f4f7fb`;
+- white public surfaces;
+- navy/blue institutional hierarchy;
+- `#10233f` primary text;
+- `#5c6b7d` muted text;
+- subtle `#dce4ee` dividers;
+- municipal blue links/focus.
+
+No additional white cards, tinted tiles, gradients, or decorative theme containers are introduced.
+
+## Dark-mode findings
+
+Dark mode now uses a slightly softer public-specific hierarchy instead of directly inheriting the internal canvas/surface values:
+
+- page background `#101a29`;
+- primary public surface `#17263a`;
+- supporting/header surface `#132238`;
+- primary text `#eef4fa`;
+- muted text `#aebdd0`;
+- visible but restrained dividers `#314158` / `#44566e`;
+- public links `#93c5fd`;
+- hover `#1d3047` and active `#243a55`;
+- dark public focus ring uses municipal gold `#f0c85a`.
+
+Hero and footer remain institutional dark regions in both themes so dark mode does not create a second product identity or a collection of dark cards.
+
+## System-mode findings
+
+System source behavior: PASS.
+
+The source resolves System from `prefers-color-scheme`, subscribes to media-query changes while System remains selected, and the initial-paint bootstrap resolves the same media query.
+
+System runtime behavior: NOT OBSERVED.
+
+## Appearance-control findings
+
+The UI-S8 accessibility model is preserved:
+
+- group label remains `Appearance preference`;
+- each option remains a native button;
+- `aria-pressed` remains the explicit selection state;
+- touch target remains at least 44px on public surfaces;
+- Escape behavior for the desktop disclosure remains intact.
+
+The public control is now styled through public theme roles instead of Tailwind `slate` light/dark hardcodes. Selected state uses background, border, and a small inset underline so it does not depend on color alone and does not look disabled.
+
+UI-S9 also corrects a source mismatch from UI-S8: public CSS had still targeted `[aria-label="Appearance"]` after the group was renamed to `Appearance preference`. The new class-based public appearance styling removes that stale selector.
+
+## Persistence findings
+
+Source persistence: PASS.
+
+Light/Dark/System preferences are written to `localStorage`; the hook reads storage on initialization and responds to both the custom appearance event and browser `storage` events.
+
+Runtime persistence/reload: NOT OBSERVED.
+
+## Surface / divider changes
+
+The public stylesheet now owns a compact semantic theme-role set rather than repeatedly depending on shared internal municipal surface variables. This prevents future public dark-mode refinement from unintentionally changing internal employee screens.
+
+UI-S4/UI-S5 divider-based service/editorial structures are preserved. Dark-mode divider values are strengthened slightly so the cardless information architecture remains legible without becoming a boxed grid.
+
+## Interaction-state findings
+
+UI-S8 focus architecture is preserved. In dark mode the general public focus token now resolves to gold, so Quick Access and service focus no longer retain a dark-blue ring against dark surfaces.
+
+Quick Access hover/active states now use theme roles. The previous light-only active color `#e9f0f6` no longer flashes as a pale block in dark mode.
+
+Mobile navigation hover/expanded states and navigation hover states now also use theme roles instead of separate hardcoded light/dark rules.
+
+## Hardcoded-color audit
+
+Hardcoded colors deliberately retained are identity/fixed-region colors such as hero/footer navy/deep surfaces, white hero text, gold civic accents, image backgrounds, and footer-on-dark text.
+
+Theme-sensitive page/surface/text/divider/link/interaction colors are moved behind public semantic roles. UI-S9 does not attempt to replace every hex merely for token purity.
+
+## Responsive-theme findings
+
+No theme-specific breakpoints are introduced. UI-S7 remains the only responsive composition authority. The public tokens change color roles while layout rules stay identical at 1920/1440/1280/1024/768/390/360 source widths.
+
+## Placeholder-asset findings
+
+The existing municipal mark/coastal/landmark assets remain placeholders and are not replaced or made more official. Existing dark-mode image opacity remains restrained and the About visual dark background now follows the public supporting-surface role.
+
+## Reduced-motion findings
+
+UI-S8 `prefers-reduced-motion: reduce` remains intact and now also covers the public appearance-choice transition. No animated theme transition is introduced.
+
+## Content deliberately unchanged
+
+UI-S9 does not change navigation, hero strategy, Quick Access IA, Municipal Services IA, editorial records, typography hierarchy, responsive layout, accessibility semantics, public data, or employee functionality.
+
+## Files changed
+
+- `resources/views/app.blade.php`
+- `resources/js/pages/Public/Home.tsx`
+- `resources/js/components/public/PublicHeader.tsx`
+- `resources/js/components/AppearanceControl.tsx`
+- `resources/css/public-portal.css`
+- `Jayr-Aj-docs.md`
+- `docs/ENGINEERING_LOG.md`
+
+## Verification
+
+- Theme architecture source audit: PASS
+- Appearance-control state source audit: PASS
+- System-mode source logic: PASS
+- Persistence source logic: PASS
+- Initial-render architecture: PASS after bootstrap change
+- Hardcoded-color audit: PASS
+- CSS role/token audit: PASS
+- Light hierarchy source review: PASS
+- Dark hierarchy source review: PASS
+- Interaction-state source review: PASS
+- Focus-state source review: PASS
+- Divider/surface source audit: PASS
+- Placeholder-asset source audit: PASS
+- Responsive-theme source audit: PASS
+- Reduced-motion regression: PASS
+- Implementation scope: PENDING post-commit
+- Git diff: PENDING post-commit
+- Build: PENDING environment attempt
+- Typecheck: PENDING environment attempt
+- Light runtime: NOT OBSERVED
+- Dark runtime: NOT OBSERVED
+- System runtime: NOT OBSERVED
+- Desktop runtime: NOT OBSERVED
+- Mobile runtime: NOT OBSERVED
+- Theme switching: NOT OBSERVED
+- System preference response: NOT OBSERVED
+- Persistence/reload runtime: NOT OBSERVED
+- Runtime theme flash: NOT OBSERVED
+- Keyboard theme selection: NOT OBSERVED
+- 200% light: NOT OBSERVED
+- 200% dark: NOT OBSERVED
+- Measured runtime contrast: NOT OBSERVED
+- Console inspection: NOT OBSERVED
+
+## Commit
+
+Implementation SHA will be recorded after post-commit verification.
+
+---
 # Current UI Branch State
 
 UI-S8 implementation candidate:
@@ -1494,10 +1697,11 @@ Status: IMPLEMENTED
 Runtime acceptance: PENDING
 
 UI-S9 — Light / Dark Verification
-Status: NEXT
+Status: IMPLEMENTED
+Runtime acceptance: PENDING
 
 UI-S10 — Full Runtime Critique + Anti-AI-Slop Cleanup
-Status: NOT STARTED
+Status: NEXT — NOT STARTED
 ```
 
 ---
@@ -1525,7 +1729,8 @@ As UI work continues:
 # Next Planned Slice
 
 ```text
-UI-S9 — Light / Dark Verification
+PHASE 4
+UI-S10 — Full Runtime Critique + Anti-AI-Slop Cleanup
 ```
 
-The next goal is to verify the established public interface across light and dark themes without changing the accessibility interaction architecture established through UI-S8.
+UI-S10 is the recommended next slice, but it has not been started. It should begin only after an explicit instruction and should prioritize runtime evidence.

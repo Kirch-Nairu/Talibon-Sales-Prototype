@@ -40,7 +40,7 @@ export default function PublicHeader({ authenticated }: Props) {
         return () => window.removeEventListener('keydown', escape);
     }, [open]);
 
-    return <header className="public-header sticky top-0 z-50 border-b border-slate-200 bg-white text-slate-900 dark:border-slate-700 dark:bg-[#111d2d] dark:text-slate-100">
+    return <header className="public-header sticky top-0 z-50">
         <div className="public-masthead">
             <a href="#home" aria-label="One Talibon home" className="public-brand">
                 <MunicipalBrand publicPortal />
