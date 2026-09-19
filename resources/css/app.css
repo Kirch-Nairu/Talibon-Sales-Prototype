@@ -160,7 +160,6 @@ summary:focus-visible,
     text-transform: uppercase;
 }
 
-
 /* Employee Portal spacing / density roles. */
 #portal-content .employee-section-stack {
     display: grid;
@@ -181,4 +180,46 @@ summary:focus-visible,
 
 #portal-content .employee-empty-state {
     padding: 0.75rem 1rem;
+}
+
+/* Employee Portal semantic color roles.
+   Most surfaces remain neutral; urgency color is reserved for real operational meaning. */
+#portal-content .employee-tone-neutral {
+    color: #475569;
+}
+
+#portal-content .employee-tone-info {
+    color: #1769aa;
+}
+
+#portal-content .employee-tone-success {
+    color: #2f7d45;
+}
+
+#portal-content .employee-tone-warning {
+    color: #996410;
+}
+
+#portal-content .employee-tone-danger {
+    color: #c83d4e;
+}
+
+:root.dark #portal-content .employee-tone-neutral {
+    color: #cbd5e1;
+}
+
+:root.dark #portal-content .employee-tone-info {
+    color: #93c5fd;
+}
+
+:root.dark #portal-content .employee-tone-success {
+    color: #8ec9a0;
+}
+
+:root.dark #portal-content .employee-tone-warning {
+    color: #e5b63a;
+}
+
+:root.dark #portal-content .employee-tone-danger {
+    color: #f29ca7;
 }

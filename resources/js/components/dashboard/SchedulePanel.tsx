@@ -13,10 +13,10 @@ const urgencyCopy = {
 } as const;
 
 const urgencyClass = {
-    overdue: 'text-rose-700 dark:text-rose-300',
-    today: 'text-amber-700 dark:text-amber-300',
-    upcoming: 'text-slate-500 dark:text-slate-400',
-    submitted: 'text-emerald-700 dark:text-emerald-300',
+    overdue: 'employee-tone-danger',
+    today: 'employee-tone-warning',
+    upcoming: 'employee-tone-neutral',
+    submitted: 'employee-tone-success',
 } as const;
 
 export default function SchedulePanel({ meetings, deadlines }: { meetings: DashboardMeeting[]; deadlines: DashboardDeadline[] }) {
@@ -32,7 +32,7 @@ export default function SchedulePanel({ meetings, deadlines }: { meetings: Dashb
     return <BoundedOperationalPanel headingId="dashboard-schedule">
         <DashboardSectionHeader
             headingId="dashboard-schedule"
-            icon={<CalendarDays size={15} className="text-amber-700 dark:text-amber-300" aria-hidden="true" />}
+            icon={<CalendarDays size={15} className="employee-tone-info" aria-hidden="true" />}
             title="Schedule and deadlines"
             description="Near-term meetings and deadlines in this work scope."
             href="/calendar"
@@ -45,7 +45,7 @@ export default function SchedulePanel({ meetings, deadlines }: { meetings: Dashb
                     {visibleMeetings.map((meeting) => <article key={meeting.id} className="employee-record-row">
                         <div className="flex items-start gap-3">
                             <div className="w-14 shrink-0">
-                                <div className="employee-metadata font-bold text-blue-700 dark:text-blue-300">{formatTime(meeting.startsAt)}</div>
+                                <div className="employee-metadata employee-tone-info font-bold">{formatTime(meeting.startsAt)}</div>
                                 <div className="employee-metadata mt-0.5 text-slate-500 dark:text-slate-400">{new Date(meeting.startsAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</div>
                             </div>
                             <div className="min-w-0 flex-1">
