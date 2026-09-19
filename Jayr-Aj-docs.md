@@ -3185,3 +3185,332 @@ Correction:
 - no behavior, routes, or data changed.
 
 Verification: source review PASS; runtime NOT OBSERVED.
+
+# EMPLOYEE PORTAL UI — SESSION 2 / PHASE 2 SUMMARY
+
+## Phase identity
+
+```text
+Repository: Kirch-Nairu/Talibon-Sales-Prototype
+Branch: masterlogin-UI-by-Jr-and-Aj
+Starting SHA: fc387e60eb8bc74dfff0ace1a333fe56205d5a9c
+Executable Phase 2 SHA: a6a1aa41a46deeea496f1dae663ae7c6a99f8a34
+Base: main
+```
+
+## Roadmap position
+
+```text
+4 PHASES / 22 BOUNDED SLICES
+
+PHASE 1 — DASHBOARD STRUCTURE & COMPOSITION
+COMPLETE — SOURCE CANDIDATE
+
+PHASE 2 — NAVIGATION & WORKSPACE EXPERIENCE
+COMPLETE — SOURCE CANDIDATE
+
+PHASE 3 — VISUAL SYSTEM & INTERACTION
+NOT STARTED
+
+PHASE 4 — RESPONSIVE QA & FINAL ACCEPTANCE
+NOT STARTED
+```
+
+## Phase 2 slice status
+
+```text
+EUI-S6 — Sidebar Hierarchy
+SOURCE: PASS
+RUNTIME: NOT OBSERVED
+
+EUI-S7 — Navigation Groups
+SOURCE: PASS
+RUNTIME: NOT OBSERVED
+
+EUI-S8 — Employee Profile / Sidebar Footer
+SOURCE: PASS
+RUNTIME: NOT OBSERVED
+
+EUI-S9 — Top Utility Bar
+SOURCE: PASS
+RUNTIME: NOT OBSERVED
+
+EUI-S10 — Workspace Shortcuts
+SOURCE: PASS
+RUNTIME: NOT OBSERVED
+```
+
+## Exact commits
+
+```text
+EUI-S6
+d3d2913baeed6977d2f89b3bc69f2b0a8e1d3342
+ui: refine employee sidebar hierarchy
+
+EUI-S7
+69c9d0240e1f4b158ca5e2ef9d77f5d885f1100a
+ui: organize employee navigation groups
+
+EUI-S8
+2d034221aada5e32bbcb2b038c33dab99cf5b221
+ui: simplify employee sidebar account context
+
+EUI-S9
+c4290364190eb8507631effc8806fe434252d9e9
+ui: refine employee utility bar
+
+EUI-S10
+27448dbc6f8561377e3f97292053d0fd4f16fbb7
+ui: improve employee workspace shortcuts
+
+PHASE-WIDE SOURCE QA CORRECTION
+a6a1aa41a46deeea496f1dae663ae7c6a99f8a34
+ui: align employee utility targets
+```
+
+## Phase-wide source diff
+
+Compared with `fc387e60eb8bc74dfff0ace1a333fe56205d5a9c`:
+
+```text
+Commits before evidence: 6
+Ahead of Phase 2 start: 6
+Behind Phase 2 start: 0
+
+Files changed:
+Jayr-Aj-docs.md
+docs/ENGINEERING_LOG.md
+resources/js/components/dashboard/QuickActions.tsx
+resources/js/components/shell/PortalHeaderIdentity.tsx
+resources/js/components/shell/PortalSidebar.tsx
+resources/js/components/shell/RecordsSearch.tsx
+resources/js/components/shell/SidebarFooter.tsx
+resources/js/components/shell/SidebarIdentity.tsx
+resources/js/components/shell/SidebarNavItem.tsx
+resources/js/components/shell/SidebarSection.tsx
+resources/js/components/shell/WorkspaceLauncher.tsx
+resources/js/layouts/AppLayout.tsx
+```
+
+Phase 2 did not modify:
+
+```text
+Public Portal components/CSS/config
+routes
+controllers/services
+authentication
+permissions
+database
+API/domain behavior
+Dashboard.tsx
+DashboardHeader
+Immediate Attention
+AttentionQueue
+BoundedOperationalPanel
+SchedulePanel
+```
+
+QuickActions changed only as EUI-S10, preserving the Phase 1 My Work + workspace relationship.
+
+## Major visible changes
+
+### Sidebar
+
+- 220px → 232px expanded width;
+- Home no longer repeats a Home group label;
+- Home/Work remain primary and always visible;
+- lower groups are separated and quieter;
+- active route uses subtle surface + structural left indicator instead of a full blue pill;
+- group labels are more readable;
+- Municipal Organization / Planning / Administration / Municipal Systems become semantic disclosures in expanded mode;
+- active lower group auto-expands;
+- compact icon sidebar keeps destinations directly reachable.
+
+### Account context
+
+- expanded footer gains compact initials marker;
+- employee name remains primary;
+- authenticated role + office are displayed as work context;
+- account utilities become a quieter Account row;
+- logout / appearance / showcase controls remain functional by source.
+
+### Top utility bar
+
+- desktop top bar stops repeating One Talibon branding already present in sidebar;
+- current page title becomes the desktop anchor;
+- mobile keeps One Talibon identity where sidebar is absent;
+- Search / Utilities / Notifications / Workspace Launcher form one utility cluster;
+- account identity becomes a separate lightweight region;
+- utility hit areas standardize at 44px;
+- search/account text defer to very wide desktop to reduce crowding.
+
+### Workspace shortcuts
+
+- role-specific destinations remain;
+- card/grid presentation is removed;
+- shortcuts become a flat divided operational list;
+- descriptions stay visible;
+- component states its purpose: frequent destinations for the current role;
+- no route or shortcut was invented.
+
+## Phase 1 preservation audit
+
+```text
+EUI-S1 work-context header: PRESERVED
+EUI-S2 Immediate Attention: PRESERVED
+EUI-S3 adaptive attention queue: PRESERVED
+EUI-S4 Schedule/Deadlines: PRESERVED
+EUI-S5 main dashboard composition: PRESERVED
+Dashboard.tsx changed during Phase 2: NO
+```
+
+## Phase 2 acceptance criteria audit
+
+```text
+Sidebar hierarchy easier to scan: PASS
+Navigation grouping clearer: PASS
+Daily work destinations easy to reach: PASS
+Lower-priority areas compete less: PASS
+Active location obvious in source: PASS
+Employee account/footer more compact: PASS
+Top utility bar quieter/aligned: PASS
+Utility functionality preserved by source: PASS
+Workspace shortcuts have explicit workflow purpose: PASS
+Navigation visibly changed at source level: PASS
+Authentication behavior changed: NO
+Routes/functionality invented: NO
+Phase 1 composition preserved: PASS
+Public Portal regression introduced by Phase 2 diff: NO
+Phase 3 work started: NO
+Documentation matches source: PASS
+```
+
+## Responsive source review
+
+```text
+Desktop expanded sidebar: PASS
+Desktop compact sidebar: PASS
+Mobile dialog navigation architecture preserved: PASS
+Secondary group disclosure supports expanded/mobile non-compact sidebar: PASS
+Compact icon destinations remain directly visible: PASS
+Top utility cluster retains mobile navigation control: PASS
+44px top utility targets: PASS
+Full breakpoint/runtime QA: NOT OBSERVED — Phase 4 boundary preserved
+```
+
+## Accessibility regression review
+
+```text
+Semantic nav preserved: PASS
+Links remain links: PASS
+Disclosure controls are buttons: PASS
+aria-expanded / aria-controls on group disclosure: PASS
+aria-current on active route: PASS
+Active group auto-expands: PASS
+Positive tabIndex introduced: 0
+Clickable div controls introduced: 0
+Clickable span controls introduced: 0
+Logout remains button: PASS
+44px utility/mobile targets after correction: PASS
+Full accessibility refinement: NOT STARTED — Phase 3 boundary preserved
+Runtime keyboard behavior: NOT OBSERVED
+```
+
+## Anti-AI-slop review
+
+```text
+Every nav row converted to card/pill: NO
+Color-coded group icons: NO
+New decorative badges: NO
+Gradients/glassmorphism/neon: NO
+Animations introduced as polish: NO
+Critical daily work hidden behind disclosure: NO
+Lower-priority groups simplified: YES
+Active state structurally clearer: YES
+Account area lighter: YES
+Top bar quieter: YES
+Shortcut panel simplified: YES
+Municipal operational character preserved: YES
+```
+
+## Environment verification
+
+Observed:
+
+```text
+Git: 2.47.3
+Node: 22.16.0
+npm: 10.9.2
+PHP: 8.4.23
+Composer: NOT AVAILABLE
+```
+
+Actual checkout attempt:
+
+```text
+git clone --branch masterlogin-UI-by-Jr-and-Aj --single-branch https://github.com/Kirch-Nairu/Talibon-Sales-Prototype.git
+```
+
+Result:
+
+```text
+Could not resolve host: github.com
+```
+
+Therefore:
+
+```text
+npm run types:check: BLOCKED
+npm run build: BLOCKED
+Laravel/application runtime: NOT OBSERVED
+Browser visual inspection: NOT OBSERVED
+```
+
+GitHub reports no combined status and no workflow run attached to the executable Phase 2 SHA.
+
+## Important visual acceptance question
+
+> Is the employee workspace noticeably easier to navigate and visually less crowded than the starting UI?
+
+```text
+SOURCE-LEVEL ANSWER: YES
+BROWSER-VISIBLE CONFIRMATION: NOT OBSERVED
+```
+
+The changes are structural: reduced always-visible navigation, clearer primary/secondary hierarchy, redesigned active state, lighter account context, quieter utility bar, and flatter role-specific shortcuts.
+
+## Known limitations
+
+- actual sidebar scroll feel across every permission profile is not observed;
+- secondary-group disclosure runtime behavior is not observed;
+- popup/search/notification alignment is not browser-validated;
+- long employee names/offices are source-constrained but not runtime-observed;
+- build and TypeScript validation are blocked by environment DNS;
+- Phase 3 typography/spacing/interaction/accessibility refinement remains pending;
+- Phase 4 complete responsive/runtime QA remains pending.
+
+## Phase 2 classification
+
+```text
+SOURCE CANDIDATE — RUNTIME NOT OBSERVED
+```
+
+## Stop boundary
+
+```text
+PHASE 2 COMPLETE AT SOURCE-CANDIDATE LEVEL
+
+DO NOT START:
+EUI-S11
+EUI-S12
+EUI-S13
+EUI-S14
+EUI-S15
+EUI-S16
+
+NEXT:
+PHASE 3 — VISUAL SYSTEM & INTERACTION
+WAIT FOR PHASE 3 HANDOFF
+```
+
+---

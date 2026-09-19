@@ -1723,3 +1723,26 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Removed the EUI-S10 shortcut arrow hover translation so Phase 2 does not introduce motion-based polish.
 - Documentation wording updated to match source truth.
 - No navigation behavior, route, auth, data, Phase 1 dashboard composition, or public UI changed.
+
+## 2026-09-19 — Employee UI Session 2 / Phase 2 evidence
+
+### `docs: record employee ui phase 2 evidence`
+
+- Repository: `Kirch-Nairu/Talibon-Sales-Prototype`; branch: `masterlogin-UI-by-Jr-and-Aj`.
+- Phase 2 start: `fc387e60eb8bc74dfff0ace1a333fe56205d5a9c`.
+- Executable Phase 2 candidate: `a6a1aa41a46deeea496f1dae663ae7c6a99f8a34`.
+- EUI-S6 `d3d2913baeed6977d2f89b3bc69f2b0a8e1d3342` — sidebar hierarchy / active state / 232px width.
+- EUI-S7 `69c9d0240e1f4b158ca5e2ef9d77f5d885f1100a` — lower-priority navigation disclosure.
+- EUI-S8 `2d034221aada5e32bbcb2b038c33dab99cf5b221` — compact employee account/work context.
+- EUI-S9 `c4290364190eb8507631effc8806fe434252d9e9` — quieter utility/header composition.
+- EUI-S10 `27448dbc6f8561377e3f97292053d0fd4f16fbb7` — flat role-specific workspace shortcuts.
+- Source QA correction `a6a1aa41a46deeea496f1dae663ae7c6a99f8a34` — restore/standardize 44px utility targets and remove shortcut arrow motion.
+- Exact Phase 2 diff: 6 commits before evidence, 12 files, only shell/workspace shortcut UI plus documentation.
+- Phase 1 dashboard composition files unchanged; Dashboard.tsx unchanged. Public Portal/backend/routes/auth/database unchanged by Phase 2 diff.
+- Responsive source review PASS; accessibility regression source review PASS; anti-AI-slop source review PASS.
+- No positive tabindex or clickable div/span controls introduced. Group disclosures use native button + aria-expanded/aria-controls; active navigation retains aria-current.
+- Local verification environment: Git 2.47.3, Node 22.16.0, npm 10.9.2, PHP 8.4.23; Composer unavailable.
+- Branch clone BLOCKED with `Could not resolve host: github.com`; therefore npm typecheck/build and runtime/browser verification are not observed.
+- GitHub CI evidence: no status/workflow run attached to executable candidate.
+- Phase 2 classification: **SOURCE CANDIDATE — RUNTIME NOT OBSERVED**.
+- Phase 3 EUI-S11 through EUI-S16: **NOT STARTED**.
