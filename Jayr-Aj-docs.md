@@ -758,6 +758,222 @@ The remaining limitation is runtime visual proof, which is still not observed.
 
 ---
 
+
+# UI-S6 — Talibon Identity + Typography Refinement
+
+## Previous typography state
+
+The public portal inherited the repository-wide stack:
+
+```text
+Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif
+```
+
+Repository inspection found no bundled Inter font files and no external font-loading rule. The browser therefore uses Inter only when available and otherwise falls through to the system sans stack.
+
+The public stylesheet also used many synthetic intermediate weights:
+
+```text
+550
+620
+650
+680
+720
+740
+750
+760
+```
+
+Important supporting labels appeared at 11px in several places, and multiple civic labels used uppercase plus wide tracking.
+
+## Typography problems found
+
+- too many font-weight values for one public interface;
+- several 11px labels carried useful information;
+- hero display type remained larger and tighter than necessary for a public-service homepage;
+- Quick Access supporting text was undersized;
+- section/subsection/title sizes were defined independently rather than as one coherent public scale;
+- several labels depended on uppercase/letter spacing for hierarchy;
+- green accent text appeared in multiple unrelated public contexts;
+- One Talibon, Municipality of Talibon, and Digital Portal labels repeated without a fully clear institutional hierarchy.
+
+## Typeface decision
+
+**Keep the existing sans-serif stack.**
+
+UI-S6 does not add a second typeface, web-font request, font package, or local font asset.
+
+Reasoning:
+
+- the existing sans stack is highly readable;
+- it supports the civic/service information density of the portal;
+- no approved Talibon editorial typeface exists in the repository;
+- adding a font only for stylistic novelty would create unnecessary performance and rendering risk;
+- identity can be strengthened more honestly through hierarchy, language, spacing, and existing municipal colors.
+
+## Type scale decisions
+
+A small public-only type scale is now defined in `public-portal.css`:
+
+```text
+Display       clamp(34px, 3.1vw, 46px)
+Section       23px
+Subsection    17px
+Record/title  15px
+Body          14px
+Supporting    13px
+Metadata      12px
+```
+
+Public font weights are normalized primarily to:
+
+```text
+500
+600
+700
+800
+```
+
+instead of relying on many synthetic intermediate values.
+
+## Hero typography changes
+
+- the hero display range is reduced and line-height relaxed;
+- headline measure is tightened to a readable maximum;
+- the municipal identity line is no longer uppercase with wide tracking;
+- the hero identity line now states the municipality directly rather than repeating `One Talibon`;
+- supporting lead measure is slightly tighter;
+- mobile H1 sizes are reduced to avoid campaign-style oversized display text.
+
+Visible hierarchy is now:
+
+```text
+Municipality of Talibon, Bohol
+Municipal services and public information for Talibon
+Supporting public-purpose copy
+Primary / secondary citizen actions
+```
+
+## Section typography changes
+
+Municipal Services, About Talibon, and the official-information H2 now share the same public section scale.
+
+Service groups and editorial groups share a consistent subsection scale.
+
+Service and record titles share a consistent title scale.
+
+This strengthens scanning without placing every section inside a new visual container.
+
+## Metadata typography changes
+
+- useful 11px Quick Access supporting text is increased to 13px;
+- metadata remains 12px but receives consistent line-height and weight;
+- appearance labels and civic kickers no longer depend on uppercase;
+- neutral metadata remains neutral rather than badge-like.
+
+## Talibon identity decisions
+
+Repository identity assets are explicitly placeholders:
+
+```text
+public/brand/talibon-mark-placeholder.svg
+public/images/talibon/coastal-placeholder.svg
+public/images/talibon/landmark-placeholder.svg
+```
+
+UI-S6 does not pretend those assets are an approved official seal or landmark.
+
+Identity is strengthened through verified repository cues instead:
+
+- `Municipality of Talibon, Bohol` as institutional authority;
+- `One Talibon` as the portal/product identity;
+- `Municipal Public Portal` as the public-surface label;
+- existing municipal navy/blue/gold palette;
+- Talibon/Bohol copy already present in the repository;
+- restrained use of the existing placeholder coastal/landmark artwork.
+
+No slogan, crest, tourism mark, historical symbol, or new locality claim was invented.
+
+## Color decisions
+
+The existing municipal palette is retained.
+
+No new palette, gradient, or content-type color system was introduced.
+
+Decorative green usage is reduced in public utility labels:
+
+- `Quick access` becomes neutral;
+- `Talibon, Bohol` in the About section uses the existing municipal blue;
+- the hero municipality line retains the existing gold family as the primary civic accent on navy.
+
+The existing green treatment inside the established One Talibon wordmark is preserved rather than redefining the brand.
+
+## Copy refinements
+
+- public brand subline: `Digital Portal` → `Municipal Public Portal`;
+- hero identity line: `One Talibon · Municipality of Talibon, Bohol` → `Municipality of Talibon, Bohol`;
+- hero copy removes the unsupported implication that prototype notices are already official;
+- About Talibon copy no longer mixes employee access into the public civic description;
+- public contact copy now states only that public contact details await municipal confirmation;
+- footer surface label becomes `Municipal Public Portal`.
+
+## Responsive considerations
+
+- mobile hero display is reduced to 32px and 30px at the smallest breakpoint;
+- supporting text no longer collapses to 11px in Quick Access;
+- section/subsection/title relationships remain stable across recomposition;
+- no new fixed-width text container or font dependency was introduced.
+
+## Accessibility considerations
+
+Source-level improvements include:
+
+- larger supporting text where 11px was previously used for meaningful content;
+- reduced dependence on uppercase and letter spacing;
+- standard font weights with strong fallback behavior;
+- preserved heading semantics;
+- preserved focus behavior;
+- hierarchy does not depend on color alone;
+- no light font weights added.
+
+## Files changed
+
+```text
+resources/js/components/MunicipalBrand.tsx
+resources/js/components/public/PublicHero.tsx
+resources/js/components/public/PublicGlance.tsx
+resources/js/components/public/PublicFooter.tsx
+config/public_portal.php
+resources/css/public-portal.css
+Jayr-Aj-docs.md
+docs/ENGINEERING_LOG.md
+```
+
+## Verification
+
+```text
+Source inspection: PASS
+Typography/style inspection: PASS
+Identity-asset inspection: PASS
+Implementation scope inspection: PENDING post-commit
+Git diff inspection: PENDING post-commit
+Build/typecheck: NOT OBSERVED
+Runtime/browser: NOT OBSERVED
+Desktop visual: NOT OBSERVED
+Mobile visual: NOT OBSERVED
+200% zoom: NOT OBSERVED
+Keyboard/focus runtime: NOT OBSERVED
+Light/dark runtime: NOT OBSERVED
+```
+
+Runtime acceptance remains unresolved until the public portal is actually rendered and inspected.
+
+## Commit
+
+Implementation SHA will be recorded in the UI-S6 evidence finalization update.
+
+---
+
 # Current UI Branch State
 
 UI-S5 implementation candidate:
@@ -865,10 +1081,11 @@ Status: IMPLEMENTED
 Runtime acceptance: PENDING
 
 UI-S6 — Talibon Identity + Typography Refinement
-Status: NEXT
+Status: IMPLEMENTED
+Runtime acceptance: PENDING
 
 UI-S7 — Large-screen Composition + Responsive Refinement
-Status: NOT STARTED
+Status: NEXT
 
 UI-S8 — Accessibility + Interaction States
 Status: NOT STARTED
@@ -905,7 +1122,7 @@ As UI work continues:
 # Next Planned Slice
 
 ```text
-UI-S6 — Talibon Identity + Typography Refinement
+UI-S7 — Large-Screen Composition + Responsive Refinement
 ```
 
-The next goal is to refine Talibon-specific civic identity and the public typography system without undoing the information hierarchy established in UI-S1 through UI-S5.
+The next goal is to audit large-screen use of space and responsive composition without changing the information architecture established through UI-S6.

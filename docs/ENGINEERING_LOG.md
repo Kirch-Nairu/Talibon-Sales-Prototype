@@ -1373,3 +1373,22 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Verification before publication: source/content-model/destination inspection **PASS**. Runtime rendering, build/typecheck execution, desktop/mobile browser inspection, and keyboard/focus walkthrough remain **NOT OBSERVED** and are not promoted to PASS.
 - Schema/migration/dependency impact: **NONE**. Internal application behavior impact: **NONE**.
 
+## 2026-09-19 — Jr/AJ public UI UI-S6 Talibon identity and typography
+
+### `ui: refine talibon identity and typography`
+
+- Working branch: `UI/Jr-and-Aj`; exact parent SHA: `cde788b7b45f684b4756d62de6f7a2ed525c47fe`.
+- Scope: **public typography, identity hierarchy, restrained copy, and color-discipline refinement only** under KIKIAM UI HARNESS V1. UI-S1 through UI-S5 information architecture remains intact. No backend, authentication, database, API, internal employee behavior, or UI-S7 composition work is introduced.
+- Typeface audit: global CSS declares `Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`; repository inspection found no bundled Inter asset or external font load. UI-S6 therefore retains the existing stack and adds no font package/request.
+- Type-system correction: public synthetic weights `550/620/650/680/720/740/750/760` are normalized to a smaller 500/600/700/800 family. A public-only type scale now defines display, section, subsection, title, body, supporting, and metadata roles.
+- Readability: meaningful 11px public supporting copy is increased where appropriate; metadata remains subordinate but readable at 12px; Quick Access supporting text rises to 13px; public navigation rises to the 14px body scale.
+- Hero: display range is reduced to 34–46px with calmer line-height and measure; mobile H1 sizes reduce to 32/30px. The identity line now states the municipality directly and drops all-caps/wide tracking.
+- Brand hierarchy: public `MunicipalBrand` subline becomes `Municipal Public Portal`; the header still pairs One Talibon with `Municipality of Talibon, Bohol`; the footer uses the same public-surface label.
+- Talibon asset boundary: current seal/coastal/landmark files are explicitly placeholder assets. UI-S6 does not relabel them as approved official marks or fabricate a seal, landmark, slogan, tourism identity, or historical symbol.
+- Color discipline: existing municipal palette is retained. Decorative green is removed from Quick Access and About locality labels; blue/neutral text and gold-on-navy civic accent take those roles. The established green `ONE` wordmark treatment is preserved.
+- Copy: hero no longer calls placeholder notices `official`; About Talibon no longer mixes employee access into public civic copy; public contact description is limited to the fact that contact details await municipal confirmation.
+- Accessibility source intent: larger supporting copy, less uppercase/tracking dependence, standard weight fallbacks, preserved heading semantics/focus behavior, and hierarchy not dependent on color alone.
+- Documentation: `Jayr-Aj-docs.md` is updated in this same candidate.
+- Verification before publication: source, typography/style, and identity-asset inspection **PASS**. Runtime rendering, build/typecheck execution, desktop/mobile visual inspection, 200% zoom, keyboard/focus, and light/dark runtime inspection are **NOT OBSERVED** and must not be promoted to PASS.
+- Schema/migration/dependency impact: **NONE**. Internal application behavior impact: **NONE**.
+

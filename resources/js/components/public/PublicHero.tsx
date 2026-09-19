@@ -6,10 +6,10 @@ export default function PublicHero({ content }: { content: PublicContent }) {
     return <section id="home" className="public-hero" aria-labelledby="public-hero-title">
         <div className="public-hero-intro">
             <div className="public-hero-copy">
-                <p className="public-welcome">One Talibon · {content.municipality}</p>
+                <p className="public-welcome">{content.municipality}</p>
                 <h1 id="public-hero-title" className="public-hero-title">Municipal services and public information for Talibon</h1>
                 <p className="public-hero-lead">
-                    Access municipal services, official notices, public documents, and local government information in one place.
+                    Access municipal services, notices, public documents, and local government information in one place.
                 </p>
                 <div className="public-hero-actions">
                     <a href="#services" className="public-primary-action">

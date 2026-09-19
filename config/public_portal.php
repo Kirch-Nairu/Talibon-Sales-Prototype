@@ -83,7 +83,7 @@ return [
     ],
     'contact' => [
         'heading' => 'Municipality of Talibon',
-        'description' => 'Use Employee Login to open the intra-office portal. Public contact details await municipal confirmation.',
+        'description' => 'Public contact details await municipal confirmation.',
         'location' => 'Talibon, Bohol, Philippines',
     ],
 ];

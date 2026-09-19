@@ -37,7 +37,7 @@ export default function PublicFooter({ content, authenticated }: { content: Publ
         </div>
         <div className="public-footer-bottom">
             <span>One Talibon · Municipality of Talibon, Bohol</span>
-            <span>Digital Portal</span>
+            <span>Municipal Public Portal</span>
         </div>
     </footer>;
 }
