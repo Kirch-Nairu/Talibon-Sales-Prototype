@@ -1535,3 +1535,18 @@ This append records the completed Approved Travel Orders wave. Earlier entries t
 - Repository search confirms `.public-section-link` has no current component usage.
 - The orphaned mobile rule is removed. No active homepage selector, layout, theme, interaction, or content behavior changes.
 - Runtime/build/typecheck remain blocked/not observed because repository checkout still cannot resolve `github.com`.
+## 2026-09-19 — Jr/AJ One Talibon final UI acceptance evidence
+
+### `docs: record final UI acceptance evidence`
+
+- Final executable UI-S10 SHA: `999a080408ab3d2f9b6fc8138a3bff3d241463ec` on `UI/Jr-and-Aj`.
+- UI-S10 starting SHA: `7ea299876a3748f08a6b6e647b0ccc809dd502fb`.
+- Final executable branch position: 25 commits ahead of `main`, 0 behind.
+- Post-fix source audit **PASS**: Quick Access now says `Transparency and document previews`; old published-information phrase absent; `.public-nav-link-active`, `.public-section-link`, and legacy `.public-panel*` selectors absent; no gradients/backdrop-filter; no 50px+ fixed public font-size residue; public semantic theme roles remain present.
+- Defect disposition: BLOCKER 0; HIGH 0; MEDIUM 1 fixed (prototype publication wording); LOW/COSMETIC 1 integration-residue group fixed (dead/orphaned public CSS). Runtime-only defects remain unknown.
+- Build/typecheck re-attempt after fixes: **BLOCKED** because the environment still cannot resolve `github.com`; Composer is also unavailable. This is not classified as an application-code failure.
+- CI evidence: **NOT OBSERVED** — no combined status and no workflow run on the final executable SHA.
+- Runtime, console, all viewport visuals, Light/Dark/System visuals, theme switching, OS System response, reload persistence, first-paint flash, keyboard walkthrough, skip link, mobile menu, appearance control, 200% zoom, screen-reader smoke test, and measured rendered contrast remain **NOT OBSERVED**.
+- Final classification: **SOURCE CANDIDATE — RUNTIME NOT OBSERVED**.
+- Final recommendation: **RUNTIME VERIFICATION REQUIRED**. Do not label merge-ready until the final executable candidate is built and observed.
+- Roadmap closure: 4 phases / 10 slices complete at source-candidate level; UI-S10 is final; no UI-S11.

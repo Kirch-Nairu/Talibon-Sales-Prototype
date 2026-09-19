@@ -1770,24 +1770,87 @@ Static UI-S9 color calculations remain source evidence only.
 - anti-AI-slop source audit: PASS;
 - dead-selector cleanup audit: PASS;
 - prior-slice preservation audit: PASS;
-- implementation scope: PENDING post-commit;
-- git diff: PENDING post-commit;
+- implementation scope: PASS;
+- git diff: PASS;
+- branch isolation: PASS;
+- content-honesty correction verification: PASS;
+- dead-selector re-check: PASS;
+- anti-AI-slop source re-check: PASS;
+- CI status/workflow evidence: NOT OBSERVED;
 - build: BLOCKED;
 - typecheck: BLOCKED;
 - runtime: NOT OBSERVED.
 
-## Acceptance classification before post-commit evidence
+## Final executable commits
 
-Source integration candidate: PASS.
+```text
+0a4b2f6e21706291866424a740a83ed88e26985d
+ui: complete final public portal qa
 
-Final runtime acceptance: NOT OBSERVED.
+999a080408ab3d2f9b6fc8138a3bff3d241463ec
+ui: remove final orphaned public selector
+```
 
-Overall UI program: implementation complete at source level; final runtime acceptance pending.
+## Post-fix source audit
+
+```text
+Quick Access uses 'Transparency and document previews': YES
+Old 'Transparency and published information' phrase: 0
+public-nav-link-active selectors: 0
+public-section-link selectors: 0
+legacy public-panel selectors: 0
+public CSS gradients: 0
+public CSS backdrop-filter/glassmorphism: 0
+oversized 50px+ fixed public font-size rules: 0
+public semantic theme-role layer: PRESENT
+```
+
+GitHub reports no combined status and no workflow run on the final executable candidate.
+
+The post-fix checkout attempt was repeated and again failed with `Could not resolve host: github.com`. Therefore the final source candidate was not built or rendered in this environment.
+
+## Final defect disposition
+
+- BLOCKER: 0 discovered by source audit;
+- HIGH: 0 discovered by source audit;
+- MEDIUM: 1 discovered, fixed — public-document shortcut wording;
+- LOW/COSMETIC: 1 integration-residue group discovered, fixed — dead/orphaned CSS selectors;
+- runtime-only defects: UNKNOWN because runtime is not observed.
+
+## Final acceptance classification
+
+```text
+Source integration audit: PASS
+Build: BLOCKED
+Typecheck: BLOCKED
+Runtime: NOT OBSERVED
+Console: NOT OBSERVED
+Final runtime acceptance: NOT OBSERVED
+
+FINAL CLASSIFICATION:
+SOURCE CANDIDATE — RUNTIME NOT OBSERVED
+
+FINAL RECOMMENDATION:
+RUNTIME VERIFICATION REQUIRED
+```
+
+The branch is not labelled merge-ready because the final slice explicitly requires runtime evidence before that conclusion.
 
 ---
 # Current UI Branch State
 
-UI-S9 implementation candidate:
+UI-S10 final executable candidate:
+
+```text
+UI/Jr-and-Aj
+Final executable SHA: 999a080408ab3d2f9b6fc8138a3bff3d241463ec
+Ahead of main at executable candidate: 25 commits
+Behind main: 0
+```
+
+The final evidence commit that updates this document is documentation-only and advances the branch after the executable candidate.
+
+Historical UI-S9 implementation candidate:
 
 ```text
 UI/Jr-and-Aj
@@ -1889,9 +1952,9 @@ resources/css/public-portal.css
 - responsive rules preserved and adjusted intentionally;
 - accessibility semantics preserved in the modified components.
 
-## Not yet fully verified
+## Runtime acceptance still pending
 
-Runtime visual inspection is still required before final UI acceptance.
+The 10-slice UI source implementation is complete, but runtime visual inspection is still required before final acceptance or merge-ready classification.
 
 The following still need to be observed in the running application:
 
@@ -1988,3 +2051,52 @@ No UI-S11
 ```
 
 Source implementation is complete. The remaining work is runtime verification of the existing UI candidate, not another design slice.
+
+# FINAL UI ROADMAP STATUS
+
+```text
+4 PHASES / 10 SLICES
+
+PHASE 1 — CORE STRUCTURE
+S1  Header + Public Navigation Hierarchy        IMPLEMENTED
+S2  Hero Hierarchy + Citizen CTA Strategy       IMPLEMENTED
+S3  Quick Access Structure                      IMPLEMENTED
+S4  Municipal Services IA                       SOURCE CANDIDATE
+
+PHASE 2 — PUBLIC INFORMATION
+S5  Editorial Public Information                SOURCE CANDIDATE
+
+PHASE 3 — VISUAL / RESPONSIVE / ACCESSIBILITY
+S6  Talibon Identity + Typography               SOURCE CANDIDATE
+S7  Responsive Composition                      SOURCE CANDIDATE
+S8  Accessibility + Interaction                 SOURCE CANDIDATE
+S9  Light / Dark Verification                   SOURCE CANDIDATE
+
+PHASE 4 — FINAL QA
+S10 Full Runtime Critique + Anti-AI-Slop        SOURCE CANDIDATE
+
+No UI-S11.
+```
+
+## Final runtime verification still required
+
+Before merge-ready classification, run the executable candidate and observe:
+
+- `npm run types:check`;
+- `npm run build`;
+- Laravel public homepage boot;
+- console errors/warnings/resources;
+- viewport matrix: 1920 / 1600 / 1440 / 1280 / 1024 / 768 / 390 / 360;
+- Light / Dark / System behavior;
+- System OS-preference response;
+- theme persistence and first-paint flash;
+- Tab / Shift+Tab / Enter / Space / Escape;
+- skip-link activation;
+- mobile-navigation behavior and focus return;
+- appearance-control selection and Escape;
+- 200% zoom in Light and Dark;
+- rendered contrast for muted text, links, focus, buttons, dividers, metadata;
+- lightweight screen-reader smoke test;
+- all public routes/anchors by activation.
+
+Do not start another design phase to address this missing evidence; verify the existing final candidate.
