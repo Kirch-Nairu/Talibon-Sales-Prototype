@@ -40,9 +40,9 @@ export default function SchedulePanel({ meetings, deadlines }: { meetings: Dashb
         />
         <BoundedOperationalPanelBody className={bodyClass}>
             <div className="min-w-0">
-                <div className="employee-functional-label border-b border-slate-100 bg-slate-50/70 px-3 py-1.5 text-slate-500 dark:border-slate-700 dark:bg-slate-900/30 dark:text-slate-400 sm:px-4">Next meetings</div>
+                <div className="employee-functional-label border-b border-slate-100 bg-slate-50/70 employee-subsection-bar text-slate-500 dark:border-slate-700 dark:bg-slate-900/30 dark:text-slate-400">Next meetings</div>
                 <div className="divide-y divide-slate-100 dark:divide-slate-700">
-                    {visibleMeetings.map((meeting) => <article key={meeting.id} className="px-3 py-2.5 sm:px-4">
+                    {visibleMeetings.map((meeting) => <article key={meeting.id} className="employee-record-row">
                         <div className="flex items-start gap-3">
                             <div className="w-14 shrink-0">
                                 <div className="employee-metadata font-bold text-blue-700 dark:text-blue-300">{formatTime(meeting.startsAt)}</div>
@@ -55,17 +55,17 @@ export default function SchedulePanel({ meetings, deadlines }: { meetings: Dashb
                             </div>
                         </div>
                     </article>)}
-                    {orderedMeetings.length === 0 ? <div className="employee-supporting-text px-3 py-3 text-slate-500 dark:text-slate-400 sm:px-4">No upcoming meetings in this scope.</div> : null}
+                    {orderedMeetings.length === 0 ? <div className="employee-empty-state employee-supporting-text text-slate-500 dark:text-slate-400">No upcoming meetings in this scope.</div> : null}
                 </div>
-                {orderedMeetings.length > visibleMeetings.length ? <div className="employee-metadata border-t border-slate-100 px-3 py-2 text-slate-500 dark:border-slate-700 dark:text-slate-400 sm:px-4">{orderedMeetings.length - visibleMeetings.length} more meeting{orderedMeetings.length - visibleMeetings.length === 1 ? '' : 's'} available in Calendar.</div> : null}
+                {orderedMeetings.length > visibleMeetings.length ? <div className="employee-metadata employee-subsection-bar border-t border-slate-100 text-slate-500 dark:border-slate-700 dark:text-slate-400">{orderedMeetings.length - visibleMeetings.length} more meeting{orderedMeetings.length - visibleMeetings.length === 1 ? '' : 's'} available in Calendar.</div> : null}
             </div>
 
             <div className="min-w-0">
-                <div className="employee-functional-label border-b border-slate-100 bg-slate-50/70 px-3 py-1.5 text-slate-500 dark:border-slate-700 dark:bg-slate-900/30 dark:text-slate-400 sm:px-4">Upcoming deadlines</div>
+                <div className="employee-functional-label border-b border-slate-100 bg-slate-50/70 employee-subsection-bar text-slate-500 dark:border-slate-700 dark:bg-slate-900/30 dark:text-slate-400">Upcoming deadlines</div>
                 <div className="divide-y divide-slate-100 dark:divide-slate-700">
                     {visibleDeadlines.map((deadline) => {
                         const urgency = deadlineUrgency(deadline);
-                        return <article key={deadline.id} className="px-3 py-2.5 sm:px-4">
+                        return <article key={deadline.id} className="employee-record-row">
                             <div className="flex items-start gap-2.5">
                                 <Clock3 size={14} className={'mt-0.5 shrink-0 ' + urgencyClass[urgency]} aria-hidden="true" />
                                 <div className="min-w-0 flex-1">
@@ -77,9 +77,9 @@ export default function SchedulePanel({ meetings, deadlines }: { meetings: Dashb
                             </div>
                         </article>;
                     })}
-                    {orderedDeadlines.length === 0 ? <div className="employee-supporting-text px-3 py-3 text-slate-500 dark:text-slate-400 sm:px-4">No upcoming deadlines in this scope.</div> : null}
+                    {orderedDeadlines.length === 0 ? <div className="employee-empty-state employee-supporting-text text-slate-500 dark:text-slate-400">No upcoming deadlines in this scope.</div> : null}
                 </div>
-                {orderedDeadlines.length > visibleDeadlines.length ? <div className="employee-metadata border-t border-slate-100 px-3 py-2 text-slate-500 dark:border-slate-700 dark:text-slate-400 sm:px-4">{orderedDeadlines.length - visibleDeadlines.length} more deadline{orderedDeadlines.length - visibleDeadlines.length === 1 ? '' : 's'} available in Calendar.</div> : null}
+                {orderedDeadlines.length > visibleDeadlines.length ? <div className="employee-metadata employee-subsection-bar border-t border-slate-100 text-slate-500 dark:border-slate-700 dark:text-slate-400">{orderedDeadlines.length - visibleDeadlines.length} more deadline{orderedDeadlines.length - visibleDeadlines.length === 1 ? '' : 's'} available in Calendar.</div> : null}
             </div>
         </BoundedOperationalPanelBody>
     </BoundedOperationalPanel>;

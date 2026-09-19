@@ -67,10 +67,10 @@ export default function Dashboard({
     const announcements = <MunicipalUpdates announcements={municipal.announcements} planningUpdates={municipal.planningUpdates} mode="announcements" />;
 
     return <AppLayout title="Home">
-        <div className="mx-auto max-w-[1560px] space-y-4">
+        <div className="employee-section-stack mx-auto max-w-[1560px]">
             <DashboardHeader experience={experience} />
 
-            <div className="@container min-w-0 space-y-4">
+            <div className="@container employee-section-stack min-w-0">
                 <AttentionSummary
                     workCount={workAttentionCount}
                     overdueWorkCount={isAdministrator
@@ -83,21 +83,21 @@ export default function Dashboard({
                     overdueLabel={isAdministrator ? 'Offices with overdue work' : undefined}
                 />
 
-                <section aria-label="Priority work and schedule" className="grid min-w-0 gap-4 @min-[1120px]:grid-cols-[minmax(0,1.2fr)_minmax(360px,.8fr)] @min-[1120px]:items-start">
+                <section aria-label="Priority work and schedule" className="grid min-w-0 gap-[0.875rem] @min-[1120px]:grid-cols-[minmax(0,1.2fr)_minmax(360px,.8fr)] @min-[1120px]:items-start">
                     {!isAdministrator ? <AttentionQueue items={attentionWork} href={attentionQueueHref} linkLabel={attentionQueueLabel} /> : null}
                     {isAdministrator && systemOverview ? <AdministrativeAttention workload={systemOverview.operations.departmentWorkload} /> : null}
                     <SchedulePanel meetings={municipal.meetings} deadlines={upcomingDeadlines} />
                 </section>
 
                 {(personalMetricGroup || hasWorkspaceLinks) ? <section aria-label="My work and workspace" className={personalMetricGroup && hasWorkspaceLinks
-                    ? 'grid min-w-0 gap-4 @min-[1120px]:grid-cols-[minmax(0,1.25fr)_minmax(320px,.75fr)] @min-[1120px]:items-start'
+                    ? 'grid min-w-0 gap-[0.875rem] @min-[1120px]:grid-cols-[minmax(0,1.25fr)_minmax(320px,.75fr)] @min-[1120px]:items-start'
                     : 'grid min-w-0 gap-4'
                 }>
                     {personalMetricGroup ? <MetricGroup group={personalMetricGroup} /> : null}
                     {hasWorkspaceLinks ? <QuickActions actions={experience.quickActions} /> : null}
                 </section> : null}
 
-                <section aria-labelledby="dashboard-operating-picture" className="space-y-3">
+                <section aria-labelledby="dashboard-operating-picture" className="space-y-[0.875rem]">
                     <div className="flex flex-wrap items-end justify-between gap-2 border-b border-slate-200 pb-2 dark:border-slate-700">
                         <div>
                             <div className="text-[9px] font-bold uppercase tracking-[0.14em] text-blue-700 dark:text-blue-300">Current work context</div>
@@ -105,7 +105,7 @@ export default function Dashboard({
                         </div>
                     </div>
 
-                    {(contextMetricGroups.length > 0 || officeOverview || executiveOverview || systemOverview || isMpdo) ? <div className="grid min-w-0 gap-4 @min-[1120px]:grid-cols-2">
+                    {(contextMetricGroups.length > 0 || officeOverview || executiveOverview || systemOverview || isMpdo) ? <div className="grid min-w-0 gap-[0.875rem] @min-[1120px]:grid-cols-2">
                         {contextMetricGroups.map((group) => <MetricGroup key={group.key} group={group} />)}
                         {experience.key === 'department_head' && officeOverview ? <OfficeOverview overview={officeOverview} /> : null}
                         {experience.key === 'executive_oversight' && executiveOverview ? <ExecutiveOverview overview={executiveOverview} /> : null}

@@ -12,7 +12,7 @@ type Props = {
 };
 
 export default function DashboardSectionHeader({ icon, title, headingId, description, href, linkLabel }: Props) {
-    return <header className="flex flex-col gap-2 border-b border-slate-200 px-4 py-2.5 dark:border-slate-700 sm:flex-row sm:items-start sm:justify-between sm:px-5">
+    return <header className="employee-panel-header flex flex-col gap-2 border-b border-slate-200 dark:border-slate-700 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
             <div className="flex items-center gap-2">
                 {icon}

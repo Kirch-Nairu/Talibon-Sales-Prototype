@@ -21,7 +21,7 @@ export default function QuickActions({ actions }: { actions: DashboardExperience
     if (!visibleActions.length) return null;
 
     return <section className="min-w-0 border-y border-slate-200 dark:border-slate-700" aria-labelledby="dashboard-quick-actions">
-        <header className="px-1 py-2.5">
+        <header className="employee-panel-header">
             <h3 id="dashboard-quick-actions" className="employee-section-title text-slate-950 dark:text-slate-100">Workspace shortcuts</h3>
             <p className="employee-supporting-text mt-0.5 text-slate-500 dark:text-slate-400">Frequent destinations for this role.</p>
         </header>
@@ -33,7 +33,7 @@ export default function QuickActions({ actions }: { actions: DashboardExperience
                     key={action.url}
                     href={action.url}
                     aria-label={`${action.label}. ${action.description}`}
-                    className="group flex min-h-14 min-w-0 items-center gap-3 px-1 py-2.5 transition-colors duration-150 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500 dark:hover:bg-slate-800/55"
+                    className="employee-record-row group flex min-h-[3.25rem] min-w-0 items-center gap-3 transition-colors duration-150 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500 dark:hover:bg-slate-800/55"
                 >
                     <Icon size={16} className="shrink-0 text-slate-500 dark:text-slate-400" strokeWidth={1.8} aria-hidden="true" />
                     <div className="min-w-0 flex-1">

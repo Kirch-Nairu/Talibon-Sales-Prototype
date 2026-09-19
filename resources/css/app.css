@@ -159,3 +159,26 @@ summary:focus-visible,
     letter-spacing: 0.04em;
     text-transform: uppercase;
 }
+
+
+/* Employee Portal spacing / density roles. */
+#portal-content .employee-section-stack {
+    display: grid;
+    gap: 0.875rem;
+}
+
+#portal-content .employee-panel-header {
+    padding: 0.625rem 1rem;
+}
+
+#portal-content .employee-record-row {
+    padding: 0.625rem 1rem;
+}
+
+#portal-content .employee-subsection-bar {
+    padding: 0.5rem 1rem;
+}
+
+#portal-content .employee-empty-state {
+    padding: 0.75rem 1rem;
+}

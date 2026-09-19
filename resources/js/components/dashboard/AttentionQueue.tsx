@@ -26,11 +26,11 @@ export default function AttentionQueue({
             linkLabel={linkLabel}
         />
         <BoundedOperationalPanelBody scrollable={useBoundedQueue}>
-            <div className="employee-table-heading hidden grid-cols-[minmax(0,2fr)_minmax(0,.85fr)_minmax(0,1fr)_minmax(0,.9fr)] gap-3 border-b border-slate-200 bg-slate-50 px-5 py-2 text-slate-500 dark:border-slate-700 dark:bg-slate-900/30 dark:text-slate-400 @min-[760px]:grid @min-[1120px]:sticky @min-[1120px]:top-0 @min-[1120px]:z-10">
+            <div className="employee-table-heading hidden grid-cols-[minmax(0,2fr)_minmax(0,.85fr)_minmax(0,1fr)_minmax(0,.9fr)] gap-3 border-b border-slate-200 bg-slate-50 employee-subsection-bar text-slate-500 dark:border-slate-700 dark:bg-slate-900/30 dark:text-slate-400 @min-[760px]:grid @min-[1120px]:sticky @min-[1120px]:top-0 @min-[1120px]:z-10">
                 <div>Record</div><div>Status</div><div>Assigned</div><div>Due</div>
             </div>
             <div className="divide-y divide-slate-100 dark:divide-slate-700">
-                {items.map((item) => <Link key={item.detailUrl} href={item.detailUrl} className="grid min-w-0 gap-2 px-4 py-2.5 transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500 dark:hover:bg-slate-800/40 sm:px-5 @min-[760px]:grid-cols-[minmax(0,2fr)_minmax(0,.85fr)_minmax(0,1fr)_minmax(0,.9fr)] @min-[760px]:items-center">
+                {items.map((item) => <Link key={item.detailUrl} href={item.detailUrl} className="employee-record-row grid min-w-0 gap-2 transition-colors hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-500 dark:hover:bg-slate-800/40 @min-[760px]:grid-cols-[minmax(0,2fr)_minmax(0,.85fr)_minmax(0,1fr)_minmax(0,.9fr)] @min-[760px]:items-center">
                     <div className="min-w-0">
                         <div className="employee-metadata flex flex-wrap items-center gap-x-2 gap-y-1">
                             <span className="font-bold text-blue-700 dark:text-blue-300">{item.reference}</span>
@@ -45,7 +45,7 @@ export default function AttentionQueue({
                         <span className="@min-[760px]:hidden">Due: </span><span className="break-words">{formatDate(item.dueAt)}</span>
                     </div>
                 </Link>)}
-                {items.length === 0 ? <div className="employee-body-text px-4 py-4 text-slate-500 dark:text-slate-400 sm:px-5">No work currently requires attention in this scope.</div> : null}
+                {items.length === 0 ? <div className="employee-empty-state employee-body-text text-slate-500 dark:text-slate-400">No work currently requires attention in this scope.</div> : null}
             </div>
         </BoundedOperationalPanelBody>
     </BoundedOperationalPanel>;
